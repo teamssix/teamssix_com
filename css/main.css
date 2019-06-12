@@ -1641,7 +1641,7 @@ pre .javascript .function {
 }
 .sidebar {
   position: fixed;
-  right: 0;
+  left: 0;
   top: 0;
   bottom: 0;
   width: 0;
@@ -1693,7 +1693,7 @@ pre .javascript .function {
 }
 .sidebar-toggle {
   position: fixed;
-  right: 30px;
+  left: 30px;
   bottom: 45px;
   width: 14px;
   height: 14px;
@@ -1773,7 +1773,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #25d724;
+  background: #6ec9ff;
 }
 .feed-link,
 .chat {
@@ -2481,4 +2481,20 @@ embed {
 }
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;
+}
+.sidebar-toggle {
+  left: 30px;
+}
+.sidebar {
+  left: 0;
+}
+.back-to-top {
+  Right: 30px;
+}
+.post {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 25px;
+  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
+  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
