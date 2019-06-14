@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.teamssix.com/"/>
-  <updated>2019-06-14T04:09:34.946Z</updated>
+  <updated>2019-06-14T05:51:53.826Z</updated>
   <id>http://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对于连接ssh时连时断的解决方法</title>
+    <link href="http://www.teamssix.com/year/190614-134948.html"/>
+    <id>http://www.teamssix.com/year/190614-134948.html</id>
+    <published>2019-06-14T05:49:48.000Z</published>
+    <updated>2019-06-14T05:51:53.826Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。</p><a id="more"></a><h1 id="0x01-修改配置文件"><a href="#0x01-修改配置文件" class="headerlink" title="0x01 修改配置文件"></a>0x01 修改配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure><p>在配置文件中加入以下内容：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UseDNS no</span><br></pre></td></tr></table></figure><p>之后重启ssh即可</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#Ubuntu:</span><br><span class="line">service sshd restart 或者 /etc/init.d/sshd restart</span><br><span class="line">#Centos7:</span><br><span class="line">systemctl restart sshd.service</span><br><span class="line">#Centos7以下版本：</span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure><h1 id="0x02-原因"><a href="#0x02-原因" class="headerlink" title="0x02 原因"></a>0x02 原因</h1><p>以下解释来自本文方法参考文章：<a href="https://m.ancii.com/ayew4gv3/" target="_blank" rel="noopener">文章地址</a></p><blockquote><p>ssh登录服务器时总是要停顿等待一下才能连接上,这是因为OpenSSH服务器有一个DNS查找选项UseDNS默认是打开的。<br>UseDNS选项打开状态下,当客户端试图登录OpenSSH服务器时,服务器端先根据客户端的IP地址进行DNS PTR反向查询,查询出客户端的host name，然后根据查询出的客户端host name进行DNS 正向A记录查询，验证与其原始IP地址是否一致，这是防止客户端欺骗的一种手段,但一般我们的IP是动态的，不会有PTR记录的，打开这个选项不过是在白白浪费时间而已。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="经验总结" scheme="http://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="解决方案" scheme="http://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+      <category term="ssh" scheme="http://www.teamssix.com/tags/ssh/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo自适应BiliBili视频大小的解决方案</title>
