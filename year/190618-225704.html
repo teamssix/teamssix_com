@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="话不多说，先让我们看看最终效果图：那么如何使用Python来获取这些信息呢？">
+<meta name="keywords" content="Python,电影,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python实例】让Python告诉你当前最火的电影是什么">
+<meta property="og:url" content="http://www.teamssix.com/year/190618-225704.html">
+<meta property="og:site_name" content="Teams Six">
+<meta property="og:description" content="话不多说，先让我们看看最终效果图：那么如何使用Python来获取这些信息呢？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm1.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm2.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm3.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm4.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm5.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm6.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm7.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm8.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm9.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm10.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm11.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm12.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm13.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm14.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm15.png">
+<meta property="og:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm16.png">
+<meta property="og:updated_time" content="2019-06-18T15:07:25.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Python实例】让Python告诉你当前最火的电影是什么">
+<meta name="twitter:description" content="话不多说，先让我们看看最终效果图：那么如何使用Python来获取这些信息呢？">
+<meta name="twitter:image" content="http://pt2jsbugk.bkt.clouddn.com/hotfilm1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Teams Six" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.teamssix.com/year/190618-225704">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【Python实例】让Python告诉你当前最火的电影是什么 | Teams Six</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8bab20886c3df9c0d832a9b6aee45740";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<!--
+<a href="https://github.com/teamssix"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+-->
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Teams Six</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.teamssix.com/year/190618-225704.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Teams Six">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/TEAMSSIX_396K.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Teams Six">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Python实例】让Python告诉你当前最火的电影是什么
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-18 22:57:04 / 修改时间：23:07:25" itemprop="dateCreated datePublished" datetime="2019-06-18T22:57:04+08:00">2019-06-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实例演示/" itemprop="url" rel="index"><span itemprop="name">实例演示</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/year/190618-225704.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/year/190618-225704.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>话不多说，先让我们看看最终效果图：<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm1.png" alt="图片"><br>那么如何使用Python来获取这些信息呢？</p>
+<a id="more"></a>
+<h1 id="一、需求与思路"><a href="#一、需求与思路" class="headerlink" title="一、需求与思路"></a>一、需求与思路</h1><h1 id="1、需求"><a href="#1、需求" class="headerlink" title="1、需求"></a>1、需求</h1><p>首先要知道最近正在上映的电影的名称、评分、评论数等等，这些都可以在豆瓣上找得到，因此本次数据挖掘对象就确定为豆瓣电影官网。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm2.png" alt="图片"></p>
+<h1 id="2、思路"><a href="#2、思路" class="headerlink" title="2、思路"></a>2、思路</h1><p>a、调用requests模块向豆瓣电影官网发出请求<br>b、调用BeautifulSoup模块从返回的html中提取数据<br>c、调用pandas模块将提取的数据转为表格样式</p>
+<h1 id="二、开工"><a href="#二、开工" class="headerlink" title="二、开工"></a>二、开工</h1><h1 id="1、发出请求"><a href="#1、发出请求" class="headerlink" title="1、发出请求"></a>1、发出请求</h1><p>设置好headers,url，调用requests模块向目标网站发出请求，最后结果存储在res中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">headers = &#123;&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36&apos;&#125;</span><br><span class="line">url = &apos;https://movie.douban.com/cinema/nowplaying/beijing/&apos;</span><br><span class="line">res = requests.get(url,headers = headers)</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、数据传入"><a href="#2、数据传入" class="headerlink" title="2、数据传入"></a>2、数据传入</h1><p>将html文本传入BeautifulSoup中，指定解析器为html.parser，并将解析内容传入soup</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(res.text,&apos;html.parser&apos;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、数据提取"><a href="#三、数据提取" class="headerlink" title="三、数据提取"></a>三、数据提取</h1><p>在介绍数据提取之前需要先介绍一个插件：infolite，这款插件可以直接查看到控件路径，而不需要到复杂的开发人员工具中就行查看。</p>
+<h1 id="1、电影名"><a href="#1、电影名" class="headerlink" title="1、电影名"></a>1、电影名</h1><p>打开电影详情页面，找到电影名控件路径<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm3.png" alt="图片"><br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm4.png" alt="图片"><br>最终修改为以下结果得到电影名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insoup.select(&apos;h1&apos;)[0].text.split()[0]</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm5.png" alt="图片"></p>
+<h1 id="2、豆瓣评分"><a href="#2、豆瓣评分" class="headerlink" title="2、豆瓣评分"></a>2、豆瓣评分</h1><p>根据同样原理可得到该电影的评分<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm6.png" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insoup.select(&apos;.rating_num&apos;)[0].text</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm7.png" alt="图片"></p>
+<h1 id="3、评论数量"><a href="#3、评论数量" class="headerlink" title="3、评论数量"></a>3、评论数量</h1><p>依旧是一样的思路，先利用InfoLite找到控件路径，再利用bs4模块提取对应内容。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm8.png" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insoup.select(&apos;.mod-hd a&apos;)[1].text.split()[1]</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm9.png" alt="图片"></p>
+<h1 id="4、简介"><a href="#4、简介" class="headerlink" title="4、简介"></a>4、简介</h1><p>对于简介因为里面有很多空格换行等，所以这里使用了正则替换空格。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm10.png" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.sub(&apos;\s&apos;,&apos;&apos;,insoup.select(&apos;.related-info span&apos;)[0].text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm11.png" alt="图片"><br>这里写个函数，为实现传入一个URL，返回该URL中信息的功能，最终四项都将传入result字典中，所以接下来要做的就是如何获取URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def pages(url):</span><br><span class="line">    result = &#123;&#125;</span><br><span class="line">    inres = requests.get(url,headers = headers)</span><br><span class="line">    insoup = BeautifulSoup(inres.text,&apos;html.parser&apos;)</span><br><span class="line">    </span><br><span class="line">    result[&apos;电影名&apos;] = insoup.select(&apos;h1&apos;)[0].text.split()[0]</span><br><span class="line">    result[&apos;豆瓣评分&apos;] = insoup.select(&apos;.rating_num&apos;)[0].text</span><br><span class="line">    result[&apos;评论数量&apos;] = insoup.select(&apos;.mod-hd a&apos;)[1].text.split()[1]</span><br><span class="line">    result[&apos;简介&apos;] = re.sub(&apos;\s&apos;,&apos;&apos;,insoup.select(&apos;.related-info span&apos;)[0].text)</span><br><span class="line">    </span><br><span class="line">    return result</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、提取URL"><a href="#四、提取URL" class="headerlink" title="四、提取URL"></a>四、提取URL</h1><p>因为我们要找的电影是正在上映的电影，因此从正在上映的电影列表中提取URL即可。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm12.png" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url = &apos;https://movie.douban.com/cinema/nowplaying/beijing/&apos;</span><br><span class="line">res = requests.get(url,headers = headers)</span><br><span class="line">soup = BeautifulSoup(res.text,&apos;html.parser&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>在soup中含有这些链接，soup.select()是列表类型，有的列表项含有URL，有的不含有，并且在调试过程中发现有的含有链接的却没有评分信息。<br>因此在以下语句中URL利用select存到urls中，利用判断语句来筛选掉一些没有评分的电影。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pools = []</span><br><span class="line">for links in soup.select(&apos;ul&apos;):</span><br><span class="line">    urls = links.select(&apos;a&apos;)[0][&apos;href&apos;]</span><br><span class="line">    if len(links.select(&apos;.subject-rate&apos;)) &gt; 0 :</span><br><span class="line">        pools.append(pages(urls))</span><br></pre></td></tr></table></figure>
+
+<p>最终，每个URL的信息都被添加到pools数组中，但是这个时候直接输出pools会很乱，因此接下来要做的就是生成表格。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm13.png" alt="图片"></p>
+<h1 id="五、表格生成"><a href="#五、表格生成" class="headerlink" title="五、表格生成"></a>五、表格生成</h1><p>生成表格的方法也非常简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas</span><br><span class="line">df = pandas.DataFrame(pools)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm14.png" alt="图片"><br>不过这样不够明显，因此我们可以将简介放到后面，再排序一下<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm15.png" alt="图片"></p>
+<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>上面一张图可以明显看到今天的四个贺岁电影中，《流浪星球》不管是豆瓣评分还是评论的数量都是第一个，倒也是实至名归。<br>在整个过程中，碰到了很多问题，其中不乏有还未解决的问题，比如在提取电影标签的时候，因为正则使用的不熟而一直没有被很好的提取出来。<br><img src="http://pt2jsbugk.bkt.clouddn.com/hotfilm16.png" alt="图片"><br>在做这个数据挖掘之前，还做了新浪新闻的信息抓取，这个电影信息的数据挖掘也相当于是练练手，后面还有的导出文档、导出到数据库的功能就没有做演示了，也是几行代码的事情。<br>用了一段时间Python后，真的不得不感叹到Python的强大之处，下面就把以上项目的全部代码展示出来吧，另外我还是个新手，代码写得十分笨拙，大佬还请绕步。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">import pandas</span><br><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line">headers = &#123;&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36&apos;&#125;</span><br><span class="line">url = &apos;https://movie.douban.com/cinema/nowplaying/beijing/&apos;</span><br><span class="line">res = requests.get(url,headers = headers)</span><br><span class="line">soup = BeautifulSoup(res.text,&apos;html.parser&apos;)</span><br><span class="line">pools = []</span><br><span class="line">for links in soup.select(&apos;ul&apos;):</span><br><span class="line">    urls = links.select(&apos;a&apos;)[0][&apos;href&apos;]</span><br><span class="line">    if len(links.select(&apos;.subject-rate&apos;)) &gt; 0 :</span><br><span class="line">        pools.append(pages(urls))</span><br><span class="line">df = pandas.DataFrame(pools,columns = [&apos;电影名&apos;,&apos;豆瓣评分&apos;,&apos;评论数量&apos;,&apos;简介&apos;])</span><br><span class="line">df.sort_values(&apos;豆瓣评分&apos;,inplace = True,ascending = False)</span><br><span class="line">df</span><br><span class="line"></span><br><span class="line">def pages(url):</span><br><span class="line">    result = &#123;&#125;</span><br><span class="line">    inres = requests.get(url,headers = headers)</span><br><span class="line">    insoup = BeautifulSoup(inres.text,&apos;html.parser&apos;)</span><br><span class="line">    </span><br><span class="line">    result[&apos;电影名&apos;] = insoup.select(&apos;h1&apos;)[0].text.split()[0]</span><br><span class="line">    result[&apos;豆瓣评分&apos;] = insoup.select(&apos;.rating_num&apos;)[0].text</span><br><span class="line">    result[&apos;评论数量&apos;] = insoup.select(&apos;.mod-hd a&apos;)[1].text.split()[1]</span><br><span class="line">    result[&apos;简介&apos;] = re.sub(&apos;\s&apos;,&apos;&apos;,insoup.select(&apos;.related-info span&apos;)[0].text)</span><br><span class="line">    </span><br><span class="line">    return result</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <!-- 版权声明 -->
+<div>
+ 
+    <ul class="post-copyright">
+      <li class="post-copyright-author">
+          <strong>本文作者：</strong>Teams Six
+      </li>
+      <li class="post-copyright-link">
+        <strong>本文链接：</strong>
+        <a href="https://teamssix.com//year/190618-225704.html" title="【Python实例】让Python告诉你当前最火的电影是什么">https://teamssix/year/190618-225704.html</a>
+      </li>
+      <li class="post-copyright-license">
+        <strong>版权声明：</strong>
+        本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！
+      </li>
+    </ul>
+  
+</div>
+
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="Teams Six wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎微信扫描上方二维码关注本站对应公众号</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+    
+	<div>
+  		
+    	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------　<i class="fa fa-heart"></i>　感谢您的阅读　<i class="fa fa-heart"></i>　------</div>
+    
+</div>
+  		
+	</div>
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/电影/" rel="tag"># 电影</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/year/190615-013724.html" rel="next" title="【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？">
+                <i class="fa fa-chevron-left"></i> 【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/TEAMSSIX_396K.JPG" alt="Teams Six">
+            
+              <p class="site-author-name" itemprop="name">Teams Six</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/teamssix" title="GitHub &rarr; https://github.com/teamssix" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.youtube.com/channel/UCKeJhJYi_tmXWETzVxKbSvA" title="YouTube &rarr; https://www.youtube.com/channel/UCKeJhJYi_tmXWETzVxKbSvA" rel="noopener" target="_blank"><i class="fa fa-fw fa-youtube"></i>YouTube</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/148389186" title="BiliBili &rarr; https://space.bilibili.com/148389186" rel="noopener" target="_blank"><i class="fa fa-fw fa-tv"></i>BiliBili</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/23b447f36f98" title="简书 &rarr; https://www.jianshu.com/u/23b447f36f98" rel="noopener" target="_blank"><i class="fa fa-fw fa-book"></i>简书</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://me.csdn.net/qq_37683287" title="CSDN &rarr; https://me.csdn.net/qq_37683287" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、需求与思路"><span class="nav-number">1.</span> <span class="nav-text">一、需求与思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、需求"><span class="nav-number">2.</span> <span class="nav-text">1、需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、思路"><span class="nav-number">3.</span> <span class="nav-text">2、思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、开工"><span class="nav-number">4.</span> <span class="nav-text">二、开工</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、发出请求"><span class="nav-number">5.</span> <span class="nav-text">1、发出请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、数据传入"><span class="nav-number">6.</span> <span class="nav-text">2、数据传入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、数据提取"><span class="nav-number">7.</span> <span class="nav-text">三、数据提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、电影名"><span class="nav-number">8.</span> <span class="nav-text">1、电影名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、豆瓣评分"><span class="nav-number">9.</span> <span class="nav-text">2、豆瓣评分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、评论数量"><span class="nav-number">10.</span> <span class="nav-text">3、评论数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、简介"><span class="nav-number">11.</span> <span class="nav-text">4、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、提取URL"><span class="nav-number">12.</span> <span class="nav-text">四、提取URL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、表格生成"><span class="nav-number">13.</span> <span class="nav-text">五、表格生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、总结"><span class="nav-number">14.</span> <span class="nav-text">六、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">����ȫվ��4.9k��</span>
+</div>-->
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teams Six</span>
+<!--<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+    ��վ�ܷ�����<span id="busuanzi_value_site_pv"></span>��
+</span>
+</div>-->
+
+  
+
+  
+</div>
+<!-- 
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 �C <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 't5OWIJz74TjMaOF3cYdhwBbD-gzGzoHsz',
+    appKey: 'r3uQcXxtegbfrvbDTpS8uMEI',
+    placeholder: '说点什么👉',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
