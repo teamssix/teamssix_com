@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.teamssix.com/"/>
-  <updated>2019-07-17T04:44:56.484Z</updated>
+  <updated>2019-07-20T04:19:21.349Z</updated>
   <id>http://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【经验总结】记录一次Docker下安装CTFd的错误</title>
+    <link href="http://www.teamssix.com/year/190720-121144.html"/>
+    <id>http://www.teamssix.com/year/190720-121144.html</id>
+    <published>2019-07-20T04:11:44.000Z</published>
+    <updated>2019-07-20T04:19:21.349Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x01-提示错误"><a href="#0x01-提示错误" class="headerlink" title="0x01 提示错误"></a>0x01 提示错误</h1><p>根据官方的步骤执行docker-compose up但是我得到了这样的一个错误<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd1.png" alt></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~/CTFd# docker-compose up</span><br><span class="line">ERROR: The Compose file &apos;./docker-compose.yml&apos; is invalid because:</span><br><span class="line">networks.internal value Additional properties are not allowed (&apos;internal&apos; was unexpected)</span><br></pre></td></tr></table></figure><p>经过多次查询后，是因为版本问题导致，因此需要将原来的docker-compose版本卸载，安装新版本。</p><a id="more"></a><h1 id="0x02-安装新版本"><a href="#0x02-安装新版本" class="headerlink" title="0x02 安装新版本"></a>0x02 安装新版本</h1><p>卸载docker-compose版本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall docker-compose</span><br></pre></td></tr></table></figure><p>先升级一下pip</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install –upgrade pip</span><br></pre></td></tr></table></figure><p>继续安装新版本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U docker-compose</span><br></pre></td></tr></table></figure><p>也可以使用国内pip源进行加速，我使用的国内源进行的安装</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -U docker-compose</span><br></pre></td></tr></table></figure><p>之后再执行docker-compose up就没有问题了<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd2.png" alt></p><p>平时遇到问题还是需要先根据提示自己一步一步去找解决方法，之后再利用好Google。</p><blockquote><p>参考文章：<a href="https://www.ilanni.com/?p=13371" target="_blank" rel="noopener">https://www.ilanni.com/?p=13371</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x01-提示错误&quot;&gt;&lt;a href=&quot;#0x01-提示错误&quot; class=&quot;headerlink&quot; title=&quot;0x01 提示错误&quot;&gt;&lt;/a&gt;0x01 提示错误&lt;/h1&gt;&lt;p&gt;根据官方的步骤执行docker-compose up但是我得到了这样的一个错误&lt;br&gt;&lt;img src=&quot;https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd1.png&quot; alt&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;~/CTFd# docker-compose up&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ERROR: The Compose file &amp;apos;./docker-compose.yml&amp;apos; is invalid because:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;networks.internal value Additional properties are not allowed (&amp;apos;internal&amp;apos; was unexpected)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;经过多次查询后，是因为版本问题导致，因此需要将原来的docker-compose版本卸载，安装新版本。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="经验总结" scheme="http://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="Docker" scheme="http://www.teamssix.com/tags/Docker/"/>
+    
+      <category term="CTFd" scheme="http://www.teamssix.com/tags/CTFd/"/>
+    
+      <category term="环境搭建" scheme="http://www.teamssix.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>分享一张超详细的渗透测试导图</title>
