@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.teamssix.com/"/>
-  <updated>2019-07-20T04:19:21.349Z</updated>
+  <updated>2019-09-25T03:44:20.746Z</updated>
   <id>http://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【CTF】记录一次CTF比赛的Writeup</title>
+    <link href="http://www.teamssix.com/year/ck0yq6rak0001eou590gwwnk1.html"/>
+    <id>http://www.teamssix.com/year/ck0yq6rak0001eou590gwwnk1.html</id>
+    <published>2019-09-25T03:44:20.000Z</published>
+    <updated>2019-09-25T03:44:20.746Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>【经验总结】记录一次Docker下安装CTFd的错误</title>
@@ -74,7 +88,7 @@
     <link href="http://www.teamssix.com/year/190715-102622.html"/>
     <id>http://www.teamssix.com/year/190715-102622.html</id>
     <published>2019-07-15T02:26:22.000Z</published>
-    <updated>2019-07-15T05:51:19.567Z</updated>
+    <updated>2019-07-25T05:32:22.409Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0x01-概述"><a href="#0x01-概述" class="headerlink" title="0x01 概述"></a>0x01 概述</h1><ul><li>使用Python3开发</li><li>结果导出为Output_Result.csv文件</li><li>使用在线平台（<a href="http://whatweb.bugscaner.com" target="_blank" rel="noopener">http://whatweb.bugscaner.com</a>）进行指纹识别</li><li>项目下载地址：<a href="https://github.com/teamssix/Batch-identification-of-website-CMS-fingerprints" target="_blank" rel="noopener">Batch-identification-of-website-CMS-fingerprints</a></li></ul><h1 id="0x02-使用方法"><a href="#0x02-使用方法" class="headerlink" title="0x02 使用方法"></a>0x02 使用方法</h1><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 Batch_CMS_identification.py url.txt</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification1.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification2.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification3.png" alt></p><h1 id="0x03-注意事项"><a href="#0x03-注意事项" class="headerlink" title="0x03 注意事项"></a>0x03 注意事项</h1><ul><li>url.txt文件中地址格式需要http开头，如<a href="http://www.teamssix.com/">http://www.teamssix.com</a></li><li>如果执行过程中出现警告，一般是碰到有些网站使用的https的情况，可以不用理会，对结果没有影响。</li><li>如果想重新运行程序，请确认导出的CSV文件没有被打开，否则将因为不能导出文件而报错</li><li>程序中途想要退出，可以直接Ctrl+C退出，等待一段时间后便会退出，结果会依然保存</li><li>如果程序经常提示连接异常，可能因为对方拒绝连接或者本地网速较慢，如果本地网速延时较高，可将程序中的两处timeout调高一些，为保证速度，默认timeout为1秒。</li><li>该平台每天有1500的使用限制。</li></ul>]]></content>
     
@@ -90,7 +104,7 @@
     
     </summary>
     
-      <category term="工具" scheme="http://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="资源分享" scheme="http://www.teamssix.com/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/"/>
     
     
       <category term="Python" scheme="http://www.teamssix.com/tags/Python/"/>
