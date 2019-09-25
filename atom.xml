@@ -38,9 +38,9 @@
     
       <category term="CTF" scheme="http://www.teamssix.com/tags/CTF/"/>
     
-      <category term="比赛" scheme="http://www.teamssix.com/tags/%E6%AF%94%E8%B5%9B/"/>
-    
       <category term="Writeup" scheme="http://www.teamssix.com/tags/Writeup/"/>
+    
+      <category term="比赛" scheme="http://www.teamssix.com/tags/%E6%AF%94%E8%B5%9B/"/>
     
   </entry>
   
