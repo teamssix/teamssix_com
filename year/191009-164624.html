@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_1.png">
 <meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_2.png">
-<meta property="og:updated_time" content="2019-10-09T08:51:29.549Z">
+<meta property="og:updated_time" content="2019-10-09T08:59:45.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【经验总结】VPS欠费后Hexo博客521无法访问">
 <meta name="twitter:description" content="0x00 前言最近自己博客的VPS欠费了，但是充值之后，启动VPS发现博客依旧无法访问，经过多次排查后，最后的结果真的是哭笑不得，下面就记录一下我最后的解决办法。">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-10-09 16:46:24 / 修改时间：16:51:29" itemprop="dateCreated datePublished" datetime="2019-10-09T16:46:24+08:00">2019-10-09</time>
+              <time title="创建时间：2019-10-09 16:46:24 / 修改时间：16:59:45" itemprop="dateCreated datePublished" datetime="2019-10-09T16:46:24+08:00">2019-10-09</time>
             
 
             
@@ -431,7 +431,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">561</span>
+                <span title="本文字数">560</span>
               
 
               
@@ -468,7 +468,7 @@
         <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近自己博客的VPS欠费了，但是充值之后，启动VPS发现博客依旧无法访问，经过多次排查后，最后的结果真的是哭笑不得，下面就记录一下我最后的解决办法。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_1.png" alt></p>
 <a id="more"></a>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_2.png" alt></p>
-<h1 id="0x01-排查过程"><a href="#0x01-排查过程" class="headerlink" title="0x01 排查过程"></a>0x01 排查过程</h1><p>排查的过程中，碰到的第一个问题就是我发现SSH连接不上了，第一反应是博客被黑了？之后修改密码后才登上，估计只是我忘记密码了吧<br>之后又发现hexo同步本地数据同步不上去，怎么搞都不行，之后过了以一天，发现又可以同步了，这……玄学问题？<br>直到博客无法访问第三天，我到网上四处找寻结果，还是没找到我碰到的这个问题，最后突然看到有人提到hexo使用的是nginx网页服务器，这才恍然大悟，我博客的nginx没有开！</p>
+<h1 id="0x01-排查过程"><a href="#0x01-排查过程" class="headerlink" title="0x01 排查过程"></a>0x01 排查过程</h1><p>排查的过程中，碰到的第一个问题就是我发现SSH连接不上了，第一反应是博客被黑了？之后修改密码后才登上，估计只是我忘记密码了吧<br>之后又发现hexo同步本地数据同步不上去，怎么搞都不行，之后过了一天，发现又可以同步了，这……玄学问题？<br>直到博客无法访问第三天，我到网上四处找寻结果，还是没找到我碰到的这个问题，最后突然看到有人提到hexo使用的是nginx网页服务器，这才恍然大悟，我博客的nginx没有开！</p>
 <h1 id="0x02-解决步骤"><a href="#0x02-解决步骤" class="headerlink" title="0x02 解决步骤"></a>0x02 解决步骤</h1><p>直接进入自己VPS的命令行输入nginx开启nginx服务就行了，之后如果不放心可以输入netstat -ant看看自己的80端口有没有开。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VPS_name ~]# nginx</span><br><span class="line">[root@VPS_name ~]# netstat -ant</span><br></pre></td></tr></table></figure>
 
