@@ -317,6 +317,239 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.teamssix.com/year/190615-013724.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Teams Six">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/New Teams Six logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Teams Six">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/year/190615-013724.html" class="post-title-link" itemprop="url">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-15 01:37:24" itemprop="dateCreated datePublished" datetime="2019-06-15T01:37:24+08:00">2019-06-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-15 13:17:14" itemprop="dateModified" datetime="2019-07-15T13:17:14+08:00">2019-07-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/漏洞复现/" itemprop="url" rel="index"><span itemprop="name">漏洞复现</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/year/190615-013724.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/year/190615-013724.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote>
+<p>2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。</p>
+</blockquote>
+<p>以上内容来自360网络安全响应中心。<br>从微软官方的消息一出，各大安全厂商都开始发布了漏洞预警，那段时间我也一直在找对应的POC，但要不就是不能利用的POC，要不就是利用以前漏洞写的POC，更有甚着点击attack后给你惊喜。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-07081.gif" alt><br>看到这个图片的时候，真的一副生无可恋的样子，随着时间推移，渐渐的也就不怎么关注这个漏洞了。<br>直到今天，看到网上有人发一些关于这个漏洞的利用复现视频的时候，才意识到已经过去正好一个月的，此时POC也早就被公布了。<br>早在在5月31日的时候，n1xbyte就在Github上发布了利用该漏洞导致系统蓝屏的可用POC ,所以我们来复现看看吧。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/year/190615-013724.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <!-- 版权声明 -->
+<div>
+ 
+</div>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+    
+	<div>
+  		
+	</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.teamssix.com/year/190614-134948.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1267,7 +1500,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1371,7 +1604,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1515,7 +1752,7 @@
         <!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">����ȫվ��10.7k��</span>
+  <span class="post-count">����ȫվ��15.1k��</span>
 </div>-->
 <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
