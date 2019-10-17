@@ -32,8 +32,6 @@
     <link rel="icon" href="/img/avatar.png">
   
   
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
-  
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -47,7 +45,7 @@
   <script>
       var yiliaConfig = {
           fancybox: true,
-          animate: true,
+          animate: false,
           isHome: false,
           isPost: true,
           isArchive: false,
@@ -68,7 +66,7 @@
 
         <a href="/" class="profilepic">
             
-            <img lazy-src="/img/avatar.png" class="js-avatar">
+            <img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
             
         </a>
         <hgroup>
@@ -190,7 +188,7 @@
         <header id="header" class="inner">
             <a href="/" class="profilepic">
                 
-                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                    <img src="/img/avatar.png" class="js-avatar" style="width: 100%; height: 100%; opacity: 1;">
                 
             </a>
             <hgroup>
@@ -221,246 +219,7 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-hexo自适应BiliBili视频大小的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/year/190614-111512.html" class="article-date">
-      <time datetime="2019-06-14T03:15:12.000Z" itemprop="datePublished">2019-06-14</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      hexo自适应BiliBili视频大小的解决方案
-    </h1>
-  
-
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/经验总结/">经验总结</a>
-    </div>
-
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BiliBili/">BiliBili</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自适应视频大小/">自适应视频大小</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="0x00-未修改"><a href="#0x00-未修改" class="headerlink" title="0x00 未修改"></a>0x00 未修改</h1><a id="more"></a>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili1.png" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt; &lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
-
-<p>直接将B站中的视频插入地址放入文章MarkDown中的效果如下：</p>
-<iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>  
-
-<p>这个视频也太小了，而且不能全屏，很难受，于是在网上看到有人用自定义调节视频的高宽。</p>
-<h1 id="0x01-自定义高宽"><a href="#0x01-自定义高宽" class="headerlink" title="0x01 自定义高宽"></a>0x01 自定义高宽</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; width=&quot;780&quot; height=&quot;480&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt; &lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
-
-<p>就是在原来的基础上加入了宽高，效果类似这样：</p>
-<iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" width="780" height="480" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>  
-
-
-<p>自定义调节视频高宽虽然可以解决这个问题，但是手机上又是另一翻景象，你看：  </p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili2.png" alt></p>
-<p>这就更难受了，于是在网上找遍各种自适应视频大小的方案，最终找到以下这种方案。</p>
-<h1 id="0x02-自适应视频大小"><a href="#0x02-自适应视频大小" class="headerlink" title="0x02 自适应视频大小"></a>0x02 自适应视频大小</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;&gt;&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; style=&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;&gt; &lt;/iframe&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>只需要把你的视频地址和上面的视频地址替换一下就行，最后效果如下：</p>
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>  
-
-<p>手机上也能很好的自适应：   </p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili3.png" alt></p>
-<p>不过发现依然不能全屏播放，还是有些美中不足，所以只好也将视频播放链接放到视频下面了，如果不能全屏就只能去源链接去看了，如果你有更好的解决方法，欢迎下方留言。</p>
-<h1 id="0x03-致谢"><a href="#0x03-致谢" class="headerlink" title="0x03 致谢"></a>0x03 致谢</h1><p>本文中的自适应解决方案来自这篇文章：<a href="https://www.andyvj.com/2019/02/12/190213-01/" target="_blank" rel="noopener">文章地址</a>，里面还介绍了其他音视频平台插入的方法，在这里也谢谢这位老哥了。</p>
-
-<div id="gitalk-container"></div>
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"bb756d7275add451dc09","clientSecret":"425cdddcfb84023df2e6f38ab14af57476e7cfbf","repo":"Gitalk","owner":"teamssix","admin":["teamssix"],"distractionFreeMode":false};
-	    gitalkConfig.id = location.pathname;
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script>
-      
-    </div>
-    
-  </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
-        <p><span>发布时间:</span>2019年06月14日 - 11时15分</p>
-        <p><span>最后更新:</span>2019年10月16日 - 17时34分</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/year/190614-111512.html" title="hexo自适应BiliBili视频大小的解决方案">http://www.teamssix.com/year/190614-111512.html</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/190614-111512.html　　作者: Teams Six" title></span>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
-<nav id="article-nav">
-  
-    <a href="/year/190614-134948.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          对于连接ssh时连时断的解决方法
-        
-      </div>
-    </a>
-  
-  
-    <a href="/year/190613-191825.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【Python实例】批量下载斗罗大陆高清视频</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-未修改"><span class="toc-number">1.</span> <span class="toc-text">0x00 未修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-自定义高宽"><span class="toc-number">2.</span> <span class="toc-text">0x01 自定义高宽</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-自适应视频大小"><span class="toc-number">3.</span> <span class="toc-text">0x02 自适应视频大小</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-致谢"><span class="toc-number">4.</span> <span class="toc-text">0x03 致谢</span></a></li></ol>
-</div>
-<style>
-    .left-col .switch-btn {
-        display: none;
-    }
-    .left-col .switch-area {
-        display: none;
-    }
-</style>
-<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
-
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-<script>
-    var valueHide = "隐藏目录";
-    var valueShow = "显示目录";
-    if ($(".left-col").is(":hidden")) {
-        $("#tocButton").attr("value", valueShow);
-    }
-    $("#tocButton").click(function() {
-        if ($("#toc").is(":hidden")) {
-            $("#tocButton").attr("value", valueHide);
-            $("#toc").slideDown(320);
-            $(".switch-btn, .switch-area").fadeOut(300);
-        }
-        else {
-            $("#tocButton").attr("value", valueShow);
-            $("#toc").slideUp(350);
-            $(".switch-btn, .switch-area").fadeIn(500);
-        }
-    })
-    if ($(".toc").length < 1) {
-        $("#toc, #tocButton").hide();
-        $(".switch-btn, .switch-area").show();
-    }
-</script>
-
-
-
-
-
-
-
-
-  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-
-if(){
-  var gitalk = new Gitalk({
-    clientID: 'bb756d7275add451dc09',
-    clientSecret: '425cdddcfb84023df2e6f38ab14af57476e7cfbf',
-    repo: 'Gitalk',
-    owner: 'teamssix',
-    admin: ['teamssix'],
-    id: 'Fri Jun 14 2019 11:15:12 GMT+0800',
-    distractionFreeMode: 'true'
-})
-gitalk.render('gitalk-container') 
-}
-</script>
-  
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/year/190614-134948.html" title="上一篇: 对于连接ssh时连时断的解决方法">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-        
-            <a href="/year/190613-191825.html" title="下一篇: 【Python实例】批量下载斗罗大陆高清视频">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-    <script>
-        $(".post-list").addClass("toc-article");
-        // $(".post-list-item a").attr("target","_blank");
-        $("#post-nav-button > a:nth-child(2)").click(function() {
-            $(".fa-bars, .fa-times").toggle();
-            $(".post-list").toggle(300);
-            if ($(".toc").length > 0) {
-                $("#toc, #tocButton").toggle(200, function() {
-                    if ($(".switch-area").is(":visible")) {
-                        $("#toc, .switch-btn, .switch-area").toggle();
-                        $("#tocButton").attr("value", valueHide);
-                        }
-                    })
-            }
-            else {
-                $(".switch-btn, .switch-area").fadeToggle(300);
-            }
-        })
-    </script>
-
-
-
-
-    <script>
-        
-    </script>
-
-</div>
+      <div class="body-wrap"></div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">
@@ -555,31 +314,6 @@ ga('send', 'pageview');
 </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
-            });
-        });
-    });
 </script>
 
 

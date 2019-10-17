@@ -25,8 +25,6 @@
     <link rel="icon" href="/img/avatar.png">
   
   
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
-  
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -40,7 +38,7 @@
   <script>
       var yiliaConfig = {
           fancybox: true,
-          animate: true,
+          animate: false,
           isHome: false,
           isPost: false,
           isArchive: false,
@@ -61,7 +59,7 @@
 
         <a href="/" class="profilepic">
             
-            <img lazy-src="/img/avatar.png" class="js-avatar">
+            <img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
             
         </a>
         <hgroup>
@@ -183,7 +181,7 @@
         <header id="header" class="inner">
             <a href="/" class="profilepic">
                 
-                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                    <img src="/img/avatar.png" class="js-avatar" style="width: 100%; height: 100%; opacity: 1;">
                 
             </a>
             <hgroup>
@@ -487,31 +485,6 @@ ga('send', 'pageview');
     </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-  <script language="javascript">
-    $(function() {
-        $("a[title]").each(function() {
-            var a = $(this);
-            var title = a.attr('title');
-            if (title == undefined || title == "") return;
-            a.data('title', title).removeAttr('title').hover(
-            function() {
-                var offset = a.offset();
-                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
-                    top: offset.top - a.outerHeight() - 15,
-                    left: offset.left + a.outerWidth()/2 + 1
-                }).fadeIn(function() {
-                    var pop = $(this);
-                    setTimeout(function() {
-                        pop.remove();
-                    }, pop.text().length * 800);
-                });
-            }, function() {
-                $("#anchortitlecontainer").remove();
-            });
-        });
-    });
 </script>
 
 
