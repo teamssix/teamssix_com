@@ -268,6 +268,15 @@
 <p>图片来源地址：<a href="https://github.com/iSafeBlue/Mind-Map" target="_blank" rel="noopener">https://github.com/iSafeBlue/Mind-Map</a></p>
 </blockquote>
 
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"bb756d7275add451dc09","clientSecret":"425cdddcfb84023df2e6f38ab14af57476e7cfbf","repo":"Gitalk","owner":"teamssix","admin":["teamssix"],"distractionFreeMode":false};
+	    gitalkConfig.id = location.pathname;
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
       
     </div>
     

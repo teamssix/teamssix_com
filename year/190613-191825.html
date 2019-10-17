@@ -307,6 +307,15 @@
 
 <p>如果视频不能全屏播放，请点击<a href="https://www.bilibili.com/video/av55224540/" title="源链接" target="_blank" rel="noopener">源链接</a>观看。</p>
 
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+		<script>
+		var gitalkConfig = {"clientID":"bb756d7275add451dc09","clientSecret":"425cdddcfb84023df2e6f38ab14af57476e7cfbf","repo":"Gitalk","owner":"teamssix","admin":["teamssix"],"distractionFreeMode":false};
+	    gitalkConfig.id = location.pathname;
+		var gitalk = new Gitalk(gitalkConfig);
+	    gitalk.render("gitalk-container");
+	    </script>
       
     </div>
     
