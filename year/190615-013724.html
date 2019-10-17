@@ -433,7 +433,31 @@
 
     <script>
         
-    </script>
+        
+     <div id="gitalk-container"></div>
+     <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+ <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: 'bb756d7275add451dc09',
+        clientSecret: '425cdddcfb84023df2e6f38ab14af57476e7cfbf',
+        repo: 'Gitalk',
+        owner: 'teamssix',
+        admin: tesmssix,
+        id: ,
+        labels: gitalk,
+        perPage: 15,
+        pagerDirection: 'last',
+        createIssueManually: false,
+        distractionFreeMode: false
+      })
+
+      gitalk.render('gitalk-container')
+     </script>
+     
+    
 
 </div>
       <footer id="footer">
@@ -561,26 +585,7 @@ ga('send', 'pageview');
   </div>
   
 </div>
-    <!-- gitalk.swig -->
-<link href="https://cdn.bootcss.com/gitalk/1.4.0/gitalk.min.css" rel="stylesheet">
-<script src="https://cdn.bootcss.com/gitalk/1.4.0/gitalk.min.js"></script>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
-<script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: 'bb756d7275add451dc09',
-    clientSecret: '425cdddcfb84023df2e6f38ab14af57476e7cfbf',
-    repo: 'Gitalk',
-    owner: 'teamssix',
-    admin: ['tesmssix'],
-    id: md5(location.pathname),   // ISSUE：location.href 限制50个字符 (应该是Issue 内容存数据库的标识， 具体在页面上无感)
-    labels: 'gitalk'.split(',').filter(l => l),  // 需要的 labels需要一个数组，否则会报错
-    perPage: 15,
-    pagerDirection: 'last',
-    createIssueManually: false,
-    distractionFreeMode: false
-  })
-  gitalk.render('gitalk-container')
-</script>
+    
 </div>
 
 </body>
