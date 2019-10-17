@@ -215,7 +215,217 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"></div>
+      <div class="body-wrap"><article id="post-对于连接ssh时连时断的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/year/190614-134948.html" class="article-date">
+      <time datetime="2019-06-14T05:49:48.000Z" itemprop="datePublished">2019-06-14</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      对于连接ssh时连时断的解决方法
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/经验总结/">经验总结</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。</p>
+<a id="more"></a>
+<h1 id="0x01-修改配置文件"><a href="#0x01-修改配置文件" class="headerlink" title="0x01 修改配置文件"></a>0x01 修改配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>在配置文件中加入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UseDNS no</span><br></pre></td></tr></table></figure>
+
+<p>之后重启ssh即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#Ubuntu:</span><br><span class="line">service sshd restart 或者 /etc/init.d/sshd restart</span><br><span class="line">#Centos7:</span><br><span class="line">systemctl restart sshd.service</span><br><span class="line">#Centos7以下版本：</span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x02-原因"><a href="#0x02-原因" class="headerlink" title="0x02 原因"></a>0x02 原因</h1><p>以下解释来自本文方法参考文章：<a href="https://m.ancii.com/ayew4gv3/" target="_blank" rel="noopener">文章地址</a></p>
+<blockquote>
+<p>ssh登录服务器时总是要停顿等待一下才能连接上,这是因为OpenSSH服务器有一个DNS查找选项UseDNS默认是打开的。<br>UseDNS选项打开状态下,当客户端试图登录OpenSSH服务器时,服务器端先根据客户端的IP地址进行DNS PTR反向查询,查询出客户端的host name，然后根据查询出的客户端host name进行DNS 正向A记录查询，验证与其原始IP地址是否一致，这是防止客户端欺骗的一种手段,但一般我们的IP是动态的，不会有PTR记录的，打开这个选项不过是在白白浪费时间而已。</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
+        <p><span>发布时间:</span>2019年06月14日 - 13时49分</p>
+        <p><span>最后更新:</span>2019年06月14日 - 13时51分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/year/190614-134948.html" title="对于连接ssh时连时断的解决方法">http://www.teamssix.com/year/190614-134948.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/190614-134948.html　　作者: Teams Six" title></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/year/190615-013724.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/year/190614-111512.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo自适应BiliBili视频大小的解决方案</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-修改配置文件"><span class="toc-number">2.</span> <span class="toc-text">0x01 修改配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-原因"><span class="toc-number">3.</span> <span class="toc-text">0x02 原因</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'TeamsSix'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/year/190615-013724.html" title="上一篇: 【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/year/190614-111512.html" title="下一篇: hexo自适应BiliBili视频大小的解决方案">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+</script></div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">
