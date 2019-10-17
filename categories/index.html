@@ -68,56 +68,6 @@
         </hgroup>
         
         
-            <form>
-                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
-            </form>
-            <div id="local-search-result"></div>
-        
-        
-            <script type="text/javascript">
-                (function() {
-                    'use strict';
-                    function getMatchData(keyword, data) {
-                        var matchData = [];
-                        for(var i =0;i<data.length;i++){
-                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
-                                matchData.push(data[i])
-                        }
-                        return matchData;
-                    }
-                    var $input = $('#local-search-input');
-                    var $resultContent = $('#local-search-result');
-                    $input.keyup(function(){
-                        $.ajax({
-                            url: '/search.json',
-                            dataType: "json",
-                            success: function( json ) {
-                                var str='<ul class=\"search-result-list\">';                
-                                var keyword = $input.val().trim().toLowerCase();
-                                $resultContent.innerHTML = "";
-                                if ($input.val().trim().length <= 0) {
-                                    $resultContent.empty();
-                                    $('#switch-area').show();
-                                    return;
-                                }
-                                var results = getMatchData(keyword, json);
-                                if(results.length === 0){
-                                    $resultContent.empty();
-                                    $('#switch-area').show();
-                                    return;
-                                } 
-                                for(var i =0; i<results.length; i++){
-                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
-                                }
-                                str += "</ul>";
-                                $resultContent.empty();
-                                $resultContent.append(str);
-                                $('#switch-area').hide();
-                            }
-                        });
-                    });
-                })();
-            </script>
         
         
             <div id="switch-btn" class="switch-btn">
@@ -165,8 +115,6 @@
                     <nav class="header-menu">
                         <ul>
                         
-                            <li><a href="/">主页</a></li>
-                        
                             <li><a href="/archives/">所有文章</a></li>
                         
                         </ul>
@@ -178,7 +126,7 @@
                             
                                 <a class="fl twitter" target="_blank" href="https://twitter.com/TeamsSix" title="twitter">twitter</a>
                             
-                                <a class="fl BiliBili" target="_blank" href="https://space.bilibili.com/148389186" title="BiliBili">BiliBili</a>
+                                <a class="fl zhihu" target="_blank" href="https://www.zhihu.com/people/teamssix" title="zhihu">zhihu</a>
                             
                                 <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
                             
@@ -196,11 +144,15 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://space.bilibili.com/148389186">BiliBili</a>
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://me.csdn.net/qq_37683287">CSDN</a>
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://www.jianshu.com/u/23b447f36f98">简书</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://www.youtube.com/channel/UCKeJhJYi_tmXWETzVxKbSvA">YouTube</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://instagram.com/TeamsSix">Instagram</a>
                     
                     </div>
                 </section>
@@ -209,7 +161,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                    <div id="js-aboutme">众人以为美的事就应当去行</div>
                 </section>
                 
             </div>
@@ -238,8 +190,6 @@
             <nav class="header-menu">
                 <ul>
                 
-                    <li><a href="/">主页</a></li>
-                
                     <li><a href="/archives/">所有文章</a></li>
                 
                 <div class="clearfix"></div>
@@ -252,7 +202,7 @@
                     
                         <a class="twitter" target="_blank" href="https://twitter.com/TeamsSix" title="twitter">twitter</a>
                     
-                        <a class="BiliBili" target="_blank" href="https://space.bilibili.com/148389186" title="BiliBili">BiliBili</a>
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/teamssix" title="zhihu">zhihu</a>
                     
                         <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
                     
@@ -402,7 +352,7 @@
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style="display:none">
-                        <span id="site-visit">极客到访数: 
+                        <span id="site-visit">TeamsSix到访数: 
                             <span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
@@ -420,6 +370,9 @@
             </div>
         
     </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
 </footer>
 
     </div>
@@ -431,7 +384,7 @@
     <script>
         $(document).ready(function() {
             var backgroundnum = 1;
-            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            var backgroundimg = "url(/background/bg-" + backgroundnum +".jpg)";
             $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
             $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
         })
@@ -508,5 +461,5 @@ ga('send', 'pageview');
 
 
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/haruto.model.json"},"display":{"position":"left","width":200,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</body>
 </html>

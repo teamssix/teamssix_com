@@ -324,9 +324,9 @@
       <category term="经验总结" scheme="http://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="ssh" scheme="http://www.teamssix.com/tags/ssh/"/>
-    
       <category term="解决方案" scheme="http://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+      <category term="ssh" scheme="http://www.teamssix.com/tags/ssh/"/>
     
   </entry>
   
@@ -348,11 +348,11 @@
       <category term="经验总结" scheme="http://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="解决方案" scheme="http://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
       <category term="BiliBili" scheme="http://www.teamssix.com/tags/BiliBili/"/>
     
       <category term="自适应视频大小" scheme="http://www.teamssix.com/tags/%E8%87%AA%E9%80%82%E5%BA%94%E8%A7%86%E9%A2%91%E5%A4%A7%E5%B0%8F/"/>
+    
+      <category term="解决方案" scheme="http://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
     
   </entry>
   
