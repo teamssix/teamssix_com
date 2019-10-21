@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.teamssix.com/"/>
-  <updated>2019-10-21T13:17:53.548Z</updated>
+  <updated>2019-10-21T14:04:23.898Z</updated>
   <id>http://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【续】CFS三层靶机中的Flag位置及其获取</title>
+    <link href="http://www.teamssix.com/year/191021-213828.html"/>
+    <id>http://www.teamssix.com/year/191021-213828.html</id>
+    <published>2019-10-21T13:38:28.000Z</published>
+    <updated>2019-10-21T14:04:23.898Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。</p><a id="more"></a><h1 id="0x01-Target1"><a href="#0x01-Target1" class="headerlink" title="0x01 Target1"></a>0x01 Target1</h1><p>1、系统根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag1.png" alt></p><p>2、网站根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag2.png" alt></p><p>3、网站robots.txt文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag3.png" alt></p><h1 id="0x02-Target2"><a href="#0x02-Target2" class="headerlink" title="0x02 Target2"></a>0x02 Target2</h1><p>1、系统根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag4.png" alt></p><p>2、日志文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag5.png" alt></p><p>3、passwd文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag6.png" alt></p><p>4、crontab文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag7.png" alt></p><p>5、网站根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag8.png" alt></p><p>6、管理后台中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag9.png" alt></p><h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><p>1、通过meterpreter上传Everything工具并安装</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; upload ./Everything_64.exe C:</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag10.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag11.png" alt></p><p>2、利用Everything，直接搜索flag文件</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag12.png" alt></p><p>3、找到两处flag，继续找寻发现计划任务中存在第三处flag</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png" alt></p><p>4、最后一处在事件日志的注册表中被找到</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Eventlog</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag14.png" alt></p><blockquote><p>《CFS三层靶机搭建及其内网渗透》文章地址：<br>1、首发地址：<a href="https://www.anquanke.com/post/id/187908" target="_blank" rel="noopener">https://www.anquanke.com/post/id/187908</a><br>2、博客地址：<a href="https://www.teamssix.com/year/191021-211425.html">https://www.teamssix.com/year/191021-211425.html</a><br>更多信息欢迎关注我的公众号：TeamsSix</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="实例演示" scheme="http://www.teamssix.com/categories/%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/"/>
+    
+    
+      <category term="内网渗透" scheme="http://www.teamssix.com/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
+    
+      <category term="CFS" scheme="http://www.teamssix.com/tags/CFS/"/>
+    
+      <category term="比赛" scheme="http://www.teamssix.com/tags/%E6%AF%94%E8%B5%9B/"/>
+    
+  </entry>
   
   <entry>
     <title>CFS三层靶机搭建及其内网渗透【附靶场环境】</title>

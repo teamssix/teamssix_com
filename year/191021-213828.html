@@ -7,16 +7,35 @@
   
   
   
-  <title>tags | Teams Six</title>
+  <title>【续】CFS三层靶机中的Flag位置及其获取 | Teams Six</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://www.teamssix.com/tags/index.html">
+  <meta name="description" content="0x00 前言最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。">
+<meta name="keywords" content="内网渗透,CFS,比赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【续】CFS三层靶机中的Flag位置及其获取">
+<meta property="og:url" content="http://www.teamssix.com/year/191021-213828.html">
 <meta property="og:site_name" content="Teams Six">
+<meta property="og:description" content="0x00 前言最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-12T08:24:56.082Z">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag1.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag2.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag3.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag4.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag5.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag6.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag7.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag8.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag9.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag10.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag11.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag12.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png">
+<meta property="og:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag14.png">
+<meta property="og:updated_time" content="2019-10-21T14:04:23.898Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="【续】CFS三层靶机中的Flag位置及其获取">
+<meta name="twitter:description" content="0x00 前言最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。">
+<meta name="twitter:image" content="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag1.png">
   
     <link rel="alternative" href="/atom.xml" title="Teams Six" type="application/atom+xml">
   
@@ -39,7 +58,7 @@
           fancybox: true,
           animate: false,
           isHome: false,
-          isPost: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -211,11 +230,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-【续】CFS三层靶机中的Flag位置及其获取" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2019-06-12T05:00:40.000Z" itemprop="datePublished">2019-06-12</time>
+      <a href="/year/191021-213828.html" class="article-date">
+      <time datetime="2019-10-21T13:38:28.000Z" itemprop="datePublished">2019-10-21</time>
 </a>
 
     </div>
@@ -229,7 +248,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      【续】CFS三层靶机中的Flag位置及其获取
     </h1>
   
 
@@ -238,8 +257,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/实例演示/">实例演示</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CFS/">CFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网渗透/">内网渗透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/比赛/">比赛</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -247,123 +274,119 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta {
-        display: none;
-    }
-    #container .article .article-title {
-        padding-right: 0;
-    }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover {
-        border-left: none;
-    }
-    .article-title {
-        font-size: 1.6em
-    }
-    .article-meta {
-        display: none;
-    }
-    .article-entry hr {
-        margin: 0;
-    }
-    #container .article-info-post.article-info {
-      display: none;
-      }
-    #container .article .article-title {
-    padding: 0;
-    }
-</style>
+        <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。</p>
+<a id="more"></a>
+<h1 id="0x01-Target1"><a href="#0x01-Target1" class="headerlink" title="0x01 Target1"></a>0x01 Target1</h1><p>1、系统根目录下</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag1.png" alt></p>
+<p>2、网站根目录下</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag2.png" alt></p>
+<p>3、网站robots.txt文件中</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag3.png" alt></p>
+<h1 id="0x02-Target2"><a href="#0x02-Target2" class="headerlink" title="0x02 Target2"></a>0x02 Target2</h1><p>1、系统根目录下</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag4.png" alt></p>
+<p>2、日志文件中</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag5.png" alt></p>
+<p>3、passwd文件中</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag6.png" alt></p>
+<p>4、crontab文件中</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag7.png" alt></p>
+<p>5、网站根目录下</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag8.png" alt></p>
+<p>6、管理后台中</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag9.png" alt></p>
+<h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><p>1、通过meterpreter上传Everything工具并安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; upload ./Everything_64.exe C:</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag10.png" alt></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag11.png" alt></p>
+<p>2、利用Everything，直接搜索flag文件</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag12.png" alt></p>
+<p>3、找到两处flag，继续找寻发现计划任务中存在第三处flag</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png" alt></p>
+<p>4、最后一处在事件日志的注册表中被找到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Eventlog</span><br></pre></td></tr></table></figure>
 
-    <!-- Tag Cloud Page -->
-    <hr>
-    <br>
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/实例演示/">实例演示</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/渗透实例/">渗透实例</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/漏洞复现/">漏洞复现</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验总结/">经验总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/资源分享/">资源分享</a><span class="category-list-count">2</span></li></ul>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag14.png" alt></p>
+<blockquote>
+<p>《CFS三层靶机搭建及其内网渗透》文章地址：<br>1、首发地址：<a href="https://www.anquanke.com/post/id/187908" target="_blank" rel="noopener">https://www.anquanke.com/post/id/187908</a><br>2、博客地址：<a href="https://www.teamssix.com/year/191021-211425.html">https://www.teamssix.com/year/191021-211425.html</a><br>更多信息欢迎关注我的公众号：TeamsSix</p>
+</blockquote>
 
-    <p class="count"></p>
-    <div class="tags">
-        <a href="/tags/BiliBili/" style="font-size: 16px; color: #808080">BiliBili</a> <a href="/tags/CFS/" style="font-size: 22.33px; color: #aaa">CFS</a> <a href="/tags/CTF/" style="font-size: 16px; color: #808080">CTF</a> <a href="/tags/CTFd/" style="font-size: 16px; color: #808080">CTFd</a> <a href="/tags/CVE-2019-0708/" style="font-size: 16px; color: #808080">CVE 2019-0708</a> <a href="/tags/CloudFlare/" style="font-size: 16px; color: #808080">CloudFlare</a> <a href="/tags/Docker/" style="font-size: 16px; color: #808080">Docker</a> <a href="/tags/GitHub/" style="font-size: 16px; color: #808080">GitHub</a> <a href="/tags/Hexo/" style="font-size: 22.33px; color: #aaa">Hexo</a> <a href="/tags/Https/" style="font-size: 16px; color: #808080">Https</a> <a href="/tags/Namesilo/" style="font-size: 16px; color: #808080">Namesilo</a> <a href="/tags/Python/" style="font-size: 35px; color: #fff">Python</a> <a href="/tags/VPS/" style="font-size: 16px; color: #808080">VPS</a> <a href="/tags/Writeup/" style="font-size: 16px; color: #808080">Writeup</a> <a href="/tags/XSS/" style="font-size: 16px; color: #808080">XSS</a> <a href="/tags/ssh/" style="font-size: 16px; color: #808080">ssh</a> <a href="/tags/内网渗透/" style="font-size: 22.33px; color: #aaa">内网渗透</a> <a href="/tags/小白/" style="font-size: 16px; color: #808080">小白</a> <a href="/tags/思维导图/" style="font-size: 16px; color: #808080">思维导图</a> <a href="/tags/总结/" style="font-size: 16px; color: #808080">总结</a> <a href="/tags/批量工具/" style="font-size: 16px; color: #808080">批量工具</a> <a href="/tags/指纹识别/" style="font-size: 16px; color: #808080">指纹识别</a> <a href="/tags/斗罗大陆/" style="font-size: 16px; color: #808080">斗罗大陆</a> <a href="/tags/比赛/" style="font-size: 28.67px; color: #d5d5d5">比赛</a> <a href="/tags/渗透实例/" style="font-size: 16px; color: #808080">渗透实例</a> <a href="/tags/渗透测试/" style="font-size: 16px; color: #808080">渗透测试</a> <a href="/tags/漏洞复现/" style="font-size: 16px; color: #808080">漏洞复现</a> <a href="/tags/漏洞挖掘/" style="font-size: 16px; color: #808080">漏洞挖掘</a> <a href="/tags/爬虫/" style="font-size: 22.33px; color: #aaa">爬虫</a> <a href="/tags/环境搭建/" style="font-size: 16px; color: #808080">环境搭建</a> <a href="/tags/电影/" style="font-size: 22.33px; color: #aaa">电影</a> <a href="/tags/经验总结/" style="font-size: 22.33px; color: #aaa">经验总结</a> <a href="/tags/自适应视频大小/" style="font-size: 16px; color: #808080">自适应视频大小</a> <a href="/tags/解决方案/" style="font-size: 22.33px; color: #aaa">解决方案</a> <a href="/tags/面试/" style="font-size: 16px; color: #808080">面试</a>
-    </div>
-    <style>
-        .category-list li{
-            display: inline-block;
-            margin: 0 1em .5em 0;
-            padding: 4px;
-            border: 1px solid lightgray;
-            font-size: 1.2em;
-        }
-        .category-list a {
-            color: gray;
-        }
-        .category-list-item:hover a {
-            color: gray;
-            text-decoration: none;
-        }
-        .category-list-count {
-            margin-left: 2px;
-            font-size: .9em;
-        }
-        .article-entry ul li:before{
-            display: none;
-        }
-        .article-inner  {
-            text-align: center;
-        }
-        .tags {
-            max-width: 40em;
-            margin: 2em auto;
-            margin-top: 0em;
-        }
-        .tags a {
-            margin-right: 1em;
-            line-height: 65px;
-            border-bottom: 1px solid gray;
-            white-space: nowrap;
-        }
-        .tags a:hover {
-            border-bottom: 2px solid black;
-            text-decoration: none;
-            font-style: italic;
-        }
-        #count > span {
-            margin: auto .2em;
-            font-weight: bold;
-        }
-    </style>
-
-    <!-- Count tags and categories -->
-
-    
-<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-
-    <p id="count">
-            已有<span><script>document.write($(".category-list-item").length)</script></span>个分类，
-            共计<span><script>document.write($(".tags > a").length)</script></span>个标签。
-    </p>
-    <script>
-        $('#count').appendTo('.count');
-    </script>
-
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/year/191021-213828.html">【续】CFS三层靶机中的Flag位置及其获取</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Teams Six 的个人博客">Teams Six</a></p>
+        <p><span>发布时间:</span>2019年10月21日 - 21时38分</p>
+        <p><span>最后更新:</span>2019年10月21日 - 22时04分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/year/191021-213828.html" title="【续】CFS三层靶机中的Flag位置及其获取">http://www.teamssix.com/year/191021-213828.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.teamssix.com/year/191021-213828.html　　作者: Teams Six" title></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/year/191021-211425.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CFS三层靶机搭建及其内网渗透【附靶场环境】</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Target1"><span class="toc-number">2.</span> <span class="toc-text">0x01 Target1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-Target2"><span class="toc-number">3.</span> <span class="toc-text">0x02 Target2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Target3"><span class="toc-number">4.</span> <span class="toc-text">0x03 Target3</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
 
 
 
@@ -387,6 +410,41 @@
     
 
 
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/year/191021-211425.html" title="下一篇: CFS三层靶机搭建及其内网渗透【附靶场环境】">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/year/191021-213828.html">【续】CFS三层靶机中的Flag位置及其获取</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191021-211425.html">CFS三层靶机搭建及其内网渗透【附靶场环境】</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191014-090745.html">经过一场面试，我发现我还存在这些不足</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191009-164624.html">【经验总结】VPS欠费后Hexo博客521无法访问</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190925-114420.html">【CTF】记录一次CTF比赛的Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190720-121144.html">【经验总结】记录一次Docker下安装CTFd的错误</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190717-124041.html">分享一张超详细的渗透测试导图</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190715-102622.html">【工具】批量网站CMS指纹识别</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190709-202131.html">【经验总结】小白挖洞十天经验分享</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190703-221956.html">【渗透实例】记录一次XSS渗透过程</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190619-202702.html">【Python实例】让Python告诉你B站观影指南</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190618-225704.html">【Python实例】让Python告诉你当前最火的电影是什么</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190615-013724.html">【漏洞复现 CVE 2019-0708】17年的勒索病毒又双叕卷土重来了？</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-134948.html">对于连接ssh时连时断的解决方法</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190614-111512.html">hexo自适应BiliBili视频大小的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/year/190613-191825.html">【Python实例】批量下载斗罗大陆高清视频</a></li><li class="post-list-item"><a class="post-list-link" href="/year/191612-123700.html">为自定义域名的Hexo博客升级到Https网站</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
 
 
 
