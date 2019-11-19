@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2019-11-05T04:24:19.696Z</updated>
+  <updated>2019-11-19T06:58:22.609Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【漏洞笔记】X-Frame-Options Header未配置</title>
+    <link href="https://www.teamssix.com/year/191119-144643.html"/>
+    <id>https://www.teamssix.com/year/191119-144643.html</id>
+    <published>2019-11-19T06:46:43.000Z</published>
+    <updated>2019-11-19T06:58:22.609Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：X-Frame-Options Header未配置</p><p>风险等级：低危</p><p>问题类型：管理员设置问题</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在&lt;忽略frame&gt;,&lt;忽略iframe&gt;,&lt;忽略embed&gt;或者&lt;忽略object&gt;中展现的标记。</p><p>网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，从而避免点击劫持（clickjacking）攻击。</p><p>X-Frame-Options有三个值：</p><a id="more"></a><h3 id="deny"><a href="#deny" class="headerlink" title="deny"></a>deny</h3><p>表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</p><h3 id="sameorigin"><a href="#sameorigin" class="headerlink" title="sameorigin"></a>sameorigin</h3><p>表示该页面可以在相同域名页面的 frame 中展示。</p><h3 id="allow-from-uri"><a href="#allow-from-uri" class="headerlink" title="allow-from uri"></a>allow-from uri</h3><p>表示该页面可以在指定来源的 frame 中展示。</p><p>换一句话说，如果设置为DENY，不光在别人的网站frame嵌入时会无法加载，在同域名页面中同样会无法加载。</p><p>另一方面，如果设置为SAMEORIGIN，那么页面就可以在同域名页面的frame中嵌套。正常情况下我们通常使用SAMEORIGIN参数。</p><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者可以使用一个透明的、不可见的iframe，覆盖在目标网页上，然后诱使用户在该网页上进行操作，此时用户将在不知情的情况下点击透明的iframe页面。通过调整iframe页面的位置，可以诱使用户恰好点击iframe页面的一些功能性按钮上，导致被劫持。</p><p>也就是说网站内容可能被其他站点引用，可能遭受到点击劫持攻击。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><h3 id="配置-Apache"><a href="#配置-Apache" class="headerlink" title="配置 Apache"></a>配置 Apache</h3><p>配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 ‘site’ 的配置中:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header always set X-Frame-Options &quot;sameorigin&quot;</span><br></pre></td></tr></table></figure><p>要将 Apache 的配置 X-Frame-Options 设置成 deny , 按如下配置去设置你的站点：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header set X-Frame-Options &quot;deny&quot;</span><br></pre></td></tr></table></figure><p>要将 Apache 的配置 X-Frame-Options 设置成 allow-from，在配置里添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header set X-Frame-Options &quot;allow-from https://example.com/&quot;</span><br></pre></td></tr></table></figure><h3 id="配置-nginx配置"><a href="#配置-nginx配置" class="headerlink" title="配置 nginx配置"></a>配置 nginx配置</h3><p>nginx 发送 X-Frame-Options 响应头，把下面这行添加到 ‘http’, ‘server’ 或者 ‘location’ 的配置中:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add_header X-Frame-Options sameorigin always;</span><br></pre></td></tr></table></figure><h3 id="配置-IIS配置"><a href="#配置-IIS配置" class="headerlink" title="配置 IIS配置"></a>配置 IIS配置</h3><p>IIS 发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;system.webServer&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;httpProtocol&gt;</span><br><span class="line">    &lt;customHeaders&gt;</span><br><span class="line">      &lt;add name=&quot;X-Frame-Options&quot; value=&quot;sameorigin&quot; /&gt;</span><br><span class="line">    &lt;/customHeaders&gt;</span><br><span class="line">  &lt;/httpProtocol&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/system.webServer&gt;</span><br></pre></td></tr></table></figure><h3 id="配置-HAProxy"><a href="#配置-HAProxy" class="headerlink" title="配置 HAProxy"></a>配置 HAProxy</h3><p>配置 HAProxy 发送 X-Frame-Options 头，添加这些到你的前端、监听 listen，或者后端的配置里面：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rspadd X-Frame-Options:\ sameorigin</span><br></pre></td></tr></table></figure><p>或者，在更加新的版本中：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http-response set-header X-Frame-Options sameorigin</span><br></pre></td></tr></table></figure><h3 id="配置-Express"><a href="#配置-Express" class="headerlink" title="配置 Express"></a>配置 Express</h3><p>要配置 Express 可以发送 X-Frame-Options header，你可以用借助了 frameguard 来设置头部的 helmet。在你的服务器配置里面添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const helmet = require(&apos;helmet&apos;);</span><br><span class="line">const app = express();</span><br><span class="line">app.use(helmet.frameguard(&#123; action: &quot;sameorigin&quot; &#125;));</span><br></pre></td></tr></table></figure><p>或者，你也可以直接用 frameguard：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const frameguard = require(&apos;frameguard&apos;)</span><br><span class="line">app.use(frameguard(&#123; action: &apos;sameorigin&apos; &#125;))</span><br></pre></td></tr></table></figure><blockquote><p>参考文章：<br><a href="https://blog.whsir.com/post-3919.html" target="_blank" rel="noopener">https://blog.whsir.com/post-3919.html</a><br><a href="https://blog.csdn.net/qq_25934401/article/details/81384876" target="_blank" rel="noopener">https://blog.csdn.net/qq_25934401/article/details/81384876</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/X-Frame-Options" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/X-Frame-Options</a></p></blockquote><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：X-Frame-Options Header未配置&lt;/p&gt;
+&lt;p&gt;风险等级：低危&lt;/p&gt;
+&lt;p&gt;问题类型：管理员设置问题&lt;/p&gt;
+&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在&amp;lt;忽略frame&amp;gt;,&amp;lt;忽略iframe&amp;gt;,&amp;lt;忽略embed&amp;gt;或者&amp;lt;忽略object&amp;gt;中展现的标记。&lt;/p&gt;
+&lt;p&gt;网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，从而避免点击劫持（clickjacking）攻击。&lt;/p&gt;
+&lt;p&gt;X-Frame-Options有三个值：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="X-Frame-Options" scheme="https://www.teamssix.com/tags/X-Frame-Options/"/>
+    
+  </entry>
   
   <entry>
     <title>【Python Threading 学习笔记】6、锁lock</title>
@@ -534,30 +563,6 @@
       <category term="漏洞复现" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
       <category term="CVE 2019-0708" scheme="https://www.teamssix.com/tags/CVE-2019-0708/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对于连接ssh时连时断的解决方法</title>
-    <link href="https://www.teamssix.com/year/190614-134948.html"/>
-    <id>https://www.teamssix.com/year/190614-134948.html</id>
-    <published>2019-06-14T05:49:48.000Z</published>
-    <updated>2019-11-02T12:23:28.839Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。</p><a id="more"></a><h1 id="0x01-修改配置文件"><a href="#0x01-修改配置文件" class="headerlink" title="0x01 修改配置文件"></a>0x01 修改配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure><p>在配置文件中加入以下内容：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UseDNS no</span><br></pre></td></tr></table></figure><p>之后重启ssh即可</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#Ubuntu:</span><br><span class="line">service sshd restart 或者 /etc/init.d/sshd restart</span><br><span class="line">#Centos7:</span><br><span class="line">systemctl restart sshd.service</span><br><span class="line">#Centos7以下版本：</span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure><h1 id="0x02-原因"><a href="#0x02-原因" class="headerlink" title="0x02 原因"></a>0x02 原因</h1><p>以下解释来自本文方法参考文章：<a href="https://m.ancii.com/ayew4gv3/" target="_blank" rel="noopener">文章地址</a></p><blockquote><p>ssh登录服务器时总是要停顿等待一下才能连接上,这是因为OpenSSH服务器有一个DNS查找选项UseDNS默认是打开的。<br>UseDNS选项打开状态下,当客户端试图登录OpenSSH服务器时,服务器端先根据客户端的IP地址进行DNS PTR反向查询,查询出客户端的host name，然后根据查询出的客户端host name进行DNS 正向A记录查询，验证与其原始IP地址是否一致，这是防止客户端欺骗的一种手段,但一般我们的IP是动态的，不会有PTR记录的，打开这个选项不过是在白白浪费时间而已。</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="解决方案" scheme="https://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
-      <category term="ssh" scheme="https://www.teamssix.com/tags/ssh/"/>
     
   </entry>
   
