@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2019-11-23T09:55:31.182Z</updated>
+  <updated>2019-11-25T11:56:10.217Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【漏洞笔记】测试目录</title>
+    <link href="https://www.teamssix.com/year/191125-195302.html"/>
+    <id>https://www.teamssix.com/year/191125-195302.html</id>
+    <published>2019-11-25T11:53:02.000Z</published>
+    <updated>2019-11-25T11:56:10.217Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：测试目录</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者读取测试目录信息，以便进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>删除或者限制访问测试目录。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：测试目录&lt;/p&gt;
+&lt;p&gt;风险等级：低&lt;/p&gt;
+&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
+&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    
+      <category term="测试目录" scheme="https://www.teamssix.com/tags/%E6%B5%8B%E8%AF%95%E7%9B%AE%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【漏洞笔记】测试文件</title>
+    <link href="https://www.teamssix.com/year/191125-195256.html"/>
+    <id>https://www.teamssix.com/year/191125-195256.html</id>
+    <published>2019-11-25T11:52:56.000Z</published>
+    <updated>2019-11-25T11:56:14.808Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：测试文件</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者读取测试文件信息，可能进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>删除或者限制访问测试文件。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：测试文件&lt;/p&gt;
+&lt;p&gt;风险等级：低&lt;/p&gt;
+&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
+&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
+    
+      <category term="测试文件" scheme="https://www.teamssix.com/tags/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>【漏洞笔记】敏感文件</title>
@@ -520,64 +578,6 @@
       <category term="思维导图" scheme="https://www.teamssix.com/tags/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"/>
     
       <category term="渗透测试" scheme="https://www.teamssix.com/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具】批量网站CMS指纹识别</title>
-    <link href="https://www.teamssix.com/year/190715-102622.html"/>
-    <id>https://www.teamssix.com/year/190715-102622.html</id>
-    <published>2019-07-15T02:26:22.000Z</published>
-    <updated>2019-11-02T12:23:01.543Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x01-概述"><a href="#0x01-概述" class="headerlink" title="0x01 概述"></a>0x01 概述</h1><ul><li>使用Python3开发</li><li>结果导出为Output_Result.csv文件</li><li>使用在线平台（<a href="http://whatweb.bugscaner.com" target="_blank" rel="noopener">http://whatweb.bugscaner.com</a>）进行指纹识别</li><li>项目下载地址：<a href="https://github.com/teamssix/Batch-identification-of-website-CMS-fingerprints" target="_blank" rel="noopener">Batch-identification-of-website-CMS-fingerprints</a></li></ul><h1 id="0x02-使用方法"><a href="#0x02-使用方法" class="headerlink" title="0x02 使用方法"></a>0x02 使用方法</h1><a id="more"></a><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 Batch_CMS_identification.py url.txt</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification1.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification2.png" alt><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Batch_CMS_identification3.png" alt></p><h1 id="0x03-注意事项"><a href="#0x03-注意事项" class="headerlink" title="0x03 注意事项"></a>0x03 注意事项</h1><ul><li>url.txt文件中地址格式需要http开头，如<a href="http://www.teamssix.com/">http://www.teamssix.com</a></li><li>如果执行过程中出现警告，一般是碰到有些网站使用的https的情况，可以不用理会，对结果没有影响。</li><li>如果想重新运行程序，请确认导出的CSV文件没有被打开，否则将因为不能导出文件而报错</li><li>程序中途想要退出，可以直接Ctrl+C退出，等待一段时间后便会退出，结果会依然保存</li><li>如果程序经常提示连接异常，可能因为对方拒绝连接或者本地网速较慢，如果本地网速延时较高，可将程序中的两处timeout调高一些，为保证速度，默认timeout为1秒。</li><li>该平台每天有1500的使用限制。</li></ul><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x01-概述&quot;&gt;&lt;a href=&quot;#0x01-概述&quot; class=&quot;headerlink&quot; title=&quot;0x01 概述&quot;&gt;&lt;/a&gt;0x01 概述&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;使用Python3开发&lt;/li&gt;
-&lt;li&gt;结果导出为Output_Result.csv文件&lt;/li&gt;
-&lt;li&gt;使用在线平台（&lt;a href=&quot;http://whatweb.bugscaner.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://whatweb.bugscaner.com&lt;/a&gt;）进行指纹识别&lt;/li&gt;
-&lt;li&gt;项目下载地址：&lt;a href=&quot;https://github.com/teamssix/Batch-identification-of-website-CMS-fingerprints&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Batch-identification-of-website-CMS-fingerprints&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;0x02-使用方法&quot;&gt;&lt;a href=&quot;#0x02-使用方法&quot; class=&quot;headerlink&quot; title=&quot;0x02 使用方法&quot;&gt;&lt;/a&gt;0x02 使用方法&lt;/h1&gt;
-    
-    </summary>
-    
-      <category term="资源分享" scheme="https://www.teamssix.com/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="批量工具" scheme="https://www.teamssix.com/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/"/>
-    
-      <category term="指纹识别" scheme="https://www.teamssix.com/tags/%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】小白挖洞十天经验分享</title>
-    <link href="https://www.teamssix.com/year/190709-202131.html"/>
-    <id>https://www.teamssix.com/year/190709-202131.html</id>
-    <published>2019-07-09T12:21:31.000Z</published>
-    <updated>2019-11-02T12:22:32.004Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h1><p>十天是指六月三十号到七月九号这十天的时间，这段时间正值暑假刚开始，虽然知道现在需要备战考研，但是看了几天书后却怎么也看不进去，这时刚好有个作业就是挖洞，于是再一次把考研的书扔到了一边。<br>事先声明一下，因为是小白挖洞分享，所以难免会存在错误的地方，希望多多指正与包涵。<br>其实自己早在一年前就有挖洞的想法，在那个时候虽然知道很多工具的使用方法，但是对于如何挖洞依旧一头雾水，慢慢的一年的时间就在自我否定与怀疑自己中过去了，因此今天分享的第一点就是要相信自己。</p><a id="more"></a><h1 id="0x02-相信自己"><a href="#0x02-相信自己" class="headerlink" title="0x02 相信自己"></a>0x02 相信自己</h1><p>这四个字，估计每个人都听过，但是如果没有这四个字，我估计我现在还在犹豫、怀疑自己、不敢去挖洞的环境中。毕竟一件事情如果还没有去做就开始否定自己，那结局注定是失败的，连开始的勇气都没有，又怎能谈何成功。<br>所以如果你现在正处在想要开始挖洞却又不知道从哪里下手的情况时，那就先打开漏洞平台，补天、漏洞盒子什么的都行，注册个账号，接下来该干什么且听我一一道来。</p><h1 id="0x03-看清自己"><a href="#0x03-看清自己" class="headerlink" title="0x03 看清自己"></a>0x03 看清自己</h1><p>这四个字，是说要明白自己有几斤几两，也就是说要有自知之明，为什么这样说呢，因为你如果上来就挖专属SRC、企业SRC的话，估计会挖到怀疑人生，所以刚开始还是先从公益SRC入手，补天上上百个公益SRC，总能找到那么几个是存在漏洞的，注意，这里说总能找到那么几个，也就是说挖不挖得着看运气咯？<br>事实上，我确实是这样的，挖不挖得到完全看运气，有时运气好了，一个站碰到很多漏洞，低危、中危、高危都齐了，有时候啥也挖不到，而这种看似运气不好的时候往往占据了很大比重，但在我看来，归根结底就两点原因：一是经验不足，二是过早放弃。<br>经验不足没事儿，多挖就行，时间可以解决，过早放弃却不是那么容易解决的，下面我们就来好好唠唠这点。</p><h1 id="0x04-总结记录"><a href="#0x04-总结记录" class="headerlink" title="0x04 总结记录"></a>0x04 总结记录</h1><p>这四个字，很容易理解，那和刚才说的过早放弃又有什么关系呢？<br>首先我们一起来想想为什么会过早的放弃，在我看来还是不相信自己，在这个时候你已经有勇气开始挖洞了，但是在挖洞的过程中碰到了困难，所以就想到了放弃。<br>打开网页看到底部的360Logo，于是关闭网页，继续下一个公益SRC；在URL参数后面加引号回车一看，知道创宇为您保驾护航，于是关闭网页，继续下一个公益SRC；突然发现有个网站存在有漏洞的CMS，于是打开hackbar，Loadurl，加上Payload，Execute执行，一顿操作猛如虎，网站却提示你提交的数据包含非法字符，于是关闭网页，继续下一个公益SRC。<br>其实这就是我刚开始几天的真实写照，慢慢的发现，这样可不行，太打击人了吧，于是开始有了 自己的总结，有了自己的挖洞思路。<br>我自己写的总结就是记录整个挖洞过程，不管最后有没有挖到，都给记录下来，比如先看这个网站用的什么语言、操作系统、数据库版本，之后再看这个网站有没有用CMS，接着继续记录这个网站哪里可能存在漏洞，但自己没有复现出来，又或者这个网站的登陆页面是什么，自己注册了什么账号等等，反正只要稍微有些价值的信息都给记录下来，那记录这有什么用，只是为了记录吗？当然不是，首先一点就是过几天或者过段时间之后通过之前的记录你可能会找到当时没有复现出来的漏洞，还有另外一点在我看来也是很重要的一点，就是形成自己的挖洞思路。<br>在我挖了几天之后，慢慢的心中就有了一个大概的挖洞步骤，之后便记录了下来，比如刚开始我一般利用Google Hacking去收集一些网站的登陆窗口什么的，刚开始就各种弱密码碰运气，期间还真碰到一个管理员弱密码的站，之后发现有些网站公告里会提到默认密码多少多少，于是继续Google Hacking搜索网站相关的公开默认密码，又或者找到存在发送短信的地方，看看有没有短信轰炸等逻辑漏洞，之后又去批量识别网站CMS，对存在低版本的网站进行Nday攻击等等，慢慢的自己就形成了一个挖洞思路，而且随着经验的不断丰富，这样的一份漏洞挖掘思路报告也会越来越详细，说到这里，不知道你有没有想到过早放弃和总结经验之间的联系。<br>当你开始总结经验的时候，开始去记录开始去总结的那一刻，如果你碰到了问题，没关系，你可以看看自己总结的挖洞思路中还有没有记录其他的方法，如果真的已经没有思路了，那也没关系，把刚才渗透这个网站获取到的信息记录下来之后，开始下一个网站的漏洞挖掘。这时你应该发现，此时已经不存在什么过早放弃的概念了，因为当记录的那一刻起，以后如果有什么新的奇淫技巧依旧可以翻翻看看，挖到高危都是没准的事儿，最后就再说一点关于学习的事儿。</p><h1 id="0x05-终身学习"><a href="#0x05-终身学习" class="headerlink" title="0x05 终身学习"></a>0x05 终身学习</h1><p>这四个字，很重要，但熟悉我的人知道，我的成绩很一般，因为我不太喜欢学习，这里说的学习是指学习自己不感兴趣的东西，而对于我自己感兴趣的东西，那可真是太喜欢了。<br>这是挖洞十天经验分享，以后或许会有挖洞十月经验分享，亦或者会有挖洞十年经验分享，不管技术怎么发展变化，保持一个终身学习的心态始终不至于和时代脱节，尤其在网安的圈子，终身学习更是至关重要。如果你的兴趣不在网安，我想本文同样适用于你，不论什么领域什么方向，首先要踏出第一步，其次看清自己几斤几两，最后在不断的失败中去总结成长。<br>看到现在，相信你也发现刚才说的那么多更多的是经验分享，没有太多的挖洞技巧，毕竟人家还是个小白萌新，关于挖洞技巧在我的公众号（TeamsSix）会有分享，可以关注关注，如果本视频对你有帮助，欢迎点赞收藏一键三连，好了，汤家凤、朱伟他们还等着我呢，拜拜。</p><p>本文视频：</p><div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=58541759&cid=102097106&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div><p>如果视频不能全屏播放，请点击<a href="https://www.bilibili.com/video/av58541759/" title="源链接" target="_blank" rel="noopener">源链接</a>进行观看。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x01-前言&quot;&gt;&lt;a href=&quot;#0x01-前言&quot; class=&quot;headerlink&quot; title=&quot;0x01 前言&quot;&gt;&lt;/a&gt;0x01 前言&lt;/h1&gt;&lt;p&gt;十天是指六月三十号到七月九号这十天的时间，这段时间正值暑假刚开始，虽然知道现在需要备战考研，但是看了几天书后却怎么也看不进去，这时刚好有个作业就是挖洞，于是再一次把考研的书扔到了一边。&lt;br&gt;事先声明一下，因为是小白挖洞分享，所以难免会存在错误的地方，希望多多指正与包涵。&lt;br&gt;其实自己早在一年前就有挖洞的想法，在那个时候虽然知道很多工具的使用方法，但是对于如何挖洞依旧一头雾水，慢慢的一年的时间就在自我否定与怀疑自己中过去了，因此今天分享的第一点就是要相信自己。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="漏洞挖掘" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
-    
-      <category term="小白" scheme="https://www.teamssix.com/tags/%E5%B0%8F%E7%99%BD/"/>
     
   </entry>
   
