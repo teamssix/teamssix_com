@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2019-11-27T12:43:53.640Z</updated>
+  <updated>2019-12-01T14:11:29.402Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【直播笔记】白帽子的成长之路</title>
+    <link href="https://www.teamssix.com/year/191201-220910.html"/>
+    <id>https://www.teamssix.com/year/191201-220910.html</id>
+    <published>2019-12-01T14:09:10.000Z</published>
+    <updated>2019-12-01T14:11:29.402Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li><p>子域名监听工具：<a href="https://github.com/guimaizi/get_domain，新出来的子域名往往漏洞较多" target="_blank" rel="noopener">https://github.com/guimaizi/get_domain，新出来的子域名往往漏洞较多</a></p></li><li><p>关于挖掘src漏洞:</p></li></ul><ol><li>白帽子主要是寻找扫描器和风控系统覆盖不到的地方，比如domxss、越权漏洞和逻辑漏洞</li><li>开发运维人员的一些疏忽的点<a id="more"></a></li><li>还有因为厂商毕竟是赚钱是第一要务，因双十一、游戏活动之类紧急上线的业务并没有被安全部门测试过，这些通常会出现问题。</li><li>漏洞主要还是存在于交互处，也就是需要表单填写多的地方，这种场景大家应该会时常遇到。</li><li>漏洞利用，这是厂商和当前法律明令禁止的….请参考国外博客，和自己私下测试，还有纯刷src角度，我个人觉得别用扫描器扫厂商业务，他们一个payload打过去,封ip封账号不说，爬虫爬过去说不定你就收到一张传票或者被查水表，就进去了……</li></ol><ul><li><p>学习路径：<a href="https://mp.weixin.qq.com/s/nE8a4Z-qCXwOrvZXE-gLFg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/nE8a4Z-qCXwOrvZXE-gLFg</a></p></li><li><p>SSRF无回显的挖掘方法：<a href="https://mp.weixin.qq.com/s/R-N9e0PfrWY2GluLrjLlww" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R-N9e0PfrWY2GluLrjLlww</a></p></li></ul><ol><li>基本上useragent是来自容器的 都很大程度上存在这个漏洞</li><li>这个漏洞最简单的挖掘方法就是先尝试一遍外网 判断是否服务器端发起的，再去找该厂商的内网ip或者内网域名</li><li>找到后需要遍历它内网有什么端口</li><li>如果想把它当作内网一样访问资产，可以利用fiddler配置一下就可以了。</li><li>如果它存在不让请求内网的怎么办？可以买一个域名，将域名A解析到它内网ip再做请求，或者利用302跳转，短链接等方式</li></ol><ul><li><p>bypass技巧：<a href="https://mp.weixin.qq.com/s/zIOH1nMe-Ekeo4ga2wDRgw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/zIOH1nMe-Ekeo4ga2wDRgw</a></p></li><li><p>关于考证</p></li></ul><ol><li>如果是搞渗透测试方向的话，入门建议OSCP，这是公认的全球最强渗透测试认证资质。考完了也就相当于拥有了渗透测试中级水平，完全可以应对国内大多数渗透测试岗位工作</li><li>cisp-pte、cisp-pts这类国测的证，主要是找投标资质用的，实战意义不是太大</li><li>cisp可以帮助大家更加全面的认真整个信息安全，从宏观上了解我国对于信息安全的政策和相关知识</li></ol><ul><li>[TPSA19-22]SRC行业安全测试规范：<a href="https://security.tencent.com/index.php/announcement/msg/180" target="_blank" rel="noopener">https://security.tencent.com/index.php/announcement/msg/180</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;&lt;p&gt;子域名监听工具：&lt;a href=&quot;https://github.com/guimaizi/get_domain，新出来的子域名往往漏洞较多&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/guimaizi/get_domain，新出来的子域名往往漏洞较多&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;关于挖掘src漏洞:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;白帽子主要是寻找扫描器和风控系统覆盖不到的地方，比如domxss、越权漏洞和逻辑漏洞&lt;/li&gt;
+&lt;li&gt;开发运维人员的一些疏忽的点
+    
+    </summary>
+    
+      <category term="笔记总结" scheme="https://www.teamssix.com/categories/%E7%AC%94%E8%AE%B0%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="直播" scheme="https://www.teamssix.com/tags/%E7%9B%B4%E6%92%AD/"/>
+    
+      <category term="笔记" scheme="https://www.teamssix.com/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="总结" scheme="https://www.teamssix.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="成长之路" scheme="https://www.teamssix.com/tags/%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>【漏洞笔记】Robots.txt站点文件</title>
@@ -355,9 +391,9 @@
     
       <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
     
-      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
-    
       <category term="jQuery" scheme="https://www.teamssix.com/tags/jQuery/"/>
+    
+      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
     
   </entry>
   
@@ -563,32 +599,6 @@
       <category term="多线程" scheme="https://www.teamssix.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【续】CFS三层靶机中的Flag位置及其获取</title>
-    <link href="https://www.teamssix.com/year/191021-213828.html"/>
-    <id>https://www.teamssix.com/year/191021-213828.html</id>
-    <published>2019-10-21T13:38:28.000Z</published>
-    <updated>2019-11-02T12:22:53.627Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。</p><a id="more"></a><h1 id="0x01-Target1"><a href="#0x01-Target1" class="headerlink" title="0x01 Target1"></a>0x01 Target1</h1><p>1、系统根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag1.png" alt></p><p>2、网站根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag2.png" alt></p><p>3、网站robots.txt文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag3.png" alt></p><h1 id="0x02-Target2"><a href="#0x02-Target2" class="headerlink" title="0x02 Target2"></a>0x02 Target2</h1><p>1、系统根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag4.png" alt></p><p>2、日志文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag5.png" alt></p><p>3、passwd文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag6.png" alt></p><p>4、crontab文件中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag7.png" alt></p><p>5、网站根目录下</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag8.png" alt></p><p>6、管理后台中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag9.png" alt></p><h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><p>1、通过meterpreter上传Everything工具并安装</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; upload ./Everything_64.exe C:</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag10.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag11.png" alt></p><p>2、利用Everything，直接搜索flag文件</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag12.png" alt></p><p>3、找到两处flag，继续找寻发现计划任务中存在第三处flag</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png" alt></p><p>4、最后一处在事件日志的注册表中被找到</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Eventlog</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag14.png" alt></p><blockquote><p>《CFS三层靶机搭建及其内网渗透》文章地址：<br>1、首发地址：<a href="https://www.anquanke.com/post/id/187908" target="_blank" rel="noopener">https://www.anquanke.com/post/id/187908</a><br>2、博客地址：<a href="https://www.teamssix.com/year/191021-211425.html">https://www.teamssix.com/year/191021-211425.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="实例演示" scheme="https://www.teamssix.com/categories/%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/"/>
-    
-    
-      <category term="内网渗透" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
-    
-      <category term="CFS" scheme="https://www.teamssix.com/tags/CFS/"/>
-    
-      <category term="比赛" scheme="https://www.teamssix.com/tags/%E6%AF%94%E8%B5%9B/"/>
     
   </entry>
   
