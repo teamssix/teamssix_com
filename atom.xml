@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-01-05T13:54:10.260Z</updated>
+  <updated>2020-02-06T12:43:20.142Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【摘要】漏洞组合拳之XSS+CSRF记录</title>
+    <link href="https://www.teamssix.com/year/200206-202959.html"/>
+    <id>https://www.teamssix.com/year/200206-202959.html</id>
+    <published>2020-02-06T12:29:59.000Z</published>
+    <updated>2020-02-06T12:43:20.142Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天，我在FreeBuf发布了一篇文章《漏洞组合拳之XSS+CSRF记录》，因为版权原因，无法在​这里发布。</p><p>文章里介绍了两种常见的组合拳方法，感兴趣的可以点击下方链接进行查看。</p><p>文章链接：<a href="https://www.freebuf.com/vuls/225096.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/225096.html</a></p><a id="more"></a><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>本文原文地址：<a href="https://www.teamssix.com/year/200206-202959.html">https://www.teamssix.com/year/200206-202959.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几天，我在FreeBuf发布了一篇文章《漏洞组合拳之XSS+CSRF记录》，因为版权原因，无法在​这里发布。&lt;/p&gt;
+&lt;p&gt;文章里介绍了两种常见的组合拳方法，感兴趣的可以点击下方链接进行查看。&lt;/p&gt;
+&lt;p&gt;文章链接：&lt;a href=&quot;https://www.freebuf.com/vuls/225096.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.freebuf.com/vuls/225096.html&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="摘要" scheme="https://www.teamssix.com/categories/%E6%91%98%E8%A6%81/"/>
+    
+    
+      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
+    
+      <category term="CSRF" scheme="https://www.teamssix.com/tags/CSRF/"/>
+    
+      <category term="组合拳" scheme="https://www.teamssix.com/tags/%E7%BB%84%E5%90%88%E6%8B%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【经验总结】Python3 Requests 模块请求内容包含中文报错的解决办法</title>
+    <link href="https://www.teamssix.com/year/200206-202951.html"/>
+    <id>https://www.teamssix.com/year/200206-202951.html</id>
+    <published>2020-02-06T12:29:51.000Z</published>
+    <updated>2020-02-06T12:44:36.542Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在写一个爬虫代码，里面需要使用 get 传参中文，但是如果直接使用中文而不对其编码的话，程序将会报错。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeEncodeError: &apos;latin-1&apos; codec can&apos;t encode characters in position 38-39: ordinal not in range(256)</span><br></pre></td></tr></table></figure><a id="more"></a><h1 id="0x01-网上的一些解决办法"><a href="#0x01-网上的一些解决办法" class="headerlink" title="0x01 网上的一些解决办法"></a>0x01 网上的一些解决办法</h1><p>参考网上的解决办法，比如下面的几种办法。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、在中文后加上&quot;.encode(&apos;GBK&apos;)&quot;</span><br><span class="line">2、在文件头部加上&quot;＃coding = utf-8&quot;</span><br><span class="line">3、在中文后加上&quot;.encode(&apos;utf-8&apos;)&quot;</span><br></pre></td></tr></table></figure><p>这几种方法在我这里都行不通，抓包也可以看到数据包里的中文并不是我们想象的经过 URL 编码的字符。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /test=b&apos;%5Cxe6%5Cxb5%5Cx8b%5Cxe8%5Cxaf%5Cx95&apos; HTTP/1.1</span><br></pre></td></tr></table></figure><h1 id="0x02-可行的办法"><a href="#0x02-可行的办法" class="headerlink" title="0x02 可行的办法"></a>0x02 可行的办法</h1><p>最后才意识到，其实并不需要对中文进行 GBK、UTF-8 转码，而应该对其进行 URL 编码。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from urllib.parse import quote</span><br><span class="line">text = quote(&quot;测试&quot;, &apos;utf-8&apos;)</span><br></pre></td></tr></table></figure><p>利用 quote 函数对 “测试” 进行 URL 编码后，再次抓包可以看到中文部分已经是 URL 格式了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /test=%E6%B5%8B%E8%AF%95 HTTP/1.1</span><br></pre></td></tr></table></figure><p>此时，程序也不再报错，可以顺利执行了。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>本文原文地址：<a href="https://www.teamssix.com/year/200206-202951.html">https://www.teamssix.com/year/200206-202951.html</a><br>参考文章：<a href="https://blog.csdn.net/qq_33876553/article/details/79730246" target="_blank" rel="noopener">https://blog.csdn.net/qq_33876553/article/details/79730246</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近在写一个爬虫代码，里面需要使用 get 传参中文，但是如果直接使用中文而不对其编码的话，程序将会报错。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;UnicodeEncodeError: &amp;apos;latin-1&amp;apos; codec can&amp;apos;t encode characters in position 38-39: ordinal not in range(256)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="Python3" scheme="https://www.teamssix.com/tags/Python3/"/>
+    
+      <category term="解决办法" scheme="https://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>【经验总结】SQL注入Bypass安全狗360主机卫士</title>
@@ -523,64 +578,6 @@
       <category term="pigat" scheme="https://www.teamssix.com/tags/pigat/"/>
     
       <category term="聚合工具" scheme="https://www.teamssix.com/tags/%E8%81%9A%E5%90%88%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【漏洞笔记】测试目录</title>
-    <link href="https://www.teamssix.com/year/191125-195302.html"/>
-    <id>https://www.teamssix.com/year/191125-195302.html</id>
-    <published>2019-11-25T11:53:02.000Z</published>
-    <updated>2019-11-25T11:56:10.217Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：测试目录</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者读取测试目录信息，以便进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>删除或者限制访问测试目录。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：测试目录&lt;/p&gt;
-&lt;p&gt;风险等级：低&lt;/p&gt;
-&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
-&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
-    
-      <category term="测试目录" scheme="https://www.teamssix.com/tags/%E6%B5%8B%E8%AF%95%E7%9B%AE%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【漏洞笔记】测试文件</title>
-    <link href="https://www.teamssix.com/year/191125-195256.html"/>
-    <id>https://www.teamssix.com/year/191125-195256.html</id>
-    <published>2019-11-25T11:52:56.000Z</published>
-    <updated>2019-11-25T11:56:14.808Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：测试文件</p><p>风险等级：低</p><p>问题类型：信息泄露</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>攻击者读取测试文件信息，可能进一步攻击目标站点。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>删除或者限制访问测试文件。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：测试文件&lt;/p&gt;
-&lt;p&gt;风险等级：低&lt;/p&gt;
-&lt;p&gt;问题类型：信息泄露&lt;/p&gt;
-&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;Web应用程序在开发过程中，程序员为了测试代码功能，在Web目录下新建测试目录，存放测试代码，可能包含敏感信息。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
-    
-      <category term="测试文件" scheme="https://www.teamssix.com/tags/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6/"/>
     
   </entry>
   
