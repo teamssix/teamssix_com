@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-02-06T12:43:20.142Z</updated>
+  <updated>2020-02-11T06:01:39.304Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【工具分享】BurpSuite Pro v2020.1 无后门专业破解版</title>
+    <link href="https://www.teamssix.com/year/200211-135752.html"/>
+    <id>https://www.teamssix.com/year/200211-135752.html</id>
+    <published>2020-02-11T05:57:52.000Z</published>
+    <updated>2020-02-11T06:01:39.304Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工欲善其身，必先利其器，吃饭的家伙终于更新了，这次改动还蛮大的，尤其是加入了黑暗模式。</p><p>至于工具的使用及破解方法相信你既然能看到这篇文章，那就不用我过多赘述了 [手动狗头]。</p><a id="more"></a><h1 id="新功能"><a href="#新功能" class="headerlink" title="新功能"></a>新功能</h1><p>1、HTTP消息编辑器下JavaScript、JSON、CSS的语法高亮颜色</p><p>2、添加了行号，代码折叠功能</p><p>3、漏洞扫描检测、规则有巨大提升</p><p>4、增加黑暗主题</p><p>5、新增特殊功能、性能改进…</p><h1 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h1><p>在我的公众号（TeamsSix）回复 “ Burp “ 即可获取下载地址。</p><h1 id="新版效果"><a href="#新版效果" class="headerlink" title="新版效果"></a>新版效果</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_1.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_3.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_2.png" alt></p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;工欲善其身，必先利其器，吃饭的家伙终于更新了，这次改动还蛮大的，尤其是加入了黑暗模式。&lt;/p&gt;
+&lt;p&gt;至于工具的使用及破解方法相信你既然能看到这篇文章，那就不用我过多赘述了 [手动狗头]。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="BurpSuite" scheme="https://www.teamssix.com/tags/BurpSuite/"/>
+    
+      <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    
+      <category term="软件" scheme="https://www.teamssix.com/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>【摘要】漏洞组合拳之XSS+CSRF记录</title>
@@ -551,33 +578,6 @@
       <category term="IIS" scheme="https://www.teamssix.com/tags/IIS/"/>
     
       <category term="信息泄露" scheme="https://www.teamssix.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Pigat：一款被动信息收集聚合工具</title>
-    <link href="https://www.teamssix.com/year/191126-215759.html"/>
-    <id>https://www.teamssix.com/year/191126-215759.html</id>
-    <published>2019-11-26T13:57:59.000Z</published>
-    <updated>2019-11-26T14:49:26.511Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Pigat即Passive Intelligence Gathering Aggregation Tool，翻译过来就是被动信息收集聚合工具，既然叫聚合工具，也就是说该工具将多款被动信息收集工具结合在了一起，进而提高了平时信息收集的效率。</p><p>早在一个月前便萌生了开发这个工具的想法，但是一直没有时间，正好最近有时间了，就简单写一下。</p><a id="more"></a><p>因为我没有太多的开发经验，所以这款工具难免存在需要改进的地方，因此希望各位大佬能够多多反馈这款工具存在的问题，一起完善这个工具。</p><h1 id="0x01-工具原理及功能概述"><a href="#0x01-工具原理及功能概述" class="headerlink" title="0x01 工具原理及功能概述"></a>0x01 工具原理及功能概述</h1><p>这款工具的原理很简单，用户输入目标url，再利用爬虫获取相关被动信息收集网站关于该url的信息，最后回显出来。</p><p>目前该工具具备8个功能，原该工具具备7个功能，分别为收集目标的资产信息、CMS信息、DNS信息、备案信息、IP地址、子域名信息、whois信息，现加入第8个功能：如果在程序中两次IP查询目标URL的结果一致，那么查询该IP的端口，即端口查询功能。</p><h1 id="0x02-工具简单上手使用"><a href="#0x02-工具简单上手使用" class="headerlink" title="0x02 工具简单上手使用"></a>0x02 工具简单上手使用</h1><h2 id="1、查看帮助信息"><a href="#1、查看帮助信息" class="headerlink" title="1、查看帮助信息"></a>1、查看帮助信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python pigat.py -h</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat1.png" alt></p><h2 id="2、指定url进行信息获取"><a href="#2、指定url进行信息获取" class="headerlink" title="2、指定url进行信息获取"></a>2、指定url进行信息获取</h2><p>如果只指定url这一个参数，没有指定其他参数，则默认获取该url的所有信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python pigat.py -u teamssix.com</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat2.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat3.png" alt></p><h2 id="3、指定url进行单项信息获取"><a href="#3、指定url进行单项信息获取" class="headerlink" title="3、指定url进行单项信息获取"></a>3、指定url进行单项信息获取</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python pigat.py -u baidu.com --assert</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat4.png" alt></p><h2 id="4、指定url进行多项信息获取"><a href="#4、指定url进行多项信息获取" class="headerlink" title="4、指定url进行多项信息获取"></a>4、指定url进行多项信息获取</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python pigat.py -u teamssix.com --ip --cms</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat5.png" alt></p><h1 id="0x03-工具获取"><a href="#0x03-工具获取" class="headerlink" title="0x03 工具获取"></a>0x03 工具获取</h1><p>关于此工具的下载地址可在我的个人公众号（TeamsSix）回复”pigat”获取。</p><h1 id="0x04-声明"><a href="#0x04-声明" class="headerlink" title="0x04 声明"></a>0x04 声明</h1><p>1、本文在FreeBuf首发，原文地址在文章尾部</p><p>2、由于我的个人疏忽，导致在FreeBuf文中获取工具的方式存在错误的地方，正确的获取方式应是回复”pigat”，而不是”pigta”，这就导致不少人及时回复了关键词也没有获取到工具地址，在这里表示深刻歉意，现在公众号后台规则已经更新，上述两个关键词均可以获取到工具地址。</p><blockquote><p>原文地址：<a href="https://www.freebuf.com/sectool/219681.html" target="_blank" rel="noopener">https://www.freebuf.com/sectool/219681.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;Pigat即Passive Intelligence Gathering Aggregation Tool，翻译过来就是被动信息收集聚合工具，既然叫聚合工具，也就是说该工具将多款被动信息收集工具结合在了一起，进而提高了平时信息收集的效率。&lt;/p&gt;
-&lt;p&gt;早在一个月前便萌生了开发这个工具的想法，但是一直没有时间，正好最近有时间了，就简单写一下。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工具使用" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
-    
-    
-      <category term="被动信息收集" scheme="https://www.teamssix.com/tags/%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
-    
-      <category term="pigat" scheme="https://www.teamssix.com/tags/pigat/"/>
-    
-      <category term="聚合工具" scheme="https://www.teamssix.com/tags/%E8%81%9A%E5%90%88%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
