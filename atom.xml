@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-02-17T05:47:30.823Z</updated>
+  <updated>2020-02-23T15:37:38.295Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -17,19 +17,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【工具分享】分享一个jQuery多版本XSS漏洞检测工具</title>
+    <link href="https://www.teamssix.com/year/200223-231648.html"/>
+    <id>https://www.teamssix.com/year/200223-231648.html</id>
+    <published>2020-02-23T15:16:48.000Z</published>
+    <updated>2020-02-23T15:37:38.295Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。</p><p>后来看到有个文章说需要Safari浏览器，于是又废了半天劲装了个黑苹果（当时不知道原来Safari浏览器还有Windows版），用Safari浏览器一番折腾依旧没有复现，直到后来在GitHub上找到了这个检测工具，分享出来，避免踩坑。</p><a id="more"></a><h1 id="0x01-工具使用"><a href="#0x01-工具使用" class="headerlink" title="0x01 工具使用"></a>0x01 工具使用</h1><blockquote><p>下载地址：<a href="https://github.com/mahp/jQuery-with-XSS" target="_blank" rel="noopener">https://github.com/mahp/jQuery-with-XSS</a></p></blockquote><p>1、下载之后，解压，使用编辑器打开，修改第9行代码，将代码中的<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p><script type="text/javascript" src="http://test/jquery.min.js"></script><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2、保存之后，使用浏览器打开，然后可以看到3个Demo.</span><br></pre></td></tr></table></figure><p>bug-9521<br>bug-11290<br>bug-11974</p><pre><code>3、可以依次点击这三个Demo，看看哪个会弹窗，我这里是 jQuery v2.1.4 的版本，在点击 bug-11974 发生了弹窗，说明此版本的漏洞被验证成功了。![](https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-23_23-05-36.png)4、也可以点击页面中的 test version，来判断自己版本的  jQuery 版本存在的 bug 编号，例如我这里的  jQuery v2.1.4 版本就对应着 bug-2432和bug-11974。![](https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-23_23-09-03.png)5、知道 bug 编号之后，再来到 test.html 页面点击对应的 bug编号即可。# 0x02 小结以上工具的使用方法是自己慢慢摸索出来的，如有不对的地方欢迎留言批评指正。&gt; 更多信息欢迎关注我的个人微信公众号：TeamsSix![](https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png)</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。&lt;/p&gt;
+&lt;p&gt;后来看到有个文章说需要Safari浏览器，于是又废了半天劲装了个黑苹果（当时不知道原来Safari浏览器还有Windows版），用Safari浏览器一番折腾依旧没有复现，直到后来在GitHub上找到了这个检测工具，分享出来，避免踩坑。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    
+      <category term="jQuery" scheme="https://www.teamssix.com/tags/jQuery/"/>
+    
+      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【经验总结】解决 BurpSuite Pro v2020.1 版本中文乱码问题</title>
     <link href="https://www.teamssix.com/year/200217-134445.html"/>
     <id>https://www.teamssix.com/year/200217-134445.html</id>
     <published>2020-02-17T05:44:45.000Z</published>
-    <updated>2020-02-17T05:47:30.823Z</updated>
+    <updated>2020-02-20T11:47:45.641Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-17_13-34-32.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-17_13-37-02.png" alt></p><a id="more"></a><h1 id="0x01-解决办法"><a href="#0x01-解决办法" class="headerlink" title="0x01 解决办法"></a>0x01 解决办法</h1><p>来到 User Options –&gt; Display –&gt; Character Sets，在第四个选项中选择 UTF-8，中文乱码的问题就可以得到解决，这个时候不管我字体选择的是哪一个，中文都是显示正常的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-02-17_13-38-35.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-02-17_13-39-09.png" alt></p><h1 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><p>在网上找了很多解决办法，但是大部分文章都是说更改中文字体就能解决，但是我这个版本没有中文字体，所以那些文章里的办法都不能用，最后才意识到通过修改编码就能解决。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。</p><a id="more"></a><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-17_13-34-32.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-17_13-37-02.png" alt></p><h1 id="0x01-解决办法"><a href="#0x01-解决办法" class="headerlink" title="0x01 解决办法"></a>0x01 解决办法</h1><p>来到 User Options –&gt; Display –&gt; Character Sets，在第四个选项中选择 UTF-8，中文乱码的问题就可以得到解决，这个时候不管我字体选择的是哪一个，中文都是显示正常的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-02-17_13-38-35.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-02-17_13-39-09.png" alt></p><h1 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><p>在网上找了很多解决办法，但是大部分文章都是说更改中文字体就能解决，但是我这个版本没有中文字体，所以那些文章里的办法都不能用，最后才意识到通过修改编码就能解决。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
       &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-17_13-34-32.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-17_13-37-02.png&quot; alt&gt;&lt;/p&gt;
     
     </summary>
     
@@ -548,35 +573,6 @@
       <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
       <category term="HTTP方法" scheme="https://www.teamssix.com/tags/HTTP%E6%96%B9%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【漏洞笔记】ASP.NET允许文件调试</title>
-    <link href="https://www.teamssix.com/year/191126-215809.html"/>
-    <id>https://www.teamssix.com/year/191126-215809.html</id>
-    <published>2019-11-26T13:58:09.000Z</published>
-    <updated>2019-11-26T14:21:57.058Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：ASP.NET允许文件调试</p><p>风险等级：低</p><p>问题类型：管理员设置问题</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>发送DEBUG动作的请求，如果服务器返回内容为OK，那么服务器就开启了调试功能，可能会导致有关Web应用程序的敏感信息泄露，例如密码、路径等。</p><a id="more"></a><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>可能会泄露密码、路径等敏感信息。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>编辑Web.config文件，设置<code>&amp;lt;compilation debug=&quot;false&quot;/&amp;gt;</code></p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：ASP.NET允许文件调试&lt;/p&gt;
-&lt;p&gt;风险等级：低&lt;/p&gt;
-&lt;p&gt;问题类型：管理员设置问题&lt;/p&gt;
-&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;发送DEBUG动作的请求，如果服务器返回内容为OK，那么服务器就开启了调试功能，可能会导致有关Web应用程序的敏感信息泄露，例如密码、路径等。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="ASP.NET" scheme="https://www.teamssix.com/tags/ASP-NET/"/>
-    
-      <category term="管理员设置问题" scheme="https://www.teamssix.com/tags/%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
