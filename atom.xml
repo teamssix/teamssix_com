@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-02-29T14:31:14.119Z</updated>
+  <updated>2020-02-29T14:35:38.216Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>57</title>
+    <link href="https://www.teamssix.com/year/200229-223431.html"/>
+    <id>https://www.teamssix.com/year/200229-223431.html</id>
+    <published>2020-02-29T14:34:31.000Z</published>
+    <updated>2020-02-29T14:35:38.216Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
+    
+      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>【Django 学习笔记】1、基础概念和MVT架构</title>
@@ -552,35 +574,6 @@
       <category term="Robots.txt" scheme="https://www.teamssix.com/tags/Robots-txt/"/>
     
       <category term="服务器设置问题" scheme="https://www.teamssix.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【漏洞笔记】Host头攻击</title>
-    <link href="https://www.teamssix.com/year/191127-201443.html"/>
-    <id>https://www.teamssix.com/year/191127-201443.html</id>
-    <published>2019-11-27T12:14:43.000Z</published>
-    <updated>2019-11-27T12:43:48.304Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>漏洞名称：Host头攻击</p><p>风险等级：低</p><p>问题类型：管理员设置问题</p><h1 id="0x01-漏洞描述"><a href="#0x01-漏洞描述" class="headerlink" title="0x01 漏洞描述"></a>0x01 漏洞描述</h1><p>Host首部字段是HTTP/1.1新增的，旨在告诉服务器，客户端请求的主机名和端口号，主要用来实现虚拟主机技术。</p><a id="more"></a><p>运用虚拟主机技术，单个主机可以运行多个站点。</p><p>例如：hacker和usagidesign两个站点都运行在同一服务器A上，不管我们请求哪个域名，最终都会被解析成服务器A的IP地址，这个时候服务器就不知道该将请求交给哪个站点处理，因此需要Host字段指定请求的主机名。</p><p>我们访问hacker域名，经DNS解析，变成了服务器A的IP，请求传达到服务器A，A接收到请求后，发现请求报文中的Host字段值为hacker，进而将请求交给hacker站点处理。</p><p>这个时候，问题就出现了。为了方便获取网站域名，开发人员一般依赖于请求包中的Host首部字段。例如，在php里用_SERVER[“HTTP_HOST”]，但是这个Host字段值是不可信赖的(可通过HTTP代理工具篡改)。</p><h1 id="0x02-漏洞危害"><a href="#0x02-漏洞危害" class="headerlink" title="0x02 漏洞危害"></a>0x02 漏洞危害</h1><p>如果应用程序没有对Host字段值进行处理，就有可能造成恶意代码的传入。</p><h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><p>对Host字段进行检测</p><p>Nginx，修改ngnix.conf文件，在server中指定一个server_name名单，并添加检测。</p><p>Apache，修改httpd.conf文件，指定ServerName，并开启UseCanonicalName选项。</p><p>Tomcat，修改server.xml文件，配置Host的name属性。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章：<br><a href="https://www.jianshu.com/p/690acbf9f321" target="_blank" rel="noopener">https://www.jianshu.com/p/690acbf9f321</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;漏洞名称：Host头攻击&lt;/p&gt;
-&lt;p&gt;风险等级：低&lt;/p&gt;
-&lt;p&gt;问题类型：管理员设置问题&lt;/p&gt;
-&lt;h1 id=&quot;0x01-漏洞描述&quot;&gt;&lt;a href=&quot;#0x01-漏洞描述&quot; class=&quot;headerlink&quot; title=&quot;0x01 漏洞描述&quot;&gt;&lt;/a&gt;0x01 漏洞描述&lt;/h1&gt;&lt;p&gt;Host首部字段是HTTP/1.1新增的，旨在告诉服务器，客户端请求的主机名和端口号，主要用来实现虚拟主机技术。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="管理员设置问题" scheme="https://www.teamssix.com/tags/%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
-    
-      <category term="Host头" scheme="https://www.teamssix.com/tags/Host%E5%A4%B4/"/>
     
   </entry>
   
