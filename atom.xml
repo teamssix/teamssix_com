@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-02-23T15:41:45.892Z</updated>
+  <updated>2020-02-29T14:31:14.119Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -17,11 +17,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【Django 学习笔记】1、基础概念和MVT架构</title>
+    <link href="https://www.teamssix.com/year/200229-220746.html"/>
+    <id>https://www.teamssix.com/year/200229-220746.html</id>
+    <published>2020-02-29T14:07:46.000Z</published>
+    <updated>2020-02-29T14:31:14.119Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-Django-简介"><a href="#0x00-Django-简介" class="headerlink" title="0x00 Django 简介"></a>0x00 Django 简介</h1><ul><li>Django是Python写的开源Web开发框架，主要目的是做一个简便、快速的开发数据库驱动的网站</li><li>Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT<ul><li>设计模式就是前辈们在开发过程中总结出来的经验和套路</li><li>MVC是一种设计模式，在这种设计模式下衍生出了MVT</li></ul></li><li>Django中文说明文档：<a href="https://yiyibooks.cn/xx/django_182/index.html" target="_blank" rel="noopener">https://yiyibooks.cn/xx/django_182/index.html</a></li></ul><a id="more"></a><h1 id="0x01-MVC-简介"><a href="#0x01-MVC-简介" class="headerlink" title="0x01 MVC 简介"></a>0x01 MVC 简介</h1><ul><li><p>全拼：<code>Model View Controller</code></p></li><li><p>MVC 核心思想：<strong>解耦</strong></p><ul><li>让不同的模块之间降低耦合, 增强代码的可扩展性和可移植性, 实现更好的向后续版本的兼容</li><li>开发原则 : <strong>高内聚, 低耦合</strong></li></ul></li><li><p>MVC 解析</p><ul><li><p><code>M</code>全拼为<code>Model</code>, 主要封装对数据库层的访问, 内嵌ORM框架, 实现面向对象的编程来操作数据库.</p></li><li><p><code>V</code>全拼为<code>View</code>, 用于封装结果, 内嵌了模板引擎, 实现动态展示数据.</p></li><li><p><code>C</code>全拼为<code>Controller</code>, 用于接收GET或POST请求, 处理业务逻辑, 与Model和View交互, 返回结果.</p></li></ul></li></ul><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1django_note.png" alt></p><h1 id="0x02-MVT-简介"><a href="#0x02-MVT-简介" class="headerlink" title="0x02 MVT 简介"></a>0x02 MVT 简介</h1><ul><li>MVT全拼为<code>Model-View-Template</code></li><li>MVT核心思想： <strong>解耦</strong>（按照模块间的职能进行划分，然后做解耦）</li><li>MVT解析<ul><li><code>M (模型)</code>全拼为<code>Model</code>, 与MVC中的M功能相同, 负责数据处理, 内嵌了ORM框架.</li><li><code>V (视图)</code>全拼为<code>View</code>, 与MVC中的C功能相同, 接收HttpRequest, 业务处理，返回HttpResponse.</li><li><code>T (模板)</code>全拼为<code>Template</code>, 与MVC中的V功能相同, 负责封装构造要返回的html, 内嵌了模板引擎.</li></ul></li><li>MVT 和 MVC 差异就在于黑箭头标识出来的部分.</li></ul><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2django_note.png" alt></p><p><strong>学习 Django, 重点就是研究 <code>Model-View-Template</code> 三个模块间如何协同工作及各自模块的代码如何编写。</strong></p><h1 id="0x03-Django安装及项目创建"><a href="#0x03-Django安装及项目创建" class="headerlink" title="0x03 Django安装及项目创建"></a>0x03 Django安装及项目创建</h1><h2 id="1、安装Django"><a href="#1、安装Django" class="headerlink" title="1、安装Django"></a>1、安装Django</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django</span><br></pre></td></tr></table></figure><h2 id="2、创建Django项目"><a href="#2、创建Django项目" class="headerlink" title="2、创建Django项目"></a>2、创建Django项目</h2><p>以书籍管理系统为例，这里创建的项目名为”book”</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt; django-admin startproject BookManager <span class="comment">#创建项目</span></span><br><span class="line">&gt; <span class="built_in">cd</span> BookManager</span><br><span class="line">BookManager/ &gt; python3 manage.py startapp Book <span class="comment">#创建应用</span></span><br><span class="line">BookManager/ &gt; tree</span><br><span class="line">.</span><br><span class="line">├── Book</span><br><span class="line">│   ├── __init__.py<span class="comment">#表示文件Book可以被当作包使用</span></span><br><span class="line">│   ├── admin.py<span class="comment">#后台的站点管理注册文件</span></span><br><span class="line">│   ├── apps.py</span><br><span class="line">│   ├── migrations<span class="comment">#做模型迁移</span></span><br><span class="line">│   │   └── __init__.py</span><br><span class="line">│   ├── models.py<span class="comment">#MVT中的M</span></span><br><span class="line">│   ├── tests.py<span class="comment">#做测试用</span></span><br><span class="line">│   └── views.py<span class="comment">#MVT中的V</span></span><br><span class="line">├── BookManager</span><br><span class="line">│   ├── __init__.py<span class="comment">#表示文件BookManager可以被当作包使用</span></span><br><span class="line">│   ├── __pycache__</span><br><span class="line">│   │   ├── __init__.cpython-37.pyc</span><br><span class="line">│   │   └── settings.cpython-37.pyc</span><br><span class="line">│   ├── asgi.py</span><br><span class="line">│   ├── settings.py<span class="comment">#项目的整体配置文件</span></span><br><span class="line">│   ├── urls.py<span class="comment">#项目的URL配置文件</span></span><br><span class="line">│   └── wsgi.py<span class="comment">#项目与WSGI兼容的Web服务器入口</span></span><br><span class="line">└── manage.py<span class="comment">#项目运行的入口, 指定配置文件路径</span></span><br><span class="line"></span><br><span class="line">4 directories, 15 files</span><br></pre></td></tr></table></figure><p>创建之后，使用PyChram打开，在<code>setting.py</code>的第39行下方添加<code>&#39;Book&#39;,</code>即将INSTALLED_APPS修改成如下所示：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="string">'Book'</span>,<span class="comment">#添加此行以安装应用</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure><h2 id="3、运行项目"><a href="#3、运行项目" class="headerlink" title="3、运行项目"></a>3、运行项目</h2><p>在项目目录下，执行<code>python3 manage.py runserver</code>即可运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py runserver</span><br></pre></td></tr></table></figure><p>运行结果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py runserver</span><br><span class="line">Watching <span class="keyword">for</span> file changes with StatReloader</span><br><span class="line">Performing system checks...</span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line">You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations <span class="keyword">for</span> app(s): admin, auth, contenttypes, sessions.</span><br><span class="line">Run <span class="string">'python manage.py migrate'</span> to apply them.</span><br><span class="line">February 28, 2020 - 19:08:25</span><br><span class="line">Django version 3.0.3, using settings <span class="string">'BookManager.settings'</span></span><br><span class="line">Starting development server at http://127.0.0.1:8000/</span><br><span class="line">Quit the server with CTRL-BREAK.</span><br></pre></td></tr></table></figure><p>此时，浏览器访问<code>http://127.0.0.1:8000/</code>，出现以下界面，说明项目已经成功创建了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3django_note.png" alt></p><blockquote><p>参考链接：</p><p><a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p><p><a href="https://www.cnblogs.com/Demon-Mx/p/8385318.html" target="_blank" rel="noopener">https://www.cnblogs.com/Demon-Mx/p/8385318.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;0x00-Django-简介&quot;&gt;&lt;a href=&quot;#0x00-Django-简介&quot; class=&quot;headerlink&quot; title=&quot;0x00 Django 简介&quot;&gt;&lt;/a&gt;0x00 Django 简介&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;Django是Python写的开源Web开发框架，主要目的是做一个简便、快速的开发数据库驱动的网站&lt;/li&gt;
+&lt;li&gt;Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT&lt;ul&gt;
+&lt;li&gt;设计模式就是前辈们在开发过程中总结出来的经验和套路&lt;/li&gt;
+&lt;li&gt;MVC是一种设计模式，在这种设计模式下衍生出了MVT&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Django中文说明文档：&lt;a href=&quot;https://yiyibooks.cn/xx/django_182/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://yiyibooks.cn/xx/django_182/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
+    
+      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【工具分享】分享一个jQuery多版本XSS漏洞检测工具</title>
     <link href="https://www.teamssix.com/year/200223-231648.html"/>
     <id>https://www.teamssix.com/year/200223-231648.html</id>
     <published>2020-02-23T15:16:48.000Z</published>
-    <updated>2020-02-23T15:41:45.892Z</updated>
+    <updated>2020-02-23T15:43:15.330Z</updated>
     
     <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。</p><p>后来看到有个文章说需要Safari浏览器，于是又废了半天劲装了个黑苹果（当时不知道原来Safari浏览器还有Windows版），用Safari浏览器一番折腾依旧没有复现，直到后来在GitHub上找到了这个检测工具，分享出来，避免踩坑。</p><a id="more"></a><h1 id="0x01-工具使用"><a href="#0x01-工具使用" class="headerlink" title="0x01 工具使用"></a>0x01 工具使用</h1><blockquote><p>下载地址：<a href="https://github.com/mahp/jQuery-with-XSS" target="_blank" rel="noopener">https://github.com/mahp/jQuery-with-XSS</a></p></blockquote><p>1、下载之后，解压，使用编辑器打开，修改第9行代码，将代码中 src 后的链接修改为自己要验证的js地址链接。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://yourjquerylink/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>2、保存之后，使用浏览器打开，然后可以看到3个Demo.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bug-9521</span><br><span class="line">bug-11290</span><br><span class="line">bug-11974</span><br></pre></td></tr></table></figure><p>3、可以依次点击这三个Demo，看看哪个会弹窗，我这里是 jQuery v2.1.4 的版本，在点击 bug-11974 发生了弹窗，说明此版本的漏洞被验证成功了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-23_23-05-36.png" alt></p><p>4、也可以点击页面中的 test version，来判断自己版本的  jQuery 版本存在的 bug 编号，例如我这里的  jQuery v2.1.4 版本就对应着 bug-2432和bug-11974。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-23_23-09-03.png" alt></p><p>5、知道 bug 编号之后，再来到 test.html 页面点击对应的 bug编号即可。</p><h1 id="0x02-小结"><a href="#0x02-小结" class="headerlink" title="0x02 小结"></a>0x02 小结</h1><p>以上工具的使用方法是自己慢慢摸索出来的，如有不对的地方欢迎留言批评指正。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
@@ -547,32 +581,6 @@
       <category term="管理员设置问题" scheme="https://www.teamssix.com/tags/%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
     
       <category term="Host头" scheme="https://www.teamssix.com/tags/Host%E5%A4%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】常见的HTTP方法</title>
-    <link href="https://www.teamssix.com/year/191127-201438.html"/>
-    <id>https://www.teamssix.com/year/191127-201438.html</id>
-    <published>2019-11-27T12:14:38.000Z</published>
-    <updated>2019-11-27T12:43:42.903Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>根据HTTP标准，HTTP请求可以使用多种请求方法。</p><p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。</p><p>HTTP1.1新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT方法。</p><a id="more"></a><h1 id="0x01-GET"><a href="#0x01-GET" class="headerlink" title="0x01 GET"></a>0x01 GET</h1><p>GET方法用于请求指定的页面信息，并返回实体主体。</p><h1 id="0x02-HEAD"><a href="#0x02-HEAD" class="headerlink" title="0x02 HEAD"></a>0x02 HEAD</h1><p>HEAD方法请求一个与GET请求的响应相同的响应，但没有响应体。</p><h1 id="0x03-POST"><a href="#0x03-POST" class="headerlink" title="0x03 POST"></a>0x03 POST</h1><p>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。</p><p>数据被包含在请求体中，POST请求可能会导致新的资源建立或已有资源的修改。</p><h1 id="0x04-PUT"><a href="#0x04-PUT" class="headerlink" title="0x04 PUT"></a>0x04 PUT</h1><p>PUT方法用请求有效载荷替换目标资源的所有当前表示。</p><h1 id="0x05-DELETE"><a href="#0x05-DELETE" class="headerlink" title="0x05 DELETE"></a>0x05 DELETE</h1><p>请求服务器删除指定的页面。</p><h1 id="0x06-CONNECT"><a href="#0x06-CONNECT" class="headerlink" title="0x06 CONNECT"></a>0x06 CONNECT</h1><p>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</p><h1 id="0x07-OPTIONS"><a href="#0x07-OPTIONS" class="headerlink" title="0x07 OPTIONS"></a>0x07 OPTIONS</h1><p>允许客户端查看服务器的性能。</p><h1 id="0x08-TRACE"><a href="#0x08-TRACE" class="headerlink" title="0x08 TRACE"></a>0x08 TRACE</h1><p>回显服务器收到的请求，主要用于测试或诊断。</p><h1 id="0x09-PATCH"><a href="#0x09-PATCH" class="headerlink" title="0x09 PATCH"></a>0x09 PATCH</h1><p>是对PUT方法的补充，用来对已知资源进行局部更新。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章：<br><a href="https://www.runoob.com/http/http-methods.html" target="_blank" rel="noopener">https://www.runoob.com/http/http-methods.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-概述&quot;&gt;&lt;a href=&quot;#0x00-概述&quot; class=&quot;headerlink&quot; title=&quot;0x00 概述&quot;&gt;&lt;/a&gt;0x00 概述&lt;/h1&gt;&lt;p&gt;根据HTTP标准，HTTP请求可以使用多种请求方法。&lt;/p&gt;
-&lt;p&gt;HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。&lt;/p&gt;
-&lt;p&gt;HTTP1.1新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT方法。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="HTTP方法" scheme="https://www.teamssix.com/tags/HTTP%E6%96%B9%E6%B3%95/"/>
     
   </entry>
   
