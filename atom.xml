@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-03-10T14:22:47.757Z</updated>
+  <updated>2020-03-10T14:24:53.292Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://www.teamssix.com/year/200310-221008.html"/>
     <id>https://www.teamssix.com/year/200310-221008.html</id>
     <published>2020-03-10T14:10:08.000Z</published>
-    <updated>2020-03-10T14:22:47.757Z</updated>
+    <updated>2020-03-10T14:24:53.292Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote><p>本文仅供学习分享用途，严禁用于违法用途</p></blockquote><p>在搞站的时候，经过一顿操作后只发现了一堆低危，过了一段时间看看Xray，居然发现一个XSS</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-03-10_14-10-35.png" alt></p><p>嗯~ Xray 真香！</p><a id="more"></a><p>随后进行复现，无奈多次尝试无果，好玩的是每换一个Payload，流量经过 Xray ，Xray 还会继续报这个漏洞，并且每次Payload都不一样，这感情好，直接用 Xray 给的 Payload 吧，尝试了半天，居然没有一个成功的，当时 Xray 的界面是这样的</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-03-10_14-19-23.png" alt></p><p>虽然没有一个成功复现的，但是这看着还是挺爽的，一会儿报个漏洞一会儿报个漏洞的</p><h1 id="0x01-Fuzz大法好"><a href="#0x01-Fuzz大法好" class="headerlink" title="0x01 Fuzz大法好"></a>0x01 Fuzz大法好</h1><p>屡试不行之后便想到了Fuzz，那先去GitHub上找个字典</p><blockquote><p><a href="https://github.com/TheKingOfDuck/fuzzDicts" target="_blank" rel="noopener">https://github.com/TheKingOfDuck/fuzzDicts</a></p></blockquote><p>有了字典之后，上Burp</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-03-10_14-26-42.png" alt></p><p>两千多的字典最后只有3个Payload响应200，不管了，先一个一个试试吧，那就先来试试第一个Payload</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;+alert(16)+&quot;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-03-10_14-29-54.png" alt></p><p>哎呀呀，不得不说，妙啊！</p><p>之后我再试另外几个 Payload 就不管用了</p><p>啧啧，Xray 真香、Fuzz 真香。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p><p>原文链接：<a href="https://www.teamssix.com/year/200310-221008.html">https://www.teamssix.com/year/200310-221008.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote><p>本文仅供学习分享用途，严禁用于违法用途</p></blockquote><p>在搞站的时候，经过一顿操作后只发现了一堆低危，过了一段时间看看Xray，居然发现一个XSS</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-03-10_14-10-35.png" alt></p><p>嗯~ Xray 真香！</p><a id="more"></a><p>随后进行复现，无奈多次尝试无果，好玩的是每换一个Payload，流量经过 Xray ，Xray 还会继续报这个漏洞，并且每次Payload都不一样，这感情好，直接用 Xray 给的 Payload 吧，尝试了半天，居然没有一个成功的，当时 Xray 的界面是这样的</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-03-10_14-19-23.png" alt></p><p>虽然没有一个成功复现的，但是这看着还是挺爽的，一会儿报个漏洞一会儿报个漏洞的</p><h1 id="0x01-Fuzz大法好"><a href="#0x01-Fuzz大法好" class="headerlink" title="0x01 Fuzz大法好"></a>0x01 Fuzz大法好</h1><p>屡试不行之后便想到了Fuzz，那先去GitHub上找个字典</p><blockquote><p><a href="https://github.com/TheKingOfDuck/fuzzDicts" target="_blank" rel="noopener">https://github.com/TheKingOfDuck/fuzzDicts</a></p></blockquote><p>有了字典之后，上Burp</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-03-10_14-26-42.png" alt></p><p>两千多的字典最后只有3个Payload响应200，不管了，先一个一个试试吧，那就先来试试第一个Payload</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;+alert(16)+&quot;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-03-10_14-29-54.png" alt></p><p>哎呀呀，不得不说，妙啊！</p><p>之后我再试另外几个 Payload 就不管用了</p><p>啧啧，Xray 真香、Fuzz 真香。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
