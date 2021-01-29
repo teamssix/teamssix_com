@@ -456,30 +456,118 @@
 <p>如果在只有一个快递需要运输的时候，使用线程与进程的区别或许不大，但是如果有十件快递、百件快递，使用多进程无疑能够极大的提高效率。</p>
 <h1 id="0x02-准备工作"><a href="#0x02-准备工作" class="headerlink" title="0x02 准备工作"></a>0x02 准备工作</h1><p>在开始学习多进程之前，先来理一下爬虫思路，这里拿爬取我的博客文章举例，首先先用 requests 访问 temassix.com，之后利用 BeautifulSoup 解析出我博客中的文章链接，接着再利用 requests 访问文章，便完成了一个简单的爬虫。</p>
 <p>接下来需要用到的模块：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time    <span class="comment">#测试爬取时间</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process   <span class="comment">#多进程模块</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    import time    #测试爬取时间
+    import requests
+    import threading
+    from multiprocessing import Process   #多进程模块
+    from bs4 import BeautifulSoup</code></pre>
 <p>接下来需要用到的一些子函数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">req_url</span>(<span class="params">url</span>):</span></span><br><span class="line">    r = requests.get(url)    <span class="comment">#访问url</span></span><br><span class="line">    <span class="keyword">return</span>(r.text)    <span class="comment">#返回html</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">soup_url</span>(<span class="params">html</span>):</span></span><br><span class="line">	url_list = []</span><br><span class="line">	soup = BeautifulSoup(html, <span class="string">&#x27;html.parser&#x27;</span>)    <span class="comment">#解析返回的html</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">&#x27;.post-title&#x27;</span>):</span><br><span class="line">		url_list.append(<span class="string">&#x27;https://www.teamssix.com&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(i[<span class="string">&#x27;href&#x27;</span>]))    <span class="comment">#拼接博客文章的url</span></span><br><span class="line">	<span class="keyword">return</span> (url_list)    <span class="comment">#返回博客文章url数组</span></span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    def req_url(url):
+        r = requests.get(url)    #访问url
+        return(r.text)    #返回html
+
+    def soup_url(html):
+        url_list = []
+        soup = BeautifulSoup(html, &#39;html.parser&#39;)    #解析返回的html
+        for i in soup.select(&#39;.post-title&#39;):
+            url_list.append(&#39;https://www.teamssix.com&#123;&#125;&#39;.format(i[&#39;href&#39;]))    #拼接博客文章的url
+        return (url_list)    #返回博客文章url数组</code></pre>
 <h1 id="0x03-测试普通爬取方法"><a href="#0x03-测试普通爬取方法" class="headerlink" title="0x03 测试普通爬取方法"></a>0x03 测试普通爬取方法</h1><p>这里先使用普通爬取的方法，也就是单线程测试一下，为了方便，下面提到的单线程处理方法，准确的来说是单进程单线程，同样的，下面提到的多进程准确的说法是多进程单线程，多线程准确的说则是单进程多线程。</p>
 <p>值得注意的是爬取耗时根据自己的网络情况而定，即使碰到多进程耗时几百秒而单线程耗时几十秒也是正常的，这种情况是因为网络环境较差造成的，所以碰到结果出入很大的时候，可以多试几次，排除偶然性，下面就来上代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment"># 开始单线程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	url = <span class="string">&#x27;https://www.teamssix.com&#x27;</span></span><br><span class="line">	html = req_url(url)</span><br><span class="line">	home_page = soup_url(html)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> home_page:</span><br><span class="line">		req_url(i)</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n单线程：&#x27;</span>,end_time - start_time)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    if __name__ == &#39;__main__&#39;:
+        # 开始单线程
+        start_time = time.time()
+        url = &#39;https://www.teamssix.com&#39;
+        html = req_url(url)
+        home_page = soup_url(html)
+        for i in home_page:
+            req_url(i)
+        end_time = time.time()
+        print(&#39;\n单线程：&#39;,end_time - start_time)</code></pre>
 <p>最终运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">单线程： 29.181440114974976</span><br></pre></td></tr></table></figure>
+<pre><code>    单线程： 29.181440114974976</code></pre>
 <p>单线程花费了 29 秒的时间，接下来使用多进程测试一下</p>
 <h1 id="0x04-测试多进程爬取方法"><a href="#0x04-测试多进程爬取方法" class="headerlink" title="0x04 测试多进程爬取方法"></a>0x04 测试多进程爬取方法</h1><p>通过学习发现多进程的用法和多线程还是挺相似的，所以就直接放代码吧，感兴趣的可以看看参考文章。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment"># 开始多进程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	url = <span class="string">&#x27;https://www.teamssix.com&#x27;</span></span><br><span class="line">	pool = Pool(<span class="number">4</span>)</span><br><span class="line">	home_page = soup_url(req_url(url))</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> home_page:</span><br><span class="line">		pool.apply_async(req_url, args=(i,))</span><br><span class="line">	pool.close()</span><br><span class="line">	pool.join()</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n多进程：&#x27;</span>,end_time - start_time)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    if __name__ == &#39;__main__&#39;:
+        # 开始多进程
+        start_time = time.time()
+        url = &#39;https://www.teamssix.com&#39;
+        pool = Pool(4)
+        home_page = soup_url(req_url(url))
+        for i in home_page:
+            pool.apply_async(req_url, args=(i,))
+        pool.close()
+        pool.join()
+        end_time = time.time()
+        print(&#39;\n多进程：&#39;,end_time - start_time)</code></pre>
 <p>最终运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">多进程： 12.674117088317871</span><br></pre></td></tr></table></figure>
+<pre><code>    多进程： 12.674117088317871</code></pre>
 <p>多进程仅用了 12 秒就完成了任务，经过多次测试，发现使用多进程基本上能比单线程快2倍以上。</p>
 <p>为了看到多线程与多进程的差距，这里使用多线程处理了一下上面的操作，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment">#开始多线程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	url = <span class="string">&#x27;https://www.teamssix.com&#x27;</span></span><br><span class="line">	thread_list = []</span><br><span class="line">	home_page = soup_url(req_url(url))</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> home_page:</span><br><span class="line">		t = threading.Thread(target = req_url, args=(i,))</span><br><span class="line">		thread_list.append(t)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> thread_list:</span><br><span class="line">		i.start()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> thread_list:</span><br><span class="line">		i.join()</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n多线程：&#x27;</span>, end_time - start_time)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    if __name__ == &#39;__main__&#39;:
+        #开始多线程
+        start_time = time.time()
+        url = &#39;https://www.teamssix.com&#39;
+        thread_list = []
+        home_page = soup_url(req_url(url))
+        for i in home_page:
+            t = threading.Thread(target = req_url, args=(i,))
+            thread_list.append(t)
+        for i in thread_list:
+            i.start()
+        for i in thread_list:
+            i.join()
+        end_time = time.time()
+        print(&#39;\n多线程：&#39;, end_time - start_time)</code></pre>
 <p>最终运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">多线程： 11.685778141021729</span><br></pre></td></tr></table></figure>
+<pre><code>    多线程： 11.685778141021729</code></pre>
 <p>看到这里可能会觉着，这多线程和多进程爬虫的时间也差不多呀，然而事实并非那么简单。</p>
 <p>由于爬虫的大多数时间都耗在了请求等待响应中，所以在爬虫的时候使用多线程好像快了不少，但我以前写过一个笔记：<a href="https://www.teamssix.com/year/191104-101112.html">不一定有效率GIL</a><br>在这篇文章里演示了如果使用单线程和多线程处理密集计算任务，有时多线程反而会比单线程慢了不少，所以接下来就看看多进程处理密集计算任务的表现。</p>
 <h1 id="0x05-处理密集计算任务耗时对比"><a href="#0x05-处理密集计算任务耗时对比" class="headerlink" title="0x05 处理密集计算任务耗时对比"></a>0x05 处理密集计算任务耗时对比</h1><p>直接上代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time  <span class="comment"># 测试爬取时间</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">math</span>(<span class="params">i</span>):</span></span><br><span class="line">	result2 = <span class="number">2</span> ** i    <span class="comment">#执行幂运算</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment">#开始单线程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1000000001</span>, <span class="number">250000000</span>):</span><br><span class="line">		math(i)</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n单线程：&#x27;</span>,end_time - start_time)</span><br><span class="line"></span><br><span class="line">	<span class="comment">#开始多进程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	pool = Pool(<span class="number">4</span>)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1000000001</span>, <span class="number">250000000</span>):</span><br><span class="line">		pool.apply_async(math, args=(i,))</span><br><span class="line">	pool.close()</span><br><span class="line">	pool.join()</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n多进程：&#x27;</span>,end_time - start_time)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 开始多线程</span></span><br><span class="line">	start_time = time.time()</span><br><span class="line">	thread_list = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1000000001</span>, <span class="number">250000000</span>):</span><br><span class="line">		t = threading.Thread(target = math, args=(i,))</span><br><span class="line">		thread_list.append(t)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> thread_list:</span><br><span class="line">		i.start()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> thread_list:</span><br><span class="line">		i.join()</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">&#x27;\n多线程：&#x27;</span>, end_time - start_time)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">    import time  # 测试爬取时间
+    import threading
+    from multiprocessing import Pool
+
+    def math(i):
+        result2 = 2 ** i    #执行幂运算
+
+
+    if __name__ == &#39;__main__&#39;:
+        #开始单线程
+        start_time = time.time()
+        for i in range(0, 1000000001, 250000000):
+            math(i)
+        end_time = time.time()
+        print(&#39;\n单线程：&#39;,end_time - start_time)
+
+        #开始多进程
+        start_time = time.time()
+        pool = Pool(4)
+        for i in range(0, 1000000001, 250000000):
+            pool.apply_async(math, args=(i,))
+        pool.close()
+        pool.join()
+        end_time = time.time()
+        print(&#39;\n多进程：&#39;,end_time - start_time)
+
+        # 开始多线程
+        start_time = time.time()
+        thread_list = []
+        for i in range(0, 1000000001, 250000000):
+            t = threading.Thread(target = math, args=(i,))
+            thread_list.append(t)
+        for i in thread_list:
+            i.start()
+        for i in thread_list:
+            i.join()
+        end_time = time.time()
+        print(&#39;\n多线程：&#39;, end_time - start_time)</code></pre>
 <p>最终运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">单线程： 20.495169162750244</span><br><span class="line"></span><br><span class="line">多进程： 11.645867347717285</span><br><span class="line"></span><br><span class="line">多线程： 22.07299304008484</span><br></pre></td></tr></table></figure>
+<pre><code>    单线程： 20.495169162750244
+
+    多进程： 11.645867347717285
+
+    多线程： 22.07299304008484</code></pre>
 <p>通过运行结果可以很明显看出，单线程与多线程的耗时差距不大，但是多进程的耗时与之相比几乎快了一倍，所以平时为了提高效率是使用多线程还是多进程，也就很清楚了。</p>
 <p>但如果平时想提高爬虫效率是用多线程还是多进程呢？毕竟他们效率都差不多，那么协程了解一下🧐</p>
 <blockquote>
@@ -921,7 +1009,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

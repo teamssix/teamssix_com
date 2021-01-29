@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    435
+                    421
                 </div>
                 
 
@@ -455,20 +455,35 @@
 <a id="more"></a>
 
 <h1 id="0x01-代码实现"><a href="#0x01-代码实现" class="headerlink" title="0x01 代码实现"></a>0x01 代码实现</h1><p>1、修改<code>templates\booklist.html</code>代码</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原来：<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>&#123;&#123; book.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">现在：<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&#123;&#123; book.id &#125;&#125;/&quot;</span>&gt;</span>&#123;&#123; book.name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span> #通过id值来进行对应书籍人物信息查询</span><br></pre></td></tr></table></figure>
-
+<pre><code class="html">原来：&lt;li&gt;&lt;h1&gt;&lt;a href=&quot;#&quot;&gt;&#123;&#123; book.name &#125;&#125;&lt;/a&gt;&lt;/h1&gt;&lt;/li&gt;
+现在：&lt;li&gt;&lt;h1&gt;&lt;a href=&quot;&#123;&#123; book.id &#125;&#125;/&quot;&gt;&#123;&#123; book.name &#125;&#125;&lt;/a&gt;&lt;/h1&gt;&lt;/li&gt; #通过id值来进行对应书籍人物信息查询</code></pre>
 <p>2、在<code>Book\views.py</code>中新添<code>peoplelist</code>函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">peoplelist</span>(<span class="params">request, book_id</span>):</span>	<span class="comment">#book_id从url中直接传入</span></span><br><span class="line">   book = BookInfo.objects.get(<span class="built_in">id</span>=book_id)	<span class="comment">#通过id查询书籍</span></span><br><span class="line">   people_list = book.peopleinfo_set.<span class="built_in">all</span>()	<span class="comment">#获取书籍中的所有人物</span></span><br><span class="line">   context = &#123;</span><br><span class="line">      <span class="string">&#x27;people_list&#x27;</span>: people_list</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> render(request, <span class="string">&#x27;peoplelist.html&#x27;</span>, context)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def peoplelist(request, book_id):    #book_id从url中直接传入
+   book = BookInfo.objects.get(id=book_id)    #通过id查询书籍
+   people_list = book.peopleinfo_set.all()    #获取书籍中的所有人物
+   context = &#123;
+      &#39;people_list&#39;: people_list
+   &#125;
+   return render(request, &#39;peoplelist.html&#39;, context)</code></pre>
 <p>3、在<code>BookManager\urls.py</code>中新添url规则</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re_path(<span class="string">r&#x27;^booklist/(\d+)/$&#x27;</span>, views.peoplelist), <span class="comment">#(\d+)里的内容将直接传入peoplelist函数中的book_id参数</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">re_path(r&#39;^booklist/(\d+)/$&#39;, views.peoplelist), #(\d+)里的内容将直接传入peoplelist函数中的book_id参数</code></pre>
 <p>如果没有导入re_path需要导入一下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> re_path</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">from django.urls import re_path</code></pre>
 <p>4、新建<code>templates\eoplelist.html</code>文件</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>人物信息<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &#123;% for people in people_list %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; people.name &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &#123;% endfor%&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;人物信息&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;ul&gt;
+    &#123;% for people in people_list %&#125;
+    <li><h1>&#123;&#123; people.name &#125;&#125;</h1></li>
+    &#123;% endfor%&#125;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 <p>5、最后实现功能：</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/12django_note.png.gif"></p>
 <p>6、总结MVT流程</p>
@@ -703,7 +718,11 @@
                     <div class="summary block-with-text">
                         
                             1、在项目根目录下，创建templates目录，在templates下新建index.html文件，PyCharm将自动生成html的文件内容格式。
-12345.├── Book├── BookManager└── templates   
+.
+├── Book
+├── BookManager
+└── templates
+    
                         
                     </div>
                     <div class="publish-info">
@@ -921,7 +940,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

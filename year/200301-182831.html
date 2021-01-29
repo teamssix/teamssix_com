@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    257
+                    256
                 </div>
                 
 
@@ -449,19 +449,37 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>1、在项目根目录下，创建<code>templates</code>目录，在<code>templates</code>下新建<code>index.html</code>文件，PyCharm将自动生成html的文件内容格式。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Book</span><br><span class="line">├── BookManager</span><br><span class="line">└── templates</span><br><span class="line">    └── index.html</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">.
+├── Book
+├── BookManager
+└── templates
+    └── index.html</code></pre>
 <a id="more"></a>
 
 <p>2、编辑<code>setting.py</code>文件第58行，修改<code>TEMPLATES</code>内容如下，目的是添加<code>templates</code>路径，好让接下来程序能够找到<code>index.html</code>文件。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;DIRS&#x27;</span>: [os.path.join(BASE_DIR,<span class="string">&#x27;templates&#x27;</span>)],</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">&#39;DIRS&#39;: [os.path.join(BASE_DIR,&#39;templates&#39;)],</code></pre>
 <p>3、修改<code>view.py</code>文件如下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">	context=&#123;</span><br><span class="line">		<span class="string">&#x27;H1&#x27;</span>:<span class="string">&#x27;OK!&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;H2&#x27;</span>:<span class="string">&#x27;-- By TeamsSix&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> render(request,<span class="string">&#x27;index.html&#x27;</span>,context)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">from django.shortcuts import render
+from django.http import HttpResponse
 
+def index(request):
+    context=&#123;
+        &#39;H1&#39;:&#39;OK!&#39;,
+        &#39;H2&#39;:&#39;-- By TeamsSix&#39;
+    &#125;
+    return render(request,&#39;index.html&#39;,context)</code></pre>
 <p>4、修改<code>index.html</code>文件如下。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">H1</span> <span class="attr">style</span>=<span class="string">&quot;color:red;&quot;</span>&gt;</span>&#123;&#123; H1 &#125;&#125;<span class="tag">&lt;/<span class="name">H1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">H2</span> <span class="attr">style</span>=<span class="string">&quot;color:limegreen;&quot;</span>&gt;</span>&#123;&#123; H2 &#125;&#125;<span class="tag">&lt;/<span class="name">H2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;H1 style=&quot;color:red;&quot;&gt;&#123;&#123; H1 &#125;&#125;&lt;/H1&gt;
+&lt;H2 style=&quot;color:limegreen;&quot;&gt;&#123;&#123; H2 &#125;&#125;&lt;/H2&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 <p>5、此时，刷新浏览器。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/10django_note.png"></p>
 <p>6、视图与<code>templates</code>的总结</p>
@@ -926,7 +944,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

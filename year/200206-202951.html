@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    357
+                    350
                 </div>
                 
 
@@ -449,22 +449,20 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近在写一个爬虫代码，里面需要使用 get 传参中文，但是如果直接使用中文而不对其编码的话，程序将会报错。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeEncodeError: &#39;latin-1&#39; codec can&#39;t encode characters in position 38-39: ordinal not in range(256)</span><br></pre></td></tr></table></figure>
-
+<pre><code>UnicodeEncodeError: &#39;latin-1&#39; codec can&#39;t encode characters in position 38-39: ordinal not in range(256)</code></pre>
 <a id="more"></a>
 
 <h1 id="0x01-网上的一些解决办法"><a href="#0x01-网上的一些解决办法" class="headerlink" title="0x01 网上的一些解决办法"></a>0x01 网上的一些解决办法</h1><p>参考网上的解决办法，比如下面的几种办法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、在中文后加上&quot;.encode(&#39;GBK&#39;)&quot;</span><br><span class="line">2、在文件头部加上&quot;＃coding &#x3D; utf-8&quot;</span><br><span class="line">3、在中文后加上&quot;.encode(&#39;utf-8&#39;)&quot;</span><br></pre></td></tr></table></figure>
-
+<pre><code>1、在中文后加上&quot;.encode(&#39;GBK&#39;)&quot;
+2、在文件头部加上&quot;＃coding = utf-8&quot;
+3、在中文后加上&quot;.encode(&#39;utf-8&#39;)&quot;</code></pre>
 <p>这几种方法在我这里都行不通，抓包也可以看到数据包里的中文并不是我们想象的经过 URL 编码的字符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;test&#x3D;b&#39;%5Cxe6%5Cxb5%5Cx8b%5Cxe8%5Cxaf%5Cx95&#39; HTTP&#x2F;1.1</span><br></pre></td></tr></table></figure>
-
+<pre><code>GET /test=b&#39;%5Cxe6%5Cxb5%5Cx8b%5Cxe8%5Cxaf%5Cx95&#39; HTTP/1.1</code></pre>
 <h1 id="0x02-可行的办法"><a href="#0x02-可行的办法" class="headerlink" title="0x02 可行的办法"></a>0x02 可行的办法</h1><p>最后才意识到，其实并不需要对中文进行 GBK、UTF-8 转码，而应该对其进行 URL 编码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from urllib.parse import quote</span><br><span class="line">text &#x3D; quote(&quot;测试&quot;, &#39;utf-8&#39;)</span><br></pre></td></tr></table></figure>
-
+<pre><code>from urllib.parse import quote
+text = quote(&quot;测试&quot;, &#39;utf-8&#39;)</code></pre>
 <p>利用 quote 函数对 “测试” 进行 URL 编码后，再次抓包可以看到中文部分已经是 URL 格式了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;test&#x3D;%E6%B5%8B%E8%AF%95 HTTP&#x2F;1.1</span><br></pre></td></tr></table></figure>
-
+<pre><code>GET /test=%E6%B5%8B%E8%AF%95 HTTP/1.1</code></pre>
 <p>此时，程序也不再报错，可以顺利执行了。</p>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>本文原文地址：<a href="https://www.teamssix.com/year/200206-202951.html">https://www.teamssix.com/year/200206-202951.html</a><br>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33876553/article/details/79730246">https://blog.csdn.net/qq_33876553/article/details/79730246</a></p>
@@ -904,7 +902,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

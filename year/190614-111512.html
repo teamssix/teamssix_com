@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    500
+                    497
                 </div>
                 
 
@@ -450,12 +450,12 @@
             <div id="articleContent">
                 <h1 id="0x00-未修改"><a href="#0x00-未修改" class="headerlink" title="0x00 未修改"></a>0x00 未修改</h1><a id="more"></a>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili1.png"></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;no&quot;</span> <span class="attr">border</span>=<span class="string">&quot;0&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;no&quot;</span> <span class="attr">framespacing</span>=<span class="string">&quot;0&quot;</span> <span class="attr">allowfullscreen</span>=<span class="string">&quot;true&quot;</span>&gt;</span> <span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="html">&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt; &lt;/iframe&gt;</code></pre>
 <p>直接将B站中的视频插入地址放入文章MarkDown中的效果如下：</p>
 <iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>  
 
 <p>这个视频也太小了，而且不能全屏，很难受，于是在网上看到有人用自定义调节视频的高宽。</p>
-<h1 id="0x01-自定义高宽"><a href="#0x01-自定义高宽" class="headerlink" title="0x01 自定义高宽"></a>0x01 自定义高宽</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot;</span> <span class="attr">width</span>=<span class="string">&quot;780&quot;</span> <span class="attr">height</span>=<span class="string">&quot;480&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;no&quot;</span> <span class="attr">border</span>=<span class="string">&quot;0&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;no&quot;</span> <span class="attr">framespacing</span>=<span class="string">&quot;0&quot;</span> <span class="attr">allowfullscreen</span>=<span class="string">&quot;true&quot;</span>&gt;</span> <span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x01-自定义高宽"><a href="#0x01-自定义高宽" class="headerlink" title="0x01 自定义高宽"></a>0x01 自定义高宽</h1><pre><code class="html">&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; width=&quot;780&quot; height=&quot;480&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&gt; &lt;/iframe&gt;</code></pre>
 <p>就是在原来的基础上加入了宽高，效果类似这样：</p>
 <iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" width="780" height="480" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>  
 
@@ -463,7 +463,7 @@
 <p>自定义调节视频高宽虽然可以解决这个问题，但是手机上又是另一翻景象，你看：  </p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/bilibili2.png"></p>
 <p>这就更难受了，于是在网上找遍各种自适应视频大小的方案，最终找到以下这种方案。</p>
-<h1 id="0x02-自适应视频大小"><a href="#0x02-自适应视频大小" class="headerlink" title="0x02 自适应视频大小"></a>0x02 自适应视频大小</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot;</span> <span class="attr">scrolling</span>=<span class="string">&quot;no&quot;</span> <span class="attr">border</span>=<span class="string">&quot;0&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;no&quot;</span> <span class="attr">framespacing</span>=<span class="string">&quot;0&quot;</span> <span class="attr">allowfullscreen</span>=<span class="string">&quot;true&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;</span>&gt;</span> <span class="tag">&lt;/<span class="name">iframe</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x02-自适应视频大小"><a href="#0x02-自适应视频大小" class="headerlink" title="0x02 自适应视频大小"></a>0x02 自适应视频大小</h1><pre><code class="html">&lt;div style=&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;&gt;&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; style=&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;&gt; &lt;/iframe&gt;&lt;/div&gt;</code></pre>
 <p>只需要把你的视频地址和上面的视频地址替换一下就行，最后效果如下：</p>
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>  
 
@@ -684,7 +684,7 @@
                         
                             0x00 下载视频下载脚本首先来到我的Github主页，找到Douluo-download项目，点开找到下载地址，使用git clone对其进行下载
 
-1git clone https://github.com/teamssix/Doulu
+git clone https://github.com/teamssix/Douluo
                         
                     </div>
                     <div class="publish-info">
@@ -902,7 +902,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

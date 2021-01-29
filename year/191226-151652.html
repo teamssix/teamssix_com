@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    723
+                    721
                 </div>
                 
 
@@ -449,19 +449,77 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="0x00-写在前面"><a href="#0x00-写在前面" class="headerlink" title="0x00 写在前面"></a>0x00 写在前面</h1><p>在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl  -s LOG_FILE&#x3D;all.log</span><br></pre></td></tr></table></figure>
+<pre><code>scrapy crawl blogurl  -s LOG_FILE=all.log</code></pre>
 <a id="more"></a>
 <p>也就是在原来的基础上加上一个 -s 参数，这样调试信息就会保存到参数指定的文件中，不过也可以在 class 下添加下面的代码，这样只会显示调试出现错误的信息，所以这种方式就不用加 -s 了，至于选择哪一个，就需要​视情况而定。​</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">custom_settings &#x3D; &#123;&#39;LOG_LEVEL&#39;:&#39;ERROR&#39;&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>custom_settings = &#123;&#39;LOG_LEVEL&#39;:&#39;ERROR&#39;&#125;</code></pre>
 <h1 id="0x01-编写子页面爬取代码"><a href="#0x01-编写子页面爬取代码" class="headerlink" title="0x01 编写子页面爬取代码"></a>0x01 编写子页面爬取代码</h1><p>先来看一行关键代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">yield</span> scrapy.Request(url,callback=self.sub_article)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">yield scrapy.Request(url,callback=self.sub_article)</code></pre>
 <p>上面这行代码中，使用 yield 返回利用 scrapy 请求 url 所获得的数据，并将数据通过 callback 传递到 sub_article 函数中。</p>
 <p>其实对于 yield 和 return 都可以返回数据，但是利用 yield 返回数据后，还可以继续运行下面的代码，而使用 return 后，接下来的代码就不会再运行了，在 scrapy 中，如果使用 return 返回数据再用 list 存储数据，会造成不少的内存消耗，而使用 yield 则可以减少这些不必要的内存浪费。</p>
 <p>所以接下来在 sub_article 函数中写上我们爬取子页面的代码即可，这里就爬取每个文章的标题和目录作为示例了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sub_article</span>(<span class="params">self,response</span>):</span></span><br><span class="line">   soup = BeautifulSoup(response.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">   print(<span class="string">&#x27;\n&#x27;</span>,soup.select(<span class="string">&#x27;.title&#x27;</span>)[<span class="number">0</span>].text)</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">&#x27;.toc-text&#x27;</span>):</span><br><span class="line">      print(<span class="string">&#x27;\t&#x27;</span>,i.text)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">def sub_article(self,response):
+   soup = BeautifulSoup(response.text,&#39;html.parser&#39;)
+   print(&#39;\n&#39;,soup.select(&#39;.title&#39;)[0].text)
+   for i in soup.select(&#39;.toc-text&#39;):
+      print(&#39;\t&#39;,i.text)</code></pre>
 <p>运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">~# scrapy crawl blogurl  -s LOG_FILE&#x3D;all.log</span><br><span class="line">【漏洞笔记】Robots.txt站点文件</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 漏洞描述</span><br><span class="line">         0x02 漏洞危害</span><br><span class="line">         0x03 修复建议</span><br><span class="line">【经验总结】常见的HTTP方法</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 GET</span><br><span class="line">         0x02 HEAD</span><br><span class="line">         0x03 POST</span><br><span class="line">         0x04 PUT</span><br><span class="line">         0x05 DELETE</span><br><span class="line">         0x06 CONNECT</span><br><span class="line">         0x07 OPTIONS</span><br><span class="line">         0x08 TRACE</span><br><span class="line">         0x09 PATCH</span><br><span class="line">【漏洞笔记】Host头攻击</span><br><span class="line">         0x00 概述</span><br><span class="line">         0x01 漏洞描述</span><br><span class="line">         0x02 漏洞危害</span><br><span class="line">         0x03 修复建议</span><br><span class="line">【直播笔记】白帽子的成长之路</span><br><span class="line">【Python 学习笔记】 异步IO (asyncio) 协程</span><br><span class="line">         0x00 前言</span><br><span class="line">         0x01 基本用法</span><br><span class="line">……省略……</span><br></pre></td></tr></table></figure>
-<h1 id="0x02-完整代码"><a href="#0x02-完整代码" class="headerlink" title="0x02 完整代码"></a>0x02 完整代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlogSpider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">   name = <span class="string">&#x27;blogurl&#x27;</span></span><br><span class="line">   start_urls = [<span class="string">&#x27;https://www.teamssix.com&#x27;</span>]</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self,response</span>):</span></span><br><span class="line">      soup = BeautifulSoup(response.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">&#x27;.post-title&#x27;</span>):</span><br><span class="line">         url = <span class="string">&#x27;https://www.teamssix.com&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(i[<span class="string">&#x27;href&#x27;</span>])</span><br><span class="line">         <span class="keyword">yield</span> scrapy.Request(url,callback=self.sub_article)</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">sub_article</span>(<span class="params">self,response</span>):</span></span><br><span class="line">      soup = BeautifulSoup(response.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">      title = self.article_title(soup)</span><br><span class="line">      <span class="built_in">list</span> = self.article_list(soup)</span><br><span class="line">      print(title)</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">         print(<span class="string">&#x27;\t&#x27;</span>,i)</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">article_title</span>(<span class="params">self,soup</span>):</span></span><br><span class="line">      <span class="keyword">return</span> soup.select(<span class="string">&#x27;.title&#x27;</span>)[<span class="number">0</span>].text</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">article_list</span>(<span class="params">self,soup</span>):</span></span><br><span class="line">      <span class="built_in">list</span> = []</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">&#x27;.toc-text&#x27;</span>):</span><br><span class="line">         <span class="built_in">list</span>.append(i.text)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">list</span></span><br></pre></td></tr></table></figure>
+<pre><code>~# scrapy crawl blogurl  -s LOG_FILE=all.log
+【漏洞笔记】Robots.txt站点文件
+         0x00 概述
+         0x01 漏洞描述
+         0x02 漏洞危害
+         0x03 修复建议
+【经验总结】常见的HTTP方法
+         0x00 概述
+         0x01 GET
+         0x02 HEAD
+         0x03 POST
+         0x04 PUT
+         0x05 DELETE
+         0x06 CONNECT
+         0x07 OPTIONS
+         0x08 TRACE
+         0x09 PATCH
+【漏洞笔记】Host头攻击
+         0x00 概述
+         0x01 漏洞描述
+         0x02 漏洞危害
+         0x03 修复建议
+【直播笔记】白帽子的成长之路
+【Python 学习笔记】 异步IO (asyncio) 协程
+         0x00 前言
+         0x01 基本用法
+……省略……</code></pre>
+<h1 id="0x02-完整代码"><a href="#0x02-完整代码" class="headerlink" title="0x02 完整代码"></a>0x02 完整代码</h1><pre><code class="python">import scrapy
+from bs4 import BeautifulSoup
+
+class BlogSpider(scrapy.Spider):
+   name = &#39;blogurl&#39;
+   start_urls = [&#39;https://www.teamssix.com&#39;]
+
+   def parse(self,response):
+      soup = BeautifulSoup(response.text,&#39;html.parser&#39;)
+      for i in soup.select(&#39;.post-title&#39;):
+         url = &#39;https://www.teamssix.com&#123;&#125;&#39;.format(i[&#39;href&#39;])
+         yield scrapy.Request(url,callback=self.sub_article)
+
+   def sub_article(self,response):
+      soup = BeautifulSoup(response.text,&#39;html.parser&#39;)
+      title = self.article_title(soup)
+      list = self.article_list(soup)
+      print(title)
+      for i in list:
+         print(&#39;\t&#39;,i)
+
+   def article_title(self,soup):
+      return soup.select(&#39;.title&#39;)[0].text
+
+   def article_list(self,soup):
+      list = []
+      for i in soup.select(&#39;.toc-text&#39;):
+         list.append(i.text)
+      return list</code></pre>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
@@ -684,9 +742,10 @@
                     <div class="summary block-with-text">
                         
                             0x00 新建项目在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：
-1scrapy startproject teamssix
+scrapy startproject teamssix
 命令运行后，会自动在当前目录下生成许多文件，如下所示：
-1234567891
+teamssix
+  
                         
                     </div>
                     <div class="publish-info">
@@ -904,7 +963,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

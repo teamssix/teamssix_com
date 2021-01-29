@@ -426,14 +426,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    9 分
                 </div>
                 
 
@@ -462,12 +462,15 @@
 <p>在 FreeBuf 上也有其对应的中文介绍：<a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/245292.html">https://www.freebuf.com/sectool/245292.html</a></p>
 </blockquote>
 <h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><h2 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h2><p>需要有 docker、docker-compose、make 环境</p>
-<h2 id="2、下载项目"><a href="#2、下载项目" class="headerlink" title="2、下载项目"></a>2、下载项目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;yogeshojha&#x2F;reNgine.git</span><br></pre></td></tr></table></figure>
-
-<h2 id="3、开始安装"><a href="#3、开始安装" class="headerlink" title="3、开始安装"></a>3、开始安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd reNgine</span><br><span class="line">make certs		#使用https访问，个人觉着可省略</span><br><span class="line">make build		#构建项目</span><br><span class="line">make up			#启动项目</span><br><span class="line">make username	#创建登陆用户</span><br></pre></td></tr></table></figure>
-
-<h2 id="4、更新"><a href="#4、更新" class="headerlink" title="4、更新"></a>4、更新</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">make build</span><br><span class="line">make up</span><br></pre></td></tr></table></figure>
-
+<h2 id="2、下载项目"><a href="#2、下载项目" class="headerlink" title="2、下载项目"></a>2、下载项目</h2><pre><code>git clone https://github.com/yogeshojha/reNgine.git</code></pre>
+<h2 id="3、开始安装"><a href="#3、开始安装" class="headerlink" title="3、开始安装"></a>3、开始安装</h2><pre><code>cd reNgine
+make certs        #使用https访问，个人觉着可省略
+make build        #构建项目
+make up            #启动项目
+make username    #创建登陆用户</code></pre>
+<h2 id="4、更新"><a href="#4、更新" class="headerlink" title="4、更新"></a>4、更新</h2><pre><code>git pull
+make build
+make up</code></pre>
 <p>看起来是非常的简单，但是对于在国内的我们来说，这其中包含了不少的坑。</p>
 <h1 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h1><p>由于是老外写的东西，在这款工具安装过程中也引用下载了很多国外的文件，所以难免包含了一些被墙的东西。</p>
 <p>最初在本地安装报错、安装报错这样过了几天之后就懒得整了，最后直接在国外的 vps 上去安装了，然后几分钟，真的就只要几分钟就安装好了。</p>
@@ -476,25 +479,39 @@
 <h1 id="0x03-问题"><a href="#0x03-问题" class="headerlink" title="0x03 问题"></a>0x03 问题</h1><h2 id="1、下载安装很慢"><a href="#1、下载安装很慢" class="headerlink" title="1、下载安装很慢"></a>1、下载安装很慢</h2><p>一开始是以为 docker 下载慢的原因，所以试着给 docker 加代理，又或者给 docker-compose 加代理等等方法都不行。最后试了亿下后，意识到应该是 Dockers 容器里下载文件比较慢，之后修改了 reNgine 项目目录下的 Dockerfile 文件才解决了这个问题。</p>
 <p>通过观察发现，在 build 的过程中，会访问默认系统镜像源下载安装文件，同时也会访问 pip 默认镜像源下载安装文件，因此我们只需要把这两个默认的镜像源替换成国内的就可以了。</p>
 <p>打开 Dockerfile 文件，在第一个 <code>RUN</code> 命令前，加上以下命令。修改后，下面的命令在我这里是 Dockerfile 文件的第 13 行左右的样子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RUN sed -i &#39;s&#x2F;dl-cdn.alpinelinux.org&#x2F;mirrors.aliyun.com&#x2F;g&#39; &#x2F;etc&#x2F;apk&#x2F;repositories \</span><br><span class="line">    &amp;&amp; mkdir ~&#x2F;.pip&#x2F; \</span><br><span class="line">    &amp;&amp; echo &#39;[global]&#39; &gt; ~&#x2F;.pip&#x2F;pip.conf \</span><br><span class="line">    &amp;&amp; echo &#39;index-url &#x3D; https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;&#39; &gt;&gt; ~&#x2F;.pip&#x2F;pip.conf</span><br></pre></td></tr></table></figure>
-
+<pre><code>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#39; /etc/apk/repositories \
+    &amp;&amp; mkdir ~/.pip/ \
+    &amp;&amp; echo &#39;[global]&#39; &gt; ~/.pip/pip.conf \
+    &amp;&amp; echo &#39;index-url = https://mirrors.aliyun.com/pypi/simple/&#39; &gt;&gt; ~/.pip/pip.conf</code></pre>
 <p>上面的命令在我理解就是把 Docker 容器中的 <code>/etc/apk/repositories</code> 文件里的 <code>dl-cdn.alpinelinux.org</code> 字符串替换成了 <code>mirrors.aliyun.com</code> ，以达到将系统默认镜像源替换成阿里云镜像源的目的。</p>
 <p>之后创建 <code>~/.pip/pip.conf</code> 文件，并添加阿里云 pip 源，以达到替换 pip 源的目的。</p>
 <p>当然如果有不喜欢阿里云源的同学可以换成其他家的源。</p>
 <h2 id="2、go-get-被墙"><a href="#2、go-get-被墙" class="headerlink" title="2、go get 被墙"></a>2、go get 被墙</h2><p>在默认配置下，直接使用 <code>make build</code> ，我在进行到第 12 步的时候报了下面这个错误。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Step 12&#x2F;24 : RUN go get -u github.com&#x2F;tomnomnom&#x2F;assetfinder github.com&#x2F;hakluke&#x2F;hakrawler github.com&#x2F;haccer&#x2F;subjack</span><br><span class="line"> ---&gt; Running in e38c60f832f0</span><br><span class="line">package golang.org&#x2F;x&#x2F;net&#x2F;html: unrecognized import path &quot;golang.org&#x2F;x&#x2F;net&#x2F;html&quot; (https fetch: Get https:&#x2F;&#x2F;golang.org&#x2F;x&#x2F;net&#x2F;html?go-get&#x3D;1: dial tcp 216.239.37.1:443: connect: connection refused)</span><br><span class="line">package golang.org&#x2F;x&#x2F;net&#x2F;html&#x2F;charset: unrecognized import path &quot;golang.org&#x2F;x&#x2F;net&#x2F;html&#x2F;charset&quot; (https fetch: Get https:&#x2F;&#x2F;golang.org&#x2F;x&#x2F;net&#x2F;html&#x2F;charset?go-get&#x3D;1: dial tcp 216.239.37.1:443: connect: connection refused)</span><br><span class="line">package google.golang.org&#x2F;appengine&#x2F;urlfetch: unrecognized import path &quot;google.golang.org&#x2F;appengine&#x2F;urlfetch&quot; (https fetch: Get https:&#x2F;&#x2F;google.golang.org&#x2F;appengine&#x2F;urlfetch?go-get&#x3D;1: dial tcp 216.239.37.1:443: connect: connection refused)</span><br><span class="line">package golang.org&#x2F;x&#x2F;text&#x2F;encoding: unrecognized import path &quot;golang.org&#x2F;x&#x2F;text&#x2F;encoding&quot; (https fetch: Get https:&#x2F;&#x2F;golang.org&#x2F;x&#x2F;text&#x2F;encoding?go-get&#x3D;1: dial tcp 216.239.37.1:443: connect: connection refused)</span><br></pre></td></tr></table></figure>
-
+<pre><code>Step 12/24 : RUN go get -u github.com/tomnomnom/assetfinder github.com/hakluke/hakrawler github.com/haccer/subjack
+ ---&gt; Running in e38c60f832f0
+package golang.org/x/net/html: unrecognized import path &quot;golang.org/x/net/html&quot; (https fetch: Get https://golang.org/x/net/html?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
+package golang.org/x/net/html/charset: unrecognized import path &quot;golang.org/x/net/html/charset&quot; (https fetch: Get https://golang.org/x/net/html/charset?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
+package google.golang.org/appengine/urlfetch: unrecognized import path &quot;google.golang.org/appengine/urlfetch&quot; (https fetch: Get https://google.golang.org/appengine/urlfetch?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
+package golang.org/x/text/encoding: unrecognized import path &quot;golang.org/x/text/encoding&quot; (https fetch: Get https://golang.org/x/text/encoding?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)</code></pre>
 <p>后来去网站查了亿下，是因为在使用 <code>go get</code>命令获取资源会被墙的关系。知道了原因就好办了，我们只要加代理就行了。</p>
 <p>在 reNgine 项目目录下的 Dockerfile 文件中找到 <code># Download Go packages</code> 这一行，在这一行的下面添加以下两条命令，此时 go get 就会去走代理，访问 <code>goproxy.io</code> 这个镜像下载资源了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENV GO111MODULE&#x3D;on</span><br><span class="line">ENV GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.io</span><br></pre></td></tr></table></figure>
-
+<pre><code>ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.io</code></pre>
 <blockquote>
 <p>如果发现 goproxy.io 无法访问，可以试试 gocenter.io 这个代理</p>
 </blockquote>
 <p>再次执行 <code>make build</code> ，就会发现第 12 步成功运行，但这还没完，报错依旧继续。</p>
 <h2 id="3、安装-psycopg2-报错"><a href="#3、安装-psycopg2-报错" class="headerlink" title="3、安装 psycopg2 报错"></a>3、安装 psycopg2 报错</h2><p>在继续安装的过程中，又给我报了这些问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Building wheel for psycopg2 (setup.py): started</span><br><span class="line">  Building wheel for psycopg2 (setup.py): finished with status &#39;error&#39;</span><br><span class="line">  ERROR: Command errored out with exit status 1:</span><br><span class="line">   command: &#x2F;usr&#x2F;local&#x2F;bin&#x2F;python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] &#x3D; &#39;&quot;&#39;&quot;&#39;&#x2F;tmp&#x2F;pip-install-eps_y188&#x2F;psycopg2&#x2F;setup.py&#39;&quot;&#39;&quot;&#39;; __file__&#x3D;&#39;&quot;&#39;&quot;&#39;&#x2F;tmp&#x2F;pip-install-eps_y188&#x2F;psycopg2&#x2F;setup.py&#39;&quot;&#39;&quot;&#39;;f&#x3D;getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code&#x3D;f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; bdist_wheel -d &#x2F;tmp&#x2F;pip-wheel-fisuy49f</span><br><span class="line">       cwd: &#x2F;tmp&#x2F;pip-install-eps_y188&#x2F;psycopg2&#x2F;</span><br><span class="line">……</span><br><span class="line">Moving to &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.8&#x2F;site-packages&#x2F;psycopg2&#x2F;</span><br><span class="line">   from &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.8&#x2F;site-packages&#x2F;~sycopg2</span><br><span class="line">ERROR: Command errored out with exit status 1: &#x2F;usr&#x2F;local&#x2F;bin&#x2F;python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] &#x3D; &#39;&quot;&#39;&quot;&#39;&#x2F;tmp&#x2F;pip-install-kwlcc4ta&#x2F;psycopg2&#x2F;setup.py&#39;&quot;&#39;&quot;&#39;; __file__&#x3D;&#39;&quot;&#39;&quot;&#39;&#x2F;tmp&#x2F;pip-install-kwlcc4ta&#x2F;psycopg2&#x2F;setup.py&#39;&quot;&#39;&quot;&#39;;f&#x3D;getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code&#x3D;f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; install --record &#x2F;tmp&#x2F;pip-record-r7w9n2l8&#x2F;install-record.txt --single-version-externally-managed --compile --install-headers &#x2F;usr&#x2F;local&#x2F;include&#x2F;python3.8&#x2F;psycopg2 Check the logs for full command output.</span><br><span class="line">The command &#39;&#x2F;bin&#x2F;sh -c pip3 install -r &#x2F;tmp&#x2F;requirements.txt&#39; returned a non-zero code: 1</span><br></pre></td></tr></table></figure>
-
+<pre><code>Building wheel for psycopg2 (setup.py): started
+  Building wheel for psycopg2 (setup.py): finished with status &#39;error&#39;
+  ERROR: Command errored out with exit status 1:
+   command: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; bdist_wheel -d /tmp/pip-wheel-fisuy49f
+       cwd: /tmp/pip-install-eps_y188/psycopg2/
+……
+Moving to /usr/local/lib/python3.8/site-packages/psycopg2/
+   from /usr/local/lib/python3.8/site-packages/~sycopg2
+ERROR: Command errored out with exit status 1: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; install --record /tmp/pip-record-r7w9n2l8/install-record.txt --single-version-externally-managed --compile --install-headers /usr/local/include/python3.8/psycopg2 Check the logs for full command output.
+The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned a non-zero code: 1</code></pre>
 <p>最初判断可能是因为源的问题，但是后来发现不管是默认的源还是国内源都会报错。</p>
 <p>然后觉着可能还是和之前两个问题一样需要修改 Dockerfile 文件，但是在修改了无数次 Dockerfile 文件后发现都不行。</p>
 <p>直到最后判断可能是版本问题，于是把 reNgine 目录下的 requirements.txt 文件里 psycopg2 后的版本号删除，再运行果然就可以了。</p>
@@ -938,7 +955,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

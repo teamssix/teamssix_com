@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    367
+                    370
                 </div>
                 
 
@@ -472,14 +472,31 @@
 <li>定义视图函数：响应字符串<code>OK!</code>给客户端</li>
 </ul>
 <p>首先修改<code>views.py</code>文件，添加响应内容，修改后如下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/views.py</span></span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">request</span>):</span></span><br><span class="line">	<span class="keyword">return</span> HttpResponse(<span class="string">&#x27;OK!    -- By TeamsSix&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python"># BookManager/Book/views.py
+from django.http import HttpResponse
 
+def index(request):
+    return HttpResponse(&#39;OK!    -- By TeamsSix&#39;)</code></pre>
 <h1 id="0x01、配置URL"><a href="#0x01、配置URL" class="headerlink" title="0x01、配置URL"></a>0x01、配置URL</h1><p>之后再修改<code>urls.py</code>文件，添加<code>path(&#39;&#39;, views.index),</code>，完整的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/BookManager/urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> Book <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">	path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">	path(<span class="string">&#x27;&#x27;</span>, views.index),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<pre><code class="python"># BookManager/BookManager/urls.py
+from django.contrib import admin
+from django.urls import path
+from Book import views
 
+urlpatterns = [
+    path(&#39;admin/&#39;, admin.site.urls),
+    path(&#39;&#39;, views.index),
+]</code></pre>
 <p>此时，当我们访问<code>127.0.0.1:8000</code>的时候，代码运行顺序是这样的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	  HttpRequest</span><br><span class="line">		↓ ↓ ↓</span><br><span class="line">ROOT_URLCONF = <span class="string">&#x27;BookManager.urls&#x27;</span>	<span class="comment"># /BookManager/settings.py</span></span><br><span class="line">		↓ ↓ ↓</span><br><span class="line">path(<span class="string">&#x27;&#x27;</span>, views.index),	<span class="comment"># /BookManager/urls.py</span></span><br><span class="line">		↓ ↓ ↓</span><br><span class="line"><span class="keyword">return</span> HttpResponse(<span class="string">&#x27;OK!    -- By TeamsSix&#x27;</span>)	<span class="comment"># /Book/views.py</span></span><br><span class="line">		↓ ↓ ↓</span><br><span class="line">      HttpResponse</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">      HttpRequest
+        ↓ ↓ ↓
+ROOT_URLCONF = &#39;BookManager.urls&#39;    # /BookManager/settings.py
+        ↓ ↓ ↓
+path(&#39;&#39;, views.index),    # /BookManager/urls.py
+        ↓ ↓ ↓
+return HttpResponse(&#39;OK!    -- By TeamsSix&#39;)    # /Book/views.py
+        ↓ ↓ ↓
+      HttpResponse</code></pre>
 <p>最终，浏览器将顺利返回我们的<code>HttpResponse</code></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/9django_note.png"></p>
 <blockquote>
@@ -646,7 +663,11 @@
                     <div class="summary block-with-text">
                         
                             1、在项目根目录下，创建templates目录，在templates下新建index.html文件，PyCharm将自动生成html的文件内容格式。
-12345.├── Book├── BookManager└── templates   
+.
+├── Book
+├── BookManager
+└── templates
+    
                         
                     </div>
                     <div class="publish-info">
@@ -926,7 +947,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

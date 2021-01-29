@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    781
+                    782
                 </div>
                 
 
@@ -450,21 +450,40 @@
             <div id="articleContent">
                 <h1 id="0x00-下载视频下载脚本"><a href="#0x00-下载视频下载脚本" class="headerlink" title="0x00 下载视频下载脚本"></a>0x00 下载视频下载脚本</h1><p>首先来到我的<a target="_blank" rel="noopener" href="http://www.github.com/teamssix/">Github主页</a>，找到Douluo-download项目，点开找到<a target="_blank" rel="noopener" href="https://github.com/teamssix/Douluo-download.git">下载地址</a>，使用git clone对其进行下载</p>
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/teamssix/Douluo-download.git</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">git clone https://github.com/teamssix/Douluo-download.git</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo1.png"></p>
-<h1 id="0x01-安装python所需要的库"><a href="#0x01-安装python所需要的库" class="headerlink" title="0x01 安装python所需要的库"></a>0x01 安装python所需要的库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> Douluo-download/</span><br><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<h1 id="0x01-安装python所需要的库"><a href="#0x01-安装python所需要的库" class="headerlink" title="0x01 安装python所需要的库"></a>0x01 安装python所需要的库</h1><pre><code class="bash">cd Douluo-download/
+pip3 install -r requirements.txt</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo2.png"></p>
-<h1 id="0x02-执行Python程序"><a href="#0x02-执行Python程序" class="headerlink" title="0x02 执行Python程序"></a>0x02 执行Python程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 douluo.py</span><br></pre></td></tr></table></figure>
+<h1 id="0x02-执行Python程序"><a href="#0x02-执行Python程序" class="headerlink" title="0x02 执行Python程序"></a>0x02 执行Python程序</h1><pre><code class="bash">python3 douluo.py</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo3.png"><br>程序在执行的时候会感觉比较慢，其实不是卡了，而是程序正在下载视频，当下载好一个视频才会弹出一条信息。</p>
 <h1 id="0x03-查看成果"><a href="#0x03-查看成果" class="headerlink" title="0x03 查看成果"></a>0x03 查看成果</h1><p>执行ls命令可以看到刚才下载的视频<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo4.png"><br>播放看看能不能正常播放<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo5.png"><br>可以看到是可以正常播放的，不过我想试试最新的一集，也就是看看需要会员的视频能不能下载下来，当前最新的一集是55集，那我们下载试试。</p>
 <h1 id="0x04-继续尝试下载VIP视频"><a href="#0x04-继续尝试下载VIP视频" class="headerlink" title="0x04 继续尝试下载VIP视频"></a>0x04 继续尝试下载VIP视频</h1><p>知道下载那一集后还需要修改一下代码才行，将原来下载视频的代码简单做一下修改就行<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo6.png"><br>执行看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo7.png"><br>看来不行，只能下载到预告片，接下来就对代码就行简单的介绍吧</p>
-<h1 id="0x05-代码简单介绍"><a href="#0x05-代码简单介绍" class="headerlink" title="0x05 代码简单介绍"></a>0x05 代码简单介绍</h1><h2 id="1、第一部分：导入库设定变量"><a href="#1、第一部分：导入库设定变量" class="headerlink" title="1、第一部分：导入库设定变量"></a>1、第一部分：导入库设定变量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入库设定变量</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">home_url =<span class="string">&#x27;https://v.qq.com/x/cover/m441e3rjq9kwpsc/m00253deqqo.html&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="0x05-代码简单介绍"><a href="#0x05-代码简单介绍" class="headerlink" title="0x05 代码简单介绍"></a>0x05 代码简单介绍</h1><h2 id="1、第一部分：导入库设定变量"><a href="#1、第一部分：导入库设定变量" class="headerlink" title="1、第一部分：导入库设定变量"></a>1、第一部分：导入库设定变量</h2><pre><code class="python">#导入库设定变量
+import os
+import requests
+from bs4 import BeautifulSoup
+headers = &#123;&#39;User-Agent&#39;:&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36&#39;&#125;
+home_url =&#39;https://v.qq.com/x/cover/m441e3rjq9kwpsc/m00253deqqo.html&#39;</code></pre>
 <p>这部分就是导入一些库和一些设定的变量什么的，比如headers、url什么的，没什么好说的</p>
-<h2 id="2、第二部分：爬取每个视频的id"><a href="#2、第二部分：爬取每个视频的id" class="headerlink" title="2、第二部分：爬取每个视频的id"></a>2、第二部分：爬取每个视频的id</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#爬取每个视频的id</span></span><br><span class="line">douluohome = requests.get(home_url,headers=headers)</span><br><span class="line">douluohome.encoding=<span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">douluosoup = BeautifulSoup(douluohome.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">douluolist = douluosoup.select(<span class="string">&#x27;.mod_episode&#x27;</span>)[<span class="number">0</span>].select(<span class="string">&#x27;a&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="2、第二部分：爬取每个视频的id"><a href="#2、第二部分：爬取每个视频的id" class="headerlink" title="2、第二部分：爬取每个视频的id"></a>2、第二部分：爬取每个视频的id</h2><pre><code class="python">#爬取每个视频的id
+douluohome = requests.get(home_url,headers=headers)
+douluohome.encoding=&#39;utf-8&#39;
+douluosoup = BeautifulSoup(douluohome.text,&#39;html.parser&#39;)
+douluolist = douluosoup.select(&#39;.mod_episode&#39;)[0].select(&#39;a&#39;)</code></pre>
 <p>这里用到了BeautifulSoup4库，先requets获取页面信息，用BeautifulSoup4去对页面html进行解析，最后找到我们想要的东西，这里是清洗出每个视频的ID</p>
-<h2 id="3、第三部分：合成下载链接"><a href="#3、第三部分：合成下载链接" class="headerlink" title="3、第三部分：合成下载链接"></a>3、第三部分：合成下载链接</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#合成下载链接</span></span><br><span class="line">lists = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(douluolist)):</span><br><span class="line">    lists.append(<span class="string">&#x27;https://v.qq.com&#x27;</span>+douluolist[i][<span class="string">&#x27;href&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="3、第三部分：合成下载链接"><a href="#3、第三部分：合成下载链接" class="headerlink" title="3、第三部分：合成下载链接"></a>3、第三部分：合成下载链接</h2><pre><code class="python">#合成下载链接
+lists = []
+for i in range(len(douluolist)):
+    lists.append(&#39;https://v.qq.com&#39;+douluolist[i][&#39;href&#39;])</code></pre>
 <p>很简单的一个处理，将上一步获取的视频的id加到v.qq.com后面，生成视频的播放链接</p>
-<h2 id="4、第四部分：开始下载视频"><a href="#4、第四部分：开始下载视频" class="headerlink" title="4、第四部分：开始下载视频"></a>4、第四部分：开始下载视频</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#开始下载视频</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(lists)):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        print(os.popen(<span class="string">&#x27;you-get &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(lists[i])).read()) <span class="comment">#视频会下载到当前目录</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+<h2 id="4、第四部分：开始下载视频"><a href="#4、第四部分：开始下载视频" class="headerlink" title="4、第四部分：开始下载视频"></a>4、第四部分：开始下载视频</h2><pre><code class="python">#开始下载视频
+for i in range(len(lists)):
+    try:
+        print(os.popen(&#39;you-get &#123;&#125;&#39;.format(lists[i])).read()) #视频会下载到当前目录
+    except:
+        pass
+    continue</code></pre>
 <p>这部分其实也没有什么东西，有了每个视频的播放链接后，直接使用工具就可以下载了，这里使用的是利用os库调用you-get命令进行下载的，最后将you-get命令的显示结果传回终端。</p>
 <h1 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06 总结"></a>0x06 总结</h1><p>总的说来，其实Python主要就是起到爬虫作用，爬取每个视频的播放链接，最后使用you-get对视频进行下载，没有什么太大的难度，所以权当练练手了。</p>
 <p>下面为视频演示：</p>
@@ -640,7 +659,7 @@
                         
                             0x00 未修改
 
-1&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolli
+&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrollin
                         
                     </div>
                     <div class="publish-info">
@@ -918,7 +937,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

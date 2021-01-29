@@ -471,48 +471,89 @@
 <p>枚举出当前域</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; net view /domain</span><br><span class="line">Domain</span><br><span class="line">-------------------------</span><br><span class="line">TEAMSSIX</span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\&gt; net view /domain
+Domain
+-------------------------
+TEAMSSIX
+命令成功完成。</code></pre>
 <ul>
 <li><p><code>net view /domain:[domain]</code>、<code>net group &quot;domain computers&quot; /domain</code></p>
 <p><code>net view /domain:[domain]</code>枚举域上一个主机的列表，但不是所有主机，这个也就是在网上邻居中可以看到的内容。</p>
 <p><code>net group &quot;domain computers&quot; /domain</code>可以获得加入到这个域中的电脑账户列表。</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; net view /domain:teamssix</span><br><span class="line">服务器名称            注解</span><br><span class="line">----------------------------------</span><br><span class="line">\\WIN<span class="literal">-72A8ERDSF2P</span></span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span></span><br><span class="line">命令成功完成。</span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> C:\&gt; net <span class="built_in">group</span> <span class="string">&quot;domain computers&quot;</span> /domain</span><br><span class="line">组名     Domain Computers</span><br><span class="line">注释     加入到域中的所有工作站和服务器</span><br><span class="line">成员</span><br><span class="line">----------------------------------------------</span><br><span class="line">WIN<span class="literal">-72A8ERDSF2P</span><span class="variable">$</span></span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">PS C:\&gt; net view /domain:teamssix
+服务器名称            注解
+----------------------------------
+\\WIN-72A8ERDSF2P
+\\WIN-P2AASSD1AF1
+命令成功完成。
 
+PS C:\&gt; net group &quot;domain computers&quot; /domain
+组名     Domain Computers
+注释     加入到域中的所有工作站和服务器
+成员
+----------------------------------------------
+WIN-72A8ERDSF2P$
+命令成功完成。</code></pre>
 <ul>
 <li><p><code>nltest /dclist:[domain]</code></p>
 <p>如果想找到那个主机是域的域控服务器，可以使用<code>nltest</code>命令</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; nltest /dclist:teamssix</span><br><span class="line">获得域“teamssix”中 DC 的列表(从“\\WIN<span class="literal">-P2AASSD1AF1</span>”中)。</span><br><span class="line">    WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com [<span class="type">PDC</span>]  [<span class="type">DS</span>] 站点: Default<span class="literal">-First</span><span class="literal">-Site</span><span class="literal">-Name</span></span><br><span class="line">此命令成功完成</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\&gt; nltest /dclist:teamssix
+获得域“teamssix”中 DC 的列表(从“\\WIN-P2AASSD1AF1”中)。
+    WIN-P2AASSD1AF1.teamssix.com [PDC]  [DS] 站点: Default-First-Site-Name
+此命令成功完成</code></pre>
 <p>​        当使用 32 位的 payload 运行在 64 位的系统上，并且 nltest 路径不对的时候，可能会提示没有 nltest 这个命令，这时可以尝试使用下面的命令为其指定路径。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; C:\windows\sysnative\nltest /dclist:teamssix</span><br><span class="line">获得域“teamssix”中 DC 的列表(从“\\WIN<span class="literal">-P2AASSD1AF1</span>”中)。</span><br><span class="line">    WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com [<span class="type">PDC</span>]  [<span class="type">DS</span>] 站点: Default<span class="literal">-First</span><span class="literal">-Site</span><span class="literal">-Name</span></span><br><span class="line">此命令成功完成</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\&gt; C:\windows\sysnative\nltest /dclist:teamssix
+获得域“teamssix”中 DC 的列表(从“\\WIN-P2AASSD1AF1”中)。
+    WIN-P2AASSD1AF1.teamssix.com [PDC]  [DS] 站点: Default-First-Site-Name
+此命令成功完成</code></pre>
 <ul>
 <li><p><code>nslookup [name]</code>、<code>ping -n 1 -4 [name]</code></p>
 <p>有时在 Cobalt Strike 里，我们只需要使用目标的 NetBIOS 名称，而不用在意使用 IPv4 地址或者 IPv6 地址，NetBIOS 名称是在域上每台机器的完整名称。</p>
 <p>但是如果想通过一个 IPv4 地址转换为一个 NetBIOS 名称，可以使用 nslookup 命令，或者使用 ping 发送一个包来获得主机返回的 IP 地址。</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; nslookup WIN<span class="literal">-P2AASSD1AF1</span></span><br><span class="line">服务器:  UnKnown</span><br><span class="line">Address:  ::<span class="number">1</span></span><br><span class="line">名称:    WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com</span><br><span class="line">Address:  <span class="number">192.168</span>.<span class="number">15.124</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> C:\&gt; ping <span class="literal">-n</span> <span class="number">1</span> <span class="literal">-4</span> WIN<span class="literal">-P2AASSD1AF1</span></span><br><span class="line">正在 Ping WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com [<span class="number">192.168</span><span class="type">.15.124</span>] 具有 <span class="number">32</span> 字节的数据:</span><br><span class="line">来自 <span class="number">192.168</span>.<span class="number">15.124</span> 的回复: 字节=<span class="number">32</span> 时间&lt;<span class="number">1</span>ms TTL=<span class="number">128</span></span><br><span class="line"><span class="number">192.168</span>.<span class="number">15.124</span> 的 Ping 统计信息:</span><br><span class="line">    数据包: 已发送 = <span class="number">1</span>，已接收 = <span class="number">1</span>，丢失 = <span class="number">0</span> (<span class="number">0</span>% 丢失)，</span><br><span class="line">往返行程的估计时间(以毫秒为单位):</span><br><span class="line">    最短 = <span class="number">0</span>ms，最长 = <span class="number">0</span>ms，平均 = <span class="number">0</span>ms</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">PS C:\&gt; nslookup WIN-P2AASSD1AF1
+服务器:  UnKnown
+Address:  ::1
+名称:    WIN-P2AASSD1AF1.teamssix.com
+Address:  192.168.15.124
 
+PS C:\&gt; ping -n 1 -4 WIN-P2AASSD1AF1
+正在 Ping WIN-P2AASSD1AF1.teamssix.com [192.168.15.124] 具有 32 字节的数据:
+来自 192.168.15.124 的回复: 字节=32 时间&lt;1ms TTL=128
+192.168.15.124 的 Ping 统计信息:
+    数据包: 已发送 = 1，已接收 = 1，丢失 = 0 (0% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+    最短 = 0ms，最长 = 0ms，平均 = 0ms</code></pre>
 <ul>
 <li><p><code>nltest /domain_trusts</code>、<code>nltest /server:[address] /domain_trusts</code></p>
 <p>如果想取得域上的信任关系，可以使用 nltest 命令来实现。</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; nltest /domain_trusts</span><br><span class="line">域信任的列表:</span><br><span class="line">    <span class="number">0</span>: TEAMSSIX teamssix.com (NT <span class="number">5</span>) (Forest Tree Root) (Primary Domain) (Native)</span><br><span class="line">此命令成功完成</span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> C:\&gt; nltest /server:<span class="number">192.168</span>.<span class="number">15.124</span> /domain_trusts</span><br><span class="line">域信任的列表:</span><br><span class="line">    <span class="number">0</span>: TEAMSSIX teamssix.com (NT <span class="number">5</span>) (Forest Tree Root) (Primary Domain) (Native)</span><br><span class="line">此命令成功完成</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">PS C:\&gt; nltest /domain_trusts
+域信任的列表:
+    0: TEAMSSIX teamssix.com (NT 5) (Forest Tree Root) (Primary Domain) (Native)
+此命令成功完成
 
+PS C:\&gt; nltest /server:192.168.15.124 /domain_trusts
+域信任的列表:
+    0: TEAMSSIX teamssix.com (NT 5) (Forest Tree Root) (Primary Domain) (Native)
+此命令成功完成</code></pre>
 <ul>
 <li><p><code>net view \\[name]</code></p>
 <p>如果想列出主机上的共享列表，只需输入<code>net view \\[name]</code>即可</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; net view \\WIN<span class="literal">-P2AASSD1AF1</span></span><br><span class="line">在 \\WIN<span class="literal">-75F8PRJM4TP</span> 的共享资源</span><br><span class="line">共享名  类型  使用为  注释</span><br><span class="line">----------------------------------</span><br><span class="line">Users   Disk</span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\&gt; net view \\WIN-P2AASSD1AF1
+在 \\WIN-75F8PRJM4TP 的共享资源
+共享名  类型  使用为  注释
+----------------------------------
+Users   Disk
+命令成功完成。</code></pre>
 <h1 id="0x02-PowerView"><a href="#0x02-PowerView" class="headerlink" title="0x02 PowerView"></a>0x02 PowerView</h1><p>在渗透进入内网后，如果直接使用 Windows 的内置命令，比如 <code>net view、net user</code>等，可能就会被管理人员或者各种安全监控设备所发现。因此较为安全的办法就是使用 Powershell 和 VMI 来进行躲避态势感知的检测。</p>
 <p>PowerView 是由 Will Schroeder 开发的 PowerShell 脚本，该脚本完全依赖于 Powershell 和 VMI ，使用 PowerView 可以更好的收集内网中的信息，在使用之前，与上一节 PowerUp 的一样需要先 import 导入 ps1 文件。</p>
 <p>PowerView 下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon">https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon</a></p>
@@ -522,31 +563,54 @@
 <p>查询本地域的信息</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\PowerView&gt; <span class="built_in">Get-NetDomain</span></span><br><span class="line">Forest                  : teamssix.com</span><br><span class="line">DomainControllers       : &#123;WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com&#125;</span><br><span class="line">Children                : &#123;&#125;</span><br><span class="line">DomainMode              : Windows2012Domain</span><br><span class="line">Parent                  :</span><br><span class="line">PdcRoleOwner            : WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com</span><br><span class="line">RidRoleOwner            : WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com</span><br><span class="line">InfrastructureRoleOwner : WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com</span><br><span class="line">Name                    : teamssix.com</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\PowerView&gt; Get-NetDomain
+Forest                  : teamssix.com
+DomainControllers       : &#123;WIN-P2AASSD1AF1.teamssix.com&#125;
+Children                : &#123;&#125;
+DomainMode              : Windows2012Domain
+Parent                  :
+PdcRoleOwner            : WIN-P2AASSD1AF1.teamssix.com
+RidRoleOwner            : WIN-P2AASSD1AF1.teamssix.com
+InfrastructureRoleOwner : WIN-P2AASSD1AF1.teamssix.com
+Name                    : teamssix.com</code></pre>
 <ul>
 <li><p>Invoke-ShareFinder</p>
 <p>查找网络上是否存在共享</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\PowerView&gt; <span class="built_in">Invoke-ShareFinder</span></span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com\ADMIN<span class="variable">$</span>   - 远程管理</span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com\C<span class="variable">$</span>       - 默认共享</span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com\IPC<span class="variable">$</span>     - 远程 IPC</span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com\NETLOGON         - Logon server share</span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span>.teamssix.com\SYSVOL   - Logon server share</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\PowerView&gt; Invoke-ShareFinder
+\\WIN-P2AASSD1AF1.teamssix.com\ADMIN$   - 远程管理
+\\WIN-P2AASSD1AF1.teamssix.com\C$       - 默认共享
+\\WIN-P2AASSD1AF1.teamssix.com\IPC$     - 远程 IPC
+\\WIN-P2AASSD1AF1.teamssix.com\NETLOGON         - Logon server share
+\\WIN-P2AASSD1AF1.teamssix.com\SYSVOL   - Logon server share</code></pre>
 <ul>
 <li><p>Invoke-MapDomainTrust</p>
 <p>显示当前域的信任关系</p>
 </li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\PowerView&gt; <span class="built_in">Invoke-MapDomainTrust</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\PowerView&gt; Invoke-MapDomainTrust</code></pre>
 <p>其他更多用法可以查看参考链接，或者参考 PowerView 项目上的 ReadMe 部分。</p>
 <h1 id="0X03-Net-模块"><a href="#0X03-Net-模块" class="headerlink" title="0X03 Net 模块"></a>0X03 Net 模块</h1><p>Cobalt Strike 中有自己的 net 模块，net 模块是 beacon 后渗透攻击模块，它通过 windows 的网络管理 api 函数来执行命令，想使用 net 命令，只需要在 beacon 的控制中心输入 net + 要执行的命令即可。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net dclist : 列出当前域的域控制器</span><br><span class="line">net dclist [<span class="type">DOMAIN</span>] : 列出指定域的域控制器</span><br><span class="line">net share \\[<span class="type">name</span>] : 列出目标的共享列表</span><br><span class="line">net view : 列出当前域的主机</span><br><span class="line">net view [<span class="type">DOMAIN</span>] : 列出指定域的主机</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">net dclist : 列出当前域的域控制器
+net dclist [DOMAIN] : 列出指定域的域控制器
+net share \\[name] : 列出目标的共享列表
+net view : 列出当前域的主机
+net view [DOMAIN] : 列出指定域的主机</code></pre>
 <p>在 beacon 控制台中输入这些命令很类似输入一个本地的 net 命令，但是有一些些许的不同，比如下面一个是在主机上运行 net view 的结果一个是在 beacon 控制台下运行 net view 的结果。不难看出，beacon 下输出的结果更为丰富。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\&gt; net view</span><br><span class="line">服务器名称            注解</span><br><span class="line">-------------------------------------------</span><br><span class="line">\\WIN<span class="literal">-P2AASSD1AF1</span></span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; net view</span><br><span class="line">[*] Tasked beacon to run net view</span><br><span class="line">[+] host called home, sent: <span class="number">104504</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">List of hosts:</span><br><span class="line">Server Name             IP Address                       Platform  Version  <span class="built_in">Type</span>   Comment</span><br><span class="line">-----------             ----------                       --------  -------  ----   -------</span><br><span class="line">WIN<span class="literal">-P2AASSD1AF1</span>         <span class="number">192.168</span>.<span class="number">15.124</span>                   <span class="number">500</span>       <span class="number">6.1</span>      PDC    </span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">PS C:\&gt; net view
+服务器名称            注解
+-------------------------------------------
+\\WIN-P2AASSD1AF1
+命令成功完成。</code></pre>
+<pre><code class="powershell">beacon&gt; net view
+[*] Tasked beacon to run net view
+[+] host called home, sent: 104504 bytes
+[+] received output:
+List of hosts:
+Server Name             IP Address                       Platform  Version  Type   Comment
+-----------             ----------                       --------  -------  ----   -------
+WIN-P2AASSD1AF1         192.168.15.124                   500       6.1      PDC    </code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs15-1.png"></p>
 <blockquote>
 <p>参考链接：</p>
@@ -986,7 +1050,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

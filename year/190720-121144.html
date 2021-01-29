@@ -451,16 +451,18 @@
                 <h1 id="0x01-提示错误"><a href="#0x01-提示错误" class="headerlink" title="0x01 提示错误"></a>0x01 提示错误</h1><p>根据官方的步骤执行docker-compose up但是我得到了这样的一个错误</p>
 <a id="more"></a>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd1.png"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~/CTFd<span class="comment"># docker-compose up</span></span><br><span class="line">ERROR: The Compose file <span class="string">&#x27;./docker-compose.yml&#x27;</span> is invalid because:</span><br><span class="line">networks.internal value Additional properties are not allowed (<span class="string">&#x27;internal&#x27;</span> was unexpected)</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">~/CTFd# docker-compose up
+ERROR: The Compose file &#39;./docker-compose.yml&#39; is invalid because:
+networks.internal value Additional properties are not allowed (&#39;internal&#39; was unexpected)</code></pre>
 <p>经过多次查询后，是因为版本问题导致，因此需要将原来的docker-compose版本卸载，安装新版本。</p>
 <h1 id="0x02-安装新版本"><a href="#0x02-安装新版本" class="headerlink" title="0x02 安装新版本"></a>0x02 安装新版本</h1><p>卸载docker-compose版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall docker-compose</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">pip uninstall docker-compose</code></pre>
 <p>先升级一下pip</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install –upgrade pip</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">pip install –upgrade pip</code></pre>
 <p>继续安装新版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U docker-compose</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">pip install -U docker-compose</code></pre>
 <p>也可以使用国内pip源进行加速，我使用的国内源进行的安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -U docker-compose</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -U docker-compose</code></pre>
 <p>之后再执行docker-compose up就没有问题了<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd2.png"></p>
 <p>平时遇到问题还是需要先根据提示自己一步一步去找解决方法，之后再利用好Google。</p>
 <blockquote>
@@ -902,7 +904,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

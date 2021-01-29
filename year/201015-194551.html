@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    571
+                    576
                 </div>
                 
 
@@ -446,8 +446,26 @@
 <p>但是虚拟机的虚拟网卡往往会有多个，一个个禁用启用难免有些麻烦，而且整个步骤也是比较繁琐的，因此下面看一下使用批处理文件的方式。</p>
 <h1 id="0x02-批处理文件"><a href="#0x02-批处理文件" class="headerlink" title="0x02 批处理文件"></a>0x02 批处理文件</h1><p>其实原理也很简单，直接禁用网卡再重启网卡即可，为了更加贴合使用，我在里面加入了注释、延时的功能。</p>
 <p>将以下内容保存到本地，后缀重命名为 <code>.bat</code> 文件，双击执行就可以重启对应的网卡了。当然 bat 文件里的网卡名称要换成自己的网卡名称，比如我这里的是 <code>VMware Network Adapter VMnet1</code>等三个网卡。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br><span class="line"></span><br><span class="line">rem &quot;禁用网卡 VMware Network Adapter VMnet1&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; disabled</span><br><span class="line">rem &quot;启用网卡 VMware Network Adapter VMnet1&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; enabled</span><br><span class="line"></span><br><span class="line">rem &quot;禁用网卡 VMware Network Adapter VMnet3&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; disabled</span><br><span class="line">rem &quot;启用网卡 VMware Network Adapter VMnet3&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; enabled</span><br><span class="line"></span><br><span class="line">rem &quot;禁用网卡 VMware Network Adapter VMnet7&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; disabled</span><br><span class="line">rem &quot;启用网卡 VMware Network Adapter VMnet7&quot;</span><br><span class="line">netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; enabled</span><br><span class="line"></span><br><span class="line">ipconfig</span><br><span class="line"></span><br><span class="line">choice &#x2F;t 5 &#x2F;c YN &#x2F;d Y</span><br></pre></td></tr></table></figure>
+<pre><code>ipconfig
 
+rem &quot;禁用网卡 VMware Network Adapter VMnet1&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; disabled
+rem &quot;启用网卡 VMware Network Adapter VMnet1&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; enabled
+
+rem &quot;禁用网卡 VMware Network Adapter VMnet3&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; disabled
+rem &quot;启用网卡 VMware Network Adapter VMnet3&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; enabled
+
+rem &quot;禁用网卡 VMware Network Adapter VMnet7&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; disabled
+rem &quot;启用网卡 VMware Network Adapter VMnet7&quot;
+netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; enabled
+
+ipconfig
+
+choice /t 5 /c YN /d Y</code></pre>
 <p>其中 <code>rem</code> 起到注释作用，<code>choice /t 5 /c YN /d Y</code> 起到延时5秒的作用，两次的 ifconfig 主要用来查看重启前后的网卡IP地址情况。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -878,7 +896,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

@@ -422,7 +422,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    373
+                    369
                 </div>
                 
 
@@ -446,11 +446,16 @@
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近用ssh连接VPS的时候，发生了很诡异的事件，有时能够连接上ssh，有时就死活连接不上，重新安装、公钥私钥都检查了，各种权限也都没有问题，端口监听地址什么的也都配置正常，总之能想到的办法都想过了，此时连不连的上仿佛就要看脸了，下面记录一下最终的解决办法。</p>
 <a id="more"></a>
-<h1 id="0x01-修改配置文件"><a href="#0x01-修改配置文件" class="headerlink" title="0x01 修改配置文件"></a>0x01 修改配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<h1 id="0x01-修改配置文件"><a href="#0x01-修改配置文件" class="headerlink" title="0x01 修改配置文件"></a>0x01 修改配置文件</h1><pre><code class="bash">vim /etc/ssh/sshd_config</code></pre>
 <p>在配置文件中加入以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UseDNS no</span><br></pre></td></tr></table></figure>
+<pre><code>UseDNS no</code></pre>
 <p>之后重启ssh即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#Ubuntu:</span><br><span class="line">service sshd restart 或者 &#x2F;etc&#x2F;init.d&#x2F;sshd restart</span><br><span class="line">#Centos7:</span><br><span class="line">systemctl restart sshd.service</span><br><span class="line">#Centos7以下版本：</span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure>
+<pre><code>#Ubuntu:
+service sshd restart 或者 /etc/init.d/sshd restart
+#Centos7:
+systemctl restart sshd.service
+#Centos7以下版本：
+service sshd restart</code></pre>
 <h1 id="0x02-原因"><a href="#0x02-原因" class="headerlink" title="0x02 原因"></a>0x02 原因</h1><p>以下解释来自本文方法参考文章：<a target="_blank" rel="noopener" href="https://m.ancii.com/ayew4gv3/">文章地址</a></p>
 <blockquote>
 <p>ssh登录服务器时总是要停顿等待一下才能连接上,这是因为OpenSSH服务器有一个DNS查找选项UseDNS默认是打开的。<br>UseDNS选项打开状态下,当客户端试图登录OpenSSH服务器时,服务器端先根据客户端的IP地址进行DNS PTR反向查询,查询出客户端的host name，然后根据查询出的客户端host name进行DNS 正向A记录查询，验证与其原始IP地址是否一致，这是防止客户端欺骗的一种手段,但一般我们的IP是动态的，不会有PTR记录的，打开这个选项不过是在白白浪费时间而已。</p>
@@ -664,7 +669,7 @@
                         
                             0x00 未修改
 
-1&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrolli
+&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=55224540&amp;cid=96981660&amp;page=1&quot; scrollin
                         
                     </div>
                     <div class="publish-info">
@@ -882,7 +887,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

@@ -464,9 +464,85 @@
 <p>也就是说尽管Python支持多线程，但是因为GIL的存在，使得Python还是一次性只能处理一个东西，那是不是说Python中的多线程就完全没用了呢，当然不是的。</p>
 <p>GIL往往只会影响到那些严重依赖CPU的程序，比如各种循环处理、计数等这种CPU密集型的程序；如果程序中大部分只会涉及到I/O，比如文件处理、网络爬虫等这种IO密集型的程序，那么多线程就能够有效的提高效率，因为在爬虫的时候大部分时间都在等待。</p>
 <p>实际上，你完全可以放心的创建几千个Python线程， 现代操作系统运行这么多线程没有任何压力，没啥可担心的。</p>
-<h1 id="0x01-测试GIL"><a href="#0x01-测试GIL" class="headerlink" title="0x01 测试GIL"></a>0x01 测试GIL</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">job</span>(<span class="params">lists,q</span>):</span></span><br><span class="line">   res = <span class="built_in">sum</span>(lists)</span><br><span class="line">   q.put(res)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multithreading</span>(<span class="params">lists</span>):</span></span><br><span class="line">   q = Queue()</span><br><span class="line">   threads_list = []</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">      t = threading.Thread(target=job,args=(copy.copy(lists),q),name = <span class="string">&#x27;任务 %i&#x27;</span> % i)</span><br><span class="line">      t.start()</span><br><span class="line">      threads_list.append(t)</span><br><span class="line">   <span class="keyword">for</span> t <span class="keyword">in</span> threads_list:</span><br><span class="line">      t.join()</span><br><span class="line"></span><br><span class="line">   total = <span class="number">0</span></span><br><span class="line">   <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">      total += q.get()</span><br><span class="line">   print(<span class="string">&#x27;使用线程运算结果:&#x27;</span>,total)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal</span>(<span class="params">lists</span>):</span></span><br><span class="line">   total = <span class="built_in">sum</span>(lists)</span><br><span class="line">   print(<span class="string">&#x27;不使用线程运算结果:&#x27;</span>,total)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">req_job</span>(<span class="params">i</span>):</span></span><br><span class="line">   requests.get(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">req_multithreading</span>(<span class="params">req_lists</span>):</span></span><br><span class="line">   threads_list = []</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">      t = threading.Thread(target=req_job,args=(req_lists[i],),name=<span class="string">&#x27;爬虫任务 %i&#x27;</span> % i)</span><br><span class="line">      t.start()</span><br><span class="line">      threads_list.append(t)</span><br><span class="line">   <span class="keyword">for</span> t <span class="keyword">in</span> threads_list:</span><br><span class="line">      t.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">req_normal</span>(<span class="params">req_lists</span>):</span></span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> req_lists:</span><br><span class="line">      requests.get(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">   lists = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1000000</span>)) <span class="comment"># 完成一个较大的计算</span></span><br><span class="line">   req_lists = [<span class="string">&#x27;https://www.teamssix.com&#x27;</span>,<span class="string">&#x27;https://github.com/teamssix&#x27;</span>,<span class="string">&#x27;https://me.csdn.net/qq_37683287&#x27;</span>,<span class="string">&#x27;https://space.bilibili.com/148389186&#x27;</span>]</span><br><span class="line">   start_time = time.time()</span><br><span class="line">   multithreading(lists)</span><br><span class="line">   print(<span class="string">&#x27;计算使用线程耗时:&#x27;</span>, time.time() - start_time,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">   start_time = time.time()</span><br><span class="line">   normal(lists * <span class="number">4</span>)</span><br><span class="line">   print(<span class="string">&#x27;计算不使用线程耗时:&#x27;</span>, time.time() - start_time,<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">   start_time = time.time()</span><br><span class="line">   req_multithreading(req_lists)</span><br><span class="line">   print(<span class="string">&#x27;爬虫使用线程耗时:&#x27;</span>, time.time() - start_time)</span><br><span class="line">   start_time = time.time()</span><br><span class="line">   req_normal(req_lists)</span><br><span class="line">   print(<span class="string">&#x27;爬虫不使用线程耗时:&#x27;</span>, time.time() - start_time)</span><br></pre></td></tr></table></figure>
+<h1 id="0x01-测试GIL"><a href="#0x01-测试GIL" class="headerlink" title="0x01 测试GIL"></a>0x01 测试GIL</h1><pre><code class="python">import copy
+import time
+import requests
+import threading
+from queue import Queue
+
+def job(lists,q):
+   res = sum(lists)
+   q.put(res)
+
+
+def multithreading(lists):
+   q = Queue()
+   threads_list = []
+
+   for i in range(4):
+      t = threading.Thread(target=job,args=(copy.copy(lists),q),name = &#39;任务 %i&#39; % i)
+      t.start()
+      threads_list.append(t)
+   for t in threads_list:
+      t.join()
+
+   total = 0
+   for _ in range(4):
+      total += q.get()
+   print(&#39;使用线程运算结果:&#39;,total)
+
+
+def normal(lists):
+   total = sum(lists)
+   print(&#39;不使用线程运算结果:&#39;,total)
+
+
+def req_job(i):
+   requests.get(i)
+
+
+def req_multithreading(req_lists):
+   threads_list = []
+
+   for i in range(4):
+      t = threading.Thread(target=req_job,args=(req_lists[i],),name=&#39;爬虫任务 %i&#39; % i)
+      t.start()
+      threads_list.append(t)
+   for t in threads_list:
+      t.join()
+
+
+def req_normal(req_lists):
+   for i in req_lists:
+      requests.get(i)
+
+
+if __name__ == &#39;__main__&#39;:
+   lists = list(range(1000000)) # 完成一个较大的计算
+   req_lists = [&#39;https://www.teamssix.com&#39;,&#39;https://github.com/teamssix&#39;,&#39;https://me.csdn.net/qq_37683287&#39;,&#39;https://space.bilibili.com/148389186&#39;]
+   start_time = time.time()
+   multithreading(lists)
+   print(&#39;计算使用线程耗时:&#39;, time.time() - start_time,&#39;\n&#39;)
+
+   start_time = time.time()
+   normal(lists * 4)
+   print(&#39;计算不使用线程耗时:&#39;, time.time() - start_time,&#39;\n&#39;)
+   start_time = time.time()
+   req_multithreading(req_lists)
+   print(&#39;爬虫使用线程耗时:&#39;, time.time() - start_time)
+   start_time = time.time()
+   req_normal(req_lists)
+   print(&#39;爬虫不使用线程耗时:&#39;, time.time() - start_time)</code></pre>
 <p>运行结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 5_GIL.py</span></span><br><span class="line">使用线程运算结果: 1999998000000</span><br><span class="line">计算使用线程耗时: 0.39594030380249023 </span><br><span class="line"></span><br><span class="line">不使用线程运算结果: 1999998000000</span><br><span class="line">计算不使用线程耗时: 0.3919515609741211</span><br><span class="line"></span><br><span class="line">爬虫使用线程耗时: 2.2410056591033936</span><br><span class="line">爬虫不使用线程耗时: 7.1159656047821045</span><br></pre></td></tr></table></figure>
+<pre><code class="bash"># python 5_GIL.py
+使用线程运算结果: 1999998000000
+计算使用线程耗时: 0.39594030380249023 
+
+不使用线程运算结果: 1999998000000
+计算不使用线程耗时: 0.3919515609741211
+
+爬虫使用线程耗时: 2.2410056591033936
+爬虫不使用线程耗时: 7.1159656047821045</code></pre>
 <p>可以看到在计算程序的代码中不使用线程和使用线程的运算结果是相同的，说明不使用线程和使用线程的程序都进行了一样多次的运算，但是很明显可以看到计算的耗时并没有少很多，按照预期我们使用了4个线程，应该会快近4倍才对，这就是因为GIL在作怪。<br>与此同时，可以看到在使用request对一个url发起get请求的时候，使用线程比不使用线程快了3倍多，也进一步的反映出在使用Python进行爬虫的时候，多线程确实可以很大程度上提高效率，但是在进行密集计算任务的时候，多线程就显得很鸡肋了。</p>
 <blockquote>
 <p>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a><br>参考文章：<br>1、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20953544">https://zhuanlan.zhihu.com/p/20953544</a><br>2、<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a></p>
@@ -699,7 +775,7 @@
 0x00 关于Queuequeue模块实现了各种【多生产者-多消费者】队列，可用于在执行的多个线程之间安全的交换信息。
 
 queue的常用方法：
-123456789101112
+q.size()：返回队列的正
                         
                     </div>
                     <div class="publish-info">
@@ -917,7 +993,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

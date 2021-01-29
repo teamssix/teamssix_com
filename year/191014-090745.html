@@ -422,14 +422,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.5k
+                    4.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    15 分
                 </div>
                 
 
@@ -539,9 +539,45 @@
 <p>看看哪些情况下属于跨域访问：</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png"></p>
 <h1 id="0x06-Linux的日志文件位置"><a href="#0x06-Linux的日志文件位置" class="headerlink" title="0x06 Linux的日志文件位置"></a>0x06 Linux的日志文件位置</h1><p>讲道理，在面试前几天我在搭建一个三层靶机的环境，当时还查过Linux的日志文件位置的文章，但是在面试的时候却忘掉了，这就有点难受了，所以再记录一下吧，此处引用的文章地址为本文参考资料9。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;var&#x2F;log&#x2F;messages   ：常规日志消息</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;boot       ：系统启动日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;debug      ：调试日志消息</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;auth.log   ：用户登录和身份验证日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;daemon.log ：运行squid，ntpd等其他日志消息到这个文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;dmesg      ：Linux内核环缓存日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;dpkg.log   ：所有二进制包日志都包括程序包安装和其他信息</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;faillog    ：用户登录日志文件失败</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;kern.log   ：内核日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;lpr.log    ：打印机日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;mail.*     ：所有邮件服务器消息日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;mysql.*    ：MySQL服务器日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;user.log   ：所有用户级日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;xorg.0.log ：X.org日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;apache2&#x2F;*  ：Apache Web服务器日志文件目录</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;lighttpd&#x2F;* ：Lighttpd Web服务器日志文件目录</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;fsck&#x2F;*     ：fsck命令日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;apport.log ：应用程序崩溃报告&#x2F;日志文件</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;syslog     ：系统日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;ufw        ：ufw防火墙日志</span><br><span class="line">&#x2F;var&#x2F;log&#x2F;gufw       ：gufw防火墙日志</span><br></pre></td></tr></table></figure>
+<pre><code>/var/log/messages   ：常规日志消息
+/var/log/boot       ：系统启动日志
+/var/log/debug      ：调试日志消息
+/var/log/auth.log   ：用户登录和身份验证日志
+/var/log/daemon.log ：运行squid，ntpd等其他日志消息到这个文件
+/var/log/dmesg      ：Linux内核环缓存日志
+/var/log/dpkg.log   ：所有二进制包日志都包括程序包安装和其他信息
+/var/log/faillog    ：用户登录日志文件失败
+/var/log/kern.log   ：内核日志文件
+/var/log/lpr.log    ：打印机日志文件
+/var/log/mail.*     ：所有邮件服务器消息日志文件
+/var/log/mysql.*    ：MySQL服务器日志文件
+/var/log/user.log   ：所有用户级日志
+/var/log/xorg.0.log ：X.org日志文件
+/var/log/apache2/*  ：Apache Web服务器日志文件目录
+/var/log/lighttpd/* ：Lighttpd Web服务器日志文件目录
+/var/log/fsck/*     ：fsck命令日志
+/var/log/apport.log ：应用程序崩溃报告/日志文件
+/var/log/syslog     ：系统日志
+/var/log/ufw        ：ufw防火墙日志
+/var/log/gufw       ：gufw防火墙日志</code></pre>
 <h1 id="0x07-Linux的各目录含义"><a href="#0x07-Linux的各目录含义" class="headerlink" title="0x07 Linux的各目录含义"></a>0x07 Linux的各目录含义</h1><p>这个是以前大一大二的时候学的了，现在只记住了平时经常用的那几个目录，所以当时感觉回答的并不是很好，因此这里也简单记录一下，此处引用的文章地址为本文参考资料10。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;bin   重要的二进制 (binary) 应用程序</span><br><span class="line">&#x2F;boot  启动 (boot) 配置文件</span><br><span class="line">&#x2F;dev   设备 (device) 文件</span><br><span class="line">&#x2F;etc   配置文件、启动脚本等 (etc)</span><br><span class="line">&#x2F;home  本地用户主 (home) 目录</span><br><span class="line">&#x2F;lib   系统库 (libraries) 文件</span><br><span class="line">&#x2F;media 挂载可移动介质 (media)</span><br><span class="line">&#x2F;mnt   挂载 (mounted) 文件系统</span><br><span class="line">&#x2F;opt   提供一个供可选的 (optional) 应用程序安装目录</span><br><span class="line">&#x2F;proc  特殊的动态目录</span><br><span class="line">&#x2F;root  root (root) 用户主文件夹，读作“slash-root”</span><br><span class="line">&#x2F;sbin  重要的系统二进制 (system binaries) 文件</span><br><span class="line">&#x2F;srv   服务（serve）文件</span><br><span class="line">&#x2F;sys   系统 (system) 文件</span><br><span class="line">&#x2F;tmp   临时(temporary)文件</span><br><span class="line">&#x2F;usr   包含绝大部分所有用户(users)都能访问的应用程序和文件</span><br><span class="line">&#x2F;var   经常变化的(variable)文件，诸如日志或数据库等</span><br></pre></td></tr></table></figure>
+<pre><code>/bin   重要的二进制 (binary) 应用程序
+/boot  启动 (boot) 配置文件
+/dev   设备 (device) 文件
+/etc   配置文件、启动脚本等 (etc)
+/home  本地用户主 (home) 目录
+/lib   系统库 (libraries) 文件
+/media 挂载可移动介质 (media)
+/mnt   挂载 (mounted) 文件系统
+/opt   提供一个供可选的 (optional) 应用程序安装目录
+/proc  特殊的动态目录
+/root  root (root) 用户主文件夹，读作“slash-root”
+/sbin  重要的系统二进制 (system binaries) 文件
+/srv   服务（serve）文件
+/sys   系统 (system) 文件
+/tmp   临时(temporary)文件
+/usr   包含绝大部分所有用户(users)都能访问的应用程序和文件
+/var   经常变化的(variable)文件，诸如日志或数据库等</code></pre>
 <h1 id="0x08-总结"><a href="#0x08-总结" class="headerlink" title="0x08 总结"></a>0x08 总结</h1><p>暂时印象较深的也就想到这些了，说实话，虽然看着这篇文章记下了很多东西，但是我感觉自己脑子里还是没有记住多少东西，这些东西还是要经常去用才能记得住呀，平时不去用不去碰真的太容易忘了。通过这次面试也认识到自己的很多不足，所以不管最后面试结果怎么样，自己有收获就好，毕竟就像新东方唐叔说的：能力的提升不在于你做了多少道题，而在于你做了多少总结。</p>
 <p>我觉着这句话再衍生一下就是能力的提升在于总结两个字，也就是说我自己犯了这些错误，有没有去总结，如果总结又总结了多少？而我觉着这些总结正是单属于我自己的宝贵财富，好了，不瞎扯了，感觉马上都变成鸡汤了 [ 笑哭 ]</p>
 <p>参考资料：</p>
@@ -981,7 +1017,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

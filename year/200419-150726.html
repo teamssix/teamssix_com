@@ -480,21 +480,26 @@
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-10.png"></p>
 <h1 id="0x06-Veil-Evasion-使用演示"><a href="#0x06-Veil-Evasion-使用演示" class="headerlink" title="0x06 Veil Evasion 使用演示"></a>0x06 Veil Evasion 使用演示</h1><p>此外，也可以使用 Veil Evasion 框架，Veil Evasion 的安装也是比较简单的，Veil-Evasion 在 Kali 2020以前是自带的，但 Kali 2020 中是需要独立安装的。在 Kali 中可以直接使用 apt-get 进行安装。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy &#39;socks5:&#x2F;&#x2F;127.0.0.1:1080&#39;</span><br><span class="line">git config --global https.proxy &#39;socks5:&#x2F;&#x2F;127.0.0.1:1080&#39;</span><br><span class="line"></span><br><span class="line">apt-get install veil-evasion</span><br><span class="line">veil</span><br></pre></td></tr></table></figure>
+<pre><code>git config --global http.proxy &#39;socks5://127.0.0.1:1080&#39;
+git config --global https.proxy &#39;socks5://127.0.0.1:1080&#39;
 
+apt-get install veil-evasion
+veil</code></pre>
 <p>其他系统可以使用 veil-evasion 项目中的介绍进行安装，项目地址：<a target="_blank" rel="noopener" href="https://github.com/Veil-Framework/Veil-Evasion">https://github.com/Veil-Framework/Veil-Evasion</a></p>
 <p>由于 Veil Evasion 有 200 多 M ，因此建议挂上代理进行下载安装。</p>
 <p>安装完成之后，在 Cobalt Strike 里的 <code>Attacks -&gt; Packages -&gt; Payload Generator</code>  中选择 Veil 输出生成一个 payload.txt 文件</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-1.png"></p>
 <p>随后来到 Kali 下，输入 <code>veil</code> 启动，输入 <code>use Evasion</code> 使用 Evasion 工具，<code>list</code> 查看当前可用的 Payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">veil</span><br><span class="line">use Evasion</span><br><span class="line">list</span><br></pre></td></tr></table></figure>
-
+<pre><code>veil
+use Evasion
+list</code></pre>
 <p>这里使用第 17 个即 <code>go/shellcode_inject/virtual.py</code> Payload 作为示例，因为 go、c 等编译性语言语言相对于 python 等脚本语言来说免杀效果会好些。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use 17</span><br></pre></td></tr></table></figure>
-
+<pre><code>use 17</code></pre>
 <p>之后输入 <code>generate</code>，选择第三项 <code>Custom shellcode string</code> ，粘贴刚生成的 payload.txt 文本内容，输入要生成的 exe 文件名，即可生成一个免杀木马。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">generate</span><br><span class="line">3</span><br><span class="line">粘贴 payload.txt 内容</span><br><span class="line">bypass_go	#生成文件的名称</span><br></pre></td></tr></table></figure>
-
+<pre><code>generate
+3
+粘贴 payload.txt 内容
+bypass_go    #生成文件的名称</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-4.png"></p>
 <p>使用 virustotal 查杀了一下生成的 bypass_go.exe，发现被 40 个引擎检测到，不得不说这效果很一般。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-5.png"></p>
@@ -952,7 +957,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

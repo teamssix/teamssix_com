@@ -453,28 +453,35 @@
 <h1 id="0x01-介绍"><a href="#0x01-介绍" class="headerlink" title="0x01 介绍"></a>0x01 介绍</h1><h2 id="1、SPF、DKIM、DMARC"><a href="#1、SPF、DKIM、DMARC" class="headerlink" title="1、SPF、DKIM、DMARC"></a>1、SPF、DKIM、DMARC</h2><p>SPF、DKIM、DMARC 都是邮件用于帮助识别垃圾信息的附加组件，那么作为一个攻击者，在发送钓鱼邮件的时候，就需要使自己的邮件能够满足这些组件的标准，或者发送到未配置这些组件的域。</p>
 <p>在理解这些防御标准前，需要先理解如何在因特网上通过 SMTP 发送邮件。</p>
 <h2 id="2、SMTP"><a href="#2、SMTP" class="headerlink" title="2、SMTP"></a>2、SMTP</h2><p>发送一封邮件的过程大概是下面这个样子，这里以QQ邮箱为例。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; telnet smtp.qq.com 25</span><br><span class="line">HELO teamssix</span><br><span class="line">auth login</span><br><span class="line">base64编码后的邮箱名</span><br><span class="line">base64编码后的授权码</span><br><span class="line">MAIL FROM: &lt;evil_teamssix@qq.com&gt;</span><br><span class="line">RCPT TO: &lt;target_teamssix@qq.com&gt;</span><br><span class="line">DATA</span><br><span class="line">邮件内容</span><br><span class="line">.</span><br><span class="line">QUIT</span><br></pre></td></tr></table></figure>
-
+<pre><code>&gt; telnet smtp.qq.com 25
+HELO teamssix
+auth login
+base64编码后的邮箱名
+base64编码后的授权码
+MAIL FROM: &lt;evil_teamssix@qq.com&gt;
+RCPT TO: &lt;target_teamssix@qq.com&gt;
+DATA
+邮件内容
+.
+QUIT</code></pre>
 <h1 id="0x02-防御策略"><a href="#0x02-防御策略" class="headerlink" title="0x02 防御策略"></a>0x02 防御策略</h1><h2 id="1、SPF"><a href="#1、SPF" class="headerlink" title="1、SPF"></a>1、SPF</h2><p>SPF <code>Sender Policy Framework</code> 发送人策略框架，SPF 主要用来防止随意伪造发件人。其做法就是设置一个 SPF 记录，SPF 记录实际上就是 DNS 的 TXT 记录。</p>
 <p>如果邮件服务器收到一封来自 IP 不在 SPF 记录里的邮件则会退信或者标记为垃圾邮件。</p>
 <p>我们可以使用以下命令查看目标的 SPF 记录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig +short TXT target.com</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; dig +short TXT qq.com</span><br><span class="line">&quot;v&#x3D;spf1 include:spf.mail.qq.com -all&quot;</span><br></pre></td></tr></table></figure>
-
+<pre><code>dig +short TXT target.com</code></pre>
+<pre><code>&gt; dig +short TXT qq.com
+&quot;v=spf1 include:spf.mail.qq.com -all&quot;</code></pre>
 <p>上面的 <code>include:spf.mail.qq.com</code> 表示引入<code>spf.mail.qq.com</code>域名下的 SPF 记录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; dig +short TXT spf-a.mail.qq.com</span><br><span class="line">&quot;v&#x3D;spf1 ip4:203.205.251.0&#x2F;24 ip4:103.7.29.0&#x2F;24 ip4:59.36.129.0&#x2F;24 ip4:113.108.23.0&#x2F;24 ip4:113.108.11.0&#x2F;24 ip4:119.147.193.0&#x2F;24 ip4:119.147.194.0&#x2F;24 ip4:59.78.209.0&#x2F;24 ip4:113.96.223.0&#x2F;24 ip4:183.3.226.0&#x2F;24 ip4:183.3.255.0&#x2F;24 ip4:59.36.132.0&#x2F;24 -all&quot;</span><br></pre></td></tr></table></figure>
-
+<pre><code>&gt; dig +short TXT spf-a.mail.qq.com
+&quot;v=spf1 ip4:203.205.251.0/24 ip4:103.7.29.0/24 ip4:59.36.129.0/24 ip4:113.108.23.0/24 ip4:113.108.11.0/24 ip4:119.147.193.0/24 ip4:119.147.194.0/24 ip4:59.78.209.0/24 ip4:113.96.223.0/24 ip4:183.3.226.0/24 ip4:183.3.255.0/24 ip4:59.36.132.0/24 -all&quot;</code></pre>
 <p>上面的 <code>ip4:203.205.251.0/24 ip4:103.7.29.0/24</code> 表示只允许这个范围内的 IP 发送邮件。</p>
 <h2 id="2、DKIM"><a href="#2、DKIM" class="headerlink" title="2、DKIM"></a>2、DKIM</h2><p>DKIM <code>DomainKeys Identified Mail</code> 域名密钥识别邮件，DKIM 是一种防范电子邮件欺诈的验证技术，通过消息加密认证的方式对邮件发送域名进行验证。</p>
 <p>邮件接收方接收邮件时，会通过 DNS 查询获得公钥，验证邮件 DKIM 签名的有效性，从而判断邮件是否被篡改。</p>
 <h2 id="3、DMARC"><a href="#3、DMARC" class="headerlink" title="3、DMARC"></a>3、DMARC</h2><p>DMARC <code>Domain-based Message Authentication, Reporting &amp; Conformance</code> 基于域的消息认证，报告和一致性。</p>
 <p>它用来检查一封电子邮件是否来自所声称的发送者。DMARC 建立在 SPF 和 DKIM 协议上, 并且添加了域名对齐检查和报告发送功能。这样可以改善域名免受钓鱼攻击的保护。</p>
 <p>可以使用下面的命令查看目标的的 DMARC 记录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig +short TXT _dmarc.target.com</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; dig +short TXT _dmarc.qq.com</span><br><span class="line">&quot;v&#x3D;DMARC1; p&#x3D;none; rua&#x3D;mailto:mailauth-reports@qq.com&quot;</span><br></pre></td></tr></table></figure>
-
+<pre><code>dig +short TXT _dmarc.target.com</code></pre>
+<pre><code>&gt; dig +short TXT _dmarc.qq.com
+&quot;v=DMARC1; p=none; rua=mailto:mailauth-reports@qq.com&quot;</code></pre>
 <p>也有一些在线网站支持检测 SPF、DKIM、DMARC 的记录，比如 <a target="_blank" rel="noopener" href="https://dmarcly.com/tools/">https://dmarcly.com/tools/</a></p>
 <p>关于这些记录查询返回结果的解释可参考文章末的参考链接。</p>
 <h1 id="0x03-发送钓鱼邮件的一些注意事项"><a href="#0x03-发送钓鱼邮件的一些注意事项" class="headerlink" title="0x03 发送钓鱼邮件的一些注意事项"></a>0x03 发送钓鱼邮件的一些注意事项</h1><p>1、检测目标是否有 SPF 记录，如果有则可能会被拦截</p>
@@ -921,7 +928,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

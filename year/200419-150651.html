@@ -462,29 +462,59 @@
 <p>攻击目标：192.168.232.0/24 地址段</p>
 </blockquote>
 <h3 id="1、设置-socks-代理"><a href="#1、设置-socks-代理" class="headerlink" title="1、设置 socks 代理"></a>1、设置 socks 代理</h3><p>首先开启交互模式，之后开启 socks 代理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sleep 0</span><br><span class="line">socks 9527</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; <span class="built_in">sleep</span> <span class="number">0</span></span><br><span class="line">[*] Tasked beacon to become interactive</span><br><span class="line">[+] host called home, sent: <span class="number">16</span> bytes</span><br><span class="line">beacon&gt; socks <span class="number">9527</span></span><br><span class="line">[+] host called home, sent: <span class="number">16</span> bytes</span><br><span class="line">[+] started SOCKS4a server on: <span class="number">9527</span></span><br></pre></td></tr></table></figure>
-
+<pre><code>sleep 0
+socks 9527</code></pre>
+<pre><code class="powershell">beacon&gt; sleep 0
+[*] Tasked beacon to become interactive
+[+] host called home, sent: 16 bytes
+beacon&gt; socks 9527
+[+] host called home, sent: 16 bytes
+[+] started SOCKS4a server on: 9527</code></pre>
 <h3 id="2、配置-ProxyChains"><a href="#2、配置-ProxyChains" class="headerlink" title="2、配置  ProxyChains"></a>2、配置  ProxyChains</h3><p>在攻击机上，配置 <code>/etc/proxychains.conf</code> 文件的最后一行，根据当前攻击主机 IP 与设置的 Socks 端口，修改如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socks4 192.168.175.200 9527</span><br></pre></td></tr></table></figure>
-
+<pre><code>socks4 192.168.175.200 9527</code></pre>
 <h3 id="3、开始使用-ProxyChains"><a href="#3、开始使用-ProxyChains" class="headerlink" title="3、开始使用  ProxyChains"></a>3、开始使用  ProxyChains</h3><p>根据<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150644.html">上一节</a>使用 Metasploit 的扫描可以知道，在 192.168.232.0/24 地址段中存在主机 192.168.232.132 ，接下来使用 nmap 扫描一下常见的端口，这里以 80,443,445,3389 作为演示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389</span><br></pre></td></tr></table></figure>
-
+<pre><code>proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389</code></pre>
 <blockquote>
 <p>-sT：使用 TCP 扫描</p>
 <p>-Pn：不使用 Ping</p>
 <p>-p：指定扫描端口</p>
 <p>注：不加上 -sT -Pn 参数，将无法使用 proxychains 进行代理扫描</p>
 </blockquote>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; proxychains nmap <span class="literal">-sT</span> <span class="literal">-Pn</span> <span class="number">192.168</span>.<span class="number">232.132</span> <span class="literal">-p</span> <span class="number">80</span>,<span class="number">443</span>,<span class="number">445</span>,<span class="number">3389</span>                       </span><br><span class="line">[<span class="type">proxychains</span>] config file found: /etc/proxychains.conf</span><br><span class="line">[<span class="type">proxychains</span>] preloading /usr/lib/x86_64<span class="literal">-linux</span><span class="literal">-gnu</span>/libproxychains.so.<span class="number">4</span></span><br><span class="line">[<span class="type">proxychains</span>] DLL init: proxychains<span class="literal">-ng</span> <span class="number">4.14</span></span><br><span class="line">Starting Nmap <span class="number">7.80</span> ( https://nmap.org ) at <span class="number">2020</span><span class="literal">-09</span><span class="literal">-07</span> <span class="number">23</span>:<span class="number">05</span> EDT</span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>  ...  <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">80</span>  ...  OK</span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>  ...  <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">445</span>  ...  OK</span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>  ...  <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">3389</span>  ...  OK</span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>  ...  <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">443</span> &lt;-<span class="literal">-denied</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line">Host is up (<span class="number">0.19</span>s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE  SERVICE</span><br><span class="line"><span class="number">80</span>/tcp   open   http</span><br><span class="line"><span class="number">443</span>/tcp  closed https</span><br><span class="line"><span class="number">445</span>/tcp  open   microsoft<span class="literal">-ds</span></span><br><span class="line"><span class="number">3389</span>/tcp open   ms<span class="literal">-wbt</span><span class="literal">-server</span></span><br><span class="line"></span><br><span class="line">Nmap done: <span class="number">1</span> IP address (<span class="number">1</span> host up) scanned <span class="keyword">in</span> <span class="number">14.35</span> seconds</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">&gt; proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389                       
+[proxychains] config file found: /etc/proxychains.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.14
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-07 23:05 EDT
+[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:80  ...  OK
+[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:445  ...  OK
+[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:3389  ...  OK
+[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:443 &lt;--denied
+Nmap scan report for 192.168.232.132
+Host is up (0.19s latency).
 
+PORT     STATE  SERVICE
+80/tcp   open   http
+443/tcp  closed https
+445/tcp  open   microsoft-ds
+3389/tcp open   ms-wbt-server
+
+Nmap done: 1 IP address (1 host up) scanned in 14.35 seconds</code></pre>
 <p>通过扫描可以看到目标 80 端口是开放的，接下来使用 curl 作为对比示例。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl 192.168.232.132</span><br><span class="line">proxychains curl 192.168.232.132</span><br></pre></td></tr></table></figure>
+<pre><code>curl 192.168.232.132
+proxychains curl 192.168.232.132</code></pre>
+<pre><code class="powershell">&gt; curl 192.168.232.132
+curl: (7) Failed to connect to 192.168.232.132 port 80: No route to host
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">curl</span> <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line"><span class="built_in">curl</span>: (<span class="number">7</span>) Failed to connect to <span class="number">192.168</span>.<span class="number">232.132</span> port <span class="number">80</span>: No route to host</span><br><span class="line"></span><br><span class="line">&gt; proxychains <span class="built_in">curl</span> <span class="number">192.168</span>.<span class="number">232.132</span></span><br><span class="line">[<span class="type">proxychains</span>] config file found: /etc/proxychains.conf</span><br><span class="line">[<span class="type">proxychains</span>] preloading /usr/lib/x86_64<span class="literal">-linux</span><span class="literal">-gnu</span>/libproxychains.so.<span class="number">4</span></span><br><span class="line">[<span class="type">proxychains</span>] DLL init: proxychains<span class="literal">-ng</span> <span class="number">4.14</span></span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">192.168</span>.<span class="number">175.200</span>:<span class="number">9527</span>  ...  <span class="number">192.168</span>.<span class="number">232.132</span>:<span class="number">80</span>  ...  OK</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;</span>&gt;</span><br><span class="line">&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http<span class="literal">-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=iso-8859-1&quot;</span> /&gt;</span><br><span class="line">……内容太多，此处省略……                 </span><br></pre></td></tr></table></figure>
-
+&gt; proxychains curl 192.168.232.132
+[proxychains] config file found: /etc/proxychains.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.14
+[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:80  ...  OK
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
+……内容太多，此处省略……                 </code></pre>
 <h1 id="0x02-反向转发"><a href="#0x02-反向转发" class="headerlink" title="0x02 反向转发"></a>0x02 反向转发</h1><p>反向转发顾名思义就是和<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150644.html">上一节</a>中提到的转发路径相反，之前我们设置的代理是 <code>CS服务端 --&gt; 上线主机 --&gt; 内网主机</code>，反向转发则是 <code>内网主机 --&gt; 上线主机 --&gt; CS服务端</code>。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-1.png"></p>
 <p>继续使用上面的演示环境，首先右击上线主机会话，选择 <code>Pivoting --&gt; Listener</code> ，除了 Name 选项之外，CS 都会自动配置好，这里直接使用默认的配置信息。</p>
@@ -931,7 +961,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

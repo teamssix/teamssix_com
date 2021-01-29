@@ -309,10 +309,19 @@
                 
                 
                 
+                <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="学习笔记: 48">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            style="background-color: #F9EBEA;">学习笔记
+                        <span class="tag-length">48</span>
+                    </span>
+                </a>
+                
+                
                 <a href="/categories/%E5%AE%9E%E4%BE%8B/" title="实例: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F9EBEA;">实例
+                            style="background-color: #F5EEF8;">实例
                         <span class="tag-length">4</span>
                     </span>
                 </a>
@@ -321,17 +330,8 @@
                 <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="经验总结: 15">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">经验总结
+                            style="background-color: #D5F5E3;">经验总结
                         <span class="tag-length">15</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="学习笔记: 48">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #D5F5E3;">学习笔记
-                        <span class="tag-length">48</span>
                     </span>
                 </a>
                 
@@ -489,9 +489,9 @@
                         <div class="summary block-with-text">
                             
                                 0x00 写在前面在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：
-1scrapy crawl blogurl  -s LOG_FILE&#x3D;all.log
+scrapy crawl blogurl  -s LOG_FILE=all.log
 
-
+也就是在原来
                             
                         </div>
                         <div class="publish-info">
@@ -546,9 +546,10 @@
                         <div class="summary block-with-text">
                             
                                 0x00 新建项目在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：
-1scrapy startproject teamssix
+scrapy startproject teamssix
 命令运行后，会自动在当前目录下生成许多文件，如下所示：
-1234567891
+teamssix
+  
                             
                         </div>
                         <div class="publish-info">
@@ -905,7 +906,7 @@ SchedulerSche
 0x00 关于Queuequeue模块实现了各种【多生产者-多消费者】队列，可用于在执行的多个线程之间安全的交换信息。
 
 queue的常用方法：
-123456789101112
+q.size()：返回队列的正
                             
                         </div>
                         <div class="publish-info">
@@ -964,7 +965,10 @@ queue的常用方法：
 2、添加线程
 0x00 不使用join()的结果首先在上一节的示例基础上进行简单修改
 
-12345678910111213141516import timeimport threadingdef thread
+import time
+import threading
+
+def thread_jobs():  # 定义要添加的线程
                             
                         </div>
                         <div class="publish-info">
@@ -1022,9 +1026,9 @@ queue的常用方法：
 这一节主要学习Threading模块的一些基本操作，如获取线程数，添加线程等。
 
 首先导入Threading模块
-1import threading
+import threading
 获取已激活的线程数
-1threading.active_co
+threading.active_coun
                             
                         </div>
                         <div class="publish-info">
@@ -1161,7 +1165,7 @@ queue的常用方法：
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

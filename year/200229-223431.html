@@ -433,7 +433,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
 
@@ -470,20 +470,45 @@
 <a id="more"></a>
 
 <h2 id="1、定义模型类"><a href="#1、定义模型类" class="headerlink" title="1、定义模型类"></a>1、定义模型类</h2><p>在这之前需要先设计数据库的表什么的，这里就不详细的说了（主要是我太懒了，手动狗头），感兴趣的可以看本文的参考链接，下面直接贴定义模型类的代码.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/models.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInfo</span>(<span class="params">models.Model</span>):</span>  <span class="comment"># 定义数据信息类模型</span></span><br><span class="line">	name = models.CharField(max_length=<span class="number">10</span>)  <span class="comment"># 设计name属性</span></span><br><span class="line">	</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfo</span>(<span class="params">models.Model</span>):</span>  <span class="comment"># 定义人物信息类模型</span></span><br><span class="line">	name = models.CharField(max_length=<span class="number">10</span>)</span><br><span class="line">	gender = models.BooleanField()</span><br><span class="line">	book = models.ForeignKey(BookInfo)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python"># BookManager/Book/models.py
+from django.db import models
 
+class BookInfo(models.Model):  # 定义数据信息类模型
+    name = models.CharField(max_length=10)  # 设计name属性
+
+class PeopleInfo(models.Model):  # 定义人物信息类模型
+    name = models.CharField(max_length=10)
+    gender = models.BooleanField()
+    book = models.ForeignKey(BookInfo)</code></pre>
 <h2 id="2、模型迁移"><a href="#2、模型迁移" class="headerlink" title="2、模型迁移"></a>2、模型迁移</h2><p>由两步完成，首先生成迁移文件，根据模型类生成创建表的语句；接下来执行迁移，根据第一步生成的语句在数据库中创建表。分别由以下两句完成。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">python3 manage.py makemigrations
+python3 manage.py migrate</code></pre>
 <p>运行结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py makemigrations</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;manage.py&quot;</span>, line 21, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    main()</span><br><span class="line">………内容太多，此处省略………</span><br><span class="line">TypeError: __init__() missing 1 required positional argument: <span class="string">&#x27;on_delete&#x27;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">BookManager/ &gt; python3 manage.py makemigrations
+Traceback (most recent call last):
+  File &quot;manage.py&quot;, line 21, in &lt;module&gt;
+    main()
+………内容太多，此处省略………
+TypeError: __init__() missing 1 required positional argument: &#39;on_delete&#39;</code></pre>
 <p>在运行第一个命令的时候报错了，此时只需要修改定义外键的那行代码即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原来的</span></span><br><span class="line">book = models.ForeignKey(BookInfo)</span><br><span class="line"><span class="comment">#修改后</span></span><br><span class="line">book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python"># 原来的
+book = models.ForeignKey(BookInfo)
+#修改后
+book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)</code></pre>
 <p>发生这个错误的原因是由于我看的教程使用的是1.8版本的Django，而我安装的是3.0，Django在2.0版本后，如果定义外键就需要加上<code>on_delete</code>选项了，OK，接下来，继续运行这两个代码。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py makemigrations</span><br><span class="line">Migrations <span class="keyword">for</span> <span class="string">&#x27;Book&#x27;</span>:</span><br><span class="line">  Book\migrations\0001_initial.py</span><br><span class="line">    - Create model BookInfo</span><br><span class="line">    - Create model PeopleInfo</span><br><span class="line"></span><br><span class="line">BookManager/ &gt; python3 manage.py migrate</span><br><span class="line">Operations to perform:</span><br><span class="line">  Apply all migrations: Book, admin, auth, contenttypes, sessions</span><br><span class="line">Running migrations:</span><br><span class="line">  Applying Book.0001_initial... OK</span><br><span class="line">………内容太多，此处省略………</span><br><span class="line">  Applying sessions.0001_initial... OK</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">BookManager/ &gt; python3 manage.py makemigrations
+Migrations for &#39;Book&#39;:
+  Book\migrations\0001_initial.py
+    - Create model BookInfo
+    - Create model PeopleInfo
 
+BookManager/ &gt; python3 manage.py migrate
+Operations to perform:
+  Apply all migrations: Book, admin, auth, contenttypes, sessions
+Running migrations:
+  Applying Book.0001_initial... OK
+………内容太多，此处省略………
+  Applying sessions.0001_initial... OK</code></pre>
 <p>到此，将主目录下生成的<code>db.sqlite3</code>文件拖拽到Database窗口中即可，如果没有Database的窗口，可以用Pycharm专业版试试。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4django_note.png"></p>
 <h1 id="0x01-站点管理"><a href="#0x01-站点管理" class="headerlink" title="0x01 站点管理"></a>0x01 站点管理</h1><ul>
@@ -500,39 +525,71 @@
 <blockquote>
 <p>ps：为什么是上海时区，而不是北京时区？可能老外感觉上海才是国际大都市，北京只是二三线城市，毕竟老外对中国的印象都是陆家嘴而不是天安门（道听途说，不要当真，嘿嘿）</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/BookManager/settings.py</span></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-Hans&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2、创建管理员"><a href="#2、创建管理员" class="headerlink" title="2、创建管理员"></a>2、创建管理员</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py createsuperuser</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python"># BookManager/BookManager/settings.py
+LANGUAGE_CODE = &#39;zh-Hans&#39;
+TIME_ZONE = &#39;Asia/Shanghai&#39;</code></pre>
+<h2 id="2、创建管理员"><a href="#2、创建管理员" class="headerlink" title="2、创建管理员"></a>2、创建管理员</h2><pre><code class="bash">python3 manage.py createsuperuser</code></pre>
 <p> 运行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BookManager/ &gt; python3 manage.py createsuperuser</span><br><span class="line">用户名 (leave blank to use <span class="string">&#x27;dora&#x27;</span>): <span class="built_in">test</span></span><br><span class="line">电子邮件地址: <span class="built_in">test</span>@test.com</span><br><span class="line">Password:</span><br><span class="line">Password (again):</span><br><span class="line">Superuser created successfully.</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">BookManager/ &gt; python3 manage.py createsuperuser
+用户名 (leave blank to use &#39;dora&#39;): test
+电子邮件地址: test@test.com
+Password:
+Password (again):
+Superuser created successfully.</code></pre>
 <p>运行服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BookManager&#x2F; &gt; python3 manage.py runserver</span><br><span class="line">Watching for file changes with StatReloader</span><br><span class="line">Performing system checks...</span><br><span class="line">System check identified no issues (0 silenced).</span><br><span class="line">February 29, 2020 - 20:52:43</span><br><span class="line">Django version 3.0.3, using settings &#39;BookManager.settings&#39;</span><br><span class="line">Starting development server at http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;</span><br><span class="line">Quit the server with CTRL-BREAK.</span><br></pre></td></tr></table></figure>
-
+<pre><code>BookManager/ &gt; python3 manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+System check identified no issues (0 silenced).
+February 29, 2020 - 20:52:43
+Django version 3.0.3, using settings &#39;BookManager.settings&#39;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.</code></pre>
 <p>运行之后，在浏览器打开 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/admin%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%88%9A%E6%89%8D%E5%88%9B%E5%BB%BA%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86%E3%80%82">http://127.0.0.1:8000/admin，使用刚才创建的用户名密码登陆。</a></p>
 <h2 id="3、注册模型类"><a href="#3、注册模型类" class="headerlink" title="3、注册模型类"></a>3、注册模型类</h2><p>刚打开管理员界面的时候，只能看到<code>认证和授权</code>管理栏，这时候就需要将模型类注册进去。</p>
 <p>修改<code>admin.py</code>代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/admin.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> Book.models <span class="keyword">import</span> BookInfo,PeopleInfo</span><br><span class="line">admin.site.register(BookInfo)</span><br><span class="line">admin.site.register(PeopleInfo)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python"># BookManager/Book/admin.py
+from django.contrib import admin
+from Book.models import BookInfo,PeopleInfo
+admin.site.register(BookInfo)
+admin.site.register(PeopleInfo)</code></pre>
 <p>刷新浏览器页面，即可看到刚添加的两个模型类。如果页面无法加载，可以看看是不是服务出现异常，如果出现异常，重新启动服务即可。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/5django_note.png"></p>
 <h2 id="4、自定义站点管理界面"><a href="#4、自定义站点管理界面" class="headerlink" title="4、自定义站点管理界面"></a>4、自定义站点管理界面</h2><p>在管理页面中，随便添加点数据，之后会发现书籍的名称都显示成了<code>BookInfo object</code></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/6django_note.png"></p>
 <p>此时，只需要在<code>model.py</code>里的class里添加以下内容即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">	<span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def __str__(self):
+    return self.name</code></pre>
 <p><code>model.py</code>完整的代码就是这个样子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/models.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookInfo</span>(<span class="params">models.Model</span>):</span>  <span class="comment"># 定义数据信息类模型</span></span><br><span class="line">	name = models.CharField(max_length=<span class="number">10</span>)  <span class="comment"># 设计name属性</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">		<span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfo</span>(<span class="params">models.Model</span>):</span>  <span class="comment"># 定义人物信息类模型</span></span><br><span class="line">	name = models.CharField(max_length=<span class="number">10</span>)</span><br><span class="line">	gender = models.BooleanField()</span><br><span class="line">	book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">		<span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
+<pre><code class="python"># BookManager/Book/models.py
+from django.db import models
 
+class BookInfo(models.Model):  # 定义数据信息类模型
+    name = models.CharField(max_length=10)  # 设计name属性
+    def __str__(self):
+        return self.name
+
+class PeopleInfo(models.Model):  # 定义人物信息类模型
+    name = models.CharField(max_length=10)
+    gender = models.BooleanField()
+    book = models.ForeignKey(BookInfo,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name</code></pre>
 <p>此时，再刷新页面，就可以看到显示正常了，同样 people info 界面也是正常的了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/7_1django_note.png"></p>
 <p>但是，这样显示还是不够直观，所以就需要自定义站点管理界面了，接下来修改<code>admin.py</code>页面，添加以下语句：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfoAdmin</span>(<span class="params">admin.ModelAdmin</span>):</span></span><br><span class="line">	list_display = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;book&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">class PeopleInfoAdmin(admin.ModelAdmin):
+    list_display = [&#39;id&#39;, &#39;name&#39;, &#39;gender&#39;, &#39;book&#39;]</code></pre>
 <p><code>admin.py</code>完成的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># BookManager/Book/admin.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> Book.models <span class="keyword">import</span> BookInfo, PeopleInfo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeopleInfoAdmin</span>(<span class="params">admin.ModelAdmin</span>):</span></span><br><span class="line">	list_display = [<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>, <span class="string">&#x27;book&#x27;</span>]</span><br><span class="line"></span><br><span class="line">admin.site.register(BookInfo)</span><br><span class="line">admin.site.register(PeopleInfo, PeopleInfoAdmin)<span class="comment">#注意此处添加PeopleInfoAdmin以注册</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python"># BookManager/Book/admin.py
+from django.contrib import admin
+from Book.models import BookInfo, PeopleInfo
 
+class PeopleInfoAdmin(admin.ModelAdmin):
+    list_display = [&#39;id&#39;, &#39;name&#39;, &#39;gender&#39;, &#39;book&#39;]
+
+admin.site.register(BookInfo)
+admin.site.register(PeopleInfo, PeopleInfoAdmin)#注意此处添加PeopleInfoAdmin以注册</code></pre>
 <p>再来刷新一下页面，就舒服很多了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/8django_note.png"></p>
 <blockquote>
@@ -993,7 +1050,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

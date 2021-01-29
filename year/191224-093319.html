@@ -426,7 +426,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    904
+                    866
                 </div>
                 
 
@@ -449,24 +449,56 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="0x00-新建项目"><a href="#0x00-新建项目" class="headerlink" title="0x00 新建项目"></a>0x00 新建项目</h1><p>在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject teamssix</span><br></pre></td></tr></table></figure>
+<pre><code>scrapy startproject teamssix</code></pre>
 <p>命令运行后，会自动在当前目录下生成许多文件，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">teamssix</span><br><span class="line">    │  scrapy.cfg  #scrapy的配置文件</span><br><span class="line">    └─teamssix  #项目的Python模块，在这里写自己的代码</span><br><span class="line">        │  items.py  #项目定义文件</span><br><span class="line">        │  middlewares.py  #项目中间件文件</span><br><span class="line">        │  pipelines.py  #项目管道文件，用来处理数据的写入存储等操作</span><br><span class="line">        │  settings.py  #项目设置文件</span><br><span class="line">        │  __init__.py</span><br><span class="line">        ├─spiders  #在这里写爬虫代码</span><br><span class="line">        └─ __init__.py</span><br></pre></td></tr></table></figure>
+<pre><code>teamssix
+    │  scrapy.cfg  #scrapy的配置文件
+    └─teamssix  #项目的Python模块，在这里写自己的代码
+        │  items.py  #项目定义文件
+        │  middlewares.py  #项目中间件文件
+        │  pipelines.py  #项目管道文件，用来处理数据的写入存储等操作
+        │  settings.py  #项目设置文件
+        │  __init__.py
+        ├─spiders  #在这里写爬虫代码
+        └─ __init__.py</code></pre>
 <a id="more"></a>
 <p>接下来使用 Pycharm 打开我们刚才新建的项目。</p>
 <h1 id="0x01-创建一个爬虫"><a href="#0x01-创建一个爬虫" class="headerlink" title="0x01 创建一个爬虫"></a>0x01 创建一个爬虫</h1><p>首先，在 spiders 文件下 new 一个 python file，这里我新建了一个名为 teamssix_blog_spider 的 py 文件。</p>
 <p>在新建的文件中写入自己的代码，这里我写的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlogSpider</span>(<span class="params">scrapy.Spider</span>):</span>  <span class="comment">#创建 Spider 类</span></span><br><span class="line">   name = <span class="string">&#x27;blogurl&#x27;</span>，  <span class="comment">#爬虫名称，必填</span></span><br><span class="line">   start_urls = [<span class="string">&#x27;https://www.teamssix.com&#x27;</span>]  <span class="comment">#待爬取的 url ，必填</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self,response</span>):</span>  <span class="comment">#定义 parse 函数，以解析爬到的东西</span></span><br><span class="line">      print(response.url)</span><br><span class="line">      print(response.text)</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">import scrapy
+class BlogSpider(scrapy.Spider):  #创建 Spider 类
+   name = &#39;blogurl&#39;，  #爬虫名称，必填
+   start_urls = [&#39;https://www.teamssix.com&#39;]  #待爬取的 url ，必填
+   def parse(self,response):  #定义 parse 函数，以解析爬到的东西
+      print(response.url)
+      print(response.text)</code></pre>
 <h1 id="0x02-运行爬虫"><a href="#0x02-运行爬虫" class="headerlink" title="0x02 运行爬虫"></a>0x02 运行爬虫</h1><p>之后运行我们刚新建的 blogurl 项目，运行命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl blogurl</span><br></pre></td></tr></table></figure>
+<pre><code>scrapy crawl blogurl</code></pre>
 <p>之后输出结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-12-23 18:33:45 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)</span><br><span class="line">2019-12-23 18:33:45 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.10.0, Python 3.7e&#39;</span><br><span class="line">……省略……</span><br><span class="line">https:&#x2F;&#x2F;www.teamssix.com</span><br><span class="line">&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta name&#x3D;&quot;generator&quot; content&#x3D;&quot;Hexo 3.8.0&quot;&gt;&lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;&lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;&lt;meta name&#x3D;&quot;vi                                      </span><br><span class="line">tent&gt;&lt;meta name&#x3D;&quot;keywords&quot; content&gt;&lt;meta name&#x3D;&quot;author&quot; content&#x3D;&quot;Teams Six,undefined&quot;&gt;&lt;meta name&#x3D;&quot;copyright&quot; content&#x3D;&quot;Teams Six&quot;&gt;&lt;title&gt;【Teams Six】&lt;&#x2F;title&gt;&lt;link rel&#x3D;&quot;styles                                      </span><br><span class="line">css&quot;&gt;&lt;link rel&#x3D;&quot;icon&quot; href&#x3D;&quot;&#x2F;favicon.ico&quot;&gt;&lt;!-- script(src&#x3D;&quot;http:&#x2F;&#x2F;cdn.mathjax.org&#x2F;mathjax&#x2F;latest&#x2F;MathJax.js?config&#x3D;TeX-AMS-MML_HTMLorMML&quot;)--&gt;&lt;script src&#x3D;&quot;&#x2F;js&#x2F;mathjax&#x2F;mathjax</span><br><span class="line">    tex2jax: &#123;inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]&#125;</span><br><span class="line">&#125;);</span><br><span class="line">……省略……</span><br></pre></td></tr></table></figure>
+<pre><code>2019-12-23 18:33:45 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)
+2019-12-23 18:33:45 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.10.0, Python 3.7e&#39;
+……省略……
+https://www.teamssix.com
+&lt;!DOCTYPE html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta name=&quot;generator&quot; content=&quot;Hexo 3.8.0&quot;&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;&lt;meta name=&quot;vi                                      
+tent&gt;&lt;meta name=&quot;keywords&quot; content&gt;&lt;meta name=&quot;author&quot; content=&quot;Teams Six,undefined&quot;&gt;&lt;meta name=&quot;copyright&quot; content=&quot;Teams Six&quot;&gt;&lt;title&gt;【Teams Six】&lt;/title&gt;&lt;link rel=&quot;styles                                      
+css&quot;&gt;&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;&gt;&lt;!-- script(src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;)--&gt;&lt;script src=&quot;/js/mathjax/mathjax
+    tex2jax: &#123;inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]&#125;
+&#125;);
+……省略……</code></pre>
 <p>不难看出，我们想要的内容已经被打印出来了，但这还远远不够，我们还需要对其进行简单的解析，这里就用到了 BeautifulSoup ，有过爬虫经验的对这个库应该是不陌生了。</p>
 <h1 id="0x03-爬取内容解析"><a href="#0x03-爬取内容解析" class="headerlink" title="0x03 爬取内容解析"></a>0x03 爬取内容解析</h1><p>接下来，想要获取到每个文章的链接，只需要对 parse 的内容进行修改，修改也很简单，基本之前写的多线程里的代码一致。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self,response</span>):</span></span><br><span class="line">   soup = BeautifulSoup(response.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> soup.select(<span class="string">&#x27;.post-title&#x27;</span>):</span><br><span class="line">      print(<span class="string">&#x27;https://www.teamssix.com&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(i[<span class="string">&#x27;href&#x27;</span>]))</span><br></pre></td></tr></table></figure>
+<pre><code class="Python">def parse(self,response):
+   soup = BeautifulSoup(response.text,&#39;html.parser&#39;)
+   for i in soup.select(&#39;.post-title&#39;):
+      print(&#39;https://www.teamssix.com&#123;&#125;&#39;.format(i[&#39;href&#39;]))</code></pre>
 <p>很简单的一个小爬虫，然后将爬虫运行一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~# scrapy crawl blogurl  #运行命令</span><br><span class="line">2019-12-23 19:02:01 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)</span><br><span class="line">……省略……</span><br><span class="line">https:&#x2F;&#x2F;www.teamssix.com&#x2F;year&#x2F;191222-192227.html</span><br><span class="line">https:&#x2F;&#x2F;www.teamssix.com&#x2F;year&#x2F;191220-161745.html</span><br><span class="line">……省略……</span><br><span class="line">2019-12-23 19:02:04 [scrapy.core.engine] INFO: Spider closed (finished)</span><br></pre></td></tr></table></figure>
-
+<pre><code>~# scrapy crawl blogurl  #运行命令
+2019-12-23 19:02:01 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)
+……省略……
+https://www.teamssix.com/year/191222-192227.html
+https://www.teamssix.com/year/191220-161745.html
+……省略……
+2019-12-23 19:02:04 [scrapy.core.engine] INFO: Spider closed (finished)</code></pre>
 <p>此时就能够将我们想要的东西爬下来了，但这实现的功能还是比较简单，接下来将介绍如何使用 Scrapy 爬取每个子页面中的详细信息。</p>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>原文链接：<a target="_blank" rel="noopener" href="https://www.temassix.com/year/191224-093319.html">https://www.temassix.com/year/191224-093319.html</a></p>
@@ -632,9 +664,9 @@
                     <div class="summary block-with-text">
                         
                             0x00 写在前面在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：
-1scrapy crawl blogurl  -s LOG_FILE&#x3D;all.log
+scrapy crawl blogurl  -s LOG_FILE=all.log
 
-
+也就是在原来
                         
                     </div>
                     <div class="publish-info">
@@ -912,7 +944,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.1k</span>&nbsp;字
+                class="white-color">114.7k</span>&nbsp;字
             
             
             
