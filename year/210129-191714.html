@@ -449,13 +449,13 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Framework 在很多地方都是兼容的，所以我们便可以将 Metasploit  Framework 攻击产生的会话传递到 Cobalt Strike 上，同样的 Cobalt Strike 的会话也能够传递到 Metasploit  Framework</p>
-<p>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</p>
+<p><strong>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</strong></p>
 <p>1、Metasploit Framework 调用攻击载荷，这里调用的是喜闻乐见的 CVE-2019-0708</p>
 <p>2、Metasploit Framework 发起攻击，获取会话</p>
 <p>3、Cobalt Strike 新建一个 Beacon，这里使用的是 HTTPS Beacon</p>
 <p>4、最后，在 Metasploit Framework 上调用 exploit/windows/local/payload_inject 模块</p>
 <p>5、在该模块上配置与 Cobalt Strike 上为同样类型的 payload，即 HTTPS Payload，设置 Cobalt Strike 服务器的 IP 和 端口后运行即可</p>
-<p>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</p>
+<p><strong>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</strong></p>
 <p>1、首先，Cobalt Strike 需要获得一个会话，这里直接采用 Scripted Web Delivery（S）的方式使靶机上线</p>
 <p>2、接着，Metasploit Framework 调用 exploit/multi/handler 模块</p>
 <p>3、在该模块上配置 HTTP Payload，为该 payload 的 IP 和 端口设置成 Metasploit Framework 所在主机 IP，端口自定义即可</p>
