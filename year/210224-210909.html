@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接, Teams Six">
+    <meta name="keywords" content="【经验总结】域内主机存活探测的一些方法总结, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接 | Teams Six</title>
+    <title>【经验总结】域内主机存活探测的一些方法总结 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -257,12 +257,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-23_21-02-52.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接</h1>
+                    <h1 class="description center-align post-title">【经验总结】域内主机存活探测的一些方法总结</h1>
                 </div>
             </div>
         </div>
@@ -379,16 +379,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                <span class="chip bg-color">学习笔记</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
                             </a>
                         
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
-                            <a href="/tags/Scrapy/">
-                                <span class="chip bg-color">Scrapy</span>
+                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                <span class="chip bg-color">经验总结</span>
                             </a>
                         
                     </div>
@@ -399,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                学习笔记
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                经验总结
                             </a>
                         
                     </div>
@@ -412,28 +412,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-24
+                    2021-02-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-02-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    866
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    12 分
                 </div>
                 
 
@@ -448,64 +448,222 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-新建项目"><a href="#0x00-新建项目" class="headerlink" title="0x00 新建项目"></a>0x00 新建项目</h1><p>在终端中即可直接新建项目，这里我创建一个名称为 teamssix 的项目，命令如下：</p>
-<pre><code>scrapy startproject teamssix</code></pre>
-<p>命令运行后，会自动在当前目录下生成许多文件，如下所示：</p>
-<pre><code>teamssix
-    │  scrapy.cfg  #scrapy的配置文件
-    └─teamssix  #项目的Python模块，在这里写自己的代码
-        │  items.py  #项目定义文件
-        │  middlewares.py  #项目中间件文件
-        │  pipelines.py  #项目管道文件，用来处理数据的写入存储等操作
-        │  settings.py  #项目设置文件
-        │  __init__.py
-        ├─spiders  #在这里写爬虫代码
-        └─ __init__.py</code></pre>
-<a id="more"></a>
-<p>接下来使用 Pycharm 打开我们刚才新建的项目。</p>
-<h1 id="0x01-创建一个爬虫"><a href="#0x01-创建一个爬虫" class="headerlink" title="0x01 创建一个爬虫"></a>0x01 创建一个爬虫</h1><p>首先，在 spiders 文件下 new 一个 python file，这里我新建了一个名为 teamssix_blog_spider 的 py 文件。</p>
-<p>在新建的文件中写入自己的代码，这里我写的代码如下：</p>
-<pre><code class="Python">import scrapy
-class BlogSpider(scrapy.Spider):  #创建 Spider 类
-   name = &#39;blogurl&#39;，  #爬虫名称，必填
-   start_urls = [&#39;https://www.teamssix.com&#39;]  #待爬取的 url ，必填
-   def parse(self,response):  #定义 parse 函数，以解析爬到的东西
-      print(response.url)
-      print(response.text)</code></pre>
-<h1 id="0x02-运行爬虫"><a href="#0x02-运行爬虫" class="headerlink" title="0x02 运行爬虫"></a>0x02 运行爬虫</h1><p>之后运行我们刚新建的 blogurl 项目，运行命令如下：</p>
-<pre><code>scrapy crawl blogurl</code></pre>
-<p>之后输出结果如下：</p>
-<pre><code>2019-12-23 18:33:45 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)
-2019-12-23 18:33:45 [scrapy.utils.log] INFO: Versions: lxml 4.2.5.0, libxml2 2.9.8, cssselect 1.1.0, parsel 1.5.2, w3lib 1.21.0, Twisted 19.10.0, Python 3.7e&#39;
-……省略……
-https://www.teamssix.com
-&lt;!DOCTYPE html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;meta name=&quot;generator&quot; content=&quot;Hexo 3.8.0&quot;&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;&lt;meta name=&quot;vi                                      
-tent&gt;&lt;meta name=&quot;keywords&quot; content&gt;&lt;meta name=&quot;author&quot; content=&quot;Teams Six,undefined&quot;&gt;&lt;meta name=&quot;copyright&quot; content=&quot;Teams Six&quot;&gt;&lt;title&gt;【Teams Six】&lt;/title&gt;&lt;link rel=&quot;styles                                      
-css&quot;&gt;&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;&gt;&lt;!-- script(src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;)--&gt;&lt;script src=&quot;/js/mathjax/mathjax
-    tex2jax: &#123;inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]&#125;
-&#125;);
-……省略……</code></pre>
-<p>不难看出，我们想要的内容已经被打印出来了，但这还远远不够，我们还需要对其进行简单的解析，这里就用到了 BeautifulSoup ，有过爬虫经验的对这个库应该是不陌生了。</p>
-<h1 id="0x03-爬取内容解析"><a href="#0x03-爬取内容解析" class="headerlink" title="0x03 爬取内容解析"></a>0x03 爬取内容解析</h1><p>接下来，想要获取到每个文章的链接，只需要对 parse 的内容进行修改，修改也很简单，基本之前写的多线程里的代码一致。</p>
-<pre><code class="Python">def parse(self,response):
-   soup = BeautifulSoup(response.text,&#39;html.parser&#39;)
-   for i in soup.select(&#39;.post-title&#39;):
-      print(&#39;https://www.teamssix.com&#123;&#125;&#39;.format(i[&#39;href&#39;]))</code></pre>
-<p>很简单的一个小爬虫，然后将爬虫运行一下</p>
-<pre><code>~# scrapy crawl blogurl  #运行命令
-2019-12-23 19:02:01 [scrapy.utils.log] INFO: Scrapy 1.8.0 started (bot: teamssix)
-……省略……
-https://www.teamssix.com/year/191222-192227.html
-https://www.teamssix.com/year/191220-161745.html
-……省略……
-2019-12-23 19:02:04 [scrapy.core.engine] INFO: Spider closed (finished)</code></pre>
-<p>此时就能够将我们想要的东西爬下来了，但这实现的功能还是比较简单，接下来将介绍如何使用 Scrapy 爬取每个子页面中的详细信息。</p>
-<blockquote>
-<p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>原文链接：<a target="_blank" rel="noopener" href="https://www.temassix.com/year/191224-093319.html">https://www.temassix.com/year/191224-093319.html</a></p>
+                <blockquote>
+<p>注：本文中的工具均来源自互联网，后门自查。</p>
 </blockquote>
+<p>在进入目标域后，对域内主机进行存活探测是不可或缺的一步，在此记录一下亿些常见的方法。</p>
+<h2 id="1、ping"><a href="#1、ping" class="headerlink" title="1、ping"></a>1、ping</h2><p>使用 ping 进行检测的优点是不容易触发检测规则，缺点是速度较慢，如果目标开启了禁止 ping 的策略，那这个方法就 gg 了。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><pre><code>for /l %i in (1,1,255) do @ping 192.168.7.%i -w 1 -n 1|find /i &quot;ttl=&quot;</code></pre>
+<pre><code>C:\Users\daniel10&gt;for /l %i in (1,1,255) do @ping 192.168.7.%i -w 1 -n 1|find /i &quot;ttl=&quot;
+来自 192.168.7.7 的回复: 字节=32 时间&lt;1ms TTL=128
+来自 192.168.7.107 的回复: 字节=32 时间=1ms TTL=64
+来自 192.168.7.110 的回复: 字节=32 时间&lt;1ms TTL=128</code></pre>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><pre><code>for k in $( seq 1 255);do ping -c 1 192.168.7.$k|grep &quot;ttl&quot;|awk -F &quot;[ :]+&quot; &#39;&#123;print $4&#125;&#39;; done</code></pre>
+<pre><code>teamssix@localhost:~#  for k in $( seq 1 255);do ping -c 1 192.168.7.$k|grep &quot;ttl&quot;|awk -F &quot;[ :]+&quot; &#39;&#123;print $4&#125;&#39;; done
+192.168.7.7
+192.168.7.107
+192.168.7.110</code></pre>
+<h3 id="VBS"><a href="#VBS" class="headerlink" title="VBS"></a>VBS</h3><pre><code>strSubNet = &quot;192.168.7.&quot;  
+Set objFSO= CreateObject(&quot;Scripting.FileSystemObject&quot;)  
+Set objTS = objfso.CreateTextFile(&quot;C:\Result.txt&quot;)   
+For i = 1 To 254  
+strComputer = strSubNet &amp; i  
+blnResult = Ping(strComputer)  
+If blnResult = True Then  
+objTS.WriteLine strComputer &amp; &quot; is alived ! :) &quot;  
+End If  
+Next   
+objTS.Close  
+WScript.Echo &quot;All Ping Scan , All Done ! :) &quot;    
+Function Ping(strComputer)  
+Set objWMIService = GetObject(&quot;winmgmts:\\.\root\cimv2&quot;) 
+Set colItems = objWMIService.ExecQuery(&quot;Select * From Win32_PingStatus Where Address=&#39;&quot; &amp; strComputer &amp; &quot;&#39;&quot;) 
+For Each objItem In colItems  
+Select case objItem.StatusCode  
+Case 0  
+Ping = True  
+Case Else  
+Ping = False  
+End select  
+Exit For  
+Next  
+End Function</code></pre>
+<h2 id="2、PowerShell"><a href="#2、PowerShell" class="headerlink" title="2、PowerShell"></a>2、PowerShell</h2><h3 id="TSPingSweep"><a href="#TSPingSweep" class="headerlink" title="TSPingSweep"></a>TSPingSweep</h3><p>PowerShell TSPingSweep 扫描脚本下载地址：</p>
+<p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/dwj7738/My-Powershell-Repository/master/Scripts/Invoke-TSPingSweep.ps1">https://raw.githubusercontent.com/dwj7738/My-Powershell-Repository/master/Scripts/Invoke-TSPingSweep.ps1</a></p>
+<pre><code>powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-TSPingSweep.ps1; Invoke-TSPingSweep -StartAddress 192.168.7.1 -EndAddress 192.168.7.254 -ResolveHost -ScanPort -Port 445,135&quot;</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-23_21-02-52.png"></p>
+<pre><code>C:\Users\daniel10&gt;powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-TSPingSweep.ps1; Invoke-TSPingSweep -StartAddress 192.168.7.1 -EndAddress 192.168.7.254 -ResolveHost -ScanPort -Port 445,135&quot;
+IPAddress     HostName             Ports
+---------     --------             -----
+192.168.7.7   dc.teamssix.com      &#123;445, 135&#125;
+192.168.7.107 DANIEL7.teamssix.com &#123;445, 135&#125;
+192.168.7.110 daniel10.teamssix... &#123;445, 135&#125;</code></pre>
+<h3 id="ARPScan"><a href="#ARPScan" class="headerlink" title="ARPScan"></a>ARPScan</h3><p>PowerShell ARPScan 扫描脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/situational_awareness/network/Invoke-ARPScan.ps1">https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/situational_awareness/network/Invoke-ARPScan.ps1</a></p>
+<pre><code>powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-ARPScan.ps1; Invoke-ARPScan -CIDR 192.168.7.0/24&quot;</code></pre>
+<pre><code>C:\Users\daniel10&gt;powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-ARPScan.ps1; Invoke-ARPScan -CIDR 192.168.7.0/24&quot;
+MAC               Address
+---               -------
+16:7D:DA:D7:8F:64 192.168.7.1
+00:0C:29:1D:82:CF 192.168.7.7
+00:0C:29:A9:62:98 192.168.7.107
+00:0C:29:DC:01:0D 192.168.7.110
+00:0C:29:DC:01:0D 192.168.7.255</code></pre>
+<h2 id="3、arp-scan"><a href="#3、arp-scan" class="headerlink" title="3、arp-scan"></a>3、arp-scan</h2><p>arp-scan 使用 ARP 协议进行探测。arp-scan Windows 下载地址：<a target="_blank" rel="noopener" href="https://github.com/QbsuranAlang/arp-scan-windows-">https://github.com/QbsuranAlang/arp-scan-windows-</a></p>
+<pre><code>C:\Users\daniel10&gt;arp-scan.exe -t 192.168.7.0/24
+Reply that 16:7D:DA:D7:8F:64 is 192.168.7.1 in 11.278300
+Reply that 00:0C:29:1D:82:CF is 192.168.7.7 in 16.140500
+Reply that 00:0C:29:A9:62:98 is 192.168.7.107 in 15.233500
+Reply that 00:0C:29:DC:01:0D is 192.168.7.110 in 0.080700
+Reply that 00:0C:29:DC:01:0D is 192.168.7.255 in 0.071500</code></pre>
+<h2 id="4、arp-ping"><a href="#4、arp-ping" class="headerlink" title="4、arp-ping"></a>4、arp-ping</h2><p>Arp-ping 基于 arp 协议，它可以 “ping” 受防火墙保护的主机，下载地址：<a target="_blank" rel="noopener" href="https://www.elifulkerson.com/projects/arp-ping.php">https://www.elifulkerson.com/projects/arp-ping.php</a></p>
+<p>由于 arp-ping 只能一次 ping 一台主机，但在测试过程中肯定不能一台一台的 ping ，所以这里参考上面的 ping 脚本写了一个 arp-ping 循环 ping 主机的脚本。</p>
+<pre><code>for /l %i in (1,1,255) do @arp-ping.exe 192.168.7.%i -w 1 -n 1|find /i &quot;Reply&quot;</code></pre>
+<pre><code>C:\Users\daniel10&gt;for /l %i in (1,1,255) do @arp-ping.exe 192.168.7.%i -w 1 -n 1|find /i &quot;Reply&quot;
+Reply that 16:7D:DA:D7:8F:64 is 192.168.7.1 in 2.233ms
+Reply that 00:0C:29:A9:62:98 is 192.168.7.107 in 16.857ms
+Reply that 00:0C:29:DC:01:0D is 192.168.7.110 in 0.205ms
+Reply that 00:0C:29:DC:01:0D is 192.168.7.255 in 0.200ms</code></pre>
+<h2 id="5、Empire"><a href="#5、Empire" class="headerlink" title="5、Empire"></a>5、Empire</h2><p>Empire 内置了arpscan 模块，该模块可利用 arp 协议对内网主机进行探测。将目标主机上线 Empire 后，使用 powershell/situational_awareness/network/arpscan 模块，设置扫描范围即可，具体如下：</p>
+<pre><code>(Empire: listeners) &gt; agents
+[*] Active agents:
+ Name     La Internal IP     Machine Name      Username                Process            PID    Delay    Last Seen
+ ----     -- -----------     ------------      --------                -------            ---    -----    ---------
+ APDGSW9X ps 192.168.7.7     DC                *TEAMSSIX\administrator powershell         3648   5/0.0    2021-02-23 20:43:27
+(Empire: agents) &gt; usemodule powershell/situational_awareness/network/arpscan
+(Empire: powershell/situational_awareness/network/arpscan) &gt; set Agent APDGSW9X
+(Empire: powershell/situational_awareness/network/arpscan) &gt; set CIDR 192.168.7.0/24
+(Empire: powershell/situational_awareness/network/arpscan) &gt; execute
+MAC               Address      
+---               -------      
+16:7D:DA:D7:8F:64 192.168.7.1  
+00:0C:29:1D:82:CF 192.168.7.7  
+00:0C:29:A9:62:98 192.168.7.107
+00:0C:29:DC:01:0D 192.168.7.110
+00:0C:29:1D:82:CF 192.168.7.255</code></pre>
+<h2 id="6、nbtscan"><a href="#6、nbtscan" class="headerlink" title="6、nbtscan"></a>6、nbtscan</h2><p>nbtscan 有 Windows 和 Linux 两个版本，使用 netbios 协议扫描本地或远程 TCP/IP 网络上的开放 NetBIOS 名称服务器。</p>
+<p>nbtscan 下载地址：<a target="_blank" rel="noopener" href="http://www.unixwiz.net/tools/nbtscan.html">http://www.unixwiz.net/tools/nbtscan.html</a></p>
+<pre><code>C:\Users\daniel10&gt;nbtscan.exe 192.168.7.0/24
+192.168.7.1     \DP
+192.168.7.7     TEAMSSIX\DC                     SHARING DC
+192.168.7.107   TEAMSSIX\DANIEL7                SHARING
+*timeout (normal end of scan)</code></pre>
+<h2 id="7、unicornscan"><a href="#7、unicornscan" class="headerlink" title="7、unicornscan"></a>7、unicornscan</h2><p>unicornscan 使用 UDP 协议，在 kali 下可以直接 apt-get 进行安装，这个使用起来感觉有点慢。</p>
+<pre><code>teamssix@localhost:~# unicornscan -mU 192.168.7.7
+UDP open              domain[   53]        from 192.168.7.7  ttl 127
+
+teamssix@localhost:~# for k in $( seq 1 255);do unicornscan -mU 192.168.7.$k|grep &quot;open&quot;|awk -F &quot;[ :]+&quot; &#39;&#123;print $5&#125;&#39;; done
+192.168.7.1
+192.168.7.7
+192.168.7.107</code></pre>
+<h2 id="8、scanline"><a href="#8、scanline" class="headerlink" title="8、scanline"></a>8、scanline</h2><p>McAfee 出品，推荐 win 下使用（管理员执行），scanline 项目地址：<a href="www.mcafee.com/us/downloads/free-tools/termsofuse.aspx">www.mcafee.com/us/downloads/free-tools/termsofuse.aspx</a></p>
+<p>但是项目地址的下载按钮貌似失效，其他的下载地址：<a target="_blank" rel="noopener" href="https://www.lanzous.com/i32zncf">https://www.lanzous.com/i32zncf</a></p>
+<pre><code>C:\Users\daniel10&gt;scanline.exe -n 192.168.7.0-255
+ScanLine (TM) 1.01
+Copyright (c) Foundstone, Inc. 2002
+http://www.foundstone.com
+Scan of 256 IPs started at Tue Feb 23 22:07:40 2021
+-------------------------------------------------------------------------------
+192.168.7.7
+Responded in 0 ms.
+0 hops away
+Responds with ICMP unreachable: No
+-------------------------------------------------------------------------------
+192.168.7.107
+Responded in 0 ms.
+0 hops away
+Responds with ICMP unreachable: No
+-------------------------------------------------------------------------------
+192.168.7.110
+Responded in 0 ms.
+0 hops away
+Responds with ICMP unreachable: No
+-------------------------------------------------------------------------------
+Scan finished at Tue Feb 23 22:07:49 2021
+3 IPs and 0 ports scanned in 0 hours 0 mins 9.16 secs</code></pre>
+<h2 id="9、telnet"><a href="#9、telnet" class="headerlink" title="9、telnet"></a>9、telnet</h2><p>通过 telnet 探测 445 端口或者其他端口判断主机存活。</p>
+<pre><code>for /l %a in (1,1,254) do start /min /low telnet 192.168.7.%a 445</code></pre>
+<h2 id="10、tcping"><a href="#10、tcping" class="headerlink" title="10、tcping"></a>10、tcping</h2><p>tcping.exe 是一个命令行程序，其操作类似于“ping”，但它通过 TCP 工作，下载地址：<a target="_blank" rel="noopener" href="https://elifulkerson.com/projects/tcping.php">https://elifulkerson.com/projects/tcping.php</a></p>
+<pre><code>C:\Users\daniel10&gt;tcping.exe -n 1 192.168.7.7 445
+
+Probing 192.168.7.7:445/tcp - Port is open - time=1.719ms
+Ping statistics for 192.168.7.7:445
+     1 probes sent.
+     1 successful, 0 failed.  (0.00% fail)
+Approximate trip times in milli-seconds:
+     Minimum = 1.719ms, Maximum = 1.719ms, Average = 1.719ms</code></pre>
+<h2 id="11、cping"><a href="#11、cping" class="headerlink" title="11、cping"></a>11、cping</h2><p>k8 团队出品，下载地址：<a target="_blank" rel="noopener" href="https://www.lanzous.com/i3837ne#Window">https://www.lanzous.com/i3837ne#Window</a></p>
+<p>下载解压后可以看到很多个 exe 文件，其分别代表了.net 编译版本，编译版本对应系统如下：</p>
+<pre><code>XP/2003(已淘汰,用户少,使用的大部分也会装.net,因为好多app需要连驱动都要.net,具体看安装版本一般2.0)
+
+Vista       2.0(基本上也没多少用户)
+Win7/2008   2.0 3.0 3.5
+Win8/2012   4.0
+Win8.1      4.0 4.5
+Win10/2016  4.0 4.6 (4.5未测应该也行)</code></pre>
+<pre><code>C:\Users\daniel10&gt;cping40.exe scan osver 192.168.7.1 192.168.7.255
+Scan OS version
+192.168.7.1---192.168.7.255
+
+Segment: 192.168.7.0
+=============================================
+IP              MAC               HostName        OSver
+192.168.7.7     00-0C-29-1D-82-CF dc.teamssix.com [Win 2008 R2 Datacenter 7601 SP 1]
+192.168.7.110   00-0C-29-DC-01-0D daniel10.teamssix.com []
+192.168.7.107   00-0C-29-A9-62-98 daniel7.teamssix.com [Win 7 Professional 7601 SP 1]
+=============================================
+Count:3</code></pre>
+<h2 id="12、fscan"><a href="#12、fscan" class="headerlink" title="12、fscan"></a>12、fscan</h2><p>影舞者大佬写的一款工具，使用起来感觉很是方便，工具下载地址：<a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan">https://github.com/shadow1ng/fscan</a></p>
+<pre><code>C:\Users\daniel10&gt;fscan.exe -h 192.168.7.1-255 -p 22,445
+   ___                              _
+  / _ \     ___  ___ _ __ __ _  ___| | __
+ / /_\/____/ __|/ __| &#39;__/ _` |/ __| |/ /
+/ /_\\_____\__ \ (__| | | (_| | (__|   &lt;
+\____/     |___/\___|_|  \__,_|\___|_|\_\
+                     fscan version: 1.5.1
+scan start
+(icmp) Target &#39;192.168.7.7&#39; is alive
+(icmp) Target &#39;192.168.7.110&#39; is alive
+(icmp) Target &#39;192.168.7.107&#39; is alive
+icmp alive hosts len is: 3
+192.168.7.110:445 open
+192.168.7.7:445 open
+192.168.7.107:445 open
+192.168.7.110 CVE-2020-0796 SmbGhost Vulnerable
+192.168.7.110  (Windows 10 Pro 18363)
+[+] 192.168.7.7 MS17-010        (Windows Server 2008 R2 Datacenter 7601 Service Pack 1)
+[+] 192.168.7.107       MS17-010        (Windows 7 Professional 7601 Service Pack 1)
+scan end
+</code></pre>
+<h2 id="13、Nmap"><a href="#13、Nmap" class="headerlink" title="13、Nmap"></a>13、Nmap</h2><p>提到扫描自然不能少了 nmap，nmap 支持多种协议的扫描，具体如下：</p>
+<pre><code>ARP 扫描：            nmap -PR -sn 192.168.7.0/24
+ICMP 扫描：        nmap ‐sP ‐PI 192.168.7.0/24 ‐T4
+ICMP 扫描：        nmap ‐sn ‐PE ‐T4 192.168.7.0/24
+SNMP 扫描：        nmap -sU --script snmp-brute 192.168.7.0/24 -T4
+UDP 扫描：            nmap -sU -T5 -sV --max-retries 1 192.168.7.7 -p 500
+NetBIOS 扫描：    nmap --script nbstat.nse -sU -p137 192.168.7.0/24 -T4
+SMB 扫描：            nmap ‐sU ‐sS ‐‐script smb‐enum‐shares.nse ‐p 445 192.168.7.0/24
+……</code></pre>
+<h2 id="14、MSF"><a href="#14、MSF" class="headerlink" title="14、MSF"></a>14、MSF</h2><p>除了 Nmap 之外，万能的 MSF 自然也不能少，MSF 能够进行主机存活探测的模块如下：</p>
+<pre><code>auxiliary/scanner/discovery/udp_probe
+auxiliary/scanner/discovery/udp_sweep
+auxiliary/scanner/discovery/arp_sweep
+auxiliary/scanner/netbios/nbname
+auxiliary/scanner/snmp/snmp_enum
+auxiliary/scanner/smb/smb_version
+……</code></pre>
+<p>除了上述工具外，还有 netdiscover、snscan 等工具可用于内网主机存活探测，在这其中有些工具因为使用起来感觉探测的不是很理想等原因，在此就不记录了，如果读者感兴趣的话可自行尝试玩玩。</p>
 <blockquote>
-<p>参考链接：<br><a target="_blank" rel="noopener" href="https://youtu.be/aDwAmj3VWH4">https://youtu.be/aDwAmj3VWH4</a><br><a target="_blank" rel="noopener" href="http://doc.scrapy.org/en/latest/intro/tutorial.html">http://doc.scrapy.org/en/latest/intro/tutorial.html</a></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://soapffz.com/sec/21.html">https://soapffz.com/sec/21.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://micro8.gitbook.io/micro8/contents-1">https://micro8.gitbook.io/micro8/contents-1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaozi/p/13722474.html">https://www.cnblogs.com/xiaozi/p/13722474.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/-mo-/p/11908260.html">https://www.cnblogs.com/-mo-/p/11908260.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42918771/article/details/108798729">https://blog.csdn.net/weixin_42918771/article/details/108798729</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45366449/article/details/113650656">https://blog.csdn.net/qq_45366449/article/details/113650656</a></p>
+<p><a target="_blank" rel="noopener" href="https://pingmaoer.github.io/2020/03/30/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B8%80/">https://pingmaoer.github.io/2020/03/30/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B8%80/</a></p>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt="img"></p>
 
             </div>
             <hr/>
@@ -531,7 +689,7 @@ https://www.teamssix.com/year/191220-161745.html
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/191224-093319.html">https://www.teamssix.com/year/191224-093319.html</a>
+                    <a href="https://www.teamssix.com/year/210224-210909.html">https://www.teamssix.com/year/210224-210909.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -569,16 +727,16 @@ https://www.teamssix.com/year/191220-161745.html
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                    <span class="chip bg-color">学习笔记</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
                                 </a>
                             
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
-                                <a href="/tags/Scrapy/">
-                                    <span class="chip bg-color">Scrapy</span>
+                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                    <span class="chip bg-color">经验总结</span>
                                 </a>
                             
                         </div>
@@ -623,7 +781,7 @@ https://www.teamssix.com/year/191220-161745.html
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2019-12-24T09-33-19',
+        id: '2021-02-24T21-09-09',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -647,57 +805,59 @@ https://www.teamssix.com/year/191220-161745.html
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/191226-151652.html">
+                <a href="/year/210224-210909.html">
                     <div class="card-image">
                         
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-23_21-02-52.png" class="responsive-img" alt="【经验总结】域内主机存活探测的一些方法总结">
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【Python Scrapy 爬虫框架】 3、利用 Scrapy 爬取博客文章详细信息">
-                        
-                        <span class="card-title">【Python Scrapy 爬虫框架】 3、利用 Scrapy 爬取博客文章详细信息</span>
+                        <span class="card-title">【经验总结】域内主机存活探测的一些方法总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 写在前面在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：
-scrapy crawl blogurl  -s LOG_FILE=all.log
+                            
+注：本文中的工具均来源自互联网，后门自查。
 
-也就是在原来
+在进入目标域后，对域内主机进行存活探测是不可或缺的一步，在此记录一下亿些常见的方法。
+1、ping使用 ping 进行检测的优点是不容易触发检测规则，缺点是速度较慢，如果目标开启了禁止 pin
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    学习笔记
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                    经验总结
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
-                    <a href="/tags/Scrapy/">
-                        <span class="chip bg-color">Scrapy</span>
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">经验总结</span>
                     </a>
                     
                 </div>
@@ -711,34 +871,34 @@ scrapy crawl blogurl  -s LOG_FILE=all.log
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/191224-092208.html">
+                <a href="/year/210224-210341.html">
                     <div class="card-image">
                         
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-23_17-38-11.png" class="responsive-img" alt="【内网学习笔记】4、域内信息收集">
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="【Python Scrapy 爬虫框架】 1、简介与安装">
-                        
-                        <span class="card-title">【Python Scrapy 爬虫框架】 1、简介与安装</span>
+                        <span class="card-title">【内网学习笔记】4、域内信息收集</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 简介下图展示了 Scrapy 的体系结构及其组件概述，在介绍图中的流程前，先来简单了解一下图中每个组件的含义。
-EngineEngine 负责控制系统所有组件之间的数据流，并在某些操作发生时触发事件。
+                            1、判断是否存在域ipconfig查看网关 IP 地址、DNS 的 IP 地址、域名、本机是否和 DNS 服务器处于同一网段。    
+ipconfig /all
+C:\Users\daniel10&gt; ipconfig /all
 
-SchedulerSche
+W
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -752,12 +912,12 @@ SchedulerSche
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/Scrapy/">
-                        <span class="chip bg-color">Scrapy</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
