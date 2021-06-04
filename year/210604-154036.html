@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【经验总结】关于 reNgine 自动化网络侦查框架的国内安装与报错的解决方法, Teams Six">
+    <meta name="keywords" content="【经验总结】SSH 隧道使用学习, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【经验总结】关于 reNgine 自动化网络侦查框架的国内安装与报错的解决方法 | Teams Six</title>
+    <title>【经验总结】SSH 隧道使用学习 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/86880620-92814300-c10a-11ea-9b27-627f43934221.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh4.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【经验总结】关于 reNgine 自动化网络侦查框架的国内安装与报错的解决方法</h1>
+                    <h1 class="description center-align post-title">【经验总结】SSH 隧道使用学习</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                                <span class="chip bg-color">工具分享</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                <span class="chip bg-color">经验总结</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
                             </a>
                         
-                            <a href="/tags/reNgine/">
-                                <span class="chip bg-color">reNgine</span>
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                经验总结
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2021-06-04
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-10-15
+                    2021-06-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    6 分
                 </div>
                 
 
@@ -449,88 +449,77 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-关于"><a href="#0x00-关于" class="headerlink" title="0x00 关于"></a>0x00 关于</h1><p>reNgine 是 <code>Yogesh Ojha</code> 写的一款自动化网络侦查框架，或者说是信息收集聚合工具，他的推特：<a target="_blank" rel="noopener" href="https://twitter.com/ojhayogesh11">@ojhayogesh11</a></p>
-<p>该工具集合了子域名扫描、目录扫描、端口扫描、CMS扫描等等，扫描结束后，还能在手机上通知你。</p>
-<p>在平时渗透测试的过程中使用这个工具可以节约很多信息收集的时间，项目地址为：<a target="_blank" rel="noopener" href="https://github.com/yogeshojha/reNgine">https://github.com/yogeshojha/reNgine</a></p>
-<p>在去年年底的时候我写了一款被动信息收集聚合工具，已经放在了我的 GitHub 上，当时还打算写个 Web 页面，为此还特地去学了一下 Django。</p>
-<p>当时设计的 Web 页面大概长这个样子，但最后因为自己实在太菜，Web 页面没能写下去，只写了命令行版的。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-09-11_10-09-30.png"></p>
-<p>在今年年初又写了一款主动信息收集工具，但是效果不太理想，所以就没放在我的 GitHub 上。</p>
-<p>直至今年7月份在逛推特的时候，偶然看到大佬分享的 reNgine 这款工具。打开这个项目一看，这不就是我理想中的信息收集聚合工具嘛，虽然目前使用起来还有不少的 bug ，但是整体上个人觉着已经很不错了，至少比自己写的不知道好了多少倍。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/86880620-92814300-c10a-11ea-9b27-627f43934221.png"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/86752434-f9482300-c05c-11ea-954b-b0f538c1ecef.png"></p>
+                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>SSH 全称 <code>Secure Shell</code>，从它的名字来看这个协议就比较安全。SSH 协议是一种应用层协议，支持几乎所有 UNIX、Linux 平台。</p>
+<p>得益于 SSH 协议在传输过程中都是加密，所以在流量层面也较难区分合法的 SSH 流量和攻击者产生的 SSH 流量。</p>
+<p>因此在内网渗透过程中，使用 SSH 协议进行建立隧道的方法，一方面不用自己再上传同类工具，另一方面降低了因上传使用了同类工具被管理员发现的风险。</p>
+<h1 id="0x01-SSH-常用命令介绍"><a href="#0x01-SSH-常用命令介绍" class="headerlink" title="0x01 SSH 常用命令介绍"></a>0x01 SSH 常用命令介绍</h1><p>相信各位平时最常使用的 SSH 命令就是拿来连接 Linux 系统了，命令一般是这样：</p>
+<pre><code>ssh root@192.168.1.1</code></pre>
+<p>或者 -p 指定自己自定义的 SSH 端口、-i 指定自己的私钥文件等等。</p>
+<p>如果拿 SSH 来创建隧道则需要用到下面的命令：</p>
+<pre><code> -C 压缩传输，提高传输速度。
+ -f 将 SSH 传输转入后台执行，不占用当前 shell
+ -N 建立静默连接（建立了连接但看不到具体会话）
+ -g 允许远程主机连接本地用于转发的端口。
+ -L 本地端口转发
+ -R 远程端口转发
+ -D 动态转发（ SOCKS 代理）
+ -p 指定 SSH 端口</code></pre>
+<h1 id="0x02-本地转发"><a href="#0x02-本地转发" class="headerlink" title="0x02 本地转发"></a>0x02 本地转发</h1><p>目前有这样的一个环境，外网有一台攻击主机 ，可访问处于内网环境的 Web 服务器（双网卡），但无法访问 Web 服务器所在内网的办公主机，接下来就用 SSH 进行流量转发，使外网的攻击主机通过 Web 服务器访问到位于内网的办公主机。</p>
+<p>环境拓扑如下：</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg"></p>
+<p>在攻击主机上执行以下命令，将内网办公主机的 3389 端口映射到自己的 3388 端口上</p>
+<pre><code>ssh -CfNg -L 攻击主机端口:内网办公主机IP:内网办公主机端口 Web服务器ssh用户名@Web服务器IP</code></pre>
+<pre><code class="#">&gt; ssh -CfNg -L 3388:192.168.7.110:3389 root@172.16.214.5
+root@172.16.214.5&#39;s password:</code></pre>
+<p>这条命令的意思就是将 Web 服务器 172.16.214.5 作为跳板，将内网办公主机的 3389 端口转发到攻击主机的 3388 端口，这样只要访问攻击主机的 3388 端口就会访问到内网办公主机的 3389 端口了。</p>
+<p>为了判断代理转发是否建立成功，可以通过 <code>netstat</code> 进行判断</p>
+<pre><code>netstat -pantu | grep &quot;3388&quot;</code></pre>
+<pre><code class="netstat">&gt; netstat -pantu | grep &quot;3388&quot;
+tcp        0      0 0.0.0.0:3388            0.0.0.0:*               LISTEN      14086/ssh
+tcp6       0      0 :::3388                 :::*                    LISTEN      14086/ssh</code></pre>
+<p>可以看到 ssh 程序已经监听 3388 端口了，接下来连接本地的 3388 端口就可以连接到内网办公主机的 3389 端口了</p>
+<pre><code>rdesktop 127.0.0.1:3388</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh2.png"></p>
+<h1 id="0x03-远程转发"><a href="#0x03-远程转发" class="headerlink" title="0x03 远程转发"></a>0x03 远程转发</h1><p>远程转发在这里其实也可以说是反向代理，目前有这样的一个环境：内网中不存在边界设备，但是内网的 Web 服务器能访问到攻击主机，而内网的办公主机则不行。</p>
+<p>因此可以在拿到 Web 服务器的 Shell 后，采用远程转发的方式，即利用 Web 服务器 SSH 连接到攻击主机上进行代理转发，然后访问攻击主机的端口即可，拓扑图如下：</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh3.jpg"></p>
+<p>将 Web 服务器作为跳板，进行远程转发</p>
+<pre><code>ssh -CfNg -R 攻击主机端口:内网办公主机IP:内网办公主机端口 攻击主机ssh用户名@攻击主机IP</code></pre>
+<pre><code>&gt; ssh -CfNg -R 3388:192.168.7.110:3389 root@172.16.214.48
+root@172.16.214.48&#39;s password:</code></pre>
+<p>同样的，为了判断代理转发是否建立成功，也可以通过 <code>netstat</code> 进行判断，和之前一样都是在攻击主机下执行下面的命令</p>
+<pre><code>netstat -pantu | grep &quot;3388&quot;</code></pre>
+<pre><code>&gt; netstat -pantu | grep &quot;3388&quot;
+tcp        0      0 127.0.0.1:3388          0.0.0.0:*               LISTEN      24728/sshd: root
+tcp6       0      0 ::1:3388                :::*                    LISTEN      24728/sshd: root</code></pre>
+<p>可以看到，同样的，在攻击主机上 3388 端口的监听已经被开启了，此时直接在攻击主机上访问 127.0.0.1:3388 就可以连接到 192.168.7.110:3389 了</p>
+<pre><code>rdesktop 127.0.0.1:3388</code></pre>
+<h1 id="0x04-动态转发"><a href="#0x04-动态转发" class="headerlink" title="0x04 动态转发"></a>0x04 动态转发</h1><p>动态转发需要攻击主机能够访问到目标主机，因此这里采用和本地转发一样的拓扑进行演示。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg"></p>
+<p>在攻击主机上执行下面的命令</p>
+<pre><code>ssh -CfNg -D 攻击主机端口 Web服务器ssh用户名@Web服务器IP</code></pre>
+<pre><code>&gt; ssh -CfNg -D 4444 root@172.16.214.5
+root@172.16.214.5&#39;s password:</code></pre>
+<p>使用 <code>netstat</code> 可以看到现在 4444 端口已经被监听了</p>
+<pre><code>netstat -pantu | grep &quot;4444&quot;</code></pre>
+<pre><code>&gt; netstat -pantu | grep &quot;4444&quot;
+tcp        0      0 0.0.0.0:4444            0.0.0.0:*               LISTEN      3979/ssh
+tcp6       0      0 :::4444                 :::*                    LISTEN      3979/ssh</code></pre>
+<p>动态转发其实就是建立一个 socks 连接，任何支持 socks 4/5 协议的程序都可以使用这个加密通道进行访问，例如这里以 proxychains 为例，借助 proxychains 从攻击主机访问到内网的办公主机的 3389 端口。</p>
+<p>在 kali 上如果没有自带 proxychains，可以直接使用 <code>sudo apt install proxychains</code> 进行安装，安装完成后，需要修改 proxychains 的配置文件</p>
+<pre><code>vim /etc/proxychains4.conf</code></pre>
+<p>来到配置文件最后一行，如果有之前配置好的代理，可以用 # 号注释掉，然后另起一行添加上我们的代理，添加内容为：</p>
+<pre><code>socks5 127.0.0.1 4444</code></pre>
+<p>修改后之后，按下<code>esc</code>，然后按下<code>:wq</code> 保存退出</p>
+<p>之后使用下面的命令连接内网办公主机 192.168.7.110 的 3389 端口。</p>
+<pre><code>proxychains4 rdesktop 192.168.7.110:3389 </code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh4.png"></p>
+<p>可以看到动态转发要比本地转发自由度高出不少，借助动态转发可以访问到内网 Web 服务器能访问的所有地址、端口，没有了本地转发只能访问单个IP、端口的限制。</p>
+<h1 id="0x05-SSH-隧道攻击的防御"><a href="#0x05-SSH-隧道攻击的防御" class="headerlink" title="0x05 SSH 隧道攻击的防御"></a>0x05 SSH 隧道攻击的防御</h1><p>对 SSH 进行双向访问控制策略可以避免这些问题，一方面只允许可信 IP 才能连接，一方面只允许连接到可信 IP。</p>
 <blockquote>
-<p>在 FreeBuf 上也有其对应的中文介绍：<a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/245292.html">https://www.freebuf.com/sectool/245292.html</a></p>
-</blockquote>
-<h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><h2 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h2><p>需要有 docker、docker-compose、make 环境</p>
-<h2 id="2、下载项目"><a href="#2、下载项目" class="headerlink" title="2、下载项目"></a>2、下载项目</h2><pre><code>git clone https://github.com/yogeshojha/reNgine.git</code></pre>
-<h2 id="3、开始安装"><a href="#3、开始安装" class="headerlink" title="3、开始安装"></a>3、开始安装</h2><pre><code>cd reNgine
-make certs        #使用https访问，个人觉着可省略
-make build        #构建项目
-make up            #启动项目
-make username    #创建登陆用户</code></pre>
-<h2 id="4、更新"><a href="#4、更新" class="headerlink" title="4、更新"></a>4、更新</h2><pre><code>git pull
-make build
-make up</code></pre>
-<p>看起来是非常的简单，但是对于在国内的我们来说，这其中包含了不少的坑。</p>
-<h1 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h1><p>由于是老外写的东西，在这款工具安装过程中也引用下载了很多国外的文件，所以难免包含了一些被墙的东西。</p>
-<p>最初在本地安装报错、安装报错这样过了几天之后就懒得整了，最后直接在国外的 vps 上去安装了，然后几分钟，真的就只要几分钟就安装好了。</p>
-<p>但是一个月过去了、两个月过去了，随着国外 vps 的使用频率变低了，最后 vps 上最常使用的就是这个工具了，如果只是为了使用这个工具而去租个 vps ，实在觉着有些划不来。</p>
-<p>于是又开始了在本地安装的折腾之旅，下面就来看看安装过程中的报错与解决方法。</p>
-<h1 id="0x03-问题"><a href="#0x03-问题" class="headerlink" title="0x03 问题"></a>0x03 问题</h1><h2 id="1、下载安装很慢"><a href="#1、下载安装很慢" class="headerlink" title="1、下载安装很慢"></a>1、下载安装很慢</h2><p>一开始是以为 docker 下载慢的原因，所以试着给 docker 加代理，又或者给 docker-compose 加代理等等方法都不行。最后试了亿下后，意识到应该是 Dockers 容器里下载文件比较慢，之后修改了 reNgine 项目目录下的 Dockerfile 文件才解决了这个问题。</p>
-<p>通过观察发现，在 build 的过程中，会访问默认系统镜像源下载安装文件，同时也会访问 pip 默认镜像源下载安装文件，因此我们只需要把这两个默认的镜像源替换成国内的就可以了。</p>
-<p>打开 Dockerfile 文件，在第一个 <code>RUN</code> 命令前，加上以下命令。修改后，下面的命令在我这里是 Dockerfile 文件的第 13 行左右的样子。</p>
-<pre><code>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#39; /etc/apk/repositories \
-    &amp;&amp; mkdir ~/.pip/ \
-    &amp;&amp; echo &#39;[global]&#39; &gt; ~/.pip/pip.conf \
-    &amp;&amp; echo &#39;index-url = https://mirrors.aliyun.com/pypi/simple/&#39; &gt;&gt; ~/.pip/pip.conf</code></pre>
-<p>上面的命令在我理解就是把 Docker 容器中的 <code>/etc/apk/repositories</code> 文件里的 <code>dl-cdn.alpinelinux.org</code> 字符串替换成了 <code>mirrors.aliyun.com</code> ，以达到将系统默认镜像源替换成阿里云镜像源的目的。</p>
-<p>之后创建 <code>~/.pip/pip.conf</code> 文件，并添加阿里云 pip 源，以达到替换 pip 源的目的。</p>
-<p>当然如果有不喜欢阿里云源的同学可以换成其他家的源。</p>
-<h2 id="2、go-get-被墙"><a href="#2、go-get-被墙" class="headerlink" title="2、go get 被墙"></a>2、go get 被墙</h2><p>在默认配置下，直接使用 <code>make build</code> ，我在进行到第 12 步的时候报了下面这个错误。</p>
-<pre><code>Step 12/24 : RUN go get -u github.com/tomnomnom/assetfinder github.com/hakluke/hakrawler github.com/haccer/subjack
- ---&gt; Running in e38c60f832f0
-package golang.org/x/net/html: unrecognized import path &quot;golang.org/x/net/html&quot; (https fetch: Get https://golang.org/x/net/html?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
-package golang.org/x/net/html/charset: unrecognized import path &quot;golang.org/x/net/html/charset&quot; (https fetch: Get https://golang.org/x/net/html/charset?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
-package google.golang.org/appengine/urlfetch: unrecognized import path &quot;google.golang.org/appengine/urlfetch&quot; (https fetch: Get https://google.golang.org/appengine/urlfetch?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)
-package golang.org/x/text/encoding: unrecognized import path &quot;golang.org/x/text/encoding&quot; (https fetch: Get https://golang.org/x/text/encoding?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)</code></pre>
-<p>后来去网站查了亿下，是因为在使用 <code>go get</code>命令获取资源会被墙的关系。知道了原因就好办了，我们只要加代理就行了。</p>
-<p>在 reNgine 项目目录下的 Dockerfile 文件中找到 <code># Download Go packages</code> 这一行，在这一行的下面添加以下两条命令，此时 go get 就会去走代理，访问 <code>goproxy.io</code> 这个镜像下载资源了。</p>
-<pre><code>ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.io</code></pre>
-<blockquote>
-<p>如果发现 goproxy.io 无法访问，可以试试 gocenter.io 这个代理</p>
-</blockquote>
-<p>再次执行 <code>make build</code> ，就会发现第 12 步成功运行，但这还没完，报错依旧继续。</p>
-<h2 id="3、安装-psycopg2-报错"><a href="#3、安装-psycopg2-报错" class="headerlink" title="3、安装 psycopg2 报错"></a>3、安装 psycopg2 报错</h2><p>在继续安装的过程中，又给我报了这些问题</p>
-<pre><code>Building wheel for psycopg2 (setup.py): started
-  Building wheel for psycopg2 (setup.py): finished with status &#39;error&#39;
-  ERROR: Command errored out with exit status 1:
-   command: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; bdist_wheel -d /tmp/pip-wheel-fisuy49f
-       cwd: /tmp/pip-install-eps_y188/psycopg2/
-……
-Moving to /usr/local/lib/python3.8/site-packages/psycopg2/
-   from /usr/local/lib/python3.8/site-packages/~sycopg2
-ERROR: Command errored out with exit status 1: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; install --record /tmp/pip-record-r7w9n2l8/install-record.txt --single-version-externally-managed --compile --install-headers /usr/local/include/python3.8/psycopg2 Check the logs for full command output.
-The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned a non-zero code: 1</code></pre>
-<p>最初判断可能是因为源的问题，但是后来发现不管是默认的源还是国内源都会报错。</p>
-<p>然后觉着可能还是和之前两个问题一样需要修改 Dockerfile 文件，但是在修改了无数次 Dockerfile 文件后发现都不行。</p>
-<p>直到最后判断可能是版本问题，于是把 reNgine 目录下的 requirements.txt 文件里 psycopg2 后的版本号删除，再运行果然就可以了。</p>
-<p>如果在 <code>pip install</code> 安装其他模块也报类似的错误时，也可以尝试删除 requirements.txt 文件的里版本号试试。不过这种操作可能会给后期带来一些不兼容的问题，但总强于安都安装不上的情况。</p>
-<blockquote>
-<p>在 pip 安装的过程中如果报错，可以再尝试几遍，因为有时仅仅可能是因为本地网络的原因。</p>
-</blockquote>
-<p>如果你碰到了除上面三个问题之外的其他问题，欢迎在下方留言。</p>
-<h1 id="0x04-最后"><a href="#0x04-最后" class="headerlink" title="0x04 最后"></a>0x04 最后</h1><p>由于国内关于这款工具的安装说明少之又少，所以只能自己一步一步的去摸索，在经历了两天的报错—》排错—》报错……之后，终于安装好了这款工具。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-09-11_12-21-28.png"></p>
-<p>另外因为整个过程是我自己摸索出来的，因此难免中间存在有问题或者可以优化的地方，如有错误欢迎各位大佬指正。</p>
-<blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.liwenzhou.com/posts/Go/fix_go_get/">https://www.liwenzhou.com/posts/Go/fix_go_get/</a></p>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1520882">https://cloud.tencent.com/developer/article/1520882</a></p>
-<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/u013360850/article/details/90602149">https://blog.csdn.net/u013360850/article/details/90602149</a></p>
-<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/xuezhangjun0121/article/details/81664260">https://blog.csdn.net/xuezhangjun0121/article/details/81664260</a></p>
-<p> 更多信息欢迎关注我的微信公众号：TeamsSix</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SSH/10407">https://baike.baidu.com/item/SSH/10407</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/174782978">https://zhuanlan.zhihu.com/p/174782978</a><br>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -558,7 +547,7 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/200920-142641.html">https://www.teamssix.com/year/200920-142641.html</a>
+                    <a href="https://www.teamssix.com/year/210604-154036.html">https://www.teamssix.com/year/210604-154036.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -596,16 +585,16 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                                    <span class="chip bg-color">工具分享</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                    <span class="chip bg-color">经验总结</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
                                 </a>
                             
-                                <a href="/tags/reNgine/">
-                                    <span class="chip bg-color">reNgine</span>
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -651,7 +640,7 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2020-09-20T14-26-41',
+        id: '2021-06-04T15-40-36',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -675,46 +664,56 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/201015-194551.html">
+                <a href="/year/210604-154036.html">
                     <div class="card-image">
                         
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh4.png" class="responsive-img" alt="【经验总结】SSH 隧道使用学习">
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="【经验总结】电脑休眠后虚拟网卡地址变成169.254网段的解决方法">
-                        
-                        <span class="card-title">【经验总结】电脑休眠后虚拟网卡地址变成169.254网段的解决方法</span>
+                        <span class="card-title">【经验总结】SSH 隧道使用学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一直以来会遇到一个问题，就是电脑在休眠后再次打开电脑，在使用虚拟机时网络老是会碰到问题，此时如果查看物理机上虚拟网卡的地址就会发现 IP 地址变成了 169.254.xxx.xxx 。
+                            0x00 前言SSH 全称 Secure Shell，从它的名字来看这个协议就比较安全。SSH 协议是一种应用层协议，支持几乎所有 UNIX、Linux 平台。
+得益于 SSH 协议在传输过程中都是加密，所以在流量层面也较难区分合法的 SS
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                    经验总结
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                        <span class="chip bg-color">经验总结</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -728,30 +727,31 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/200705-013156.html">
+                <a href="/year/210601-155103.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-05_00-19-41.png" class="responsive-img" alt="【经验总结】Linux下使用HAProxy为多个代理设置负载均衡">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_14-23-47.png" class="responsive-img" alt="【内网学习笔记】8、powercat 的使用">
                         
-                        <span class="card-title">【经验总结】Linux下使用HAProxy为多个代理设置负载均衡</span>
+                        <span class="card-title">【内网学习笔记】8、powercat 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在平时进行一些挖洞、扫描或者爬虫工作的时候，被封 IP 的情况时有发生，解决这个问题较好的方法可能就是挂代理了。但是代理有时也会被封，并且有的代理质量可能还不太高，这时采用负载均衡个人觉着是一种不错的解决方法。
+                            1、下载安装 powercatpowercat 可以视为 nc 的 powershell 版本，因此也可以和 nc 进行连接。
+powercat 可在 github 进行下载，项目地址为：https://github.com/besimor
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                    经验总结
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -761,16 +761,16 @@ The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned 
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                        <span class="chip bg-color">经验总结</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/%E4%BB%A3%E7%90%86/">
-                        <span class="chip bg-color">代理</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">
-                        <span class="chip bg-color">负载均衡</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
