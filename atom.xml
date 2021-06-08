@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-06-08T07:09:37.307Z</updated>
+  <updated>2021-06-08T13:51:21.517Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】9、iodine 使用</title>
+    <link href="https://www.teamssix.com/year/210608-213403.html"/>
+    <id>https://www.teamssix.com/year/210608-213403.html</id>
+    <published>2021-06-08T13:34:03.000Z</published>
+    <updated>2021-06-08T13:51:21.517Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>iodine 这个名字起的很有意思，iodine 翻译过来就是碘，碘的原子序数为 53，53 也就是 DNS 服务对应的端口号。 </p><p>iodine 和 dnscat2 一样，适合于其他请求方式被限制以至于只能发送 DNS 请求的环境中，iodine 同样也是分成了直接转发和中继两种模式。</p><p>iodine 与 dnscat2 不同的在于 Iodine 服务端和客户端都是用 C 语言开发，同时 iodine 的原理也有些不同，iodine 通过 TAP 在服务端和客户端分别建立一个局域网和虚拟网卡，再通过 DNS 隧道进行连接，然后使其处在同一个局域网中。</p><h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>首先需要有一个域名，并设置 NS 和 A 记录，A 记录指向自己的公网 VPS 地址，NS 记录指向 A 记录的子域名。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-20-20.png"></p><p>Kali 下自带 iodine ，Debian Linux 可以使用 apt 进行安装</p><pre><code>sudo apt-get install iodine</code></pre><p>Windows 可以直接到官网下载，下载地址：<a href="https://code.kryo.se/iodine/">https://code.kryo.se/iodine/</a>，服务端名称是 iodined.exe，客户端是 iodine.exe</p><h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>这里服务端使用的是 Linux，服务端命令如下：</p><pre><code>sudo iodined -f -c -P teamssix 192.168.77.1 dc.teamssix.com -DD</code></pre><pre><code> -f        在前台运行 -c        不检查传入请求的客户端 IP 地址 -P        客户端与服务端之间的连接密码 -D        调试级别，-D 表示第一级，-DD 表示第二级，依此类推 192.168.77.1 是自己自定义的局域网虚拟 IP 地址。</code></pre><p>这里客户端使用的是 Windows，Windows 客户端上除了要有 iodine 相关文件外，还需要安装 tap 网卡驱动程序，这里我百度找了一个下载地址 <a href="http://www.qudong51.net/qudong/981.html">http://www.qudong51.net/qudong/981.html</a></p><p>打开下载好的 tap 网卡驱动程序，一直下一步下一步安装就行。</p><p>然后就可以启动客户端程序了，注意下载下来的 dll 文件要和 exe 在一个目录下，不能只复制一个 exe 到目标主机上，而且要以管理员权限运行下面的命令。</p><pre><code>.\iodine.exe -f -r -P teamssix dc.teamssix.com</code></pre><pre><code>-r        iodine 有时会自动将 DNS 隧道切换成 UDP 通道，使用 -r 命令可以强制让 iodine 在任何情况下都使用 DNS 隧道</code></pre><p>如果出现 <code>Connection setup complete, transmitting data.</code> 就表示 DNS 隧道就已经建立了。</p><p>这时如果去 ping 服务端自定义的虚拟 IP 也是可以 ping 通的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_21-12-06.png"></p><p>假如这里内网机器分配到了 192.168.77.2 这个 IP ，因为处在一个局域网中，所以 VPS 直接访问 192.168.77.2 的 3389、80 等端口就可以直接访问到内网机器的相关端口了，同样的内网主机也可以访问 VPS 的 22 端口等等，至此便绕过了策略限制。</p><blockquote><p>参考文章：</p><p><a href="https://www.cnblogs.com/micr067/p/12263337.html">https://www.cnblogs.com/micr067/p/12263337.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;iodine 这个名字起的很有意思，iodine 翻译过来就是碘，碘的原子序数为 53，53 也就是 DNS 服务对应的端口</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】dnscat2 使用</title>
@@ -551,34 +579,6 @@
     
     
     <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】关于 reNgine 自动化网络侦查框架的国内安装与报错的解决方法</title>
-    <link href="https://www.teamssix.com/year/200920-142641.html"/>
-    <id>https://www.teamssix.com/year/200920-142641.html</id>
-    <published>2020-09-20T06:26:41.000Z</published>
-    <updated>2020-10-15T02:00:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-关于"><a href="#0x00-关于" class="headerlink" title="0x00 关于"></a>0x00 关于</h1><p>reNgine 是 <code>Yogesh Ojha</code> 写的一款自动化网络侦查框架，或者说是信息收集聚合工具，他的推特：<a href="https://twitter.com/ojhayogesh11">@ojhayogesh11</a></p><p>该工具集合了子域名扫描、目录扫描、端口扫描、CMS扫描等等，扫描结束后，还能在手机上通知你。</p><p>在平时渗透测试的过程中使用这个工具可以节约很多信息收集的时间，项目地址为：<a href="https://github.com/yogeshojha/reNgine">https://github.com/yogeshojha/reNgine</a></p><p>在去年年底的时候我写了一款被动信息收集聚合工具，已经放在了我的 GitHub 上，当时还打算写个 Web 页面，为此还特地去学了一下 Django。</p><p>当时设计的 Web 页面大概长这个样子，但最后因为自己实在太菜，Web 页面没能写下去，只写了命令行版的。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-09-11_10-09-30.png"></p><p>在今年年初又写了一款主动信息收集工具，但是效果不太理想，所以就没放在我的 GitHub 上。</p><p>直至今年7月份在逛推特的时候，偶然看到大佬分享的 reNgine 这款工具。打开这个项目一看，这不就是我理想中的信息收集聚合工具嘛，虽然目前使用起来还有不少的 bug ，但是整体上个人觉着已经很不错了，至少比自己写的不知道好了多少倍。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/86880620-92814300-c10a-11ea-9b27-627f43934221.png"></p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/86752434-f9482300-c05c-11ea-954b-b0f538c1ecef.png"></p><blockquote><p>在 FreeBuf 上也有其对应的中文介绍：<a href="https://www.freebuf.com/sectool/245292.html">https://www.freebuf.com/sectool/245292.html</a></p></blockquote><h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><h2 id="1、环境准备"><a href="#1、环境准备" class="headerlink" title="1、环境准备"></a>1、环境准备</h2><p>需要有 docker、docker-compose、make 环境</p><h2 id="2、下载项目"><a href="#2、下载项目" class="headerlink" title="2、下载项目"></a>2、下载项目</h2><pre><code>git clone https://github.com/yogeshojha/reNgine.git</code></pre><h2 id="3、开始安装"><a href="#3、开始安装" class="headerlink" title="3、开始安装"></a>3、开始安装</h2><pre><code>cd reNginemake certs        #使用https访问，个人觉着可省略make build        #构建项目make up            #启动项目make username    #创建登陆用户</code></pre><h2 id="4、更新"><a href="#4、更新" class="headerlink" title="4、更新"></a>4、更新</h2><pre><code>git pullmake buildmake up</code></pre><p>看起来是非常的简单，但是对于在国内的我们来说，这其中包含了不少的坑。</p><h1 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h1><p>由于是老外写的东西，在这款工具安装过程中也引用下载了很多国外的文件，所以难免包含了一些被墙的东西。</p><p>最初在本地安装报错、安装报错这样过了几天之后就懒得整了，最后直接在国外的 vps 上去安装了，然后几分钟，真的就只要几分钟就安装好了。</p><p>但是一个月过去了、两个月过去了，随着国外 vps 的使用频率变低了，最后 vps 上最常使用的就是这个工具了，如果只是为了使用这个工具而去租个 vps ，实在觉着有些划不来。</p><p>于是又开始了在本地安装的折腾之旅，下面就来看看安装过程中的报错与解决方法。</p><h1 id="0x03-问题"><a href="#0x03-问题" class="headerlink" title="0x03 问题"></a>0x03 问题</h1><h2 id="1、下载安装很慢"><a href="#1、下载安装很慢" class="headerlink" title="1、下载安装很慢"></a>1、下载安装很慢</h2><p>一开始是以为 docker 下载慢的原因，所以试着给 docker 加代理，又或者给 docker-compose 加代理等等方法都不行。最后试了亿下后，意识到应该是 Dockers 容器里下载文件比较慢，之后修改了 reNgine 项目目录下的 Dockerfile 文件才解决了这个问题。</p><p>通过观察发现，在 build 的过程中，会访问默认系统镜像源下载安装文件，同时也会访问 pip 默认镜像源下载安装文件，因此我们只需要把这两个默认的镜像源替换成国内的就可以了。</p><p>打开 Dockerfile 文件，在第一个 <code>RUN</code> 命令前，加上以下命令。修改后，下面的命令在我这里是 Dockerfile 文件的第 13 行左右的样子。</p><pre><code>RUN sed -i &#39;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#39; /etc/apk/repositories \    &amp;&amp; mkdir ~/.pip/ \    &amp;&amp; echo &#39;[global]&#39; &gt; ~/.pip/pip.conf \    &amp;&amp; echo &#39;index-url = https://mirrors.aliyun.com/pypi/simple/&#39; &gt;&gt; ~/.pip/pip.conf</code></pre><p>上面的命令在我理解就是把 Docker 容器中的 <code>/etc/apk/repositories</code> 文件里的 <code>dl-cdn.alpinelinux.org</code> 字符串替换成了 <code>mirrors.aliyun.com</code> ，以达到将系统默认镜像源替换成阿里云镜像源的目的。</p><p>之后创建 <code>~/.pip/pip.conf</code> 文件，并添加阿里云 pip 源，以达到替换 pip 源的目的。</p><p>当然如果有不喜欢阿里云源的同学可以换成其他家的源。</p><h2 id="2、go-get-被墙"><a href="#2、go-get-被墙" class="headerlink" title="2、go get 被墙"></a>2、go get 被墙</h2><p>在默认配置下，直接使用 <code>make build</code> ，我在进行到第 12 步的时候报了下面这个错误。</p><pre><code>Step 12/24 : RUN go get -u github.com/tomnomnom/assetfinder github.com/hakluke/hakrawler github.com/haccer/subjack ---&gt; Running in e38c60f832f0package golang.org/x/net/html: unrecognized import path &quot;golang.org/x/net/html&quot; (https fetch: Get https://golang.org/x/net/html?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)package golang.org/x/net/html/charset: unrecognized import path &quot;golang.org/x/net/html/charset&quot; (https fetch: Get https://golang.org/x/net/html/charset?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)package google.golang.org/appengine/urlfetch: unrecognized import path &quot;google.golang.org/appengine/urlfetch&quot; (https fetch: Get https://google.golang.org/appengine/urlfetch?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)package golang.org/x/text/encoding: unrecognized import path &quot;golang.org/x/text/encoding&quot; (https fetch: Get https://golang.org/x/text/encoding?go-get=1: dial tcp 216.239.37.1:443: connect: connection refused)</code></pre><p>后来去网站查了亿下，是因为在使用 <code>go get</code>命令获取资源会被墙的关系。知道了原因就好办了，我们只要加代理就行了。</p><p>在 reNgine 项目目录下的 Dockerfile 文件中找到 <code># Download Go packages</code> 这一行，在这一行的下面添加以下两条命令，此时 go get 就会去走代理，访问 <code>goproxy.io</code> 这个镜像下载资源了。</p><pre><code>ENV GO111MODULE=onENV GOPROXY=https://goproxy.io</code></pre><blockquote><p>如果发现 goproxy.io 无法访问，可以试试 gocenter.io 这个代理</p></blockquote><p>再次执行 <code>make build</code> ，就会发现第 12 步成功运行，但这还没完，报错依旧继续。</p><h2 id="3、安装-psycopg2-报错"><a href="#3、安装-psycopg2-报错" class="headerlink" title="3、安装 psycopg2 报错"></a>3、安装 psycopg2 报错</h2><p>在继续安装的过程中，又给我报了这些问题</p><pre><code>Building wheel for psycopg2 (setup.py): started  Building wheel for psycopg2 (setup.py): finished with status &#39;error&#39;  ERROR: Command errored out with exit status 1:   command: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-eps_y188/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; bdist_wheel -d /tmp/pip-wheel-fisuy49f       cwd: /tmp/pip-install-eps_y188/psycopg2/……Moving to /usr/local/lib/python3.8/site-packages/psycopg2/   from /usr/local/lib/python3.8/site-packages/~sycopg2ERROR: Command errored out with exit status 1: /usr/local/bin/python -u -c &#39;import sys, setuptools, tokenize; sys.argv[0] = &#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;; __file__=&#39;&quot;&#39;&quot;&#39;/tmp/pip-install-kwlcc4ta/psycopg2/setup.py&#39;&quot;&#39;&quot;&#39;;f=getattr(tokenize, &#39;&quot;&#39;&quot;&#39;open&#39;&quot;&#39;&quot;&#39;, open)(__file__);code=f.read().replace(&#39;&quot;&#39;&quot;&#39;\r\n&#39;&quot;&#39;&quot;&#39;, &#39;&quot;&#39;&quot;&#39;\n&#39;&quot;&#39;&quot;&#39;);f.close();exec(compile(code, __file__, &#39;&quot;&#39;&quot;&#39;exec&#39;&quot;&#39;&quot;&#39;))&#39; install --record /tmp/pip-record-r7w9n2l8/install-record.txt --single-version-externally-managed --compile --install-headers /usr/local/include/python3.8/psycopg2 Check the logs for full command output.The command &#39;/bin/sh -c pip3 install -r /tmp/requirements.txt&#39; returned a non-zero code: 1</code></pre><p>最初判断可能是因为源的问题，但是后来发现不管是默认的源还是国内源都会报错。</p><p>然后觉着可能还是和之前两个问题一样需要修改 Dockerfile 文件，但是在修改了无数次 Dockerfile 文件后发现都不行。</p><p>直到最后判断可能是版本问题，于是把 reNgine 目录下的 requirements.txt 文件里 psycopg2 后的版本号删除，再运行果然就可以了。</p><p>如果在 <code>pip install</code> 安装其他模块也报类似的错误时，也可以尝试删除 requirements.txt 文件的里版本号试试。不过这种操作可能会给后期带来一些不兼容的问题，但总强于安都安装不上的情况。</p><blockquote><p>在 pip 安装的过程中如果报错，可以再尝试几遍，因为有时仅仅可能是因为本地网络的原因。</p></blockquote><p>如果你碰到了除上面三个问题之外的其他问题，欢迎在下方留言。</p><h1 id="0x04-最后"><a href="#0x04-最后" class="headerlink" title="0x04 最后"></a>0x04 最后</h1><p>由于国内关于这款工具的安装说明少之又少，所以只能自己一步一步的去摸索，在经历了两天的报错—》排错—》报错……之后，终于安装好了这款工具。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-09-11_12-21-28.png"></p><p>另外因为整个过程是我自己摸索出来的，因此难免中间存在有问题或者可以优化的地方，如有错误欢迎各位大佬指正。</p><blockquote><p>参考链接：</p><p><a href="https://www.liwenzhou.com/posts/Go/fix_go_get/">https://www.liwenzhou.com/posts/Go/fix_go_get/</a></p><p><a href="https://cloud.tencent.com/developer/article/1520882">https://cloud.tencent.com/developer/article/1520882</a></p><p> <a href="https://blog.csdn.net/u013360850/article/details/90602149">https://blog.csdn.net/u013360850/article/details/90602149</a></p><p> <a href="https://blog.csdn.net/xuezhangjun0121/article/details/81664260">https://blog.csdn.net/xuezhangjun0121/article/details/81664260</a></p><p> 更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-关于&quot;&gt;&lt;a href=&quot;#0x00-关于&quot; class=&quot;headerlink&quot; title=&quot;0x00 关于&quot;&gt;&lt;/a&gt;0x00 关于&lt;/h1&gt;&lt;p&gt;reNgine 是 &lt;code&gt;Yogesh Ojha&lt;/code&gt; 写的一款自动化网络侦查框架，或</summary>
-      
-    
-    
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-    <category term="工具分享" scheme="https://www.teamssix.com/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    <category term="reNgine" scheme="https://www.teamssix.com/tags/reNgine/"/>
     
   </entry>
   
