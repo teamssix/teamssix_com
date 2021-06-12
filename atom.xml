@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-06-11T09:31:22.632Z</updated>
+  <updated>2021-06-12T13:45:48.068Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】12、nps 的使用</title>
+    <link href="https://www.teamssix.com/year/210612-213704.html"/>
+    <id>https://www.teamssix.com/year/210612-213704.html</id>
+    <published>2021-06-12T13:37:04.000Z</published>
+    <updated>2021-06-12T13:45:48.068Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>nps 项目地址：<a href="https://github.com/ehang-io/nps">https://github.com/ehang-io/nps</a></p><p>也是一款还在更新的内网穿透工具，相较于 frp，nps 的 web 管理就要强大很多了。</p><p>nps 和 frp 一样功能都很多，这里就主要记录下平时经常用到的 SOCKS5 代理模式。</p><h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>nps 不同于 frp 的开箱即用，nps 的服务端需要安装才能使用，这里以 kali 下的安装为例。</p><p>在 nps 项目的 releases 中下载好自己对应系统的版本后，解压安装</p><pre><code>tar -zxvf linux_amd64_server.tar.gz./nps install</code></pre><h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>官方使用文档：<a href="https://ehang-io.github.io/nps">https://ehang-io.github.io/nps</a></p><p>启动服务端，默认 Web 管理界面端口 8080 </p><pre><code>nps start</code></pre><p>启动 nps 后，直接访问服务端的 8080 端口，输入默认密码 admin/123 进行登录，不难看出，这 web 界面确实比 frp 的丰富很多。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609170306.png"></p><p>nps 的使用也很简单，界面语言也可选择中文。</p><p>首先新增一个客户端，点击 “客户端” –》“新增”，打开新增客户端页面，填写相关信息后，点击新增即可</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609171610.png"></p><p>新增之后，刷新一下可以看到刚刚添加的记录，点击刚刚新增记录里的“加号”还能直接看到在客户端上要运行的命令，这个可谓是很贴心了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609172254.png"></p><p>复制命令到客户端上运行，服务端这边就能看到目标已经上线了，连接状态也由离线变成了在线。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609172144.png"></p><p>如果想创建一个 SOCKS5 代理也很简单，直接点击 “SOCKS 代理”–》“新增”，输入客户端的 ID 和代理的端口，然后新增即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609172512.png"></p><p>之后直接设置 SOCKS5 代理 IP 为 nps 服务端 IP ，端口这里设置的是 1080，这样就建立了一个 SOCKS 代理，如果新增设置客户端的时候，设置了认证账号密码，那么在连接 SOCKS 代理的时候，也要添加上对应的账号和密码。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609173211.png"></p><p>在这整个过程中都没有修改配置文件等等操作，真的是很方便了。</p><blockquote><p>参考文章：</p><p><a href="https://ehang-io.github.io/nps/">https://ehang-io.github.io/nps/</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;nps 项目地址：&lt;a href=&quot;https://github.com/ehang-io/nps&quot;&gt;https://git</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】11、frp 的使用</title>
@@ -555,34 +583,6 @@
     <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
     
     <category term="批量工具" scheme="https://www.teamssix.com/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具分享】一个爬取各大SRC厂家公告的小工具</title>
-    <link href="https://www.teamssix.com/year/201115-194850.html"/>
-    <id>https://www.teamssix.com/year/201115-194850.html</id>
-    <published>2020-11-15T11:48:50.000Z</published>
-    <updated>2020-11-15T11:59:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>平时在挖洞的时候，往往会关注其有没有活动之类的公告，但是国内那么多家厂商，一个个的去关注难免效率比较低，因此这里写了一个爬取各大SRC厂家公告的小工具，没啥技术含量，都是体力活。</p><p>工具下载地址：<a href="https://github.com/teamssix/src_notice">https://github.com/teamssix/src_notice</a></p><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>✔ 爬取各个SRC平台的公告通知</p><p>✔ 对2020年发布的活动通知进行红色高亮显示</p><p>✔ 【进阶版】将当天发布的公告推送到微信上，结合系统定时任务可实现SRC平台公告监测</p><blockquote><p><strong>在我的微信公众号“TeamsSix”后台回复“SRC”即可获得进阶版下载地址</strong></p></blockquote><p>✔ 支持的SRC平台【当前共计27家】：</p><p>360、58、阿里、阿里本地生活、爱奇艺、百度、贝壳、哔哩哔哩、菜鸟、滴滴出行、度小满、瓜子、京东、蚂蚁金服、美团、陌陌、OPPO、平安、水滴互助、顺丰、腾讯、vivo、网易、唯品会、WIFI万能钥匙、中通、字节跳动</p><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>git clone https://github.com/teamssix/src_notice.gitcd src_noticepip3 install -r requirements.txtpython3 src_notice.py</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-11-15_18-35-17.png"></p><h1 id="进阶版"><a href="#进阶版" class="headerlink" title="进阶版"></a>进阶版</h1><p>进阶版比普通版多了一个微信通知的功能，结合系统定时任务可实现SRC平台公告监测。<strong>在我的微信公众号“TeamsSix”后台回复“SRC”即可获得进阶版下载地址</strong></p><h3 id="如何实现微信通知？"><a href="#如何实现微信通知？" class="headerlink" title="如何实现微信通知？"></a>如何实现微信通知？</h3><p>进阶版下载好后，在 503 行代码中添加上你自己的 Server酱 key 就行了， Server酱 key 的申请地址为：<a href="http://sc.ftqq.com/">http://sc.ftqq.com/</a></p><h3 id="如何实现公告监测？"><a href="#如何实现公告监测？" class="headerlink" title="如何实现公告监测？"></a>如何实现公告监测？</h3><p>首先在 vps 上下载安装该工具，之后设置定时任务即可。比如我想在每天的上午 9 点获取一下各大 SRC 有没有新的公告：</p><p>1、输入<code>crontab -e</code></p><p>2、在打开的界面中输入<code>00 9 * * * python3 /root/src_notice/src_notice.py</code>即可。</p><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>1、如果之前没有编辑过定时任务，第一次打开会提示选择编辑器，根据自己喜好选择即可</p><p>2、上面命令中的 <code>python3 /root/src_notice/src_notice.py</code>要修改成你自己的绝对路径，我这里是在 root 目录下的</p><h1 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h1><blockquote><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;平时在挖洞的时候，往往会关注其有没有活动之类的公告，但是国内那么多家厂商，一个个的去关注难免效率比较低，因此这里写了一个爬取各大SRC厂家公</summary>
-      
-    
-    
-    
-    <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-    <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-    <category term="批量工具" scheme="https://www.teamssix.com/tags/%E6%89%B9%E9%87%8F%E5%B7%A5%E5%85%B7/"/>
-    
-    <category term="SRC" scheme="https://www.teamssix.com/tags/SRC/"/>
     
   </entry>
   
