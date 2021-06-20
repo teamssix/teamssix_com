@@ -420,14 +420,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-11
+                    2021-06-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    946
+                    948
                 </div>
                 
 
@@ -511,10 +511,25 @@ dashboard_pwd = password</code></pre>
 2021/06/09 04:06:35 [I] [service.go:294] Dashboard listen on 0.0.0.0:8000
 2021/06/09 04:06:35 [I] [root.go:209] frps started successfully</code></pre>
 <p>配置客户端文件</p>
-<pre><code>[common]server_addr = vps_ipserver_port = 4444# 客户端认证 token，需要和服务端 token 保持一致token = 123456# 启用加密，防止流量被拦截use_encryption = true# 启用压缩，提升流量转发速度use_compression = true[socks5]type = tcp# 连接 vps 的端口remote_port = 1080plugin = socks5</code></pre>
+<pre><code>[common]
+server_addr = vps_ipserver_port = 4444
+# 客户端认证 token，需要和服务端 token 保持一致
+token = 123456
+
+# 启用加密，防止流量被拦截use_encryption = true
+# 启用压缩，提升流量转发速度use_compression = true
+
+[socks5]
+type = tcp
+# 连接 vps 的端口
+remote_port = 1080
+plugin = socks5</code></pre>
 <p>开启客户端</p>
 <pre><code>frpc -c frpc.ini</code></pre>
-<pre><code>&gt; .\frpc.exe -c frpc.ini2021/06/09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]2021/06/09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]2021/06/09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success</code></pre>
+<pre><code>&gt; .\frpc.exe -c frpc.ini
+2021/06/09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]
+2021/06/09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]
+2021/06/09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success</code></pre>
 <p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png"></p>
 <p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p>
