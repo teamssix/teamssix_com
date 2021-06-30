@@ -455,7 +455,7 @@
 <h1 id="0x01-压缩文件"><a href="#0x01-压缩文件" class="headerlink" title="0x01 压缩文件"></a>0x01 压缩文件</h1><p>这里以 7-Zip 为代表，其他的压缩软件还有 WinRAR 等，7-Zip 文件下载地址：<a target="_blank" rel="noopener" href="https://www.7-zip.org/">https://www.7-zip.org/</a></p>
 <p>如果目标主机没有安装 7-Zip，可以现在自己的主机上安装 7-Zip，然后把安装目录下的 7z.exe 拷贝到目标主机上，默认路径为「C:\Program Files\7-Zip\7z.exe」。</p>
 <p>7z.exe 只有 400 多 K 的大小，可以说很是小巧了，以下为 7z.exe 的常用命令。</p>
-<pre><code> a         添加压缩文件
+<pre><code> a     添加压缩文件
  x     解压压缩文件
  -p    指定密码
  -v    分卷压缩
@@ -523,7 +523,32 @@ Everything is Ok</code></pre>
                8 个文件      6,195,482 字节</code></pre>
 <p>把 fscan.7z 解压成 fscan.exe</p>
 <pre><code>7z.exe x -pteamssix.com fscan.7z.001</code></pre>
-<pre><code>C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.0017-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06Scanning the drive for archives:1 file, 512000 bytes (500 KiB)Extracting archive: fscan.7z.001--Path = fscan.7z.001Type = SplitPhysical Size = 512000Volumes = 6Total Physical Size = 2794266----Path = fscan.7zSize = 2794266--Path = fscan.7zType = 7zPhysical Size = 2794266Headers Size = 170Method = LZMA2:3m BCJ 7zAESSolid = -Blocks = 1Everything is OkSize:       2911744Compressed: 2794266</code></pre>
+<pre><code>C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.001
+
+7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
+Scanning the drive for archives:
+1 file, 512000 bytes (500 KiB)
+Extracting archive: fscan.7z.001
+--
+Path = fscan.7z.001
+Type = SplitPhysical 
+Size = 512000
+Volumes = 6Total 
+Physical Size = 2794266
+----
+Path = fscan.7z
+Size = 2794266
+--
+Path = fscan.7z
+Type = 7z
+Physical Size = 2794266
+Headers Size = 170
+Method = LZMA2:3m BCJ 7zAES
+Solid = -
+Blocks = 1
+Everything is Ok
+Size:       2911744
+Compressed: 2794266</code></pre>
 <p>可以看到，使用分卷压缩可以把一个大文件分成多个小文件，然后将小文件上传上去后，再进行解压就可以了。</p>
 <p>但这样做感觉还是有些麻烦，直接使用下文的 split 进行文件分割个人觉着是更为方便的方法，使用 split 进行分割也是我个人解决前段时间碰到不能上传大文件问题时的方法。</p>
 <h1 id="0x02-分割文件"><a href="#0x02-分割文件" class="headerlink" title="0x02 分割文件"></a>0x02 分割文件</h1><p>使用 split 以 500 K 大小分割 fscan.exe 文件，split 命令在 Linux 和 MAC 下都是自带的，因此在自己的电脑上分割好后，直接上传即可。</p>
