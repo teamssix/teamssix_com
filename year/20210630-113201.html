@@ -529,7 +529,8 @@ Everything is Ok</code></pre>
 <h1 id="0x02-分割文件"><a href="#0x02-分割文件" class="headerlink" title="0x02 分割文件"></a>0x02 分割文件</h1><p>使用 split 以 500 K 大小分割 fscan.exe 文件，split 命令在 Linux 和 MAC 下都是自带的，因此在自己的电脑上分割好后，直接上传即可。</p>
 <pre><code>split -b 500k fscan.exe teamssix</code></pre>
 <p>合并分割文件为 fscan.exe</p>
-<pre><code>cat teamssix* &gt; fscan            # 适用于 Linux、Maccopy /b teamssix* fscan.exe        # 适用于 Windows</code></pre>
+<pre><code>cat teamssix* &gt; fscan            # 适用于 Linux、Mac
+copy /b teamssix* fscan.exe        # 适用于 Windows</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210629220302.png"></p>
 <p>个人觉着直接用 split 分割文件是较为方便的做法，无需第三方软件，且不论目标是 Linux 还是 Windows 都能支持。</p>
 <blockquote>
