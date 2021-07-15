@@ -420,14 +420,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-20
+                    2021-07-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    948
+                    949
                 </div>
                 
 
@@ -512,12 +512,15 @@ dashboard_pwd = password</code></pre>
 2021/06/09 04:06:35 [I] [root.go:209] frps started successfully</code></pre>
 <p>配置客户端文件</p>
 <pre><code>[common]
-server_addr = vps_ipserver_port = 4444
+server_addr = vps_ip
+server_port = 4444
 # 客户端认证 token，需要和服务端 token 保持一致
 token = 123456
 
-# 启用加密，防止流量被拦截use_encryption = true
-# 启用压缩，提升流量转发速度use_compression = true
+# 启用加密，防止流量被拦截
+use_encryption = true
+# 启用压缩，提升流量转发速度
+use_compression = true
 
 [socks5]
 type = tcp
