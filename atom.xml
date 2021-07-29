@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-07-28T07:08:34.592Z</updated>
+  <updated>2021-07-29T03:17:20.161Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】17、令牌窃取</title>
+    <link href="https://www.teamssix.com/year/210729-110334.html"/>
+    <id>https://www.teamssix.com/year/210729-110334.html</id>
+    <published>2021-07-29T03:03:34.000Z</published>
+    <updated>2021-07-29T03:17:20.161Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。</p><h2 id="1、MSF"><a href="#1、MSF" class="headerlink" title="1、MSF"></a>1、MSF</h2><p>在获取到 Meterpreter Shell 后，使用以下命令获取令牌</p><pre><code>load incognitolist_tokens -u</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729095721.png"></p><p>这里有两种令牌，一个是 Delegation Tokens 即授权令牌，还有一种是 Impersonation Tokens 即模拟令牌。前者支持交互式登录比如远程桌面，后者支持非交互的会话。</p><p>令牌获取的数量取决于获取到 Shell 的权限等级。</p><p>如果已经获取到了 SYSTEM 权限的令牌，那么攻击者就可以伪造这个令牌，拥有对应的权限。</p><pre><code>impersonate_token &quot;NT AUTHORITY\SYSTEM&quot;</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100415.png"></p><p>可以看到我们已经通过伪造 SYSTEM 的令牌拿到 SYSTEM 权限了。</p><p>不过值得注意的是，如果不加双引号，\ 需要改成 <code>\\</code> 才行，个人猜测可能是因为 \ 被当做转义字符处理的原因。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100653.png"></p><h2 id="2、Rotten-Potato-本地提权"><a href="#2、Rotten-Potato-本地提权" class="headerlink" title="2、Rotten Potato 本地提权"></a>2、Rotten Potato 本地提权</h2><p>Rotten Potato 直译过来就烂土豆的意思，如果目标中存在有效的令牌，就可以通过 Rotten Potato 模拟用户令牌实现提权。</p><p>Rotten Potato 项目地址：<a href="https://github.com/breenmachine/RottenPotatoNG">https://github.com/breenmachine/RottenPotatoNG</a></p><p>运行 RottenPotato.exe 直接弹出 SYSTEM 权限的 CMD 窗口，不需要用到 MSF。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png"></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】16、组策略凭据获取</title>
@@ -548,34 +576,6 @@
     <category term="蓝队" scheme="https://www.teamssix.com/tags/%E8%93%9D%E9%98%9F/"/>
     
     <category term="威胁情报" scheme="https://www.teamssix.com/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】5、BloodHound 的使用</title>
-    <link href="https://www.teamssix.com/year/210226-190853.html"/>
-    <id>https://www.teamssix.com/year/210226-190853.html</id>
-    <published>2021-02-26T11:08:53.000Z</published>
-    <updated>2021-02-26T10:10:32.704Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>BloodHound 使用可视化图形显示域环境中的关系，攻击者可以使用 BloodHound 识别高度复杂的攻击路径，防御者可以使用 BloodHound 来识别和防御那些相同的攻击路径。蓝队和红队都可以使用 BloodHound 轻松深入域环境中的权限关系。</p><p>BloodHound 通过在域内导出相关信息，在将数据收集后，将其导入Neo4j 数据库中，进行展示分析。因此在安装 BloodHound 时，需要安装 Neo4j 数据库。</p><h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>因为 Neo4j 数据库需要 Java 支持，因此安装 BloodHound 需要先安装 Java，这里以 Windows 系统下的安装为例。</p><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p>JDK 需要下载最新版本，不然 Neo4j 运行可能会报错，JDK 下载地址：<a href="https://www.oracle.com/java/technologies/javase-downloads.html">https://www.oracle.com/java/technologies/javase-downloads.html</a>，下载之后，直接安装即可。</p><h3 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h3><p>Neo4j 直接下载最新版本，下载地址：<a href="https://neo4j.com/download-center/#community">https://neo4j.com/download-center/#community</a></p><p>下载最新版本之后解压下载文件，打开 bin 目录，执行命令<code>neo4j.bat console</code>，之后打开浏览器访问 <a href="http://localhost:7474/">http://localhost:7474</a> 登陆后台，输入以下信息连接到数据库说明安装就完成了。</p><pre><code>URL：neo4j://localhost:7687用户名(默认)：neo4j密码(默认)：neo4j</code></pre><h3 id="BloodHound"><a href="#BloodHound" class="headerlink" title="BloodHound"></a>BloodHound</h3><p>BloodHound 项目地址：<a href="https://github.com/BloodHoundAD/BloodHound">https://github.com/BloodHoundAD/BloodHound</a>，下载后解压打开 BloodHound.exe，输入 Neo4j 数据库的账号密码即可完成安装。</p><h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>安装完成 BloodHound 后，需要进行数据的采集与导入，数据的采集可以使用 ps1 脚本或者使用 exe 程序收集，工具下载地址：<a href="https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors">https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors</a></p><p>这里使用 SharpHound.exe 进行数据的采集，将 SharpHound.exe 拷贝到目标上，执行 <code>SharpHound.exe -c all</code> 进行数据采集。</p><pre><code>C:\Users\daniel10&gt;SharpHound.exe -c all---------------------------------------------Initializing SharpHound at 22:36 on 2021/2/25---------------------------------------------Resolved Collection Methods: Group, Sessions, LoggedOn, Trusts, ACL, ObjectProps, LocalGroups, SPNTargets, Container[+] Creating Schema map for domain TEAMSSIX.COM using path CN=Schema,CN=Configuration,DC=teamssix,DC=com[+] Cache File Found! Loaded 1332 Objects in cache[+] Pre-populating Domain Controller SIDSStatus: 0 objects finished (+0) -- Using 24 MB RAMStatus: 673 objects finished (+673 134.6)/s -- Using 43 MB RAMEnumeration finished in 00:00:05.3136324Compressing data to .\20210225223622_BloodHound.zipYou can upload this file directly to the UISharpHound Enumeration Completed at 22:36 on 2021/2/25! Happy Graphing!</code></pre><p>如果使用 ps1 脚本收集，命令为：</p><pre><code>powershell -exec bypass -command &quot;Import-Module ./SharpHound.ps1; Invoke-BloodHound -c all&quot;</code></pre><p>采集到的数据会以 zip 压缩包的格式保存，将其拷贝到 BloodHound 所在主机上，在 BloodHound 右侧图标里点击 Upload Data，之后上传刚才生成的压缩包就可以导入数据了。</p><blockquote><p>或者直接将 zip 压缩包拖拽到 BloodHound 里也可以导入数据。</p></blockquote><p>在 BloodHound 右上角有三个板块：</p><p>1、Database Info（数据库信息），可以查看当前数据库中的域用户、域计算机等统计信息。</p><p>2、Node Indo（节点信息），单击某个节点时，在这里可以看到对应节点的相关信息。</p><p>3、Analysis（分析查询），在 BloodHound 中预设了一些查询条件，具体如下：</p><pre><code>1、查询所有域管理员2、寻找到域管理员的最短路径3、查找具有DCSync权限的主体4、具有外部域组成员资格的用户5、具有外部域名组成员资格的组6、映射域信任7、到无约束委托系统的最短路径8、到达Kerberoastable用户的最短路径9、从Kerberoastable用户到域管理员的最短路径10、拥有的主体的最短路径11、从拥有的主体到域管理员的最短路径12、到高价值目标的最短路径13、查找域用户是本地管理员的计算机14、查找域用户可以读取密码的计算机15、从域用户到高价值目标的最短路径16、找到从域用户到高价值目标的所有路径17、找到域用户可以RDP的工作站18、找到域用户可以RDP的服务器19、查找域用户组的危险权限20、找到高价值群体中能够支持kerberoable的成员21、列出所有kerberoable用户22、查找具有大多数特权的Kerberoastable用户23、查找到非域控制器的域管理登录24、查找不支持操作系统的计算机25、查找AS-REP Roastable用户(DontReqPreAuth)</code></pre><p>比如这里查询到域管理员的最短路径</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-25_14-00-42.png"></p><blockquote><p>路径由粗到细表示xx对xx有权限或关系</p></blockquote><p>总的来说感觉 BloodHound 还是挺有意思的，可以很直观的看到域内主机间的关系。不过毕竟是辅助工具，还是需要不断提升自己的实力、经验才能更好的去分析这样的一个结果才是。</p><blockquote><p>参考链接：</p><p><a href="https://xz.aliyun.com/t/7311">https://xz.aliyun.com/t/7311</a></p><p><a href="https://www.freebuf.com/sectool/179002.html">https://www.freebuf.com/sectool/179002.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;BloodHound 使用可视化图形显示域环境中的关系，攻击者可以使用 BloodHound 识别高度复杂的攻击路径，防御者</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
