@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【经验总结】解决 BurpSuite Pro v2020.1 版本中文乱码问题, Teams Six">
+    <meta name="keywords" content="【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击, Teams Six">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【经验总结】解决 BurpSuite Pro v2020.1 版本中文乱码问题 | Teams Six</title>
+    <title>【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击 | Teams Six</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-02-17_13-38-35.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190444.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【经验总结】解决 BurpSuite Pro v2020.1 版本中文乱码问题</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/BurpSuite/">
-                                <span class="chip bg-color">BurpSuite</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/%E8%BD%AF%E4%BB%B6/">
-                                <span class="chip bg-color">软件</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
                             </a>
                         
-                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                <span class="chip bg-color">经验总结</span>
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                经验总结
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-17
+                    2021-07-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-07-30
+                    2021-07-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    255
+                    794
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -449,17 +449,40 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>之前在我的公众号分享了 BurpSuite Pro v2020.1 版本，但是在使用过程中发现总是会有中文乱码的情况出现，后来使用 Lucida 字体，乱码的情况得到了缓解，但是有些网页依旧会出现乱码的情况，直到后来才意识到问题其实不在于字体的选择。</p>
-<a id="more"></a>
-
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-17_13-34-32.png"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-02-17_13-37-02.png"></p>
-<h1 id="0x01-解决办法"><a href="#0x01-解决办法" class="headerlink" title="0x01 解决办法"></a>0x01 解决办法</h1><p>来到 User Options –&gt; Display –&gt; Character Sets，在第四个选项中选择 UTF-8，中文乱码的问题就可以得到解决，这个时候不管我字体选择的是哪一个，中文都是显示正常的。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-02-17_13-38-35.png"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-02-17_13-39-09.png"></p>
-<h1 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h1><p>在网上找了很多解决办法，但是大部分文章都是说更改中文字体就能解决，但是我这个版本没有中文字体，所以那些文章里的办法都不能用，最后才意识到通过修改编码就能解决。</p>
+                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。</p>
+<h2 id="1、基本概念"><a href="#1、基本概念" class="headerlink" title="1、基本概念"></a>1、基本概念</h2><h3 id="LLMNR"><a href="#LLMNR" class="headerlink" title="LLMNR"></a>LLMNR</h3><p>本地链路多播名称解析（LLMNR）是一种域名系统数据包格式，当局域网中的 DNS 服务器不可用时，DNS 客户端就会使用 LLMNR 解析本地网段中机器的名称，直到 DNS 服务器恢复正常为止。</p>
+<p>从 Windows Vista 开始支持 LLMNR ，Linux 系统也通过 systemd 实现了此协议，同时 LLMNR 也支持 IPv6。</p>
+<h3 id="NetBIOS"><a href="#NetBIOS" class="headerlink" title="NetBIOS"></a>NetBIOS</h3><p>NetBIOS 协议是由 IBM 公司开发，主要用于数十台计算机的小型局域网，根据 NetBIOS 协议广播获得计算机名称，并将其解析成相应的 IP 地址。</p>
+<p>从 Windows NT 以后版本的所有操作系统中都可以使用 NetBIOS，不过 NetBIOS 不支持 IPv6.</p>
+<p>NetBIOS 提供的三种服务：</p>
+<p>​    i、NetBIOS-NS（名称服务）：主要用于名称注册和解析，以启动会话和分发数据报，该服务默认监听 UDP 137 端口，也可以使用 TCP 的 137 端口进行监听。</p>
+<p>​    ii、Datagram Distribution Service（数据报分发服务）：无连接服务，该服务负责进行错误检测和恢复，默认监听 UDP 138 端口。</p>
+<p>​    iii、Session Service（会话服务）：允许两台计算机建立连接，默认使用 TCP 139 端口。</p>
+<h3 id="Net-NTLM-Hash"><a href="#Net-NTLM-Hash" class="headerlink" title="Net-NTLM Hash"></a>Net-NTLM Hash</h3><blockquote>
+<p>NTLM 即 NT LAN Manager，NTLM 是指 telnet 的一种验证身份方式，即问询/应答协议，是 Windows NT 早期版本的标准安全协议。</p>
+</blockquote>
+<p>Net-NTLM Hash 不同于 NTLM Hash，NTLM Hash 是 Windows 登录密码的 Hash 值，可以在 Windows 系统的 SAM 文件或者域控的 NTDS.dit 文件中提取到出来，NTLM Hash 支持哈希传递攻击。 </p>
+<p>Net-NTLM Hash 是网络环境下 NTLM 认证的 Hash，使用 Responder 抓取的通常就是 Net-NTLM Hash，该 Hash 不能进行哈希传递，但可用于 NTLM 中继攻击或者使用 Hashcat 等工具碰撞出明文进行横向。</p>
+<h2 id="2、利用"><a href="#2、利用" class="headerlink" title="2、利用"></a>2、利用</h2><p>Responder 是一款使用 Python 编写用于毒化 LLMNR 和 NBT-NS 请求的一款工具。</p>
+<p>假设我们已连接到 Windows Active Directory 环境，当网络上的设备尝试用 LLMNR 和 NBT-NS（NetBIOS 名称服务）请求来解析目标机器时，Responder 就会伪装成目标机器。</p>
+<p>当受害者机器尝试登陆攻击者机器，Responder 就可以获取受害者机器用户的 Net-NTLM 哈希值。</p>
+<p>Responder 项目地址：<a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">https://github.com/lgandx/Responder</a></p>
+<p>Responder 不支持 Windows，这里使用 Kali 进行演示。</p>
+<p>Responder 开启监听，-I 指定网卡，这里 eth1 的 IP 为 192.168.7.65</p>
+<pre><code>python Responder.py -I eth1</code></pre>
+<p>开启监听后，当目标主机上有人访问 Responder 主机的共享目录时，就会看到对方的 Net-NTLM 哈希值了。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190444.png"></p>
+<p>再利用 Hashcat 进行碰撞</p>
+<pre><code>hashcat -m 5600 hash.txt password.txt -D 1</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190835.png"></p>
 <blockquote>
-<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a210528f9b35">https://www.jianshu.com/p/a210528f9b35</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTLM/6371298">https://baike.baidu.com/item/NTLM/6371298</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LLMNR/1116392">https://baike.baidu.com/item/LLMNR/1116392</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/194549.html">https://www.freebuf.com/articles/system/194549.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996">https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996</a></p>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -487,7 +510,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/year/200217-134445.html">https://www.teamssix.com/year/200217-134445.html</a>
+                    <a href="https://www.teamssix.com/year/210729-191048.html">https://www.teamssix.com/year/210729-191048.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -525,16 +548,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/BurpSuite/">
-                                    <span class="chip bg-color">BurpSuite</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/%E8%BD%AF%E4%BB%B6/">
-                                    <span class="chip bg-color">软件</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
                                 </a>
                             
-                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                    <span class="chip bg-color">经验总结</span>
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -580,7 +603,7 @@
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2020-02-17T13-44-45',
+        id: '2021-07-29T19-10-48',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -604,54 +627,56 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/year/200223-231648.html">
+                <a href="/year/210729-191048.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-23_23-05-36.png" class="responsive-img" alt="【工具分享】分享一个jQuery多版本XSS漏洞检测工具">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190444.png" class="responsive-img" alt="【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击">
                         
-                        <span class="card-title">【工具分享】分享一个jQuery多版本XSS漏洞检测工具</span>
+                        <span class="card-title">【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 前言最近在搞一个 jQuery v2.1.4 DOM-XSS 漏洞的复现，在网上找了很多Payload都不能用，大多数Payload都只适用于 jQuery v1.x 版本的。
-后来看到有个文章说需要Safari浏览器，于是又废了
+                            0、前言如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。
+1、基本概念LLMNR本地链路多播名称解析（LLMNR）是一种域名系统数据包格式，当局域网中的 DNS 服
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-23
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                    工具分享
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                        <span class="chip bg-color">工具分享</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/jQuery/">
-                        <span class="chip bg-color">jQuery</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/XSS/">
-                        <span class="chip bg-color">XSS</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -665,34 +690,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/year/200211-135752.html">
+                <a href="/year/210729-110334.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/burp20201_1.png" class="responsive-img" alt="【工具分享】BurpSuite Pro v2020.1 无后门专业破解版">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png" class="responsive-img" alt="【内网学习笔记】17、令牌窃取">
                         
-                        <span class="card-title">【工具分享】BurpSuite Pro v2020.1 无后门专业破解版</span>
+                        <span class="card-title">【内网学习笔记】17、令牌窃取</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言工欲善其身，必先利其器，吃饭的家伙终于更新了，这次改动还蛮大的，尤其是加入了黑暗模式。
-至于工具的使用及破解方法相信你既然能看到这篇文章，那就不用我过多赘述了 [手动狗头]。
-
-
-新功能1、HTTP消息编辑器下JavaScript、JS
+                            0、前言令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。
+1、MSF在获取到 Meterpreter Shell 后，使用以下命令
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-29
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                    工具分享
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -702,16 +724,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/BurpSuite/">
-                        <span class="chip bg-color">BurpSuite</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                        <span class="chip bg-color">工具分享</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/%E8%BD%AF%E4%BB%B6/">
-                        <span class="chip bg-color">软件</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>

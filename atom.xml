@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-07-29T03:17:20.161Z</updated>
+  <updated>2021-07-30T08:03:16.118Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击</title>
+    <link href="https://www.teamssix.com/year/210729-191048.html"/>
+    <id>https://www.teamssix.com/year/210729-191048.html</id>
+    <published>2021-07-29T11:10:48.000Z</published>
+    <updated>2021-07-30T08:03:16.118Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。</p><h2 id="1、基本概念"><a href="#1、基本概念" class="headerlink" title="1、基本概念"></a>1、基本概念</h2><h3 id="LLMNR"><a href="#LLMNR" class="headerlink" title="LLMNR"></a>LLMNR</h3><p>本地链路多播名称解析（LLMNR）是一种域名系统数据包格式，当局域网中的 DNS 服务器不可用时，DNS 客户端就会使用 LLMNR 解析本地网段中机器的名称，直到 DNS 服务器恢复正常为止。</p><p>从 Windows Vista 开始支持 LLMNR ，Linux 系统也通过 systemd 实现了此协议，同时 LLMNR 也支持 IPv6。</p><h3 id="NetBIOS"><a href="#NetBIOS" class="headerlink" title="NetBIOS"></a>NetBIOS</h3><p>NetBIOS 协议是由 IBM 公司开发，主要用于数十台计算机的小型局域网，根据 NetBIOS 协议广播获得计算机名称，并将其解析成相应的 IP 地址。</p><p>从 Windows NT 以后版本的所有操作系统中都可以使用 NetBIOS，不过 NetBIOS 不支持 IPv6.</p><p>NetBIOS 提供的三种服务：</p><p>​    i、NetBIOS-NS（名称服务）：主要用于名称注册和解析，以启动会话和分发数据报，该服务默认监听 UDP 137 端口，也可以使用 TCP 的 137 端口进行监听。</p><p>​    ii、Datagram Distribution Service（数据报分发服务）：无连接服务，该服务负责进行错误检测和恢复，默认监听 UDP 138 端口。</p><p>​    iii、Session Service（会话服务）：允许两台计算机建立连接，默认使用 TCP 139 端口。</p><h3 id="Net-NTLM-Hash"><a href="#Net-NTLM-Hash" class="headerlink" title="Net-NTLM Hash"></a>Net-NTLM Hash</h3><blockquote><p>NTLM 即 NT LAN Manager，NTLM 是指 telnet 的一种验证身份方式，即问询/应答协议，是 Windows NT 早期版本的标准安全协议。</p></blockquote><p>Net-NTLM Hash 不同于 NTLM Hash，NTLM Hash 是 Windows 登录密码的 Hash 值，可以在 Windows 系统的 SAM 文件或者域控的 NTDS.dit 文件中提取到出来，NTLM Hash 支持哈希传递攻击。 </p><p>Net-NTLM Hash 是网络环境下 NTLM 认证的 Hash，使用 Responder 抓取的通常就是 Net-NTLM Hash，该 Hash 不能进行哈希传递，但可用于 NTLM 中继攻击或者使用 Hashcat 等工具碰撞出明文进行横向。</p><h2 id="2、利用"><a href="#2、利用" class="headerlink" title="2、利用"></a>2、利用</h2><p>Responder 是一款使用 Python 编写用于毒化 LLMNR 和 NBT-NS 请求的一款工具。</p><p>假设我们已连接到 Windows Active Directory 环境，当网络上的设备尝试用 LLMNR 和 NBT-NS（NetBIOS 名称服务）请求来解析目标机器时，Responder 就会伪装成目标机器。</p><p>当受害者机器尝试登陆攻击者机器，Responder 就可以获取受害者机器用户的 Net-NTLM 哈希值。</p><p>Responder 项目地址：<a href="https://github.com/lgandx/Responder">https://github.com/lgandx/Responder</a></p><p>Responder 不支持 Windows，这里使用 Kali 进行演示。</p><p>Responder 开启监听，-I 指定网卡，这里 eth1 的 IP 为 192.168.7.65</p><pre><code>python Responder.py -I eth1</code></pre><p>开启监听后，当目标主机上有人访问 Responder 主机的共享目录时，就会看到对方的 Net-NTLM 哈希值了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190444.png"></p><p>再利用 Hashcat 进行碰撞</p><pre><code>hashcat -m 5600 hash.txt password.txt -D 1</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190835.png"></p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/a210528f9b35">https://www.jianshu.com/p/a210528f9b35</a></p><p><a href="https://baike.baidu.com/item/NTLM/6371298">https://baike.baidu.com/item/NTLM/6371298</a></p><p><a href="https://baike.baidu.com/item/LLMNR/1116392">https://baike.baidu.com/item/LLMNR/1116392</a></p><p><a href="https://www.freebuf.com/articles/system/194549.html">https://www.freebuf.com/articles/system/194549.html</a></p><p><a href="https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996">https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】17、令牌窃取</title>
@@ -548,34 +576,6 @@
     <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
     
     <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具分享】写了一个威胁情报收集的小工具</title>
-    <link href="https://www.teamssix.com/year/210315-133209.html"/>
-    <id>https://www.teamssix.com/year/210315-133209.html</id>
-    <published>2021-03-15T05:32:09.000Z</published>
-    <updated>2021-03-15T05:43:04.398Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-介绍"><a href="#0x00-介绍" class="headerlink" title="0x00 介绍"></a>0x00 介绍</h1><p>tig <code>Threat Intelligence Gathering</code> 威胁情报收集，旨在提高蓝队拿到攻击 IP 后对其进行威胁情报信息收集的效率，目前已集成微步、IP 域名反查、Fofa 信息收集、ICP 备案查询、IP 存活检测五个模块，现已支持以下信息的查询：</p><ul><li>✅ 微步标签</li><li>✅ IP 域名反查</li><li>✅ ICP 备案查询</li><li>✅ IP 存活检测</li><li>✅ 开放端口查询</li><li>……</li></ul><p>后续将集成更多模块，如有好的建议或遇到 Bug 欢迎与我反馈，我的微信号：teamssix_com</p><p>工具地址：<a href="https://github.com/wgpsec/tig">https://github.com/wgpsec/tig</a>，或点击查看原文链接进行打开</p><p>如果感觉工具还行，欢迎各位师傅赏个 star</p><h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><p>需要 python3 环境支持</p><pre><code>pip3 install -r requirements.txtpython3 tig.py</code></pre><h1 id="0x02-使用"><a href="#0x02-使用" class="headerlink" title="0x02 使用"></a>0x02 使用</h1><p>工具命令如下：</p><pre><code>-h, --help  查看帮助信息-c CONFIG   指定配置文件，默认 ./config.ini-f FILE     IP 文本，一行一个-i IP       目标 IP-p PROXY    指定代理，比如：http://127.0.0.1:1080 或者 socks5://127.0.0.1:1080</code></pre><p>在开始使用工具之前，需要对配置文件进行配置，默认配置文件如下：</p><pre><code>[Threat Intelligence]# 微步威胁情报查询，查看 api 地址：https://x.threatbook.cn/nodev4/vb4/myAPI（每天 50 次的免费额度）ThreatBook_enable = trueThreatBook_api = &#39;&#39;[IP Passive Information]# IP 反查，调用 http://api.hackertarget.com/reverseiplookup/ 的 api，每个 IP 限制每天 100 次免费查询IP_reverse_enable = true# ICP 备案信息查询，调用 https://api.vvhan.com/api/icp 的 api，如果目标 IP 没有反查到域名，该项即使开启也不会有输出ICP_beian_enable = true# Fofa ip 信息查询，查看 api 地址：https://fofa.so/user/users/detail（付费，普通会员每次100条，高级会员每次10000条）Fofa_enable = trueFofa_email = &#39;&#39;Fofa_api = &#39;&#39;[IP Active Information]# 利用 ping 命令对 IP 进行存活检测IP_survive_enable = true</code></pre><p>在配置文件里添加自己的微步 API 和 Fofa API 才可使用相关模块，添加 API 后，就可以正常使用相关模块了。</p><p>例如这里获取某个 IP 的信息，直接使用 -i 命令即可，如果想使用代理可以使用 -p 命令。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-03-15_13-03-47.png"></p><h1 id="0x03-最后"><a href="#0x03-最后" class="headerlink" title="0x03 最后"></a>0x03 最后</h1><p>如果在工具使用的过程中发现存在 bug 等问题，欢迎与我反馈，我的微信号：teamssix_com，同时也欢迎关注我的个人微信公众号：TeamsSix</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-介绍&quot;&gt;&lt;a href=&quot;#0x00-介绍&quot; class=&quot;headerlink&quot; title=&quot;0x00 介绍&quot;&gt;&lt;/a&gt;0x00 介绍&lt;/h1&gt;&lt;p&gt;tig &lt;code&gt;Threat Intelligence Gathering&lt;/code&gt; 威胁情</summary>
-      
-    
-    
-    
-    <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    
-    
-    <category term="Python" scheme="https://www.teamssix.com/tags/Python/"/>
-    
-    <category term="蓝队" scheme="https://www.teamssix.com/tags/%E8%93%9D%E9%98%9F/"/>
-    
-    <category term="威胁情报" scheme="https://www.teamssix.com/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"/>
     
   </entry>
   
