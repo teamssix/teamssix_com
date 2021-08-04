@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -527,7 +527,7 @@ Guest:501:aca3b435b5z404eeaad3f435b51404he:31d6cfe0d16ae931b73c59d7e0c089c0:::
 krbtgt:502:aca3b435b5z404eeaad3f435b51404he:z1f8417a00az34scwb0dc15x66z43bg1:::
 daniel:1108:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::</code></pre>
 <p>Cobalt Strike 在 <code>Access -&gt; Golden Ticket</code> 中可以打开生成黄金票据的界面。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs18-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs18-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>信息填完之后，选择 Build，需要注意 Domain 需要填写成 FQDN 格式，即完全合格域名 <code>Fully Qualified Domain Name</code> ，也就是类似于 <code>teamssix.com</code> 的格式。</p>
 <p>此时可以通过 <code>shell dir \\host\C$</code> 检查自己是否有权限，也可以使用 PowerShell 运行 whoami 查看自己是谁。</p>
 <pre><code class="powershell">beacon&gt; powershell Invoke-Command -computer WinDC -ScriptBlock &#123;whoami&#125;

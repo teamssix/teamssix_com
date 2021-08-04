@@ -416,7 +416,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -455,7 +455,7 @@
 <h1 id="0x01-SSRF和CSRF的概念以及区别"><a href="#0x01-SSRF和CSRF的概念以及区别" class="headerlink" title="0x01 SSRF和CSRF的概念以及区别"></a>0x01 SSRF和CSRF的概念以及区别</h1><p>这个知识点就属于以前有了解，但是平时很少接触以至于遗忘的类型，同时在笔试的时候就有提到这个点，笔试结束后我还特意查了一下，但是面试的时候却没有答上来，有点尴尬，下面就引用CSDN和知乎里两篇文章的描述，此处引用的文章地址为本文参考资料1和2。</p>
 <h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>CSRF又称跨站请求伪造，XSS就是CSRF中的一种。二者区别是XSS利用的是用户对指定网站的信任，CSRF利用是网站对用户浏览器的信任。</p>
 <p>简单来说，CSRF是通过第三方网站伪装成正常用户登录目标网站，并以正常用户的身份对用户账号进行操作，以达到目的，CSRF攻击原理流程如下图。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>防御：</p>
 <p>1、增加验证码机制，增加带有大量噪点的验证码，杜绝代码能够识别的简单验证码，当然了也经常被绕过。</p>
 <p>2、验证referer,采用同源政策，referer记录着数据包的来源地址，来判断请求的合法性，但是这个可以伪造。</p>
@@ -469,7 +469,7 @@
 <p>4、通过社交工程学诱使用户触发攻击的指令</p>
 <h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p>SSRF又名服务端请求伪造攻击，如果把CSRF理解成客户端伪造请求攻击，它是利用用户本地的Cookie骗过服务器端的验证达到目的，而SSRF则是利用服务器天然能够访问内部网络的特点，进行攻击。</p>
 <p>由此可以得出，SSRF的受害对象主要是一些服务器所连接的一些内网设备，如内网的应用程序，通过file协议获得内部网络的资料等。SSRF攻击常见于一些允许以URL作为参数，且未对URL进行过滤的服务器。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如上图，若URL是正常的第三方服务器，则URL会过滤通过。若URL是带有命令操作的服务器端A，且绕过了服务器端A的过滤，则服务器端A会执行URL带有的命令，并将结果返回会客户端，由此一次SSRF攻击成功。</p>
 <p>防御：</p>
 <p>从以上我们可以得出，该漏洞产生的原因是由于服务端对资源进行请求的时候对URL的验证出现了纰漏，所以我们的防护策略主要是围绕URL的过滤。</p>
@@ -538,7 +538,7 @@
 <p>同源是指相同的协议、域名、端口，三者都相同才属于同源。同源策略浏览器出于安全考虑，在全局层面禁止了页面加载或执行与自身来源不同的域的任何脚本，站外其他来源的脚本同页面的交互则被严格限制。</p>
 <p>跨域由于浏览器同源策略，凡是发送请求url的协议、域名、端口三者之间任意一与当前页面地址不同即为跨域。</p>
 <p>看看哪些情况下属于跨域访问：</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x06-Linux的日志文件位置"><a href="#0x06-Linux的日志文件位置" class="headerlink" title="0x06 Linux的日志文件位置"></a>0x06 Linux的日志文件位置</h1><p>讲道理，在面试前几天我在搭建一个三层靶机的环境，当时还查过Linux的日志文件位置的文章，但是在面试的时候却忘掉了，这就有点难受了，所以再记录一下吧，此处引用的文章地址为本文参考资料9。</p>
 <pre><code>/var/log/messages   ：常规日志消息
 /var/log/boot       ：系统启动日志

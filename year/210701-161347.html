@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-01
+                    2021-08-04
                 </div>
                 
 
@@ -458,13 +458,13 @@ Set-Content fscan_base64.txt -Value $Base64Payload</code></pre>
 <pre><code>$Base64Bytes = Get-Content (&quot;fscan_base64.txt&quot;)
 $PEBytes= [System.Convert]::FromBase64String($Base64Bytes)
 [System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、CertUtil"><a href="#3、CertUtil" class="headerlink" title="3、CertUtil"></a>3、CertUtil</h2><p>自 Windows 7 开始，Windows 自带了 CertUtil 命令，可以使用 CertUtil 进行 MD5、SHA1 等算法的计算，也可以使用 CertUtil 进行 base64 的编码，使用起来要比 PowerShell 方便不少。</p>
 <p>使用 CertUtil 进行编码</p>
 <pre><code>CertUtil -encode fscan.exe fscan_base64.txt</code></pre>
 <p>使用 CertUtil 进行解码</p>
 <pre><code>CertUtil -decode fscan_base64.txt fscan_base64.exe</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630173155.png"> </p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630173155.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"> </p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfoder/p/8241548.html">https://www.cnblogs.com/lfoder/p/8241548.html</a></p>

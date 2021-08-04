@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-08-04
                 </div>
                 
 
@@ -452,14 +452,14 @@
                 <h1 id="0x00-下载视频下载脚本"><a href="#0x00-下载视频下载脚本" class="headerlink" title="0x00 下载视频下载脚本"></a>0x00 下载视频下载脚本</h1><p>首先来到我的<a target="_blank" rel="noopener" href="http://www.github.com/teamssix/">Github主页</a>，找到Douluo-download项目，点开找到<a target="_blank" rel="noopener" href="https://github.com/teamssix/Douluo-download.git">下载地址</a>，使用git clone对其进行下载</p>
 <a id="more"></a>
 <pre><code class="bash">git clone https://github.com/teamssix/Douluo-download.git</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x01-安装python所需要的库"><a href="#0x01-安装python所需要的库" class="headerlink" title="0x01 安装python所需要的库"></a>0x01 安装python所需要的库</h1><pre><code class="bash">cd Douluo-download/
 pip3 install -r requirements.txt</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-执行Python程序"><a href="#0x02-执行Python程序" class="headerlink" title="0x02 执行Python程序"></a>0x02 执行Python程序</h1><pre><code class="bash">python3 douluo.py</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo3.png"><br>程序在执行的时候会感觉比较慢，其实不是卡了，而是程序正在下载视频，当下载好一个视频才会弹出一条信息。</p>
-<h1 id="0x03-查看成果"><a href="#0x03-查看成果" class="headerlink" title="0x03 查看成果"></a>0x03 查看成果</h1><p>执行ls命令可以看到刚才下载的视频<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo4.png"><br>播放看看能不能正常播放<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo5.png"><br>可以看到是可以正常播放的，不过我想试试最新的一集，也就是看看需要会员的视频能不能下载下来，当前最新的一集是55集，那我们下载试试。</p>
-<h1 id="0x04-继续尝试下载VIP视频"><a href="#0x04-继续尝试下载VIP视频" class="headerlink" title="0x04 继续尝试下载VIP视频"></a>0x04 继续尝试下载VIP视频</h1><p>知道下载那一集后还需要修改一下代码才行，将原来下载视频的代码简单做一下修改就行<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo6.png"><br>执行看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo7.png"><br>看来不行，只能下载到预告片，接下来就对代码就行简单的介绍吧</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>程序在执行的时候会感觉比较慢，其实不是卡了，而是程序正在下载视频，当下载好一个视频才会弹出一条信息。</p>
+<h1 id="0x03-查看成果"><a href="#0x03-查看成果" class="headerlink" title="0x03 查看成果"></a>0x03 查看成果</h1><p>执行ls命令可以看到刚才下载的视频<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>播放看看能不能正常播放<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>可以看到是可以正常播放的，不过我想试试最新的一集，也就是看看需要会员的视频能不能下载下来，当前最新的一集是55集，那我们下载试试。</p>
+<h1 id="0x04-继续尝试下载VIP视频"><a href="#0x04-继续尝试下载VIP视频" class="headerlink" title="0x04 继续尝试下载VIP视频"></a>0x04 继续尝试下载VIP视频</h1><p>知道下载那一集后还需要修改一下代码才行，将原来下载视频的代码简单做一下修改就行<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>执行看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/douluo7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>看来不行，只能下载到预告片，接下来就对代码就行简单的介绍吧</p>
 <h1 id="0x05-代码简单介绍"><a href="#0x05-代码简单介绍" class="headerlink" title="0x05 代码简单介绍"></a>0x05 代码简单介绍</h1><h2 id="1、第一部分：导入库设定变量"><a href="#1、第一部分：导入库设定变量" class="headerlink" title="1、第一部分：导入库设定变量"></a>1、第一部分：导入库设定变量</h2><pre><code class="python">#导入库设定变量
 import os
 import requests

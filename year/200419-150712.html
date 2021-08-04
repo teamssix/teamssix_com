@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -456,9 +456,9 @@
 <pre><code>./c2lint [profile]</code></pre>
 <p>在运行的结果中，绿色正常（这里更像青色），黄色告警，红色错误，比如运行 <code>Malleable-C2-Profiles</code> 项目里的 <code>havex.profile</code> 文件。</p>
 <pre><code>./c2lint ./Malleable-C2-Profiles/APT/havex.profile</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>当配置文件存在错误的时候，就会以红色显示出来</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-运行-teamserver"><a href="#0x02-运行-teamserver" class="headerlink" title="0x02 运行 teamserver"></a>0x02 运行 teamserver</h1><pre><code>./teamserver [teamserver_ip] [teamserver_password] [profile]</code></pre>
 <pre><code>&gt; ./teamserver 192.168.12.2 password ./Malleable-C2-Profiles/APT/havex.profile
 [*] Will use existing X509 certificate and keystore (for SSL)
@@ -467,7 +467,7 @@ Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
 [+] Team server is up on 50050</code></pre>
 <p>这里调用的 havex.profile 配置文件，该配置文件里对 cookie 进行了 base64 编码。</p>
 <p>开启 cobalt strike 后，使主机上线，通过 wireshark 抓包可以发现数据包确实符合这些特征。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs24-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>关于 Malleable C2 文件的使用，这里只是大概记录了一些，想了解更多关于 Malleable C2 文件的内容或者注意事项等，可以参考 A-TEAM 团队的 CS 4.0 用户手册。</p>
 <blockquote>
 <p>参考链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>

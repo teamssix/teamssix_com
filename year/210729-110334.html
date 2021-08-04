@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-29
+                    2021-08-04
                 </div>
                 
 
@@ -453,19 +453,19 @@
 <h2 id="1、MSF"><a href="#1、MSF" class="headerlink" title="1、MSF"></a>1、MSF</h2><p>在获取到 Meterpreter Shell 后，使用以下命令获取令牌</p>
 <pre><code>load incognito
 list_tokens -u</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729095721.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729095721.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>这里有两种令牌，一个是 Delegation Tokens 即授权令牌，还有一种是 Impersonation Tokens 即模拟令牌。前者支持交互式登录比如远程桌面，后者支持非交互的会话。</p>
 <p>令牌获取的数量取决于获取到 Shell 的权限等级。</p>
 <p>如果已经获取到了 SYSTEM 权限的令牌，那么攻击者就可以伪造这个令牌，拥有对应的权限。</p>
 <pre><code>impersonate_token &quot;NT AUTHORITY\SYSTEM&quot;</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100415.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100415.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到我们已经通过伪造 SYSTEM 的令牌拿到 SYSTEM 权限了。</p>
 <p>不过值得注意的是，如果不加双引号，\ 需要改成 <code>\\</code> 才行，个人猜测可能是因为 \ 被当做转义字符处理的原因。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100653.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100653.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、Rotten-Potato-本地提权"><a href="#2、Rotten-Potato-本地提权" class="headerlink" title="2、Rotten Potato 本地提权"></a>2、Rotten Potato 本地提权</h2><p>Rotten Potato 直译过来就烂土豆的意思，如果目标中存在有效的令牌，就可以通过 Rotten Potato 模拟用户令牌实现提权。</p>
 <p>Rotten Potato 项目地址：<a target="_blank" rel="noopener" href="https://github.com/breenmachine/RottenPotatoNG">https://github.com/breenmachine/RottenPotatoNG</a></p>
 <p>运行 RottenPotato.exe 直接弹出 SYSTEM 权限的 CMD 窗口，不需要用到 MSF。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>

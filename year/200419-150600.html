@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -549,9 +549,9 @@ PS C:\WINDOWS\system32&gt;</code></pre>
 <p>参考网上相关文章后也未果，这也是为什么这一节拖更这么久的原因，因此 PowerUp 的复现过程暂时就没法记录了。</p>
 <p>如果正在看本篇文章的你有过使用 PowerUp 提权成功的经历，欢迎留言分享。</p>
 <h1 id="0x02-获取凭证和哈希"><a href="#0x02-获取凭证和哈希" class="headerlink" title="0x02 获取凭证和哈希"></a>0x02 获取凭证和哈希</h1><p>想要获取凭证信息，可以在管理员权限的会话处右击选择<code>Access --&gt; Dump Hashes</code>，或者在控制台中使用<code>hashdump</code>命令。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs14-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs14-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>想获取当前用户的密码，可以运行<code>mimikatz</code>，右击管理员权限会话选择<code>Access --&gt; Run Mimikatz</code>，或在控制台运行<code>logonpasswords</code>命令。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs14-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs14-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在<code>View --&gt; Credentials</code>下可以查看到<code>hashdump</code>与<code>mimikatz</code>获取的数据。</p>
 <h1 id="0x03-Mimikatz"><a href="#0x03-Mimikatz" class="headerlink" title="0x03 Mimikatz"></a>0x03 Mimikatz</h1><p>在 Beacon 中集成了 mimikatz ，mimikatz 执行命令有三种形式：</p>
 <ul>

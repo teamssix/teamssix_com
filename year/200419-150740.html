@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -452,32 +452,32 @@
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>这是 Cobalt Strike 学习笔记的最后一节，这节将来学习白名单申请与宏渗透的一些方法。</p>
 <h1 id="0x01-白名单申请"><a href="#0x01-白名单申请" class="headerlink" title="0x01 白名单申请"></a>0x01 白名单申请</h1><p>Win + R 打开运行窗口，输入 <code>gpedit.msc</code> ，来到 <code>用户配置 -&gt; 管理模板 -&gt; 系统</code> 处，打开 <code>只允许指定的 Windows 程序</code></p>
 <p>在打开的窗口中，勾选<code>已启用</code>，之后点击<code>显示</code>按钮，在其中写入白名单的程序名称后，点击两次确定之后即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-建立宏攻击"><a href="#0x02-建立宏攻击" class="headerlink" title="0x02 建立宏攻击"></a>0x02 建立宏攻击</h1><p>在 Cobalt Strike 客户端上，选择 <code>Packages --&gt; MS Office Macro</code>，指定一个监听器，点击 <code>Generate</code>，之后根据提示的步骤生成一个 Word 文档。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>大体的步骤如下：</p>
 <p>1、打开 Microsoft Word 或者 Excel</p>
 <p>2、来到 <code>视图 --&gt; 宏</code></p>
 <p>3、任意填写一个宏的名称</p>
 <p>4、宏的位置选择为当前文档</p>
 <p>5、点击创建</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>6、在打开的编辑器中，删除掉原来的内容</p>
 <p>7、点击 Cobalt Strike 上的 <code>Copy Macro</code> 按钮</p>
 <p>8、将刚复制 Cobalt Strike 生成的内容粘贴到打开的编辑器中</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-4.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>9、关闭编辑器</p>
 <p>10、将文档保存为启用宏的文档，这里可以选择保存为 <code>启用宏的 Word 文档</code> 或者 <code>Word 97-2003 文档</code></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-5.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>接下来使用钓鱼邮件等方式上传到靶机，当靶机运行该文档后启用宏内容即可上线。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-6.png"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-7.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>这里不得不吐槽一句，Microsoft Office 的东西安装是真的麻烦。</p>
 </blockquote>
 <p>在上面 2-8 步骤创建编辑宏内容的过程，也可以打开 <code>开发工具 --&gt; Visual Basic</code> 界面，这里推荐使用快捷键<code>Alt+F11</code>打开该界面。</p>
 <p>之后编辑<code>ThisDocument</code> 模块，粘贴宏代码也可以达到上述 2-8 步的效果。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-8.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><p>自 4 月 19 日发布 Cobalt Strike 第一节笔记开始，已经过去了半年的时间，踩过了无数坑，解决了无数的坑。</p>
 <p>感谢 Cobalt Strike 的作者 <code>Raphael Mudge</code> 的课程，感谢 UP <code>Hack 学习呀</code> 上传的中文翻译版本，感谢 <code>A-Team</code> 团队的 Cobalt Strike 4.0 中文翻译手册，感谢每篇笔记最后参考链接的作者们，感谢曾经帮助我解决所碰到问题的大佬们，谢谢你们。</p>
 <p>最后，还有一点要注意的就是， <code>CS学习笔记</code>系列只是我个人在学习 Cobalt Strike 的过程中所做的笔记，建议不要当做教程看，因为其中我本身已经知道的知识点和感觉不重要知识点我是没有记录的。</p>

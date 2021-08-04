@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -459,7 +459,7 @@
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>除了上述使用命令的方式进行屏幕截图和键盘记录，也可以来到<code>Explore --&gt; Process List</code>下选择要注入的进程，再直接点击屏幕截图或键盘记录的功能按钮。</p>
 <p>从使用上，具体注入那个程序都是可以的，只是注入 explorer.exe 会比较稳定与持久。值得注意的是，多个键盘记录器可能相互冲突，每个桌面会话只应使用一个键盘记录器。</p>
 <h1 id="0x02-浏览器转发"><a href="#0x02-浏览器转发" class="headerlink" title="0x02 浏览器转发"></a>0x02 浏览器转发</h1><p>浏览器转发是指在已经攻击成功的目标中，利用目标的信息登录网站进行会话劫持，但是目前只支持目标正在使用IE浏览器的前提下。关于如何判断当前用户是否使用IE浏览器，则可以通过屏幕截图来判断。如下图中，通过屏幕截图可以看到目标正在使用IE浏览器登陆着当前网站的admin账户。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs11-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs11-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>找到目前正在使用IE浏览器的目标后，右击该会话，选择<code>Explore --&gt; Browser Pivot</code>，随后选择要注入的进程，CS 会在它认为可以注入的进程右边显示一个对勾，设置好端口后，点击运行即可。</p>
 <p>此时，在浏览器中配置代理，代理配置为http代理，IP为CS团队服务器IP，端口为刚设置的端口。</p>
 <p>代理配置好后，在浏览器中打开目标当前正在打开的网址，即可绕过登录界面。</p>
@@ -467,7 +467,7 @@
 <p>目标发现<code>discovery method</code>有三种方法，分别是：<code>arp、icmp、none</code>，<code>arp</code>方法使用 ARP 请求来发现一个主机是否存活。<code>icmp</code>方法发送一个 ICMP echo 请求来检查一个目标是否存活。<code>none</code>选项让端口扫描工具假设所有的主机都是存活的。</p>
 <p>端口扫描会在 Beacon 和团队服务器通讯的这个过程中不停运行。当它有可以报告的结果，它会把结果发送到 Beacon 控制台。Cobalt Strike 会处理这个信息并使用发现的主机更新目标模型。</p>
 <p>右击 Beacon会话，在<code>Explore --&gt; Port Scan</code>中即可打开端口扫描的图形窗口，CS会自动填充扫描地址，确认扫描地址、端口、扫描方式等无误后，开始扫描即可。扫描结束后，在 target table页面中可看到扫描结果，右击会话，选择 Services 可查看详细的扫描结果。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs11-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs11-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>

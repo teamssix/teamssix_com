@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-07-29
+                    2021-08-04
                 </div>
                 
 
@@ -456,15 +456,15 @@
 <h1 id="0x01-工具原理及功能概述"><a href="#0x01-工具原理及功能概述" class="headerlink" title="0x01 工具原理及功能概述"></a>0x01 工具原理及功能概述</h1><p>这款工具的原理很简单，用户输入目标url，再利用爬虫获取相关被动信息收集网站关于该url的信息，最后回显出来。</p>
 <p>目前该工具具备8个功能，原该工具具备7个功能，分别为收集目标的资产信息、CMS信息、DNS信息、备案信息、IP地址、子域名信息、whois信息，现加入第8个功能：如果在程序中两次IP查询目标URL的结果一致，那么查询该IP的端口，即端口查询功能。</p>
 <h1 id="0x02-工具简单上手使用"><a href="#0x02-工具简单上手使用" class="headerlink" title="0x02 工具简单上手使用"></a>0x02 工具简单上手使用</h1><h2 id="1、查看帮助信息"><a href="#1、查看帮助信息" class="headerlink" title="1、查看帮助信息"></a>1、查看帮助信息</h2><pre><code># python pigat.py -h</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、指定url进行信息获取"><a href="#2、指定url进行信息获取" class="headerlink" title="2、指定url进行信息获取"></a>2、指定url进行信息获取</h2><p>如果只指定url这一个参数，没有指定其他参数，则默认获取该url的所有信息</p>
 <pre><code># python pigat.py -u teamssix.com</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat2.png"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、指定url进行单项信息获取"><a href="#3、指定url进行单项信息获取" class="headerlink" title="3、指定url进行单项信息获取"></a>3、指定url进行单项信息获取</h2><pre><code># python pigat.py -u baidu.com --assert</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat4.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="4、指定url进行多项信息获取"><a href="#4、指定url进行多项信息获取" class="headerlink" title="4、指定url进行多项信息获取"></a>4、指定url进行多项信息获取</h2><pre><code># python pigat.py -u teamssix.com --ip --cms</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat5.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/pigat5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-工具获取"><a href="#0x03-工具获取" class="headerlink" title="0x03 工具获取"></a>0x03 工具获取</h1><p>关于此工具的下载地址可在我的个人公众号（TeamsSix）回复”pigat”获取。</p>
 <h1 id="0x04-声明"><a href="#0x04-声明" class="headerlink" title="0x04 声明"></a>0x04 声明</h1><p>1、本文在FreeBuf首发，原文地址在文章尾部</p>
 <p>2、由于我的个人疏忽，导致在FreeBuf文中获取工具的方式存在错误的地方，正确的获取方式应是回复”pigat”，而不是”pigta”，这就导致不少人及时回复了关键词也没有获取到工具地址，在这里表示深刻歉意，现在公众号后台规则已经更新，上述两个关键词均可以获取到工具地址。</p>

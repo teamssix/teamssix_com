@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-15
+                    2021-08-04
                 </div>
                 
 
@@ -485,7 +485,7 @@ remote_port = 3389</code></pre>
 2021/06/09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]
 2021/06/09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success</code></pre>
 <p>此时，在 vps 上访问本地的 3389 端口就会访问到内网主机的 3389 端口了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="b、建立-socks-代理"><a href="#b、建立-socks-代理" class="headerlink" title="b、建立 socks 代理"></a>b、建立 socks 代理</h3><p>场景：内网主机可出网，想把内网主机作为跳板机使用</p>
 <p>上面的场景只是利用 frp 访问了内网指定机器的指定端口，我们还可以利用 frp 将内网主机作为跳板机使用。</p>
 <p>这次我们用上 frp 的 web 控制面板以及访问密码等功能，让我们建立的连接更加安全、方便。</p>
@@ -534,9 +534,9 @@ plugin = socks5</code></pre>
 2021/06/09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]
 2021/06/09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success</code></pre>
 <p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161859.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161859.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>frp 的参数远不止文章中提到的这些，更多功能可以参考下面的参考文章。</p>
 <blockquote>
 <p>参考文章：</p>

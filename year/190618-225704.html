@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-08-04
                 </div>
                 
 
@@ -451,8 +451,8 @@
             <div id="articleContent">
                 <p>话不多说，先让我们看看最终效果图：</p>
 <a id="more"></a>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm1.png"><br>那么如何使用Python来获取这些信息呢？</p>
-<h1 id="一、需求与思路"><a href="#一、需求与思路" class="headerlink" title="一、需求与思路"></a>一、需求与思路</h1><h1 id="1、需求"><a href="#1、需求" class="headerlink" title="1、需求"></a>1、需求</h1><p>首先要知道最近正在上映的电影的名称、评分、评论数等等，这些都可以在豆瓣上找得到，因此本次数据挖掘对象就确定为豆瓣电影官网。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>那么如何使用Python来获取这些信息呢？</p>
+<h1 id="一、需求与思路"><a href="#一、需求与思路" class="headerlink" title="一、需求与思路"></a>一、需求与思路</h1><h1 id="1、需求"><a href="#1、需求" class="headerlink" title="1、需求"></a>1、需求</h1><p>首先要知道最近正在上映的电影的名称、评分、评论数等等，这些都可以在豆瓣上找得到，因此本次数据挖掘对象就确定为豆瓣电影官网。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="2、思路"><a href="#2、思路" class="headerlink" title="2、思路"></a>2、思路</h1><p>a、调用requests模块向豆瓣电影官网发出请求<br>b、调用BeautifulSoup模块从返回的html中提取数据<br>c、调用pandas模块将提取的数据转为表格样式</p>
 <h1 id="二、开工"><a href="#二、开工" class="headerlink" title="二、开工"></a>二、开工</h1><h1 id="1、发出请求"><a href="#1、发出请求" class="headerlink" title="1、发出请求"></a>1、发出请求</h1><p>设置好headers,url，调用requests模块向目标网站发出请求，最后结果存储在res中</p>
 <pre><code class="python">import requests
@@ -463,18 +463,18 @@ res = requests.get(url,headers = headers)</code></pre>
 <pre><code class="python">from bs4 import BeautifulSoup
 soup = BeautifulSoup(res.text,&#39;html.parser&#39;)</code></pre>
 <h1 id="三、数据提取"><a href="#三、数据提取" class="headerlink" title="三、数据提取"></a>三、数据提取</h1><p>在介绍数据提取之前需要先介绍一个插件：infolite，这款插件可以直接查看到控件路径，而不需要到复杂的开发人员工具中就行查看。</p>
-<h1 id="1、电影名"><a href="#1、电影名" class="headerlink" title="1、电影名"></a>1、电影名</h1><p>打开电影详情页面，找到电影名控件路径<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm3.png"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm4.png"><br>最终修改为以下结果得到电影名称</p>
+<h1 id="1、电影名"><a href="#1、电影名" class="headerlink" title="1、电影名"></a>1、电影名</h1><p>打开电影详情页面，找到电影名控件路径<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>最终修改为以下结果得到电影名称</p>
 <pre><code class="python">insoup.select(&#39;h1&#39;)[0].text.split()[0]</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm5.png"></p>
-<h1 id="2、豆瓣评分"><a href="#2、豆瓣评分" class="headerlink" title="2、豆瓣评分"></a>2、豆瓣评分</h1><p>根据同样原理可得到该电影的评分<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm6.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h1 id="2、豆瓣评分"><a href="#2、豆瓣评分" class="headerlink" title="2、豆瓣评分"></a>2、豆瓣评分</h1><p>根据同样原理可得到该电影的评分<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <pre><code class="python">insoup.select(&#39;.rating_num&#39;)[0].text</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm7.png"></p>
-<h1 id="3、评论数量"><a href="#3、评论数量" class="headerlink" title="3、评论数量"></a>3、评论数量</h1><p>依旧是一样的思路，先利用InfoLite找到控件路径，再利用bs4模块提取对应内容。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm8.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h1 id="3、评论数量"><a href="#3、评论数量" class="headerlink" title="3、评论数量"></a>3、评论数量</h1><p>依旧是一样的思路，先利用InfoLite找到控件路径，再利用bs4模块提取对应内容。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <pre><code class="python">insoup.select(&#39;.mod-hd a&#39;)[1].text.split()[1]</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm9.png"></p>
-<h1 id="4、简介"><a href="#4、简介" class="headerlink" title="4、简介"></a>4、简介</h1><p>对于简介因为里面有很多空格换行等，所以这里使用了正则替换空格。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm10.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm9.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h1 id="4、简介"><a href="#4、简介" class="headerlink" title="4、简介"></a>4、简介</h1><p>对于简介因为里面有很多空格换行等，所以这里使用了正则替换空格。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <pre><code class="python">re.sub(&#39;\s&#39;,&#39;&#39;,insoup.select(&#39;.related-info span&#39;)[0].text)</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm11.png"><br>这里写个函数，为实现传入一个URL，返回该URL中信息的功能，最终四项都将传入result字典中，所以接下来要做的就是如何获取URL。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm11.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>这里写个函数，为实现传入一个URL，返回该URL中信息的功能，最终四项都将传入result字典中，所以接下来要做的就是如何获取URL。</p>
 <pre><code class="python">def pages(url):
     result = &#123;&#125;
     inres = requests.get(url,headers = headers)
@@ -486,7 +486,7 @@ soup = BeautifulSoup(res.text,&#39;html.parser&#39;)</code></pre>
     result[&#39;简介&#39;] = re.sub(&#39;\s&#39;,&#39;&#39;,insoup.select(&#39;.related-info span&#39;)[0].text)
     
     return result</code></pre>
-<h1 id="四、提取URL"><a href="#四、提取URL" class="headerlink" title="四、提取URL"></a>四、提取URL</h1><p>因为我们要找的电影是正在上映的电影，因此从正在上映的电影列表中提取URL即可。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm12.png"></p>
+<h1 id="四、提取URL"><a href="#四、提取URL" class="headerlink" title="四、提取URL"></a>四、提取URL</h1><p>因为我们要找的电影是正在上映的电影，因此从正在上映的电影列表中提取URL即可。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <pre><code class="python">url = &#39;https://movie.douban.com/cinema/nowplaying/beijing/&#39;
 res = requests.get(url,headers = headers)
 soup = BeautifulSoup(res.text,&#39;html.parser&#39;)</code></pre>
@@ -496,13 +496,13 @@ for links in soup.select(&#39;ul&#39;):
     urls = links.select(&#39;a&#39;)[0][&#39;href&#39;]
     if len(links.select(&#39;.subject-rate&#39;)) &gt; 0 :
         pools.append(pages(urls))</code></pre>
-<p>最终，每个URL的信息都被添加到pools数组中，但是这个时候直接输出pools会很乱，因此接下来要做的就是生成表格。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm13.png"></p>
+<p>最终，每个URL的信息都被添加到pools数组中，但是这个时候直接输出pools会很乱，因此接下来要做的就是生成表格。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm13.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="五、表格生成"><a href="#五、表格生成" class="headerlink" title="五、表格生成"></a>五、表格生成</h1><p>生成表格的方法也非常简单</p>
 <pre><code class="python">import pandas
 df = pandas.DataFrame(pools)
 df</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm14.png"><br>不过这样不够明显，因此我们可以将简介放到后面，再排序一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm15.png"></p>
-<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>上面一张图可以明显看到今天的四个贺岁电影中，《流浪星球》不管是豆瓣评分还是评论的数量都是第一个，倒也是实至名归。<br>在整个过程中，碰到了很多问题，其中不乏有还未解决的问题，比如在提取电影标签的时候，因为正则使用的不熟而一直没有被很好的提取出来。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm16.png"><br>在做这个数据挖掘之前，还做了新浪新闻的信息抓取，这个电影信息的数据挖掘也相当于是练练手，后面还有的导出文档、导出到数据库的功能就没有做演示了，也是几行代码的事情。<br>用了一段时间Python后，真的不得不感叹到Python的强大之处，下面就把以上项目的全部代码展示出来吧，另外我还是个新手，代码写得十分笨拙，大佬还请绕步。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm14.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>不过这样不够明显，因此我们可以将简介放到后面，再排序一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm15.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>上面一张图可以明显看到今天的四个贺岁电影中，《流浪星球》不管是豆瓣评分还是评论的数量都是第一个，倒也是实至名归。<br>在整个过程中，碰到了很多问题，其中不乏有还未解决的问题，比如在提取电影标签的时候，因为正则使用的不熟而一直没有被很好的提取出来。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/hotfilm16.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>在做这个数据挖掘之前，还做了新浪新闻的信息抓取，这个电影信息的数据挖掘也相当于是练练手，后面还有的导出文档、导出到数据库的功能就没有做演示了，也是几行代码的事情。<br>用了一段时间Python后，真的不得不感叹到Python的强大之处，下面就把以上项目的全部代码展示出来吧，另外我还是个新手，代码写得十分笨拙，大佬还请绕步。</p>
 <pre><code class="python">import re
 import pandas
 import requests

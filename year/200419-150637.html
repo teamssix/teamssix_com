@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -456,7 +456,7 @@
 <p>4、实现对目标的控制</p>
 <p>以上是根据视频教程中直译的结果，个人感觉其实这一节叫<code>横向移动的方法</code>更为合适。</p>
 <h1 id="0x01-创建可执行文件"><a href="#0x01-创建可执行文件" class="headerlink" title="0x01 创建可执行文件"></a>0x01 创建可执行文件</h1><p>创建可执行文件可以在 Cobalt Strike 的 <code>Attack -&gt; Packages -&gt; Windows Executable(s)</code> 处进行创建。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果用于内网中的横向移动，那么强烈建议使用 SMB Beacon，SMB Beacon 就是为了内网横向扩展渗透而设计的。</p>
 <h1 id="0x02-上传可执行文件"><a href="#0x02-上传可执行文件" class="headerlink" title="0x02 上传可执行文件"></a>0x02 上传可执行文件</h1><p>首先使用 Cobalt Strike 上的 <code>upload</code> 功能上传文件，接着复制文件到目标主机的其他位置。</p>
 <pre><code class="powershell">shell copy file.exe \\host\C$\Windows\Temp</code></pre>
@@ -578,7 +578,7 @@ beacon&gt; powershell Find-LocalAdminAccess
 WinDC.teamssix.com</code></pre>
 <p>接下来在 WinDC 上运行 psexec，因为这里是 64 位的，所以选择 psexec64，之后监听选择一个 smb beacon，会话就选择已经上线的 wintest 主机的会话，并勾选使用当前会话的访问令牌。</p>
 <p>这里笔者认为应该是因为当前在 wintest 主机上有 windc 的管理员账户登录着，所以使用 wintest 的访问令牌是可以获取 windc 的信任的，类似于 <a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150622.html">CS 学习笔记 17 节</a>里的描述方法，如有不正确之处，还请多多指教。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>之后，windc 主机就上线了，域中如果还有其他主机，也可以使用这种方法去横向移动。</p>
 <blockquote>
 <p>参考链接：</p>

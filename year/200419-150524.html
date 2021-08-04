@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -468,11 +468,11 @@ set LPORT 80</code></pre>
 set PrependMigrate True</code></pre>
 <p>4、最后，开始攻击。</p>
 <pre><code>exploit -j</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="伪装——克隆网站"><a href="#伪装——克隆网站" class="headerlink" title="伪装——克隆网站"></a>伪装——克隆网站</h2><p>在向目标发送漏洞程序之前，我们将自己进行伪装一下，这样可以更好的保护自己，同时提高成功率。CS上有个克隆网站的功能，能够较好的帮助到我们。</p>
 <p>首先，来到<code>Attacks --&gt; Web Drive-by --&gt; Clone Site</code>下，打开克隆网站的功能，之后写入待克隆网站的URL，在Attack中写入MSF中生成的URL。</p>
 <p>其中<code>Log keystrokes on cloned site</code>选项如果勾选则可以获取目标的键盘记录，记录结果在Web Log中能够查看。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-2.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>之后，浏览器打开克隆站点地址，如果目标存在漏洞，就可以被利用了，同时在CS中也会观察到主机上线。</p>
 <h1 id="鱼叉式网络钓鱼"><a href="#鱼叉式网络钓鱼" class="headerlink" title="鱼叉式网络钓鱼"></a>鱼叉式网络钓鱼</h1><p>用CS进行钓鱼需要四个步骤：</p>
 <p>1、创建一个目标清单</p>
@@ -490,10 +490,10 @@ ypmgin95416@chacuo.net    test3</code></pre>
 <p>首先可以自己写一封邮件发给自己，或者直接从自己收件箱挑选一个合适的。有了合适的邮件之后，查看邮件原始信息，一般在邮件的选项里能找到这个功能。最后将邮件的原始信息保存为文件，一个模板就制作完成了。</p>
 <h2 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h2><p>有了目标和模板，然后选好自己的邮件服务器，之后就可以发送消息了。</p>
 <p>在CS客户端中，点击<code>Attacks --&gt; Spear Phish</code>即可打开网络钓鱼模块。添加上目标、模板、钓鱼地址、邮箱服务、退回邮箱，其中Bounce To为退回邮件接收地址，注意要和配置邮件服务器时填的邮箱一致，否则会报错。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-3.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>所有信息添加完成后，可以点击Preview查看。如果感觉效果不错，就可以点击send发送了。</p>
 <p>当目标收到钓鱼邮件，并且点击钓鱼邮件中的链接后，如果钓鱼链接配置的没有问题，CS就能够上线了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-4.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>由于此处是仅作为测试用途，所以模板中的链接都是自己的本地内网CS服务器地址，如果是真实环境中，则自然需要使用公网的地址才行。</p>
 <p>在真实环境中的钓鱼邮件也不会像这里这么浮夸，真实环境中的钓鱼邮件往往都伪装成和正经儿的邮件一模一样，单从表面上看很难看出区别，因此提高自己的安全意识还是很重要滴。</p>
 <blockquote>

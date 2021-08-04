@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -511,7 +511,7 @@ Running migrations:
 ………内容太多，此处省略………
   Applying sessions.0001_initial... OK</code></pre>
 <p>到此，将主目录下生成的<code>db.sqlite3</code>文件拖拽到Database窗口中即可，如果没有Database的窗口，可以用Pycharm专业版试试。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4django_note.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x01-站点管理"><a href="#0x01-站点管理" class="headerlink" title="0x01 站点管理"></a>0x01 站点管理</h1><ul>
 <li>站点分为内容发布和公共访问两部分。</li>
 <li>使用django站点管理模块步骤：<ul>
@@ -555,9 +555,9 @@ from Book.models import BookInfo,PeopleInfo
 admin.site.register(BookInfo)
 admin.site.register(PeopleInfo)</code></pre>
 <p>刷新浏览器页面，即可看到刚添加的两个模型类。如果页面无法加载，可以看看是不是服务出现异常，如果出现异常，重新启动服务即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/5django_note.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/5django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="4、自定义站点管理界面"><a href="#4、自定义站点管理界面" class="headerlink" title="4、自定义站点管理界面"></a>4、自定义站点管理界面</h2><p>在管理页面中，随便添加点数据，之后会发现书籍的名称都显示成了<code>BookInfo object</code></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/6django_note.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/6django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>此时，只需要在<code>model.py</code>里的class里添加以下内容即可。</p>
 <pre><code class="python">def __str__(self):
     return self.name</code></pre>
@@ -577,7 +577,7 @@ class PeopleInfo(models.Model):  # 定义人物信息类模型
     def __str__(self):
         return self.name</code></pre>
 <p>此时，再刷新页面，就可以看到显示正常了，同样 people info 界面也是正常的了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/7_1django_note.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/7_1django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>但是，这样显示还是不够直观，所以就需要自定义站点管理界面了，接下来修改<code>admin.py</code>页面，添加以下语句：</p>
 <pre><code class="python">class PeopleInfoAdmin(admin.ModelAdmin):
     list_display = [&#39;id&#39;, &#39;name&#39;, &#39;gender&#39;, &#39;book&#39;]</code></pre>
@@ -592,7 +592,7 @@ class PeopleInfoAdmin(admin.ModelAdmin):
 admin.site.register(BookInfo)
 admin.site.register(PeopleInfo, PeopleInfoAdmin)#注意此处添加PeopleInfoAdmin以注册</code></pre>
 <p>再来刷新一下页面，就舒服很多了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/8django_note.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/8django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://youtu.be/BXyGr9JQVcc">https://youtu.be/BXyGr9JQVcc</a></p>

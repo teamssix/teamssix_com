@@ -420,7 +420,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-06-04
+                    2021-08-04
                 </div>
                 
 
@@ -468,18 +468,18 @@
 <p>3、构建</p>
 <p>4、使用 Artifact Kit 加载脚本</p>
 <h1 id="0x05-Artifact-Kit-使用演示"><a href="#0x05-Artifact-Kit-使用演示" class="headerlink" title="0x05 Artifact Kit 使用演示"></a>0x05 Artifact Kit 使用演示</h1><p>首先来看看未进行免杀处理的效果，这里采用 <a target="_blank" rel="noopener" href="https://www.virustotal.com/">virustotal</a> 进行检测，发现被 42 个引擎检测到。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-6.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>接下来就试试 Artifact Kit 进行免杀的效果，有条件的可以去官网下载支持一下正版。</p>
 <p>当然 Github 上也有人上传了，项目地址：<a target="_blank" rel="noopener" href="https://github.com/Cliov/Arsenal">https://github.com/Cliov/Arsenal</a></p>
 <p>这里使用 Artifact Kit 中的 dist-peek 方法进行测试。</p>
 <p>来到 Cobalt Strike 下打开 <code>Cobalt Strike -&gt; Script Manager</code>，Load 加载 <code>/Arsenal/artifact/dist-peek/artifact.cna</code> 插件，之后在 <code>Attacks -&gt; Packages -&gt; Windows Executable</code> 中生成木马文件。</p>
 <p>使用 VT 检测发现仅有 8 个引擎检测到，感觉效果好像还行。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-9.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-9.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>把每个杀软的病毒库升级到最新后，实测可以过腾讯电脑管家、火绒，但 360 安全卫士 、 360 杀毒不行。</p>
 <blockquote>
 <p>说句题外话，至于为什么用了两款 360 的产品，主要就是为了截图好看些。</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-10.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x06-Veil-Evasion-使用演示"><a href="#0x06-Veil-Evasion-使用演示" class="headerlink" title="0x06 Veil Evasion 使用演示"></a>0x06 Veil Evasion 使用演示</h1><p>此外，也可以使用 Veil Evasion 框架，Veil Evasion 的安装也是比较简单的，Veil-Evasion 在 Kali 2020以前是自带的，但 Kali 2020 中是需要独立安装的。在 Kali 中可以直接使用 apt-get 进行安装。</p>
 <pre><code>git config --global http.proxy &#39;socks5://127.0.0.1:1080&#39;
 git config --global https.proxy &#39;socks5://127.0.0.1:1080&#39;
@@ -489,7 +489,7 @@ veil</code></pre>
 <p>其他系统可以使用 veil-evasion 项目中的介绍进行安装，项目地址：<a target="_blank" rel="noopener" href="https://github.com/Veil-Framework/Veil-Evasion">https://github.com/Veil-Framework/Veil-Evasion</a></p>
 <p>由于 Veil Evasion 有 200 多 M ，因此建议挂上代理进行下载安装。</p>
 <p>安装完成之后，在 Cobalt Strike 里的 <code>Attacks -&gt; Packages -&gt; Payload Generator</code>  中选择 Veil 输出生成一个 payload.txt 文件</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-1.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>随后来到 Kali 下，输入 <code>veil</code> 启动，输入 <code>use Evasion</code> 使用 Evasion 工具，<code>list</code> 查看当前可用的 Payload</p>
 <pre><code>veil
 use Evasion
@@ -501,19 +501,19 @@ list</code></pre>
 3
 粘贴 payload.txt 内容
 bypass_go    #生成文件的名称</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-4.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>使用 virustotal 查杀了一下生成的 bypass_go.exe，发现被 40 个引擎检测到，不得不说这效果很一般。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-5.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>实测可以过360 安全卫士、 360 杀毒，但腾讯电脑管家、火绒不行。</p>
 <blockquote>
 <p>看到 VT 的检测结果后，我还以为四款杀软都能检测到呢，没想到啊。</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-11.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-11.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x07-免杀插件"><a href="#0x07-免杀插件" class="headerlink" title="0x07 免杀插件"></a>0x07 免杀插件</h1><p>后来又在 GitHub 上发现一款免杀插件，2 个月前更新的，项目地址：<a target="_blank" rel="noopener" href="https://github.com/hack2fun/BypassAV">https://github.com/hack2fun/BypassAV</a></p>
 <p>使用方法可以参考项目中的介绍，目前效果感觉还是可以的，在 virustotal 上只被 10 个引擎检测到。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-7.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>实测可以过 360 安全卫士、360 杀毒、腾讯电脑管家，但火绒不行。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-8.png"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs25-8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x08-总结"><a href="#0x08-总结" class="headerlink" title="0x08 总结"></a>0x08 总结</h1><p>在测试完成之后，开始体会到为什么要判断目标使用了哪款杀软的目的了，就上面测试的情况来说，每一家都出现未检测到的情况。在实际的环境中，还是要根据目标的具体情况具体分析。</p>
 <blockquote>
 <p>Emm，浏览器首页又被 360 改成 360 导航了。</p>
