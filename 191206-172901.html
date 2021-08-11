@@ -1,0 +1,1261 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="【漏洞复现】DNS域传送漏洞, Teams Six">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150271429-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-150271429-1');
+</script>
+
+
+    <title>【漏洞复现】DNS域传送漏洞 | Teams Six</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script data-ad-client="ca-pub-7704006270618117" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Teams Six" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Teams Six</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Teams Six</div>
+        <div class="logo-desc">
+            
+            I can do all this through him who gives me strength. (Philippians 4:13 NIV)
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">【漏洞复现】DNS域传送漏洞</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #567ddf;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #567ddf;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                <span class="chip bg-color">漏洞复现</span>
+                            </a>
+                        
+                            <a href="/tags/DNS/">
+                                <span class="chip bg-color">DNS</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%9F%9F%E4%BC%A0%E9%80%81/">
+                                <span class="chip bg-color">域传送</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="post-category">
+                                漏洞复现
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-12-06
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-08-04
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>注：本文中使用的域名是不存在DNS域传送漏洞的，本文仅用作技术交流学习用途，严禁将该文内容用于违法行为。</p>
+<a id="more"></a>
+<h1 id="0x00-漏洞描述"><a href="#0x00-漏洞描述" class="headerlink" title="0x00 漏洞描述"></a>0x00 漏洞描述</h1><p>DNS: 网域名称系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。</p>
+<p>它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。</p>
+<p>DNS使用TCP和UDP端口53，当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。</p>
+<p>常用的DNS记录有以下几类：</p>
+<pre><code>主机记录(A记录)：
+A记录是用于名称解析的重要记录，它将特定的主机名映射到对应主机的IP地址上。
+
+IPv6主机记录(AAAA记录)：
+与A记录对应，用于将特定的主机名映射到一个主机的IPv6地址。 
+
+别名(CNAME记录)：
+CNAME记录用于将某个别名指向到某个A记录上，这样就不需要再为某个新名字另外创建一条新的A记录。
+
+电子邮件交换记录（MX记录)：
+记录一个邮件域名对应的IP地址
+
+域名服务器记录 (NS记录)：
+记录该域名由哪台域名服务器解析
+
+反向记录(PTR记录):
+也即从IP地址到域名的一条记录
+
+TXT记录：
+记录域名的相关文本信息</code></pre>
+<p>DNS服务器分为主服务器，备份服务器，缓存服务器。</p>
+<p>备份服务器需要利用“域传送”从主服务器上复制数据，然后更新自身的数据库，以达到数据同步的目的，这样是为了增加冗余，万一主服务器挂了还有备份服务器顶着。</p>
+<p>而“域传送”漏洞则是由于dns配置不当，本来只有备份服务器能获得主服务器的数据，由于漏洞导致任意client都能通过“域传送”获得主服务器的数据（zone数据库信息）。</p>
+<p>这样，攻击者就能获得某个域的所有记录，甚至整个网络拓扑都暴露无遗，凭借这份网络蓝图，攻击者可以节省很多扫描时间以及信息收集的时间，还提升了准确度等等。</p>
+<p>大的互联网厂商通常将内部网络与外部互联网隔离开，一个重要的手段是使用 Private DNS。如果内部 DNS 泄露，将造成极大的安全风险。风险控制不当甚至造成整个内部网络沦陷。</p>
+<h1 id="0x01-漏洞利用"><a href="#0x01-漏洞利用" class="headerlink" title="0x01 漏洞利用"></a>0x01 漏洞利用</h1><h2 id="1、Windows下使用nslookup"><a href="#1、Windows下使用nslookup" class="headerlink" title="1、Windows下使用nslookup"></a>1、Windows下使用nslookup</h2><p>nslookup命令以两种方式运行：非交互式和交互式。</p>
+<p>1、非交互式模式下，查看对应主机域的域名服务器</p>
+<pre><code>~# nslookup -type=ns teamssix.com
+
+服务器:  ns-gg.online.ny.cn
+Address:  118.192.13.5
+非权威应答:
+teamssix.com    nameserver = clint.ns.cloudflare.com
+teamssix.com    nameserver = isla.ns.cloudflare.com</code></pre>
+<p>2、进入交互模式，指定域名服务器，列出域名信息</p>
+<pre><code>~# nslookup
+
+默认服务器:  ns-gg.online.ny.cn
+Address:  118.192.13.5
+
+&gt; server clint.ns.cloudflare.com
+
+默认服务器:  clint.ns.cloudflare.com
+Addresses:  2400:cb00:2049:1::adf5:3b5a
+          2606:4700:58::adf5:3b5a
+          173.245.59.90
+
+&gt; ls teamssix.com
+
+ls: connect: No such file or directory
+*** 无法列出域 teamssix.com: Unspecified error
+DNS 服务器拒绝将区域 teamssix.com 传送到你的计算机。如果这不正确，
+请检查 IP 地址 2400:cb00:2049:1::adf5:3b5a 的 DNS 服务器上 teamssix.com 的
+区域传送安全设置。</code></pre>
+<p>如果提示无法列出域，那就说明此域名不存在域传送漏洞。</p>
+<h2 id="2、Kali下使用dig、dnsenum、dnswalk"><a href="#2、Kali下使用dig、dnsenum、dnswalk" class="headerlink" title="2、Kali下使用dig、dnsenum、dnswalk"></a>2、Kali下使用dig、dnsenum、dnswalk</h2><h3 id="a、dig"><a href="#a、dig" class="headerlink" title="a、dig"></a>a、dig</h3><p>这里涉及dig 一个重要的命令axfr，axfr 是q-type类型的一种，axfr类型是Authoritative Transfer的缩写，指请求传送某个区域的全部记录。</p>
+<p>我们只要欺骗dns服务器发送一个axfr请求过去，如果该dns服务器上存在该漏洞，就会返回所有的解析记录值。</p>
+<p>dig的整体利用步骤基本和nslookup一致。</p>
+<p>1、查看对应主机域的域名服务器</p>
+<pre><code>~# dig teamssix.com ns
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1-Debian &lt;&lt;&gt;&gt; teamssix.com ns
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 16945
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;teamssix.com.                  IN      NS
+
+
+;; ANSWER SECTION:
+teamssix.com.           5       IN      NS      clint.ns.cloudflare.com.
+teamssix.com.           5       IN      NS      isla.ns.cloudflare.com.
+
+
+;; Query time: 6 msec
+;; SERVER: 10.18.37.7#54(10.18.37.7)
+;; WHEN: Fri Dec 06 03:30:37 EST 2019
+;; MSG SIZE  rcvd: 83</code></pre>
+<p>2、向该域名发送axfr 请求</p>
+<pre><code>~# dig axfr @clint.ns.cloudflare.com teamssix.com
+
+; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1-Debian &lt;&lt;&gt;&gt; axfr @clint.ns.cloudflare.com teamssix.com
+; (3 servers found)
+;; global options: +cmd
+; Transfer failed.</code></pre>
+<h3 id="b、dnsenum"><a href="#b、dnsenum" class="headerlink" title="b、dnsenum"></a>b、dnsenum</h3><p>这个工具相较于之前的方法要为简单，一行命令即可</p>
+<pre><code>~# dnsenum -enum teamssix.com
+
+Smartmatch is experimental at /usr/bin/dnsenum line 698.
+Smartmatch is experimental at /usr/bin/dnsenum line 698.
+dnsenum VERSION:1.2.4
+Warning: can&#39;t load Net::Whois::IP module, whois queries disabled.
+Warning: can&#39;t load WWW::Mechanize module, Google scraping desabled.
+
+-----   teamssix.com   -----
+
+Host&#39;s addresses:
+__________________
+teamssix.com.                            5        IN    A        104.28.22.70
+teamssix.com.                            5        IN    A        104.28.23.70
+
+Name Servers:
+______________
+
+isla.ns.cloudflare.com.                  5        IN    A        173.245.58.119
+clint.ns.cloudflare.com.                 5        IN    A        173.245.59.90
+clint.ns.cloudflare.com.                 5        IN    RRSIG             (
+
+Mail (MX) Servers:
+___________________
+
+Trying Zone Transfers and getting Bind Versions:
+_________________________________________________
+
+Trying Zone Transfer for teamssix.com on isla.ns.cloudflare.com ...
+AXFR record query failed: FORMERR
+
+Trying Zone Transfer for teamssix.com on clint.ns.cloudflare.com ...
+AXFR record query failed: FORMERR
+
+brute force file not specified, bay.</code></pre>
+<h3 id="c、dnswalk"><a href="#c、dnswalk" class="headerlink" title="c、dnswalk"></a>c、dnswalk</h3><p>dnswalk的使用同样一条命令，但是注意在域名最后加上一个点</p>
+<pre><code>~# dnswalk teamssix.com.
+
+Checking teamssix.com.
+Getting zone transfer of teamssix.com. from clint.ns.cloudflare.com...failed
+FAIL: Zone transfer of teamssix.com. from clint.ns.cloudflare.com failed: FORMERR
+Getting zone transfer of teamssix.com. from isla.ns.cloudflare.com...failed
+FAIL: Zone transfer of teamssix.com. from isla.ns.cloudflare.com failed: FORMERR
+BAD: All zone transfer attempts of teamssix.com. failed!
+2 failures, 0 warnings, 1 errors.</code></pre>
+<h1 id="0x02-修复建议"><a href="#0x02-修复建议" class="headerlink" title="0x02 修复建议"></a>0x02 修复建议</h1><p>区域传送是 DNS 常用的功能，为保证使用安全，应严格限制允许区域传送的主机，例如一个主 DNS 服务器应该只允许它的备用 DNS 服务器执行区域传送功能。</p>
+<p>在相应的 zone、options 中添加 allow-transfer，对执行此操作的服务器进行限制。如：</p>
+<ul>
+<li><p>严格限制允许进行区域传送的客户端的 IP</p>
+<pre><code>allow-transfer ｛1.1.1.1; 2.2.2.2;｝</code></pre>
+</li>
+<li><p>设置 TSIG key</p>
+<pre><code>allow-transfer ｛key &quot;dns1-slave1&quot;; key &quot;dns1-slave2&quot;;｝</code></pre>
+<h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><p>最后感谢前辈们的文章与辛勤奉献，DNS域传送漏洞除了本文中讨论的方法外，也可以使用Python脚本或者万能的nmap，这里就不做讨论啦。</p>
+</li>
+</ul>
+<p>想写这篇文章已经想一周了，今天终于有时间给整理整理，另外前文发布的Pigat工具，最近也会修复一些bug提交到Github更新哒。</p>
+<blockquote>
+<p>更多信息欢迎关注我的个人公众号：TeamsSix</p>
+</blockquote>
+<blockquote>
+<p>参考文章：<br><a target="_blank" rel="noopener" href="http://sunu11.com/2017/03/16/8/">http://sunu11.com/2017/03/16/8/</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d2af08e6f8fb">https://www.jianshu.com/p/d2af08e6f8fb</a><br><a target="_blank" rel="noopener" href="http://www.lijiejie.com/dns-zone-transfer-1/">http://www.lijiejie.com/dns-zone-transfer-1/</a><br><a target="_blank" rel="noopener" href="https://www.alibabacloud.com/help/zh/faq-detail/37529.htm">https://www.alibabacloud.com/help/zh/faq-detail/37529.htm</a><br><a target="_blank" rel="noopener" href="https://www.lsablog.com/networksec/awd/dns-zone-transfer/">https://www.lsablog.com/networksec/awd/dns-zone-transfer/</a><br><a target="_blank" rel="noopener" href="https://larry.ngrep.me/2015/09/02/DNS-zone-transfer-studying/">https://larry.ngrep.me/2015/09/02/DNS-zone-transfer-studying/</a></p>
+</blockquote>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Teams Six</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.teamssix.com/191206-172901.html">https://www.teamssix.com/191206-172901.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Teams Six</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                    <span class="chip bg-color">漏洞复现</span>
+                                </a>
+                            
+                                <a href="/tags/DNS/">
+                                    <span class="chip bg-color">DNS</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%9F%9F%E4%BC%A0%E9%80%81/">
+                                    <span class="chip bg-color">域传送</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'c8a95bd73658f8325d81',
+        clientSecret: '6f23956fb6261181412ed54eef0d37255730d3fd',
+        repo: 'Gitalk',
+        owner: 'teamssix',
+        proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
+        admin: "teamssix",
+        id: '2019-12-06T17-29-01',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/191220-161533.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【Python 学习笔记】多进程爬虫">
+                        
+                        <span class="card-title">【Python 学习笔记】多进程爬虫</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            0x00 前言前段时间学习了多线程，但在实际的情况中对于多线程的速度实在不满意，所以今天就来学学多进程分布式爬虫，在这里感谢莫烦的Python教程。
+0x01 什么是多进程爬虫在讲述多进程之前，先来回顾一下之前学习的多线程。
+
+对于多线程可
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-20
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Python-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    Python 学习笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/">
+                        <span class="chip bg-color">多进程</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                        <span class="chip bg-color">分布式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/191201-220910.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【直播笔记】白帽子的成长之路">
+                        
+                        <span class="card-title">【直播笔记】白帽子的成长之路</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+子域名监听工具：https://github.com/guimaizi/get_domain，新出来的子域名往往漏洞较多
+
+关于挖掘src漏洞:
+
+
+
+白帽子主要是寻找扫描器和风控系统覆盖不到的地方，比如domxss、越权漏洞和逻辑漏洞
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    学习笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%9B%B4%E6%92%AD/">
+                        <span class="chip bg-color">直播</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">笔记</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">总结</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/">
+                        <span class="chip bg-color">成长之路</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Teams Six<br />'
+            + '文章作者: Teams Six<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">150.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "12";
+                    var startDate = "19";
+                    var startHour = "7";
+                    var startMinute = "7";
+                    var startSecond = "7";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的 GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:teamssix@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="https://twitter.com/TeamsSix" class="tooltipped" target="_blank" data-tooltip="关注我的 Twitter" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" class="tooltipped" target="_blank" data-tooltip="关注我的微信公众号" data-position="top" data-delay="50">
+        <i class="fab fa-weixin"></i>
+    </a>
+
+
+
+    <a href="https://blog.csdn.net/qq_37683287" class="tooltipped" target="_blank" data-tooltip="访问我的 CSDN" data-position="top" data-delay="50">
+        <i class="fab fa-cuttlefish"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?8bab20886c3df9c0d832a9b6aee45740";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

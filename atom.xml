@@ -18,8 +18,8 @@
   
   <entry>
     <title>【内网学习笔记】19、IPC 与计划任务</title>
-    <link href="https://www.teamssix.com/year/210802-181052.html"/>
-    <id>https://www.teamssix.com/year/210802-181052.html</id>
+    <link href="https://www.teamssix.com/210802-181052.html"/>
+    <id>https://www.teamssix.com/210802-181052.html</id>
     <published>2021-08-02T10:10:52.000Z</published>
     <updated>2021-08-04T08:22:03.568Z</updated>
     
@@ -46,8 +46,8 @@
   
   <entry>
     <title>【内网学习笔记】18、LLMNR 和 NetBIOS 欺骗攻击</title>
-    <link href="https://www.teamssix.com/year/210729-191048.html"/>
-    <id>https://www.teamssix.com/year/210729-191048.html</id>
+    <link href="https://www.teamssix.com/210729-191048.html"/>
+    <id>https://www.teamssix.com/210729-191048.html</id>
     <published>2021-07-29T11:10:48.000Z</published>
     <updated>2021-08-04T08:22:03.535Z</updated>
     
@@ -74,8 +74,8 @@
   
   <entry>
     <title>【内网学习笔记】17、令牌窃取</title>
-    <link href="https://www.teamssix.com/year/210729-110334.html"/>
-    <id>https://www.teamssix.com/year/210729-110334.html</id>
+    <link href="https://www.teamssix.com/210729-110334.html"/>
+    <id>https://www.teamssix.com/210729-110334.html</id>
     <published>2021-07-29T03:03:34.000Z</published>
     <updated>2021-08-04T08:22:03.562Z</updated>
     
@@ -102,8 +102,8 @@
   
   <entry>
     <title>【内网学习笔记】16、组策略凭据获取</title>
-    <link href="https://www.teamssix.com/year/210728-145329.html"/>
-    <id>https://www.teamssix.com/year/210728-145329.html</id>
+    <link href="https://www.teamssix.com/210728-145329.html"/>
+    <id>https://www.teamssix.com/210728-145329.html</id>
     <published>2021-07-28T06:53:29.000Z</published>
     <updated>2021-08-04T08:22:03.550Z</updated>
     
@@ -130,8 +130,8 @@
   
   <entry>
     <title>【内网学习笔记】浅谈几个 Windows 错误配置利用的方法</title>
-    <link href="https://www.teamssix.com/year/20210728-130839.html"/>
-    <id>https://www.teamssix.com/year/20210728-130839.html</id>
+    <link href="https://www.teamssix.com/20210728-130839.html"/>
+    <id>https://www.teamssix.com/20210728-130839.html</id>
     <published>2021-07-28T05:08:39.000Z</published>
     <updated>2021-08-04T08:22:03.571Z</updated>
     
@@ -158,8 +158,8 @@
   
   <entry>
     <title>【漏洞复现】CVE-2021-36934 Windows 提权漏洞复现</title>
-    <link href="https://www.teamssix.com/year/210725-074847.html"/>
-    <id>https://www.teamssix.com/year/210725-074847.html</id>
+    <link href="https://www.teamssix.com/210725-074847.html"/>
+    <id>https://www.teamssix.com/210725-074847.html</id>
     <published>2021-07-24T23:48:47.000Z</published>
     <updated>2021-08-04T08:22:03.548Z</updated>
     
@@ -186,8 +186,8 @@
   
   <entry>
     <title>【内网学习笔记】15、系统服务权限配置不当利用</title>
-    <link href="https://www.teamssix.com/year/210722-173157.html"/>
-    <id>https://www.teamssix.com/year/210722-173157.html</id>
+    <link href="https://www.teamssix.com/210722-173157.html"/>
+    <id>https://www.teamssix.com/210722-173157.html</id>
     <published>2021-07-22T09:31:57.000Z</published>
     <updated>2021-08-04T08:22:03.531Z</updated>
     
@@ -214,8 +214,8 @@
   
   <entry>
     <title>【内网学习笔记】14、发现主机缺失补丁</title>
-    <link href="https://www.teamssix.com/year/210706-155005.html"/>
-    <id>https://www.teamssix.com/year/210706-155005.html</id>
+    <link href="https://www.teamssix.com/210706-155005.html"/>
+    <id>https://www.teamssix.com/210706-155005.html</id>
     <published>2021-07-06T07:50:05.000Z</published>
     <updated>2021-08-04T08:22:03.553Z</updated>
     
@@ -242,8 +242,8 @@
   
   <entry>
     <title>【内网学习笔记】13、内网中绕过无法上传文件限制</title>
-    <link href="https://www.teamssix.com/year/210701-161347.html"/>
-    <id>https://www.teamssix.com/year/210701-161347.html</id>
+    <link href="https://www.teamssix.com/210701-161347.html"/>
+    <id>https://www.teamssix.com/210701-161347.html</id>
     <published>2021-07-01T08:13:47.000Z</published>
     <updated>2021-08-04T08:22:03.548Z</updated>
     
@@ -270,8 +270,8 @@
   
   <entry>
     <title>【内网学习笔记】两种突破内网中无法上传大文件的方法</title>
-    <link href="https://www.teamssix.com/year/20210630-113201.html"/>
-    <id>https://www.teamssix.com/year/20210630-113201.html</id>
+    <link href="https://www.teamssix.com/20210630-113201.html"/>
+    <id>https://www.teamssix.com/20210630-113201.html</id>
     <published>2021-06-30T03:32:01.000Z</published>
     <updated>2021-08-04T08:22:03.558Z</updated>
     
@@ -299,8 +299,8 @@
   
   <entry>
     <title>【随笔】Windows 11 的安装尝鲜</title>
-    <link href="https://www.teamssix.com/year/210616-133645.html"/>
-    <id>https://www.teamssix.com/year/210616-133645.html</id>
+    <link href="https://www.teamssix.com/210616-133645.html"/>
+    <id>https://www.teamssix.com/210616-133645.html</id>
     <published>2021-06-16T05:36:45.000Z</published>
     <updated>2021-08-04T08:22:03.552Z</updated>
     
@@ -325,8 +325,8 @@
   
   <entry>
     <title>【内网学习笔记】12、nps 的使用</title>
-    <link href="https://www.teamssix.com/year/210612-213704.html"/>
-    <id>https://www.teamssix.com/year/210612-213704.html</id>
+    <link href="https://www.teamssix.com/210612-213704.html"/>
+    <id>https://www.teamssix.com/210612-213704.html</id>
     <published>2021-06-12T13:37:04.000Z</published>
     <updated>2021-08-04T08:22:03.531Z</updated>
     
@@ -353,8 +353,8 @@
   
   <entry>
     <title>【内网学习笔记】11、frp 的使用</title>
-    <link href="https://www.teamssix.com/year/210611-171526.html"/>
-    <id>https://www.teamssix.com/year/210611-171526.html</id>
+    <link href="https://www.teamssix.com/210611-171526.html"/>
+    <id>https://www.teamssix.com/210611-171526.html</id>
     <published>2021-06-11T09:15:26.000Z</published>
     <updated>2021-08-04T08:22:03.553Z</updated>
     
@@ -381,8 +381,8 @@
   
   <entry>
     <title>【内网学习笔记】10、ew 的使用</title>
-    <link href="https://www.teamssix.com/year/210610-164507.html"/>
-    <id>https://www.teamssix.com/year/210610-164507.html</id>
+    <link href="https://www.teamssix.com/210610-164507.html"/>
+    <id>https://www.teamssix.com/210610-164507.html</id>
     <published>2021-06-10T08:45:07.000Z</published>
     <updated>2021-08-04T08:22:03.542Z</updated>
     
@@ -409,8 +409,8 @@
   
   <entry>
     <title>【内网学习笔记】9、iodine 使用</title>
-    <link href="https://www.teamssix.com/year/210608-213403.html"/>
-    <id>https://www.teamssix.com/year/210608-213403.html</id>
+    <link href="https://www.teamssix.com/210608-213403.html"/>
+    <id>https://www.teamssix.com/210608-213403.html</id>
     <published>2021-06-08T13:34:03.000Z</published>
     <updated>2021-08-04T08:22:03.545Z</updated>
     
@@ -437,8 +437,8 @@
   
   <entry>
     <title>【内网学习笔记】dnscat2 使用</title>
-    <link href="https://www.teamssix.com/year/210608-150224.html"/>
-    <id>https://www.teamssix.com/year/210608-150224.html</id>
+    <link href="https://www.teamssix.com/210608-150224.html"/>
+    <id>https://www.teamssix.com/210608-150224.html</id>
     <published>2021-06-08T07:02:24.000Z</published>
     <updated>2021-08-04T08:22:03.565Z</updated>
     
@@ -465,8 +465,8 @@
   
   <entry>
     <title>【内网学习笔记】SSH 隧道使用学习</title>
-    <link href="https://www.teamssix.com/year/210604-154036.html"/>
-    <id>https://www.teamssix.com/year/210604-154036.html</id>
+    <link href="https://www.teamssix.com/210604-154036.html"/>
+    <id>https://www.teamssix.com/210604-154036.html</id>
     <published>2021-06-04T07:40:36.000Z</published>
     <updated>2021-08-04T08:22:03.533Z</updated>
     
@@ -493,8 +493,8 @@
   
   <entry>
     <title>【内网学习笔记】8、powercat 的使用</title>
-    <link href="https://www.teamssix.com/year/210601-155103.html"/>
-    <id>https://www.teamssix.com/year/210601-155103.html</id>
+    <link href="https://www.teamssix.com/210601-155103.html"/>
+    <id>https://www.teamssix.com/210601-155103.html</id>
     <published>2021-06-01T07:51:03.000Z</published>
     <updated>2021-08-04T08:22:03.550Z</updated>
     
@@ -521,8 +521,8 @@
   
   <entry>
     <title>【内网学习笔记】7、lcx、netcat和socat的使用</title>
-    <link href="https://www.teamssix.com/year/210528-130449.html"/>
-    <id>https://www.teamssix.com/year/210528-130449.html</id>
+    <link href="https://www.teamssix.com/210528-130449.html"/>
+    <id>https://www.teamssix.com/210528-130449.html</id>
     <published>2021-05-28T05:04:49.000Z</published>
     <updated>2021-08-04T08:22:03.574Z</updated>
     
@@ -549,8 +549,8 @@
   
   <entry>
     <title>【内网学习笔记】6、ICMP隧道工具使用</title>
-    <link href="https://www.teamssix.com/year/210407-183605.html"/>
-    <id>https://www.teamssix.com/year/210407-183605.html</id>
+    <link href="https://www.teamssix.com/210407-183605.html"/>
+    <id>https://www.teamssix.com/210407-183605.html</id>
     <published>2021-04-07T10:36:05.000Z</published>
     <updated>2021-08-04T08:22:03.533Z</updated>
     
