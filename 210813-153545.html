@@ -450,7 +450,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近看到网上反制 Goby 的文章，而自己平时 Mac 一直是裸奔的状态，这下整的自己有点慌了，这里就来记录下反制 Goby RCE 的复现以及 Mac 用户的防御策略。</p>
-<h1 id="0x01-反制-Goby-RCE-复现"><a href="#0x01-反制-Goby-RCE-复现" class="headerlink" title="0x01 反制 Goby RCE 复现"></a>0x01 反制 Goby RCE 复现</h1><h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>为了方便，这里直接使用 PhpStudy 了，这里的 PhpStudy 地址为 <a target="_blank" rel="noopener" href="http://172.16.214.4,直接将/">http://172.16.214.4，直接将</a> Web 服务里的 index.php 改为以下内容。</p>
+<h1 id="0x01-反制-Goby-RCE-复现"><a href="#0x01-反制-Goby-RCE-复现" class="headerlink" title="0x01 反制 Goby RCE 复现"></a>0x01 反制 Goby RCE 复现</h1><h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>为了方便，这里直接使用 PhpStudy 了，这里的 PhpStudy 地址为 <a target="_blank" rel="noopener" href="http://172.16.214.4/">http://172.16.214.4</a> ，直接将 Web 服务里的 index.php 改为以下内容。</p>
 <pre><code>&lt;?php
 header(&quot;X-Powered-By: PHP/&lt;img    src=1    onerror=alert(\&quot;TeamsSix@WgpSec\&quot;)&gt;&quot;);
 ?&gt;</code></pre>
