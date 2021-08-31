@@ -510,7 +510,7 @@
 <pre><code>#注入前XML代码
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;&gt;
 &lt;USER role=&quot;admin&quot;&gt;用户输入位置&lt;/USER&gt;</code></pre>
-<p>当用户输入一些恶意代码，比如User1</USER><USER role="admin">User2，原XML代码就变成了下面的样子：</p>
+<p>当用户输入一些恶意代码，比如<code>User1&lt;/USER&gt;&lt;USER role=&quot;admin&quot;&gt;User2</code>，原XML代码就变成了下面的样子：</p>
 <pre><code>#注入后XML代码
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;&gt;
 &lt;USER role=&quot;admin&quot;&gt;User1&lt;/USER&gt;
