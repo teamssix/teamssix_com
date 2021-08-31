@@ -477,11 +477,11 @@ chmod +x hashcat.bin
 --increment-min            密码最小长度,后面直接等于一个整数即可,配置 increment 模式一起使用
 --increment-max            密码最大长度,同上
 --outfile-format        指定破解结果的输出格式 id ,默认是 3
---self-test-disable    关闭启动自检</code></pre>
+--self-test-disable        关闭启动自检</code></pre>
 <p>-a 破解模式：</p>
 <pre><code>0 | Straight        （字段破解）
-1 | Combination    （组合破解）
-3 | Brute-force    （掩码暴力破解）
+1 | Combination        （组合破解）
+3 | Brute-force        （掩码暴力破解）
 6 | Hybrid Wordlist + Mask（字典+掩码破解）
 7 | Hybrid Mask + Wordlist（掩码+字典破解）</code></pre>
 <p>-D 指定设备类型</p>
@@ -492,12 +492,12 @@ chmod +x hashcat.bin
 <p>掩码设置：</p>
 <pre><code>l | abcdefghijklmnopqrstuvwxyz                纯小写字母
 u | ABCDEFGHIJKLMNOPQRSTUVWXYZ                纯大写字母
-d | 0123456789                                                纯数字
-h | 0123456789abcdef                                    十六进制小写字母和数字
-H | 0123456789ABCDEF                                    十六进制大写字母和数字
-s |  !&quot;#$%&amp;&#39;()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~    特殊字符
-a | ?l?u?d?s                                                    键盘上所有可见的字符
-b | 0x00 - 0xff                                                匹配密码空格</code></pre>
+d | 0123456789                                纯数字
+h | 0123456789abcdef                        十六进制小写字母和数字
+H | 0123456789ABCDEF                        十六进制大写字母和数字
+s |  !&quot;#$%&amp;&#39;()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~        特殊字符
+a | ?l?u?d?s                                键盘上所有可见的字符
+b | 0x00 - 0xff                                匹配密码空格</code></pre>
 <p>掩码设置举例：</p>
 <pre><code>八位数字密码：?d?d?d?d?d?d?d?d
 八位未知密码：?a?a?a?a?a?a?a?a
@@ -654,7 +654,7 @@ airmon-ng start wlan0</code></pre>
 </ul>
 <pre><code>--gpu-accel 160            可以让GPU发挥最大性能
 --gpu-loops 1024        可以让GPU发挥最大性能
---segment-size 512    可以提高大字典破解的速度</code></pre>
+--segment-size 512        可以提高大字典破解的速度</code></pre>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4008">https://xz.aliyun.com/t/4008</a></p>
