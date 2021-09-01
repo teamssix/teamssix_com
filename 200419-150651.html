@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -478,59 +481,66 @@
 <p>攻击目标：192.168.232.0/24 地址段</p>
 </blockquote>
 <h3 id="1、设置-socks-代理"><a href="#1、设置-socks-代理" class="headerlink" title="1、设置 socks 代理"></a>1、设置 socks 代理</h3><p>首先开启交互模式，之后开启 socks 代理</p>
-<pre><code>sleep 0
-socks 9527</code></pre>
-<pre><code class="powershell">beacon&gt; sleep 0
-[*] Tasked beacon to become interactive
-[+] host called home, sent: 16 bytes
-beacon&gt; socks 9527
-[+] host called home, sent: 16 bytes
-[+] started SOCKS4a server on: 9527</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sleep 0
+socks 9527<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> <span class="token function">sleep</span> 0
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to become interactive
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 16 bytes
+beacon> socks 9527
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 16 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> started SOCKS4a server on: 9527<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="2、配置-ProxyChains"><a href="#2、配置-ProxyChains" class="headerlink" title="2、配置  ProxyChains"></a>2、配置  ProxyChains</h3><p>在攻击机上，配置 <code>/etc/proxychains.conf</code> 文件的最后一行，根据当前攻击主机 IP 与设置的 Socks 端口，修改如下：</p>
-<pre><code>socks4 192.168.175.200 9527</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socks4 192.168.175.200 9527<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="3、开始使用-ProxyChains"><a href="#3、开始使用-ProxyChains" class="headerlink" title="3、开始使用  ProxyChains"></a>3、开始使用  ProxyChains</h3><p>根据<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150644.html">上一节</a>使用 Metasploit 的扫描可以知道，在 192.168.232.0/24 地址段中存在主机 192.168.232.132 ，接下来使用 nmap 扫描一下常见的端口，这里以 80,443,445,3389 作为演示。</p>
-<pre><code>proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>-sT：使用 TCP 扫描</p>
 <p>-Pn：不使用 Ping</p>
 <p>-p：指定扫描端口</p>
 <p>注：不加上 -sT -Pn 参数，将无法使用 proxychains 进行代理扫描</p>
 </blockquote>
-<pre><code class="powershell">&gt; proxychains nmap -sT -Pn 192.168.232.132 -p 80,443,445,3389                       
-[proxychains] config file found: /etc/proxychains.conf
-[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
-[proxychains] DLL init: proxychains-ng 4.14
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-07 23:05 EDT
-[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:80  ...  OK
-[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:445  ...  OK
-[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:3389  ...  OK
-[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:443 &lt;--denied
-Nmap scan report for 192.168.232.132
-Host is up (0.19s latency).
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">> proxychains nmap <span class="token operator">-</span>sT <span class="token operator">-</span>Pn 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132 <span class="token operator">-</span>p 80<span class="token punctuation">,</span>443<span class="token punctuation">,</span>445<span class="token punctuation">,</span>3389                       
+<span class="token namespace">[proxychains]</span> config file found: <span class="token operator">/</span>etc<span class="token operator">/</span>proxychains<span class="token punctuation">.</span>conf
+<span class="token namespace">[proxychains]</span> preloading <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>x86_64<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>libproxychains<span class="token punctuation">.</span>so<span class="token punctuation">.</span>4
+<span class="token namespace">[proxychains]</span> DLL init: proxychains<span class="token operator">-</span>ng 4<span class="token punctuation">.</span>14
+Starting Nmap 7<span class="token punctuation">.</span>80 <span class="token punctuation">(</span> https:<span class="token operator">/</span><span class="token operator">/</span>nmap<span class="token punctuation">.</span>org <span class="token punctuation">)</span> at 2020<span class="token operator">-</span>09<span class="token operator">-</span>07 23:05 EDT
+<span class="token namespace">[proxychains]</span> Strict chain  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:80  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  OK
+<span class="token namespace">[proxychains]</span> Strict chain  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  OK
+<span class="token namespace">[proxychains]</span> Strict chain  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:3389  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  OK
+<span class="token namespace">[proxychains]</span> Strict chain  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:443 &lt;<span class="token operator">--</span>denied
+Nmap scan report <span class="token keyword">for</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+Host is up <span class="token punctuation">(</span>0<span class="token punctuation">.</span>19s latency<span class="token punctuation">)</span><span class="token punctuation">.</span>
 
 PORT     STATE  SERVICE
-80/tcp   open   http
-443/tcp  closed https
-445/tcp  open   microsoft-ds
-3389/tcp open   ms-wbt-server
+80<span class="token operator">/</span>tcp   open   http
+443<span class="token operator">/</span>tcp  closed https
+445<span class="token operator">/</span>tcp  open   microsoft<span class="token operator">-</span>ds
+3389<span class="token operator">/</span>tcp open   ms<span class="token operator">-</span>wbt<span class="token operator">-</span>server
 
-Nmap done: 1 IP address (1 host up) scanned in 14.35 seconds</code></pre>
+Nmap done: 1 IP address <span class="token punctuation">(</span>1 host up<span class="token punctuation">)</span> scanned in 14<span class="token punctuation">.</span>35 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>通过扫描可以看到目标 80 端口是开放的，接下来使用 curl 作为对比示例。</p>
-<pre><code>curl 192.168.232.132
-proxychains curl 192.168.232.132</code></pre>
-<pre><code class="powershell">&gt; curl 192.168.232.132
-curl: (7) Failed to connect to 192.168.232.132 port 80: No route to host
+<pre class="line-numbers language-none"><code class="language-none">curl 192.168.232.132
+proxychains curl 192.168.232.132<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-&gt; proxychains curl 192.168.232.132
-[proxychains] config file found: /etc/proxychains.conf
-[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
-[proxychains] DLL init: proxychains-ng 4.14
-[proxychains] Strict chain  ...  192.168.175.200:9527  ...  192.168.232.132:80  ...  OK
-&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot; /&gt;
-……内容太多，此处省略……                 </code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">> curl 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+curl: <span class="token punctuation">(</span>7<span class="token punctuation">)</span> Failed to connect to 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132 port 80: No route to host
+
+> proxychains curl 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+<span class="token namespace">[proxychains]</span> config file found: <span class="token operator">/</span>etc<span class="token operator">/</span>proxychains<span class="token punctuation">.</span>conf
+<span class="token namespace">[proxychains]</span> preloading <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>x86_64<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>libproxychains<span class="token punctuation">.</span>so<span class="token punctuation">.</span>4
+<span class="token namespace">[proxychains]</span> DLL init: proxychains<span class="token operator">-</span>ng 4<span class="token punctuation">.</span>14
+<span class="token namespace">[proxychains]</span> Strict chain  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:80  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  OK
+&lt;<span class="token operator">!</span>DOCTYPE html PUBLIC <span class="token string">"-//W3C//DTD XHTML 1.0 Strict//EN"</span> <span class="token string">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"</span>>
+&lt;html xmlns=<span class="token string">"http://www.w3.org/1999/xhtml"</span>>
+&lt;head>
+&lt;meta http<span class="token operator">-</span>equiv=<span class="token string">"Content-Type"</span> content=<span class="token string">"text/html; charset=iso-8859-1"</span> <span class="token operator">/</span>>
+……内容太多，此处省略……                 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x02-反向转发"><a href="#0x02-反向转发" class="headerlink" title="0x02 反向转发"></a>0x02 反向转发</h1><p>反向转发顾名思义就是和<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150644.html">上一节</a>中提到的转发路径相反，之前我们设置的代理是 <code>CS服务端 --&gt; 上线主机 --&gt; 内网主机</code>，反向转发则是 <code>内网主机 --&gt; 上线主机 --&gt; CS服务端</code>。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>继续使用上面的演示环境，首先右击上线主机会话，选择 <code>Pivoting --&gt; Listener</code> ，除了 Name 选项之外，CS 都会自动配置好，这里直接使用默认的配置信息。</p>
@@ -973,7 +983,7 @@ curl: (7) Failed to connect to 192.168.232.132 port 80: No route to host
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

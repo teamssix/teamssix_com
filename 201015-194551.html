@@ -429,7 +429,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    576
+                    579
                 </div>
                 
 
@@ -451,6 +451,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -462,7 +465,7 @@
 <p>但是虚拟机的虚拟网卡往往会有多个，一个个禁用启用难免有些麻烦，而且整个步骤也是比较繁琐的，因此下面看一下使用批处理文件的方式。</p>
 <h1 id="0x02-批处理文件"><a href="#0x02-批处理文件" class="headerlink" title="0x02 批处理文件"></a>0x02 批处理文件</h1><p>其实原理也很简单，直接禁用网卡再重启网卡即可，为了更加贴合使用，我在里面加入了注释、延时的功能。</p>
 <p>将以下内容保存到本地，后缀重命名为 <code>.bat</code> 文件，双击执行就可以重启对应的网卡了。当然 bat 文件里的网卡名称要换成自己的网卡名称，比如我这里的是 <code>VMware Network Adapter VMnet1</code>等三个网卡。</p>
-<pre><code>ipconfig
+<pre class="line-numbers language-none"><code class="language-none">ipconfig
 
 rem &quot;禁用网卡 VMware Network Adapter VMnet1&quot;
 netsh interface set interface &quot;VMware Network Adapter VMnet1&quot; disabled
@@ -481,7 +484,8 @@ netsh interface set interface &quot;VMware Network Adapter VMnet7&quot; enabled
 
 ipconfig
 
-choice /t 5 /c YN /d Y</code></pre>
+choice &#x2F;t 5 &#x2F;c YN &#x2F;d Y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>其中 <code>rem</code> 起到注释作用，<code>choice /t 5 /c YN /d Y</code> 起到延时5秒的作用，两次的 ifconfig 主要用来查看重启前后的网卡IP地址情况。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -908,7 +912,7 @@ choice /t 5 /c YN /d Y</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

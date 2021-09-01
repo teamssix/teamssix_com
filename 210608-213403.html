@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,21 +473,26 @@
 <h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>首先需要有一个域名，并设置 NS 和 A 记录，A 记录指向自己的公网 VPS 地址，NS 记录指向 A 记录的子域名。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-20-20.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>Kali 下自带 iodine ，Debian Linux 可以使用 apt 进行安装</p>
-<pre><code>sudo apt-get install iodine</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install iodine<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>Windows 可以直接到官网下载，下载地址：<a target="_blank" rel="noopener" href="https://code.kryo.se/iodine/">https://code.kryo.se/iodine/</a>，服务端名称是 iodined.exe，客户端是 iodine.exe</p>
 <h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>这里服务端使用的是 Linux，服务端命令如下：</p>
-<pre><code>sudo iodined -f -c -P teamssix 192.168.77.1 dc.teamssix.com -DD</code></pre>
-<pre><code> -f        在前台运行
- -c        不检查传入请求的客户端 IP 地址
- -P        客户端与服务端之间的连接密码
- -D        调试级别，-D 表示第一级，-DD 表示第二级，依此类推
+<pre class="line-numbers language-none"><code class="language-none">sudo iodined -f -c -P teamssix 192.168.77.1 dc.teamssix.com -DD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
- 192.168.77.1 是自己自定义的局域网虚拟 IP 地址。</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">-f		在前台运行
+-c		不检查传入请求的客户端 IP 地址
+-P		客户端与服务端之间的连接密码
+-D		调试级别，-D 表示第一级，-DD 表示第二级，依此类推
+
+192.168.77.1 是自己自定义的局域网虚拟 IP 地址。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这里客户端使用的是 Windows，Windows 客户端上除了要有 iodine 相关文件外，还需要安装 tap 网卡驱动程序，这里我百度找了一个下载地址 <a target="_blank" rel="noopener" href="http://www.qudong51.net/qudong/981.html">http://www.qudong51.net/qudong/981.html</a></p>
 <p>打开下载好的 tap 网卡驱动程序，一直下一步下一步安装就行。</p>
 <p>然后就可以启动客户端程序了，注意下载下来的 dll 文件要和 exe 在一个目录下，不能只复制一个 exe 到目标主机上，而且要以管理员权限运行下面的命令。</p>
-<pre><code>.\iodine.exe -f -r -P teamssix dc.teamssix.com</code></pre>
-<pre><code>-r        iodine 有时会自动将 DNS 隧道切换成 UDP 通道，使用 -r 命令可以强制让 iodine 在任何情况下都使用 DNS 隧道</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">.\iodine.exe -f -r -P teamssix dc.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">-r		iodine 有时会自动将 DNS 隧道切换成 UDP 通道，使用 -r 命令可以强制让 iodine 在任何情况下都使用 DNS 隧道<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果出现 <code>Connection setup complete, transmitting data.</code> 就表示 DNS 隧道就已经建立了。</p>
 <p>这时如果去 ping 服务端自定义的虚拟 IP 也是可以 ping 通的。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_21-12-06.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -921,7 +929,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

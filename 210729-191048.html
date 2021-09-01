@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -484,11 +487,13 @@
 <p>Responder 项目地址：<a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">https://github.com/lgandx/Responder</a></p>
 <p>Responder 不支持 Windows，这里使用 Kali 进行演示。</p>
 <p>Responder 开启监听，-I 指定网卡，这里 eth1 的 IP 为 192.168.7.65</p>
-<pre><code>python Responder.py -I eth1</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python Responder.py -I eth1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>开启监听后，当目标主机上有人访问 Responder 主机的共享目录时，就会看到对方的 Net-NTLM 哈希值了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190444.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>再利用 Hashcat 进行碰撞</p>
-<pre><code>hashcat -m 5600 hash.txt password.txt -D 1</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">hashcat -m 5600 hash.txt password.txt -D 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729190835.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考文章：</p>
@@ -926,7 +931,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

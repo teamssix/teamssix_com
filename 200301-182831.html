@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    256
+                    220
                 </div>
                 
 
@@ -459,43 +459,50 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>1、在项目根目录下，创建<code>templates</code>目录，在<code>templates</code>下新建<code>index.html</code>文件，PyCharm将自动生成html的文件内容格式。</p>
-<pre><code class="bash">.
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">.</span>
 ├── Book
 ├── BookManager
 └── templates
-    └── index.html</code></pre>
+    └── index.html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <a id="more"></a>
 
 <p>2、编辑<code>setting.py</code>文件第58行，修改<code>TEMPLATES</code>内容如下，目的是添加<code>templates</code>路径，好让接下来程序能够找到<code>index.html</code>文件。</p>
-<pre><code class="python">&#39;DIRS&#39;: [os.path.join(BASE_DIR,&#39;templates&#39;)],</code></pre>
-<p>3、修改<code>view.py</code>文件如下。</p>
-<pre><code class="python">from django.shortcuts import render
-from django.http import HttpResponse
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token string">'DIRS'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>BASE_DIR<span class="token punctuation">,</span><span class="token string">'templates'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-def index(request):
-    context=&#123;
-        &#39;H1&#39;:&#39;OK!&#39;,
-        &#39;H2&#39;:&#39;-- By TeamsSix&#39;
-    &#125;
-    return render(request,&#39;index.html&#39;,context)</code></pre>
+<p>3、修改<code>view.py</code>文件如下。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>shortcuts <span class="token keyword">import</span> render
+<span class="token keyword">from</span> django<span class="token punctuation">.</span>http <span class="token keyword">import</span> HttpResponse
+
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	context<span class="token operator">=</span><span class="token punctuation">&#123;</span>
+		<span class="token string">'H1'</span><span class="token punctuation">:</span><span class="token string">'OK!'</span><span class="token punctuation">,</span>
+		<span class="token string">'H2'</span><span class="token punctuation">:</span><span class="token string">'-- By TeamsSix'</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span><span class="token string">'index.html'</span><span class="token punctuation">,</span>context<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>4、修改<code>index.html</code>文件如下。</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Home&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;H1 style=&quot;color:red;&quot;&gt;&#123;&#123; H1 &#125;&#125;&lt;/H1&gt;
-&lt;H2 style=&quot;color:limegreen;&quot;&gt;&#123;&#123; H2 &#125;&#125;&lt;/H2&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Home<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>H1</span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span>&#123;&#123; H1 &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>H1</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>H2</span> <span class="token special-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token value css language-css"><span class="token property">color</span><span class="token punctuation">:</span>limegreen<span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">></span></span>&#123;&#123; H2 &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>H2</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>5、此时，刷新浏览器。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/10django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>6、视图与<code>templates</code>的总结</p>
@@ -950,7 +957,7 @@ def index(request):
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

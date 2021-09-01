@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,28 +473,31 @@
 <h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p>JDK 需要下载最新版本，不然 Neo4j 运行可能会报错，JDK 下载地址：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">https://www.oracle.com/java/technologies/javase-downloads.html</a>，下载之后，直接安装即可。</p>
 <h3 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h3><p>Neo4j 直接下载最新版本，下载地址：<a target="_blank" rel="noopener" href="https://neo4j.com/download-center/#community">https://neo4j.com/download-center/#community</a></p>
 <p>下载最新版本之后解压下载文件，打开 bin 目录，执行命令<code>neo4j.bat console</code>，之后打开浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:7474/">http://localhost:7474</a> 登陆后台，输入以下信息连接到数据库说明安装就完成了。</p>
-<pre><code>URL：neo4j://localhost:7687
+<pre class="line-numbers language-none"><code class="language-none">URL：neo4j:&#x2F;&#x2F;localhost:7687
 用户名(默认)：neo4j
-密码(默认)：neo4j</code></pre>
+密码(默认)：neo4j<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="BloodHound"><a href="#BloodHound" class="headerlink" title="BloodHound"></a>BloodHound</h3><p>BloodHound 项目地址：<a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/BloodHound">https://github.com/BloodHoundAD/BloodHound</a>，下载后解压打开 BloodHound.exe，输入 Neo4j 数据库的账号密码即可完成安装。</p>
 <h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>安装完成 BloodHound 后，需要进行数据的采集与导入，数据的采集可以使用 ps1 脚本或者使用 exe 程序收集，工具下载地址：<a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors">https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors</a></p>
 <p>这里使用 SharpHound.exe 进行数据的采集，将 SharpHound.exe 拷贝到目标上，执行 <code>SharpHound.exe -c all</code> 进行数据采集。</p>
-<pre><code>C:\Users\daniel10&gt;SharpHound.exe -c all
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;SharpHound.exe -c all
 ---------------------------------------------
-Initializing SharpHound at 22:36 on 2021/2/25
+Initializing SharpHound at 22:36 on 2021&#x2F;2&#x2F;25
 ---------------------------------------------
 Resolved Collection Methods: Group, Sessions, LoggedOn, Trusts, ACL, ObjectProps, LocalGroups, SPNTargets, Container
-[+] Creating Schema map for domain TEAMSSIX.COM using path CN=Schema,CN=Configuration,DC=teamssix,DC=com
+[+] Creating Schema map for domain TEAMSSIX.COM using path CN&#x3D;Schema,CN&#x3D;Configuration,DC&#x3D;teamssix,DC&#x3D;com
 [+] Cache File Found! Loaded 1332 Objects in cache
 [+] Pre-populating Domain Controller SIDS
 Status: 0 objects finished (+0) -- Using 24 MB RAM
-Status: 673 objects finished (+673 134.6)/s -- Using 43 MB RAM
+Status: 673 objects finished (+673 134.6)&#x2F;s -- Using 43 MB RAM
 Enumeration finished in 00:00:05.3136324
 Compressing data to .\20210225223622_BloodHound.zip
 You can upload this file directly to the UI
-SharpHound Enumeration Completed at 22:36 on 2021/2/25! Happy Graphing!</code></pre>
+SharpHound Enumeration Completed at 22:36 on 2021&#x2F;2&#x2F;25! Happy Graphing!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果使用 ps1 脚本收集，命令为：</p>
-<pre><code>powershell -exec bypass -command &quot;Import-Module ./SharpHound.ps1; Invoke-BloodHound -c all&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell -exec bypass -command &quot;Import-Module .&#x2F;SharpHound.ps1; Invoke-BloodHound -c all&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>采集到的数据会以 zip 压缩包的格式保存，将其拷贝到 BloodHound 所在主机上，在 BloodHound 右侧图标里点击 Upload Data，之后上传刚才生成的压缩包就可以导入数据了。</p>
 <blockquote>
 <p>或者直接将 zip 压缩包拖拽到 BloodHound 里也可以导入数据。</p>
@@ -500,7 +506,7 @@ SharpHound Enumeration Completed at 22:36 on 2021/2/25! Happy Graphing!</code></
 <p>1、Database Info（数据库信息），可以查看当前数据库中的域用户、域计算机等统计信息。</p>
 <p>2、Node Indo（节点信息），单击某个节点时，在这里可以看到对应节点的相关信息。</p>
 <p>3、Analysis（分析查询），在 BloodHound 中预设了一些查询条件，具体如下：</p>
-<pre><code>1、查询所有域管理员
+<pre class="line-numbers language-none"><code class="language-none">1、查询所有域管理员
 2、寻找到域管理员的最短路径
 3、查找具有DCSync权限的主体
 4、具有外部域组成员资格的用户
@@ -524,7 +530,8 @@ SharpHound Enumeration Completed at 22:36 on 2021/2/25! Happy Graphing!</code></
 22、查找具有大多数特权的Kerberoastable用户
 23、查找到非域控制器的域管理登录
 24、查找不支持操作系统的计算机
-25、查找AS-REP Roastable用户(DontReqPreAuth)</code></pre>
+25、查找AS-REP Roastable用户(DontReqPreAuth)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>比如这里查询到域管理员的最短路径</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-25_14-00-42.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -964,7 +971,7 @@ SharpHound Enumeration Completed at 22:36 on 2021/2/25! Happy Graphing!</code></
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

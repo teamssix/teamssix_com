@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.3k
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,15 +473,17 @@
 <h1 id="0x01-压缩文件"><a href="#0x01-压缩文件" class="headerlink" title="0x01 压缩文件"></a>0x01 压缩文件</h1><p>这里以 7-Zip 为代表，其他的压缩软件还有 WinRAR 等，7-Zip 文件下载地址：<a target="_blank" rel="noopener" href="https://www.7-zip.org/">https://www.7-zip.org/</a></p>
 <p>如果目标主机没有安装 7-Zip，可以现在自己的主机上安装 7-Zip，然后把安装目录下的 7z.exe 拷贝到目标主机上，默认路径为「C:\Program Files\7-Zip\7z.exe」。</p>
 <p>7z.exe 只有 400 多 K 的大小，可以说很是小巧了，以下为 7z.exe 的常用命令。</p>
-<pre><code> a     添加压缩文件
- x     解压压缩文件
- -p    指定密码
- -v    分卷压缩
- -r    递归压缩
- -o    指定输出目录</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">a     添加压缩文件
+x     解压压缩文件
+-p    指定密码
+-v    分卷压缩
+-r    递归压缩
+-o    指定输出目录<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="普通的压缩-解压文件"><a href="#普通的压缩-解压文件" class="headerlink" title="普通的压缩/解压文件"></a>普通的压缩/解压文件</h3><p>把 fscan.exe 压缩成 fscan.7z，压缩密码为『teamssix.com』</p>
-<pre><code>7z.exe a -pteamssix.com fscan.7z fscan.exe</code></pre>
-<pre><code>C:\7-Zip&gt;7z.exe a -pteamssix.com fscan.7z fscan.exe
+<pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com fscan.7z fscan.exe
 
 7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
 Scanning the drive:
@@ -487,31 +492,35 @@ Creating archive: fscan.7z
 Add new data to archive: 1 file, 2911744 bytes (2844 KiB)
 Files read from disk: 1
 Archive size: 2794266 bytes (2729 KiB)
-Everything is Ok</code></pre>
+Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>把 fscan.7z 解压成 fscan.exe</p>
-<pre><code>7z.exe x -pteamssix.com fscan.7z</code></pre>
-<pre><code>C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z
+<pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z
 
 7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
 Scanning the drive for archives:
 1 file, 2794266 bytes (2729 KiB)
 Extracting archive: fscan.7z
 --
-Path = fscan.7z
-Type = 7z
-Physical Size = 2794266
-Headers Size = 170
-Method = LZMA2:3m BCJ 7zAES
-Solid = -
-Blocks = 1
+Path &#x3D; fscan.7z
+Type &#x3D; 7z
+Physical Size &#x3D; 2794266
+Headers Size &#x3D; 170
+Method &#x3D; LZMA2:3m BCJ 7zAES
+Solid &#x3D; -
+Blocks &#x3D; 1
 Everything is Ok
 Size:       2911744
-Compressed: 2794266</code></pre>
+Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>fscan.7z 的大小是 2729 KB，fscan.exe 的大小是 2844 KB，可以看到其实大小差别也不大，没能达到我们将大文件变成小文件的目的，这种大小上传可能还是会失败，那再来试试分卷上传。</p>
 <h3 id="分卷压缩-解压文件"><a href="#分卷压缩-解压文件" class="headerlink" title="分卷压缩/解压文件"></a>分卷压缩/解压文件</h3><p>分卷压缩其实和下面介绍的分割文件有点类似，区别还是在于一个对文件进行了压缩，一个没有进行压缩。</p>
 <p>把 fscan.exe 以 500 K 大小进行分卷压缩。</p>
-<pre><code>7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe</code></pre>
-<pre><code>C:\7-Zip&gt;7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe
+<pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe
 
 7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
 Scanning the drive:
@@ -520,57 +529,63 @@ Creating archive: fscan.7z
 Add new data to archive: 1 file, 2911744 bytes (2844 KiB)
 Files read from disk: 1
 Archive size: 2794266 bytes (2729 KiB)
-Everything is Ok</code></pre>
-<pre><code>C:\7-Zip&gt;dir
+Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;dir
  驱动器 C 中的卷没有标签。
  卷的序列号是 2C2C-615D
  C:\7-Zip 的目录
-2021/06/29  21:42    &lt;DIR&gt;          .
-2021/06/29  21:42    &lt;DIR&gt;          ..
-2021/05/06  15:00           489,472 7z.exe
-2021/06/29  21:40           512,000 fscan.7z.001
-2021/06/29  21:40           512,000 fscan.7z.002
-2021/06/29  21:40           512,000 fscan.7z.003
-2021/06/29  21:40           512,000 fscan.7z.004
-2021/06/29  21:40           512,000 fscan.7z.005
-2021/06/29  21:40           234,266 fscan.7z.006
-2021/06/18  14:58         2,911,744 fscan.exe
-               8 个文件      6,195,482 字节</code></pre>
+2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          .
+2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          ..
+2021&#x2F;05&#x2F;06  15:00           489,472 7z.exe
+2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.001
+2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.002
+2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.003
+2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.004
+2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.005
+2021&#x2F;06&#x2F;29  21:40           234,266 fscan.7z.006
+2021&#x2F;06&#x2F;18  14:58         2,911,744 fscan.exe
+               8 个文件      6,195,482 字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>把 fscan.7z 解压成 fscan.exe</p>
-<pre><code>7z.exe x -pteamssix.com fscan.7z.001</code></pre>
-<pre><code>C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.001
+<pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z.001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.001
 
 7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
 Scanning the drive for archives:
 1 file, 512000 bytes (500 KiB)
 Extracting archive: fscan.7z.001
 --
-Path = fscan.7z.001
-Type = SplitPhysical 
-Size = 512000
-Volumes = 6Total 
-Physical Size = 2794266
+Path &#x3D; fscan.7z.001
+Type &#x3D; SplitPhysical 
+Size &#x3D; 512000
+Volumes &#x3D; 6Total 
+Physical Size &#x3D; 2794266
 ----
-Path = fscan.7z
-Size = 2794266
+Path &#x3D; fscan.7z
+Size &#x3D; 2794266
 --
-Path = fscan.7z
-Type = 7z
-Physical Size = 2794266
-Headers Size = 170
-Method = LZMA2:3m BCJ 7zAES
-Solid = -
-Blocks = 1
+Path &#x3D; fscan.7z
+Type &#x3D; 7z
+Physical Size &#x3D; 2794266
+Headers Size &#x3D; 170
+Method &#x3D; LZMA2:3m BCJ 7zAES
+Solid &#x3D; -
+Blocks &#x3D; 1
 Everything is Ok
 Size:       2911744
-Compressed: 2794266</code></pre>
+Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到，使用分卷压缩可以把一个大文件分成多个小文件，然后将小文件上传上去后，再进行解压就可以了。</p>
 <p>但这样做感觉还是有些麻烦，直接使用下文的 split 进行文件分割个人觉着是更为方便的方法，使用 split 进行分割也是我个人解决前段时间碰到不能上传大文件问题时的方法。</p>
 <h1 id="0x02-分割文件"><a href="#0x02-分割文件" class="headerlink" title="0x02 分割文件"></a>0x02 分割文件</h1><p>使用 split 以 500 K 大小分割 fscan.exe 文件，split 命令在 Linux 和 MAC 下都是自带的，因此在自己的电脑上分割好后，直接上传即可。</p>
-<pre><code>split -b 500k fscan.exe teamssix</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">split -b 500k fscan.exe teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>合并分割文件为 fscan.exe</p>
-<pre><code>cat teamssix* &gt; fscan            # 适用于 Linux、Mac
-copy /b teamssix* fscan.exe        # 适用于 Windows</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">cat teamssix* &gt; fscan			# 适用于 Linux、Mac
+copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210629220302.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>个人觉着直接用 split 分割文件是较为方便的做法，无需第三方软件，且不论目标是 Linux 还是 Windows 都能支持。</p>
 <blockquote>
@@ -999,7 +1014,7 @@ copy /b teamssix* fscan.exe        # 适用于 Windows</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

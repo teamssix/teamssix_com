@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    257
+                    246
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -468,30 +471,30 @@
 <p>这一节主要学习Threading模块的一些基本操作，如获取线程数，添加线程等。</p>
 <a id="more"></a>
 <p>首先导入Threading模块</p>
-<pre><code class="python">import threading</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> threading<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>获取已激活的线程数</p>
-<pre><code class="python">threading.active_count()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">threading<span class="token punctuation">.</span>active_count<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>查看所有线程信息</p>
-<pre><code class="python">threading.enumerate()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">threading<span class="token punctuation">.</span><span class="token builtin">enumerate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>查看现在正在运行的线程</p>
-<pre><code class="python">threading.current_thread()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">threading<span class="token punctuation">.</span>current_thread<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>添加线程，threading.Thread()接收参数target代表这个线程要完成的任务，需自行定义</p>
-<pre><code class="python">import threading
-def thread_jobs():  # 定义要添加的线程
-    print(&#39;已激活的线程数： %s&#39; % threading.active_count())
-    print(&#39;所有线程信息： %s&#39; % threading.enumerate())
-    print(&#39;正在运行的线程： %s&#39; % threading.current_thread())
-def main():
-    thread = threading.Thread(target=thread_jobs, )  # 定义线程
-    thread.start()  # 开始线程
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> threading
+<span class="token keyword">def</span> <span class="token function">thread_jobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 定义要添加的线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'已激活的线程数： %s'</span> <span class="token operator">%</span> threading<span class="token punctuation">.</span>active_count<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有线程信息： %s'</span> <span class="token operator">%</span> threading<span class="token punctuation">.</span><span class="token builtin">enumerate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'正在运行的线程： %s'</span> <span class="token operator">%</span> threading<span class="token punctuation">.</span>current_thread<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    thread <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>thread_jobs<span class="token punctuation">,</span> <span class="token punctuation">)</span>  <span class="token comment"># 定义线程</span>
+    thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程</span>
 
-if __name__ == &#39;__main__&#39;:
-    main()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果：</p>
-<pre><code class="bash"># python 2_add_thread.py
-已激活的线程数： 2
-所有线程信息： [&lt;_MainThread(MainThread, stopped 16800)&gt;, &lt;Thread(Thread-1, started 20512)&gt;]
-正在运行的线程 &lt;Thread(Thread-1, started 20512)&gt;</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 2_add_thread.py</span>
+已激活的线程数： <span class="token number">2</span>
+所有线程信息： <span class="token punctuation">[</span><span class="token operator">&lt;</span>_MainThread<span class="token punctuation">(</span>MainThread, stopped <span class="token number">16800</span><span class="token punctuation">)</span><span class="token operator">></span>, <span class="token operator">&lt;</span>Thread<span class="token punctuation">(</span>Thread-1, started <span class="token number">20512</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token punctuation">]</span>
+正在运行的线程 <span class="token operator">&lt;</span>Thread<span class="token punctuation">(</span>Thread-1, started <span class="token number">20512</span><span class="token punctuation">)</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a><br>参考文章：<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a></p>
 </blockquote>
@@ -927,7 +930,7 @@ if __name__ == &#39;__main__&#39;:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

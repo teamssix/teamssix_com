@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    906
+                    883
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -509,57 +512,62 @@
 </ul>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><strong>学习 Django, 重点就是研究 <code>Model-View-Template</code> 三个模块间如何协同工作及各自模块的代码如何编写。</strong></p>
-<h1 id="0x03-Django安装及项目创建"><a href="#0x03-Django安装及项目创建" class="headerlink" title="0x03 Django安装及项目创建"></a>0x03 Django安装及项目创建</h1><h2 id="1、安装Django"><a href="#1、安装Django" class="headerlink" title="1、安装Django"></a>1、安装Django</h2><pre><code>pip install django</code></pre>
-<h2 id="2、创建Django项目"><a href="#2、创建Django项目" class="headerlink" title="2、创建Django项目"></a>2、创建Django项目</h2><p>以书籍管理系统为例，这里创建的项目名为”book”</p>
-<pre><code class="bash">&gt; django-admin startproject BookManager #创建项目
-&gt; cd BookManager
-BookManager/ &gt; python3 manage.py startapp Book #创建应用
-BookManager/ &gt; tree
-.
-├── Book
-│   ├── __init__.py    #表示文件Book可以被当作包使用
-│   ├── admin.py    #后台的站点管理注册文件
-│   ├── apps.py
-│   ├── migrations    #做模型迁移
-│   │   └── __init__.py
-│   ├── models.py    #MVT中的M
-│   ├── tests.py    #做测试用
-│   └── views.py    #MVT中的V
-├── BookManager
-│   ├── __init__.py    #表示文件BookManager可以被当作包使用
-│   ├── __pycache__
-│   │   ├── __init__.cpython-37.pyc
-│   │   └── settings.cpython-37.pyc
-│   ├── asgi.py
-│   ├── settings.py    #项目的整体配置文件
-│   ├── urls.py        #项目的URL配置文件
-│   └── wsgi.py        #项目与WSGI兼容的Web服务器入口
-└── manage.py        #项目运行的入口, 指定配置文件路径
+<h1 id="0x03-Django安装及项目创建"><a href="#0x03-Django安装及项目创建" class="headerlink" title="0x03 Django安装及项目创建"></a>0x03 Django安装及项目创建</h1><h2 id="1、安装Django"><a href="#1、安装Django" class="headerlink" title="1、安装Django"></a>1、安装Django</h2><pre class="line-numbers language-none"><code class="language-none">pip install django<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-4 directories, 15 files</code></pre>
+<h2 id="2、创建Django项目"><a href="#2、创建Django项目" class="headerlink" title="2、创建Django项目"></a>2、创建Django项目</h2><p>以书籍管理系统为例，这里创建的项目名为”book”</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">></span> django-admin startproject BookManager <span class="token comment">#创建项目</span>
+<span class="token operator">></span> <span class="token builtin class-name">cd</span> BookManager
+BookManager/ <span class="token operator">></span> python3 manage.py startapp Book <span class="token comment">#创建应用</span>
+BookManager/ <span class="token operator">></span> tree
+<span class="token builtin class-name">.</span>
+├── Book
+│   ├── __init__.py	<span class="token comment">#表示文件Book可以被当作包使用</span>
+│   ├── admin.py	<span class="token comment">#后台的站点管理注册文件</span>
+│   ├── apps.py
+│   ├── migrations	<span class="token comment">#做模型迁移</span>
+│   │   └── __init__.py
+│   ├── models.py	<span class="token comment">#MVT中的M</span>
+│   ├── tests.py	<span class="token comment">#做测试用</span>
+│   └── views.py	<span class="token comment">#MVT中的V</span>
+├── BookManager
+│   ├── __init__.py	<span class="token comment">#表示文件BookManager可以被当作包使用</span>
+│   ├── __pycache__
+│   │   ├── __init__.cpython-37.pyc
+│   │   └── settings.cpython-37.pyc
+│   ├── asgi.py
+│   ├── settings.py	<span class="token comment">#项目的整体配置文件</span>
+│   ├── urls.py		<span class="token comment">#项目的URL配置文件</span>
+│   └── wsgi.py		<span class="token comment">#项目与WSGI兼容的Web服务器入口</span>
+└── manage.py		<span class="token comment">#项目运行的入口, 指定配置文件路径</span>
+
+<span class="token number">4</span> directories, <span class="token number">15</span> files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>创建之后，使用PyChram打开，在<code>setting.py</code>的第39行下方添加<code>&#39;Book&#39;,</code>即将INSTALLED_APPS修改成如下所示：</p>
-<pre><code class="python">INSTALLED_APPS = [
-    &#39;django.contrib.admin&#39;,
-    &#39;django.contrib.auth&#39;,
-    &#39;django.contrib.contenttypes&#39;,
-    &#39;django.contrib.sessions&#39;,
-    &#39;django.contrib.messages&#39;,
-    &#39;django.contrib.staticfiles&#39;,
-    &#39;Book&#39;,    #添加此行以安装应用
-]</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">INSTALLED_APPS <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">'django.contrib.admin'</span><span class="token punctuation">,</span>
+    <span class="token string">'django.contrib.auth'</span><span class="token punctuation">,</span>
+    <span class="token string">'django.contrib.contenttypes'</span><span class="token punctuation">,</span>
+    <span class="token string">'django.contrib.sessions'</span><span class="token punctuation">,</span>
+    <span class="token string">'django.contrib.messages'</span><span class="token punctuation">,</span>
+    <span class="token string">'django.contrib.staticfiles'</span><span class="token punctuation">,</span>
+    <span class="token string">'Book'</span><span class="token punctuation">,</span>	<span class="token comment">#添加此行以安装应用</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="3、运行项目"><a href="#3、运行项目" class="headerlink" title="3、运行项目"></a>3、运行项目</h2><p>在项目目录下，执行<code>python3 manage.py runserver</code>即可运行</p>
-<pre><code>python3 manage.py runserver</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 manage.py runserver<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>运行结果：</p>
-<pre><code class="bash">BookManager/ &gt; python3 manage.py runserver
-Watching for file changes with StatReloader
-Performing system checks...
-System check identified no issues (0 silenced).
-You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
-Run &#39;python manage.py migrate&#39; to apply them.
-February 28, 2020 - 19:08:25
-Django version 3.0.3, using settings &#39;BookManager.settings&#39;
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">BookManager/ <span class="token operator">></span> python3 manage.py runserver
+Watching <span class="token keyword">for</span> <span class="token function">file</span> changes with StatReloader
+Performing system checks<span class="token punctuation">..</span>.
+System check identified no issues <span class="token punctuation">(</span><span class="token number">0</span> silenced<span class="token punctuation">)</span>.
+You have <span class="token number">17</span> unapplied migration<span class="token punctuation">(</span>s<span class="token punctuation">)</span>. Your project may not work properly <span class="token keyword">until</span> you apply the migrations <span class="token keyword">for</span> app<span class="token punctuation">(</span>s<span class="token punctuation">)</span>: admin, auth, contenttypes, sessions.
+Run <span class="token string">'python manage.py migrate'</span> to apply them.
+February <span class="token number">28</span>, <span class="token number">2020</span> - <span class="token number">19</span>:08:25
+Django version <span class="token number">3.0</span>.3, using settings <span class="token string">'BookManager.settings'</span>
 Starting development server at http://127.0.0.1:8000/
-Quit the server with CTRL-BREAK.</code></pre>
+Quit the server with CTRL-BREAK.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时，浏览器访问<code>http://127.0.0.1:8000/</code>，出现以下界面，说明项目已经成功创建了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -1002,7 +1010,7 @@ MVT设计模式中的Model, 专门负责和数据库交互.对应(models.py)
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

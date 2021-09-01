@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1k
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -480,85 +483,85 @@
 <p>也就是说尽管Python支持多线程，但是因为GIL的存在，使得Python还是一次性只能处理一个东西，那是不是说Python中的多线程就完全没用了呢，当然不是的。</p>
 <p>GIL往往只会影响到那些严重依赖CPU的程序，比如各种循环处理、计数等这种CPU密集型的程序；如果程序中大部分只会涉及到I/O，比如文件处理、网络爬虫等这种IO密集型的程序，那么多线程就能够有效的提高效率，因为在爬虫的时候大部分时间都在等待。</p>
 <p>实际上，你完全可以放心的创建几千个Python线程， 现代操作系统运行这么多线程没有任何压力，没啥可担心的。</p>
-<h1 id="0x01-测试GIL"><a href="#0x01-测试GIL" class="headerlink" title="0x01 测试GIL"></a>0x01 测试GIL</h1><pre><code class="python">import copy
-import time
-import requests
-import threading
-from queue import Queue
+<h1 id="0x01-测试GIL"><a href="#0x01-测试GIL" class="headerlink" title="0x01 测试GIL"></a>0x01 测试GIL</h1><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> copy
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> threading
+<span class="token keyword">from</span> queue <span class="token keyword">import</span> Queue
 
-def job(lists,q):
-   res = sum(lists)
-   q.put(res)
-
-
-def multithreading(lists):
-   q = Queue()
-   threads_list = []
-
-   for i in range(4):
-      t = threading.Thread(target=job,args=(copy.copy(lists),q),name = &#39;任务 %i&#39; % i)
-      t.start()
-      threads_list.append(t)
-   for t in threads_list:
-      t.join()
-
-   total = 0
-   for _ in range(4):
-      total += q.get()
-   print(&#39;使用线程运算结果:&#39;,total)
+<span class="token keyword">def</span> <span class="token function">job</span><span class="token punctuation">(</span>lists<span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   res <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span>
+   q<span class="token punctuation">.</span>put<span class="token punctuation">(</span>res<span class="token punctuation">)</span>
 
 
-def normal(lists):
-   total = sum(lists)
-   print(&#39;不使用线程运算结果:&#39;,total)
+<span class="token keyword">def</span> <span class="token function">multithreading</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   q <span class="token operator">=</span> Queue<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   threads_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job<span class="token punctuation">,</span>args<span class="token operator">=</span><span class="token punctuation">(</span>copy<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>lists<span class="token punctuation">)</span><span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">,</span>name <span class="token operator">=</span> <span class="token string">'任务 %i'</span> <span class="token operator">%</span> i<span class="token punctuation">)</span>
+      t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      threads_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+   <span class="token keyword">for</span> t <span class="token keyword">in</span> threads_list<span class="token punctuation">:</span>
+      t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+   total <span class="token operator">=</span> <span class="token number">0</span>
+   <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      total <span class="token operator">+=</span> q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'使用线程运算结果:'</span><span class="token punctuation">,</span>total<span class="token punctuation">)</span>
 
 
-def req_job(i):
-   requests.get(i)
+<span class="token keyword">def</span> <span class="token function">normal</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   total <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'不使用线程运算结果:'</span><span class="token punctuation">,</span>total<span class="token punctuation">)</span>
 
 
-def req_multithreading(req_lists):
-   threads_list = []
-
-   for i in range(4):
-      t = threading.Thread(target=req_job,args=(req_lists[i],),name=&#39;爬虫任务 %i&#39; % i)
-      t.start()
-      threads_list.append(t)
-   for t in threads_list:
-      t.join()
+<span class="token keyword">def</span> <span class="token function">req_job</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
 
 
-def req_normal(req_lists):
-   for i in req_lists:
-      requests.get(i)
+<span class="token keyword">def</span> <span class="token function">req_multithreading</span><span class="token punctuation">(</span>req_lists<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   threads_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>req_job<span class="token punctuation">,</span>args<span class="token operator">=</span><span class="token punctuation">(</span>req_lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">'爬虫任务 %i'</span> <span class="token operator">%</span> i<span class="token punctuation">)</span>
+      t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      threads_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+   <span class="token keyword">for</span> t <span class="token keyword">in</span> threads_list<span class="token punctuation">:</span>
+      t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-if __name__ == &#39;__main__&#39;:
-   lists = list(range(1000000)) # 完成一个较大的计算
-   req_lists = [&#39;https://www.teamssix.com&#39;,&#39;https://github.com/teamssix&#39;,&#39;https://me.csdn.net/qq_37683287&#39;,&#39;https://space.bilibili.com/148389186&#39;]
-   start_time = time.time()
-   multithreading(lists)
-   print(&#39;计算使用线程耗时:&#39;, time.time() - start_time,&#39;\n&#39;)
+<span class="token keyword">def</span> <span class="token function">req_normal</span><span class="token punctuation">(</span>req_lists<span class="token punctuation">)</span><span class="token punctuation">:</span>
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> req_lists<span class="token punctuation">:</span>
+      requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
 
-   start_time = time.time()
-   normal(lists * 4)
-   print(&#39;计算不使用线程耗时:&#39;, time.time() - start_time,&#39;\n&#39;)
-   start_time = time.time()
-   req_multithreading(req_lists)
-   print(&#39;爬虫使用线程耗时:&#39;, time.time() - start_time)
-   start_time = time.time()
-   req_normal(req_lists)
-   print(&#39;爬虫不使用线程耗时:&#39;, time.time() - start_time)</code></pre>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+   lists <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1000000</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 完成一个较大的计算</span>
+   req_lists <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'https://www.teamssix.com'</span><span class="token punctuation">,</span><span class="token string">'https://github.com/teamssix'</span><span class="token punctuation">,</span><span class="token string">'https://me.csdn.net/qq_37683287'</span><span class="token punctuation">,</span><span class="token string">'https://space.bilibili.com/148389186'</span><span class="token punctuation">]</span>
+   start_time <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   multithreading<span class="token punctuation">(</span>lists<span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'计算使用线程耗时:'</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start_time<span class="token punctuation">,</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+
+   start_time <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   normal<span class="token punctuation">(</span>lists <span class="token operator">*</span> <span class="token number">4</span><span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'计算不使用线程耗时:'</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start_time<span class="token punctuation">,</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+   start_time <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   req_multithreading<span class="token punctuation">(</span>req_lists<span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'爬虫使用线程耗时:'</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start_time<span class="token punctuation">)</span>
+   start_time <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   req_normal<span class="token punctuation">(</span>req_lists<span class="token punctuation">)</span>
+   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'爬虫不使用线程耗时:'</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start_time<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果：</p>
-<pre><code class="bash"># python 5_GIL.py
-使用线程运算结果: 1999998000000
-计算使用线程耗时: 0.39594030380249023 
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 5_GIL.py</span>
+使用线程运算结果: <span class="token number">1999998000000</span>
+计算使用线程耗时: <span class="token number">0.39594030380249023</span> 
 
-不使用线程运算结果: 1999998000000
-计算不使用线程耗时: 0.3919515609741211
+不使用线程运算结果: <span class="token number">1999998000000</span>
+计算不使用线程耗时: <span class="token number">0.3919515609741211</span>
 
-爬虫使用线程耗时: 2.2410056591033936
-爬虫不使用线程耗时: 7.1159656047821045</code></pre>
+爬虫使用线程耗时: <span class="token number">2.2410056591033936</span>
+爬虫不使用线程耗时: <span class="token number">7.1159656047821045</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到在计算程序的代码中不使用线程和使用线程的运算结果是相同的，说明不使用线程和使用线程的程序都进行了一样多次的运算，但是很明显可以看到计算的耗时并没有少很多，按照预期我们使用了4个线程，应该会快近4倍才对，这就是因为GIL在作怪。<br>与此同时，可以看到在使用request对一个url发起get请求的时候，使用线程比不使用线程快了3倍多，也进一步的反映出在使用Python进行爬虫的时候，多线程确实可以很大程度上提高效率，但是在进行密集计算任务的时候，多线程就显得很鸡肋了。</p>
 <blockquote>
 <p>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a><br>参考文章：<br>1、<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20953544">https://zhuanlan.zhihu.com/p/20953544</a><br>2、<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a></p>
@@ -1002,7 +1005,7 @@ if __name__ == &#39;__main__&#39;:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    986
+                    1k
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,92 +473,93 @@
 <p>今天就来看看协程能不能干掉多线程和多进程。</p>
 <a id="more"></a>
 <h1 id="0x01-基本用法"><a href="#0x01-基本用法" class="headerlink" title="0x01 基本用法"></a>0x01 基本用法</h1><p>Python 的在 3.4 中引入了协程的概念，3.5 则确定了协程的语法，所以想使用协程处理 IO ，需要Python3.5 及以上的版本，下面是一个简单示例代码。</p>
-<pre><code class="Python">    import time
-    import asyncio
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import time
+import asyncio
 
-    async def job(t):
-        print(&#39;开始第&#39;, t,&#39;个任务&#39;)
-        await asyncio.sleep(t)  #等待t秒
-        print(&#39;第&#39;, t, &#39;个任务执行了&#39;, t, &#39;秒&#39;)
+async def job(t):
+    print(&#39;开始第&#39;, t,&#39;个任务&#39;)
+    await asyncio.sleep(t)  #等待t秒
+    print(&#39;第&#39;, t, &#39;个任务执行了&#39;, t, &#39;秒&#39;)
+    
 
+async def main(loop):
+    tasks &#x3D; [loop.create_task(job(t)) for t in range(1, 4)]     #创建多个任务
+    await asyncio.wait(tasks)    #运行刚才创建的那些任务
 
-    async def main(loop):
-        tasks = [loop.create_task(job(t)) for t in range(1, 4)]     #创建多个任务
-        await asyncio.wait(tasks)    #运行刚才创建的那些任务
-
-    if __name__ == &#39;__main__&#39;:
-        start_time = time.time()
-        loop = asyncio.get_event_loop()    #创建事件循环
-        loop.run_until_complete(main(loop))    #运行刚才创建的事件循环
-        loop.close()
-        print(&quot;所有总共耗时&quot;, time.time() - start_time)</code></pre>
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    start_time &#x3D; time.time()
+    loop &#x3D; asyncio.get_event_loop()    #创建事件循环
+    loop.run_until_complete(main(loop))    #运行刚才创建的事件循环
+    loop.close()
+    print(&quot;所有总共耗时&quot;, time.time() - start_time)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果如下：</p>
-<pre><code>    开始第 1 个任务
-    开始第 2 个任务
-    开始第 3 个任务
-    第 1 个任务执行了 1 秒
-    第 2 个任务执行了 2 秒
-    第 3 个任务执行了 3 秒
-    所有总共耗时 3.0029773712158203</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">开始第 1 个任务
+开始第 2 个任务
+开始第 3 个任务
+第 1 个任务执行了 1 秒
+第 2 个任务执行了 2 秒
+第 3 个任务执行了 3 秒
+所有总共耗时 3.0029773712158203<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里运行了三个任务，三个任务的执行时间加在一起是6秒，但是最后总共耗时是3秒，接下来就看看协程在爬虫中的使用。</p>
 <h1 id="0x02-aiohttp的使用"><a href="#0x02-aiohttp的使用" class="headerlink" title="0x02 aiohttp的使用"></a>0x02 aiohttp的使用</h1><p>使用 aiohttp 模块可以将 requests 替换成一个异步的 requests ，下面先来看看一般的 requests 的使用，下面的运行结果耗时是我运行了三次，然后取平均数的结果。</p>
-<pre><code class="Python">    import time
-    import requests
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import time
+import requests
 
-    def normal():
-        for i in range(3):
-            r = requests.get(URL)
+def normal():
+    for i in range(3):
+        r &#x3D; requests.get(URL)
 
-    if __name__ == &#39;__main__&#39;:
-            t1 = time.time()
-            URL = &#39;https://www.teamssix.com/&#39;
-        normal()
-        print(&quot;正常访问 3 次博客耗费时间&quot;, time.time()-t1)</code></pre>
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+		t1 &#x3D; time.time()
+		URL &#x3D; &#39;https:&#x2F;&#x2F;www.teamssix.com&#x2F;&#39;
+    normal()
+    print(&quot;正常访问 3 次博客耗费时间&quot;, time.time()-t1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果如下：</p>
-<pre><code>正常访问 3 次博客耗费时间 12.872265259424845</code></pre>
+<pre><code>正常访问 3 次博客耗费时间 12.872265259424845
+</code></pre>
 <p>正常情况下，花费了近 13 秒，接下来使用 aiohttp 看看耗时多少。</p>
-<pre><code class="Python">    import time
-    import asyncio
-    import aiohttp
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import time
+import asyncio
+import aiohttp
 
-    async def job(session):
-       response = await session.get(&#39;https://www.teamssix.com/&#39;)       # 等待并切换
-       return str(response.url)
+async def job(session):
+   response &#x3D; await session.get(&#39;https:&#x2F;&#x2F;www.teamssix.com&#x2F;&#39;)       # 等待并切换
+   return str(response.url)
 
-    async def main(loop):
-       async with aiohttp.ClientSession() as session:      # 官网推荐建立 Session 的形式
-           tasks = [loop.create_task(job(session)) for _ in range(3)]
-           finished, unfinished = await asyncio.wait(tasks)
-    if __name__ == &#39;__main__&#39;:
-        t1 = time.time()
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(main(loop))
-        loop.close()
-        print(&quot;异步访问 3 次博客耗费时间&quot;, time.time() - t1)</code></pre>
+async def main(loop):
+   async with aiohttp.ClientSession() as session:      # 官网推荐建立 Session 的形式
+       tasks &#x3D; [loop.create_task(job(session)) for _ in range(3)]
+       finished, unfinished &#x3D; await asyncio.wait(tasks)
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+	t1 &#x3D; time.time()
+	loop &#x3D; asyncio.get_event_loop()
+	loop.run_until_complete(main(loop))
+	loop.close()
+	print(&quot;异步访问 3 次博客耗费时间&quot;, time.time() - t1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果如下：</p>
-<pre><code>    异步访问 3 次博客耗费时间 4.055158615112305</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">异步访问 3 次博客耗费时间 4.055158615112305<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>从运行结果上来看使用 aiohttp 还是很给力的，接下来，看看多线程运行的时间。</p>
-<pre><code class="Python">    import time
-    import threading
-    import requests
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import time
+import threading
+import requests
 
-    def thread_test():
-        r = requests.get(URL)
+def thread_test():
+    r &#x3D; requests.get(URL)
 
-    if __name__ == &#39;__main__&#39;:
-        t1 = time.time()
-        URL = &#39;https://www.teamssix.com/&#39;
-        thread_list = []
-        for i in range(3):
-            t = threading.Thread(target=thread_test)
-            thread_list.append(t)
-        for i in thread_list:
-            i.start()
-        for i in thread_list:
-            i.join()
-        print(&quot;多线程访问 3 次博客耗费时间&quot;, time.time()-t1)</code></pre>
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    t1 &#x3D; time.time()
+    URL &#x3D; &#39;https:&#x2F;&#x2F;www.teamssix.com&#x2F;&#39;
+    thread_list &#x3D; []
+    for i in range(3):
+        t &#x3D; threading.Thread(target&#x3D;thread_test)
+        thread_list.append(t)
+    for i in thread_list:
+        i.start()
+    for i in thread_list:
+        i.join()
+    print(&quot;多线程访问 3 次博客耗费时间&quot;, time.time()-t1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果如下：</p>
-<pre><code>    5.449431339899699</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">5.449431339899699<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>可以看到 aiohttp 的速度还是要略快于多线程的，这里只是简单介绍了一下 aiohttp ，详细的可以参阅<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/asyncio.html">官方文档</a>，想要使用的熟练还是需要大量练习，任重道远。</p>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix<br>参考文章：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b5e347b3a17c">https://www.jianshu.com/p/b5e347b3a17c</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008814676">https://segmentfault.com/a/1190000008814676</a><br><a target="_blank" rel="noopener" href="https://www.lylinux.net/article/2019/6/9/57.html">https://www.lylinux.net/article/2019/6/9/57.html</a><br><a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/data-manipulation/scraping/4-02-asyncio/">https://morvanzhou.github.io/tutorials/data-manipulation/scraping/4-02-asyncio/</a></p>
@@ -989,7 +993,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

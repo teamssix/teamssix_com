@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    6 分
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -478,40 +481,43 @@
 <h2 id="一些条件"><a href="#一些条件" class="headerlink" title="一些条件"></a>一些条件</h2><p>所有代理的密码、加密方式、协议、混淆方式都必须一致，简而言之，除了代理的IP之外的信息都尽可能的保持一致。</p>
 <p>达到以上条件后，就可以在 Linux 下利用 HAProxy 配置负载均衡了。</p>
 <h1 id="0x02-HAProxy-的安装与使用"><a href="#0x02-HAProxy-的安装与使用" class="headerlink" title="0x02 HAProxy 的安装与使用"></a>0x02 HAProxy 的安装与使用</h1><p>HAProxy 可直接使用<code>apt install</code>进行安装，安装之前建议先将系统<code>apt-get update</code>一下。</p>
-<pre><code class="bash">apt install haproxy</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> haproxy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>安装之后，编辑配置文件，编辑之前建议先将配置文件进行备份。</p>
-<pre><code class="bash">mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
-vim /etc/haproxy/haproxy.cfg</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+<span class="token function">vim</span> /etc/haproxy/haproxy.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>为了便于直接复制配置文件信息，这里使用的<code>mv</code>命令进行备份，因此使用<code>vim</code>打开时，直接将以下配置文件信息根据自己情况修改复制到<code>/etc/haproxy/haproxy.cfg</code>即可。</p>
-<pre><code class="bash">global
-    chroot  /var/lib/haproxy
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">global
+    <span class="token function">chroot</span>  /var/lib/haproxy
     pidfile /var/run/haproxy.pid
     user    haproxy
     group   haproxy
 
 defaults
-    mode    tcp                         #服务器默认的工作模式
-    balance roundrobin                  #服务器默认使用的均衡模式
-    retries 3                           #三次连接失败表示服务器不可用
-    maxconn 5000                        #最大连接数
-    timeout connect 500ms               #连接超时
-    timeout client  3s                  #客户端超时
-    timeout server  3s                  #服务器超时
+    mode    tcp                         <span class="token comment">#服务器默认的工作模式</span>
+    balance roundrobin                  <span class="token comment">#服务器默认使用的均衡模式</span>
+    retries <span class="token number">3</span>                           <span class="token comment">#三次连接失败表示服务器不可用</span>
+    maxconn <span class="token number">5000</span>                        <span class="token comment">#最大连接数</span>
+    <span class="token function">timeout</span> connect 500ms               <span class="token comment">#连接超时</span>
+    <span class="token function">timeout</span> client  3s                  <span class="token comment">#客户端超时</span>
+    <span class="token function">timeout</span> server  3s                  <span class="token comment">#服务器超时</span>
 
 listen WebPanel
-    mode    http                        #这里使用HTTP模式
-    bind    127.0.0.1:50000             #WEB服务端口
-    stats   refresh 5s                  #自动刷新时间
-    stats   uri  /                      #WEB管理地址
-    stats   auth admin:admin           #账号密码
-    stats   hide-version                #隐藏版本
-    stats   admin if TRUE               #验证通过则赋予管理权
+    mode    http                        <span class="token comment">#这里使用HTTP模式</span>
+    <span class="token builtin class-name">bind</span>    <span class="token number">127.0</span>.0.1:50000             <span class="token comment">#WEB服务端口</span>
+    stats   refresh 5s                  <span class="token comment">#自动刷新时间</span>
+    stats   uri  /                      <span class="token comment">#WEB管理地址</span>
+    stats   auth admin:admin		   <span class="token comment">#账号密码</span>
+    stats   hide-version                <span class="token comment">#隐藏版本</span>
+    stats   admin <span class="token keyword">if</span> TRUE               <span class="token comment">#验证通过则赋予管理权</span>
 
 listen Server
-    bind 127.0.0.1:8880                    #服务IP端口    
-    server proxy_name1 proxy_ip1:proxy_port1 check inter 500 rise 2 fall 4 weight 100    #酸酸乳服务器地址与端口
-    server proxy_name2 proxy_ip2:proxy_port2 check inter 500 rise 2 fall 4 weight 100    #酸酸乳服务器地址与端口
-    server proxy_name3 proxy_ip3:proxy_port3 check inter 500 rise 2 fall 4 weight 100    #酸酸乳服务器地址与端口</code></pre>
+    <span class="token builtin class-name">bind</span> <span class="token number">127.0</span>.0.1:8880	    			<span class="token comment">#服务IP端口	</span>
+    server proxy_name1 proxy_ip1:proxy_port1 check inter <span class="token number">500</span> rise <span class="token number">2</span> fall <span class="token number">4</span> weight <span class="token number">100</span>	<span class="token comment">#酸酸乳服务器地址与端口</span>
+    server proxy_name2 proxy_ip2:proxy_port2 check inter <span class="token number">500</span> rise <span class="token number">2</span> fall <span class="token number">4</span> weight <span class="token number">100</span>	<span class="token comment">#酸酸乳服务器地址与端口</span>
+    server proxy_name3 proxy_ip3:proxy_port3 check inter <span class="token number">500</span> rise <span class="token number">2</span> fall <span class="token number">4</span> weight <span class="token number">100</span>	<span class="token comment">#酸酸乳服务器地址与端口</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在上面的配置文件中，修改最后几行代理信息即可，即将其中的<code>proxy_name、proxy_ip、proxy_port</code>替换成自己的就行。</p>
 <h2 id="关于配置文件中的一些注意事项"><a href="#关于配置文件中的一些注意事项" class="headerlink" title="关于配置文件中的一些注意事项"></a>关于配置文件中的一些注意事项</h2><ul>
 <li>配置文件中的注释信息需要删除，尤其是中文，否则 HAProxy 启动时会报错</li>
@@ -520,50 +526,55 @@ listen Server
 <li>如果想了解配置文件中的更多信息可以查看参考链接中的文章</li>
 </ul>
 <p>HAProxy 配置完后，直接使用<code>service</code>命令启动即可。</p>
-<pre><code class="bash">service haproxy start</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">service</span> haproxy start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>此时，浏览器打开 HAProxy 的 Web 管理地址，输入账号密码后，看到以下页面，就说明 HAProxy 已经正在运行了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-05_00-19-41.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在这个 Web 页面中，绿色的线路表示当前可用，红色线路表示当前可能是不可用状态，其他颜色所表示的意思可参考页面上方的示意信息。</p>
 <h1 id="0x03-代理客户端上的配置"><a href="#0x03-代理客户端上的配置" class="headerlink" title="0x03 代理客户端上的配置"></a>0x03 代理客户端上的配置</h1><p>配置好 HAProxy，就开始配置代理工具了。根据上面 HAProxy 配置文件，服务 IP 端口配置的为<code>127.0.0.1:8880</code>。</p>
 <p>打开酸酸乳的配置文件，我这里是<code>user-config.json</code>文件，原文件内容如下：</p>
-<pre><code class="bash">&#123;
-    &quot;server&quot;:&quot;xxxxxx&quot;,
-    &quot;server_port&quot;:xxxx,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;xxxx&quot;,
-    &quot;timeout&quot;:600,
-    &quot;method&quot;:&quot;xxxx&quot;,
-    &quot;protocol&quot;: &quot;xxxx&quot;,
-    &quot;obfs&quot;: &quot;xxxx&quot;,
-    &quot;obfs_param&quot;: &quot;xxxx&quot;
-&#125;</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">&#123;</span>
+    <span class="token string">"server"</span><span class="token builtin class-name">:</span><span class="token string">"xxxxxx"</span>,
+    <span class="token string">"server_port"</span>:xxxx,
+    <span class="token string">"local_address"</span><span class="token builtin class-name">:</span><span class="token string">"127.0.0.1"</span>,
+    <span class="token string">"local_port"</span>:1080,
+    <span class="token string">"password"</span><span class="token builtin class-name">:</span><span class="token string">"xxxx"</span>,
+    <span class="token string">"timeout"</span>:600,
+    <span class="token string">"method"</span><span class="token builtin class-name">:</span><span class="token string">"xxxx"</span>,
+    <span class="token string">"protocol"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>,
+    <span class="token string">"obfs"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>,
+    <span class="token string">"obfs_param"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>现在需要把文件中的<code>server</code>和<code>server_port</code>修改为 HAProxy 的服务 IP 端口信息，即 <code>127.0.0.1:8880</code>，修改后如下：</p>
-<pre><code class="bash">&#123;
-    &quot;server&quot;:&quot;127.0.0.1&quot;,
-    &quot;server_port&quot;:8880,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;xxxx&quot;,
-    &quot;timeout&quot;:600,
-    &quot;method&quot;:&quot;xxxx&quot;,
-    &quot;protocol&quot;: &quot;xxxx&quot;,
-    &quot;obfs&quot;: &quot;xxxx&quot;,
-    &quot;obfs_param&quot;: &quot;xxxx&quot;
-&#125;</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">&#123;</span>
+    <span class="token string">"server"</span><span class="token builtin class-name">:</span><span class="token string">"127.0.0.1"</span>,
+    <span class="token string">"server_port"</span>:8880,
+    <span class="token string">"local_address"</span><span class="token builtin class-name">:</span><span class="token string">"127.0.0.1"</span>,
+    <span class="token string">"local_port"</span>:1080,
+    <span class="token string">"password"</span><span class="token builtin class-name">:</span><span class="token string">"xxxx"</span>,
+    <span class="token string">"timeout"</span>:600,
+    <span class="token string">"method"</span><span class="token builtin class-name">:</span><span class="token string">"xxxx"</span>,
+    <span class="token string">"protocol"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>,
+    <span class="token string">"obfs"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>,
+    <span class="token string">"obfs_param"</span><span class="token builtin class-name">:</span> <span class="token string">"xxxx"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>接下来，重启酸酸乳，使用 curl 进行一下测试。</p>
-<pre><code class="bash">curl --socks5-hostname 127.0.0.1:1080 cip.cc</code></pre>
-<pre><code class="bash">root@ubuntu:~# curl --socks5-hostname 127.0.0.1:1080 cip.cc
-IP      : 200.xxx.xxx.41
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> --socks5-hostname <span class="token number">127.0</span>.0.1:1080 cip.cc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@ubuntu:~<span class="token comment"># curl --socks5-hostname 127.0.0.1:1080 cip.cc</span>
+IP      <span class="token builtin class-name">:</span> <span class="token number">200</span>.xxx.xxx.41
 ……省略……
 
-root@ubuntu:~# curl --socks5-hostname 127.0.0.1:1080 cip.cc
-IP      : 200.xxx.xxx.48
+root@ubuntu:~<span class="token comment"># curl --socks5-hostname 127.0.0.1:1080 cip.cc</span>
+IP      <span class="token builtin class-name">:</span> <span class="token number">200</span>.xxx.xxx.48
 ……省略……
 
-root@ubuntu:~# curl --socks5-hostname 127.0.0.1:1080 cip.cc
-IP      : 200.xxx.xxx.42
-……省略……</code></pre>
+root@ubuntu:~<span class="token comment"># curl --socks5-hostname 127.0.0.1:1080 cip.cc</span>
+IP      <span class="token builtin class-name">:</span> <span class="token number">200</span>.xxx.xxx.42
+……省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>通过测试，可以发现每次请求时，自己的 IP 都会改变，这就是 HAProxy 起到了作用。</p>
 <p>这里只是进行一下测试，平时在<code>Linux</code>下使用代理的时候，更推荐使用<code>proxychains4</code>对命令进行代理。</p>
 <h2 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h2><ul>
@@ -1006,7 +1017,7 @@ IP      : 200.xxx.xxx.42
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

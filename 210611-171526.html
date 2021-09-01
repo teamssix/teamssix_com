@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    949
+                    997
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -474,80 +477,91 @@
 </blockquote>
 <h3 id="a、内网端口穿透"><a href="#a、内网端口穿透" class="headerlink" title="a、内网端口穿透"></a>a、内网端口穿透</h3><p> 场景：内网主机可出网，想从公网访问内网主机的 3389 端口</p>
 <p>在 VPS 上开启服务端，这里以 kali 为例，首先修改配置文件 frps.ini</p>
-<pre><code>[common]
-bind_port = 4444</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">[common]
+bind_port &#x3D; 4444<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>然后启动服务端</p>
-<pre><code>frps -c frps.ini</code></pre>
-<pre><code>&gt; ./frps -c frps.ini
-2021/06/09 03:45:03 [I] [root.go:200] frps uses config file: frps.ini
-2021/06/09 03:45:03 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
-2021/06/09 03:45:03 [I] [root.go:209] frps started successfully</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">frps -c frps.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&gt; .&#x2F;frps -c frps.ini
+2021&#x2F;06&#x2F;09 03:45:03 [I] [root.go:200] frps uses config file: frps.ini
+2021&#x2F;06&#x2F;09 03:45:03 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
+2021&#x2F;06&#x2F;09 03:45:03 [I] [root.go:209] frps started successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>配置客户端配置文件</p>
-<pre><code>[common]
+<pre class="line-numbers language-none"><code class="language-none">[common]
 # 服务端 IP
-server_addr = vps_ip
+server_addr &#x3D; vps_ip
 # 服务端端口
-server_port = 4444
+server_port &#x3D; 4444
 
 [rdp]
-type = tcp
-local_ip = 127.0.0.1
-local_port = 3389
+type &#x3D; tcp
+local_ip &#x3D; 127.0.0.1
+local_port &#x3D; 3389
 # 连接 vps 的端口
-remote_port = 3389</code></pre>
-<pre><code>&gt; .\frpc.exe -c frpc.ini
-2021/06/09 15:50:29 [I] [service.go:304] [72904e8037a7fdf8] login to server success, get run id [72904e8037a7fdf8], server udp port [0]
-2021/06/09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]
-2021/06/09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success</code></pre>
+remote_port &#x3D; 3389<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&gt; .\frpc.exe -c frpc.ini
+2021&#x2F;06&#x2F;09 15:50:29 [I] [service.go:304] [72904e8037a7fdf8] login to server success, get run id [72904e8037a7fdf8], server udp port [0]
+2021&#x2F;06&#x2F;09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]
+2021&#x2F;06&#x2F;09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时，在 vps 上访问本地的 3389 端口就会访问到内网主机的 3389 端口了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="b、建立-socks-代理"><a href="#b、建立-socks-代理" class="headerlink" title="b、建立 socks 代理"></a>b、建立 socks 代理</h3><p>场景：内网主机可出网，想把内网主机作为跳板机使用</p>
 <p>上面的场景只是利用 frp 访问了内网指定机器的指定端口，我们还可以利用 frp 将内网主机作为跳板机使用。</p>
 <p>这次我们用上 frp 的 web 控制面板以及访问密码等功能，让我们建立的连接更加安全、方便。</p>
 <p>在 VPS 上开启服务端，服务端配置文件如下：</p>
-<pre><code>[common]
-bind_port = 4444
+<pre class="line-numbers language-none"><code class="language-none">[common]
+bind_port &#x3D; 4444
 
 # 客户端认证 token
-token = 123456
+token &#x3D; 123456
 
 # 设置 frps 仪表盘端口、账号和密码，实战中用处貌似不大，但如果设置一定要设置强密码
-dashboard_port = 8000
-dashboard_user = admin
-dashboard_pwd = password</code></pre>
+dashboard_port &#x3D; 8000
+dashboard_user &#x3D; admin
+dashboard_pwd &#x3D; password<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>实战中，为了更好的隐藏自己，最好还是要设置通过域名访问</p>
 </blockquote>
 <p>配置好文件后，启动服务端</p>
-<pre><code>frps -c frps.ini</code></pre>
-<pre><code>./frps -c frps.ini
-2021/06/09 04:06:34 [I] [root.go:200] frps uses config file: frps.ini
-2021/06/09 04:06:35 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
-2021/06/09 04:06:35 [I] [service.go:294] Dashboard listen on 0.0.0.0:8000
-2021/06/09 04:06:35 [I] [root.go:209] frps started successfully</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">frps -c frps.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;frps -c frps.ini
+2021&#x2F;06&#x2F;09 04:06:34 [I] [root.go:200] frps uses config file: frps.ini
+2021&#x2F;06&#x2F;09 04:06:35 [I] [service.go:192] frps tcp listen on 0.0.0.0:4444
+2021&#x2F;06&#x2F;09 04:06:35 [I] [service.go:294] Dashboard listen on 0.0.0.0:8000
+2021&#x2F;06&#x2F;09 04:06:35 [I] [root.go:209] frps started successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>配置客户端文件</p>
-<pre><code>[common]
-server_addr = vps_ip
-server_port = 4444
+<pre class="line-numbers language-none"><code class="language-none">[common]
+server_addr &#x3D; vps_ip
+server_port &#x3D; 4444
 # 客户端认证 token，需要和服务端 token 保持一致
-token = 123456
+token &#x3D; 123456
 
 # 启用加密，防止流量被拦截
-use_encryption = true
+use_encryption &#x3D; true
 # 启用压缩，提升流量转发速度
-use_compression = true
+use_compression &#x3D; true
 
 [socks5]
-type = tcp
+type &#x3D; tcp
 # 连接 vps 的端口
-remote_port = 1080
-plugin = socks5</code></pre>
+remote_port &#x3D; 1080
+plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>开启客户端</p>
-<pre><code>frpc -c frpc.ini</code></pre>
-<pre><code>&gt; .\frpc.exe -c frpc.ini
-2021/06/09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]
-2021/06/09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]
-2021/06/09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">frpc -c frpc.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&gt; .\frpc.exe -c frpc.ini
+2021&#x2F;06&#x2F;09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]
+2021&#x2F;06&#x2F;09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]
+2021&#x2F;06&#x2F;09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p>
@@ -986,7 +1000,7 @@ plugin = socks5</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

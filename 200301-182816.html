@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    370
+                    358
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -488,31 +491,34 @@
 <li>定义视图函数：响应字符串<code>OK!</code>给客户端</li>
 </ul>
 <p>首先修改<code>views.py</code>文件，添加响应内容，修改后如下。</p>
-<pre><code class="python"># BookManager/Book/views.py
-from django.http import HttpResponse
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># BookManager/Book/views.py</span>
+<span class="token keyword">from</span> django<span class="token punctuation">.</span>http <span class="token keyword">import</span> HttpResponse
 
-def index(request):
-    return HttpResponse(&#39;OK!    -- By TeamsSix&#39;)</code></pre>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> HttpResponse<span class="token punctuation">(</span><span class="token string">'OK!    -- By TeamsSix'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x01、配置URL"><a href="#0x01、配置URL" class="headerlink" title="0x01、配置URL"></a>0x01、配置URL</h1><p>之后再修改<code>urls.py</code>文件，添加<code>path(&#39;&#39;, views.index),</code>，完整的代码如下：</p>
-<pre><code class="python"># BookManager/BookManager/urls.py
-from django.contrib import admin
-from django.urls import path
-from Book import views
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># BookManager/BookManager/urls.py</span>
+<span class="token keyword">from</span> django<span class="token punctuation">.</span>contrib <span class="token keyword">import</span> admin
+<span class="token keyword">from</span> django<span class="token punctuation">.</span>urls <span class="token keyword">import</span> path
+<span class="token keyword">from</span> Book <span class="token keyword">import</span> views
 
-urlpatterns = [
-    path(&#39;admin/&#39;, admin.site.urls),
-    path(&#39;&#39;, views.index),
-]</code></pre>
+urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span>
+	path<span class="token punctuation">(</span><span class="token string">'admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	path<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>index<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>此时，当我们访问<code>127.0.0.1:8000</code>的时候，代码运行顺序是这样的：</p>
-<pre><code class="python">      HttpRequest
-        ↓ ↓ ↓
-ROOT_URLCONF = &#39;BookManager.urls&#39;    # /BookManager/settings.py
-        ↓ ↓ ↓
-path(&#39;&#39;, views.index),    # /BookManager/urls.py
-        ↓ ↓ ↓
-return HttpResponse(&#39;OK!    -- By TeamsSix&#39;)    # /Book/views.py
-        ↓ ↓ ↓
-      HttpResponse</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">	  HttpRequest
+		↓ ↓ ↓
+ROOT_URLCONF <span class="token operator">=</span> <span class="token string">'BookManager.urls'</span>	<span class="token comment"># /BookManager/settings.py</span>
+		↓ ↓ ↓
+path<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>index<span class="token punctuation">)</span><span class="token punctuation">,</span>	<span class="token comment"># /BookManager/urls.py</span>
+		↓ ↓ ↓
+<span class="token keyword">return</span> HttpResponse<span class="token punctuation">(</span><span class="token string">'OK!    -- By TeamsSix'</span><span class="token punctuation">)</span>	<span class="token comment"># /Book/views.py</span>
+		↓ ↓ ↓
+      HttpResponse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>最终，浏览器将顺利返回我们的<code>HttpResponse</code></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/9django_note.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -959,7 +965,7 @@ MVT设计模式中的Model, 专门负责和数据库交互.对应(models.py)
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

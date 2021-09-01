@@ -593,14 +593,6 @@ header .go-back i {
     font-weight: 400;
 }
 
-@-webkit-keyframes rainbow {
-    0%
-}
-
-@keyframes rainbow {
-    0%
-}
-
 .index-card {
     margin-top: -10px;
     padding-top: 20px;

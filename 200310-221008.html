@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -482,7 +485,8 @@
 <p>有了字典之后，上Burp</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-03-10_14-26-42.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>两千多的字典最后只有3个Payload响应200，不管了，先一个一个试试吧，那就先来试试第一个Payload</p>
-<pre><code>&quot;+alert(16)+&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&quot;+alert(16)+&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-03-10_14-29-54.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>哎呀呀，不得不说，妙啊！</p>
 <p>之后我再试另外几个 Payload 就不管用了</p>
@@ -922,7 +926,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

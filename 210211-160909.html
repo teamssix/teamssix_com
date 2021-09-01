@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    998
+                    1k
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,159 +470,188 @@
                 <h2 id="1、手动收集本地工作组信息"><a href="#1、手动收集本地工作组信息" class="headerlink" title="1、手动收集本地工作组信息"></a>1、手动收集本地工作组信息</h2><ul>
 <li>查看当前权限</li>
 </ul>
-<pre><code>whoami </code></pre>
+<pre class="line-numbers language-none"><code class="language-none">whoami <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>本机网络配置信息</li>
 </ul>
-<pre><code>ipconfig /all</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">ipconfig &#x2F;all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>操作系统和版本信息（英文版）</li>
 </ul>
-<pre><code>systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot; </code></pre>
+<pre class="line-numbers language-none"><code class="language-none">systeminfo | findstr &#x2F;B &#x2F;C:&quot;OS Name&quot; &#x2F;C:&quot;OS Version&quot; <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>操作系统和版本信息（中文版）</li>
 </ul>
-<pre><code>systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">systeminfo | findstr &#x2F;B &#x2F;C:&quot;OS 名称&quot; &#x2F;C:&quot;OS 版本&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看系统体系结构</li>
 </ul>
-<pre><code>echo %PROCESSOR_ARCHITECTURE%</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">echo %PROCESSOR_ARCHITECTURE%<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看系统所有环境变量</li>
 </ul>
-<pre><code>set</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">set<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看安装的软件及版本和路径等信息</li>
 </ul>
-<pre><code>wmic product get name,version</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic product get name,version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>利用 PowerShell 收集软件版本信息</li>
 </ul>
-<pre><code>powershell &quot;Get-WmiObject -class Win32_Product |Select-Object -Property name,version&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell &quot;Get-WmiObject -class Win32_Product |Select-Object -Property name,version&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查询本机服务信息</li>
 </ul>
-<pre><code>wmic service list brief</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic service list brief<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查询进程列表</li>
 </ul>
-<pre><code>tasklist /v</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">tasklist &#x2F;v<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>wmic 查看进程信息</li>
 </ul>
-<pre><code>wmic process list brief</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic process list brief<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看启动程序信息</li>
 </ul>
-<pre><code>wmic startup get command,caption</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic startup get command,caption<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看计划任务</li>
 </ul>
-<pre><code>schtasks /query /fo LIST /v</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">schtasks &#x2F;query &#x2F;fo LIST &#x2F;v<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看主机开启时间</li>
 </ul>
-<pre><code>net statistics workstation</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net statistics workstation<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查询用户列表</li>
 </ul>
-<pre><code>net user</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li> 查看指定用户的信息</li>
 </ul>
-<pre><code>net user teamssix</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net user teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li> 查看本地管理员用户</li>
 </ul>
-<pre><code>net localgroup administrators</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net localgroup administrators<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看当前在线用户</li>
 </ul>
-<pre><code>query user || qwinsta</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">query user || qwinsta<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>列出或断开本地计算机和连接的客户端的会话 </li>
 </ul>
-<pre><code>net session</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net session<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看端口列表</li>
 </ul>
-<pre><code>netstat –ano</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">netstat –ano<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看补丁列表</li>
 </ul>
-<pre><code>systeminfo</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">systeminfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>使用 wmic 查看补丁列表</li>
 </ul>
-<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic qfe get Caption,Description,HotFixID,InstalledOn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查看本机共享</li>
 </ul>
-<pre><code>net share</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">net share<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>使用 wmic 查看共享列表</li>
 </ul>
-<pre><code>wmic share get name,path,status</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic share get name,path,status<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>查询路由表及所有可用接口的ARP 缓存表 </li>
 </ul>
-<pre><code>route print
-arp –a</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">route print
+arp –a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <ul>
 <li><p>查询防火墙相关配置 </p>
 <ul>
 <li>关闭防火墙</li>
 </ul>
-<pre><code>netsh firewall set opmode disable (Windows Server 2003 系统及之前版本)
-netsh advfirewall set allprofiles state off    (Windows Server 2003 系统及之后版本)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">netsh firewall set opmode disable (Windows Server 2003 系统及之前版本)
+netsh advfirewall set allprofiles state off	(Windows Server 2003 系统及之后版本)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <ul>
 <li>查看防火墙配置</li>
 </ul>
-<pre><code>netsh firewall show config</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">netsh firewall show config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>修改防火墙配置</li>
 </ul>
-<pre><code>(Windows Server 2003 系统及之前版本)
+<pre class="line-numbers language-none"><code class="language-none">(Windows Server 2003 系统及之前版本)
 允许指定程序全部连接
 netsh firewall add allowedprogram c:\nc.exe &quot;allow nc&quot; enable
 
 (Windows Server 2003 之后系统版本)
 允许指定程序连入
-netsh advfirewall firewall add rule name=&quot;pass nc&quot; dir=in action=allow program=&quot;C: \nc.exe&quot;
+netsh advfirewall firewall add rule name&#x3D;&quot;pass nc&quot; dir&#x3D;in action&#x3D;allow program&#x3D;&quot;C: \nc.exe&quot;
 
 允许指定程序连出
-netsh advfirewall firewall add rule name=&quot;Allow nc&quot; dir=out action=allow program=&quot;C: \nc.exe&quot;
+netsh advfirewall firewall add rule name&#x3D;&quot;Allow nc&quot; dir&#x3D;out action&#x3D;allow program&#x3D;&quot;C: \nc.exe&quot;
 
 允许 3389 端口放行
-netsh advfirewall firewall add rule name=&quot;Remote Desktop&quot; protocol=TCP dir=in localport=3389 action=allow</code></pre>
+netsh advfirewall firewall add rule name&#x3D;&quot;Remote Desktop&quot; protocol&#x3D;TCP dir&#x3D;in localport&#x3D;3389 action&#x3D;allow<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ul>
 <li>自定义防火墙日志储存位置</li>
 </ul>
-<pre><code>netsh advfirewall set currentprofile logging filename &quot;C:\windows\temp\fw.log&quot;</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">netsh advfirewall set currentprofile logging filename &quot;C:\windows\temp\fw.log&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>查看计算机代理配置情况 </p>
 </li>
 </ul>
-<pre><code>reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li><p>查询并开启远程连接服务</p>
 <ul>
 <li>查看远程连接端口（0xd3d换成10进制即3389）</li>
 </ul>
-<pre><code>REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot; /V PortNumber</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot; &#x2F;V PortNumber<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>在Windows Server 2003 中开启3389 端口</li>
 </ul>
-<pre><code>wmic path win32_terminalservicesetting where (__CLASS !=&quot;&quot;) call setallowtsconnections 1</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">wmic path win32_terminalservicesetting where (__CLASS !&#x3D;&quot;&quot;) call setallowtsconnections 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>在Windows Server 2008 和Windows Server 2012 中开启3389 端口</li>
 </ul>
-<pre><code>wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS !=&quot;&quot;) call setallowtsconnections 1
+<pre class="line-numbers language-none"><code class="language-none">wmic &#x2F;namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS !&#x3D;&quot;&quot;) call setallowtsconnections 1
 
-wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName=&#39;RDP-Tcp&#39;) call setuserauthenticationrequired 1
+wmic &#x2F;namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName&#x3D;&#39;RDP-Tcp&#39;) call setuserauthenticationrequired 1
 
-reg add &quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; /v fSingleSessionPerUser /t REG_DWORD /d 0 /f</code></pre>
-</li>
+reg add &quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; &#x2F;v fSingleSessionPerUser &#x2F;t REG_DWORD &#x2F;d 0 &#x2F;f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h2 id="2、自动收集本地工作组信息"><a href="#2、自动收集本地工作组信息" class="headerlink" title="2、自动收集本地工作组信息"></a>2、自动收集本地工作组信息</h2><h3 id="wmic-脚本"><a href="#wmic-脚本" class="headerlink" title="wmic 脚本"></a>wmic 脚本</h3><p>wmic 脚本下载地址：<a target="_blank" rel="noopener" href="https://www.fuzzysecurity.com/scripts/files/wmic_info.rar">https://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a></p>
 <p>直接将脚本在目标主机上运行，运行结束后会生成一个 output.html 文件</p>
@@ -1068,7 +1100,7 @@ reg add &quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; /v fS
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

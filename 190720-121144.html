@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    228
+                    224
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,18 +470,18 @@
                 <h1 id="0x01-提示错误"><a href="#0x01-提示错误" class="headerlink" title="0x01 提示错误"></a>0x01 提示错误</h1><p>根据官方的步骤执行docker-compose up但是我得到了这样的一个错误</p>
 <a id="more"></a>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<pre><code class="bash">~/CTFd# docker-compose up
-ERROR: The Compose file &#39;./docker-compose.yml&#39; is invalid because:
-networks.internal value Additional properties are not allowed (&#39;internal&#39; was unexpected)</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">~/CTFd<span class="token comment"># docker-compose up</span>
+ERROR: The Compose <span class="token function">file</span> <span class="token string">'./docker-compose.yml'</span> is invalid because:
+networks.internal value Additional properties are not allowed <span class="token punctuation">(</span><span class="token string">'internal'</span> was unexpected<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>经过多次查询后，是因为版本问题导致，因此需要将原来的docker-compose版本卸载，安装新版本。</p>
 <h1 id="0x02-安装新版本"><a href="#0x02-安装新版本" class="headerlink" title="0x02 安装新版本"></a>0x02 安装新版本</h1><p>卸载docker-compose版本</p>
-<pre><code class="bash">pip uninstall docker-compose</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip uninstall docker-compose<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>先升级一下pip</p>
-<pre><code class="bash">pip install –upgrade pip</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> –upgrade pip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>继续安装新版本</p>
-<pre><code class="bash">pip install -U docker-compose</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> -U docker-compose<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>也可以使用国内pip源进行加速，我使用的国内源进行的安装</p>
-<pre><code class="bash">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -U docker-compose</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> -i https://pypi.tuna.tsinghua.edu.cn/simple -U docker-compose<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>之后再执行docker-compose up就没有问题了<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/docker_CTFd2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>平时遇到问题还是需要先根据提示自己一步一步去找解决方法，之后再利用好Google。</p>
 <blockquote>
@@ -909,7 +912,7 @@ networks.internal value Additional properties are not allowed (&#39;internal&#39
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

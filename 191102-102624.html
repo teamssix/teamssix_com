@@ -444,7 +444,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    4 分
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -469,119 +472,119 @@
 <p><a href="https://www.teamssix.com/year/191101-112015.html">2、添加线程</a></p>
 <h1 id="0x00-不使用join-的结果"><a href="#0x00-不使用join-的结果" class="headerlink" title="0x00 不使用join()的结果"></a>0x00 不使用join()的结果</h1><p>首先在上一节的示例基础上进行简单修改</p>
 <a id="more"></a>
-<pre><code class="python">import time
-import threading
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> threading
 
-def thread_jobs():  # 定义要添加的线程
-    print(&#39;任务1开始\n&#39;)
-    for i in range(10):
-        time.sleep(0.1)
-    print(&#39;任务1结束\n&#39;)
+<span class="token keyword">def</span> <span class="token function">thread_jobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 定义要添加的线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务1开始\n'</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务1结束\n'</span><span class="token punctuation">)</span>
+    
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    thread <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>thread_jobs<span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">'任务1'</span><span class="token punctuation">)</span>  <span class="token comment"># 定义线程</span>
+    thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有任务已完成\n'</span><span class="token punctuation">)</span>
 
-def main():
-    thread = threading.Thread(target=thread_jobs,name=&#39;任务1&#39;)  # 定义线程
-    thread.start()  # 开始线程
-    print(&#39;所有任务已完成\n&#39;)
-
-if __name__ == &#39;__main__&#39;:
-    main()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>预计输出结果：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务1结束
-所有任务已完成</code></pre>
+所有任务已完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>实际输出结果：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 所有任务已完成
-任务1结束</code></pre>
+任务1结束<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到在线程还没有结束的时候，程序就开始运行之后的代码了，也就是说线程和其他部分的程序都是同步进行的，如果想要避免这种情况，想要程序按照代码顺序执行的话，就需要用到join功能。</p>
 <h1 id="0x01-使用join-的结果"><a href="#0x01-使用join-的结果" class="headerlink" title="0x01 使用join()的结果"></a>0x01 使用join()的结果</h1><p>在源代码thread.start()下加入thread.join()即可，原来代码的main函数就变成这样：</p>
-<pre><code class="python">def main():
-    thread = threading.Thread(target=thread_jobs,name=&#39;任务1&#39;)  # 定义线程
-    thread.start()  # 开始线程
-    thread.join() #加入join功能
-    print(&#39;所有任务已完成\n&#39;)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    thread <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>thread_jobs<span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">'任务1'</span><span class="token punctuation">)</span>  <span class="token comment"># 定义线程</span>
+    thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程</span>
+    thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#加入join功能</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有任务已完成\n'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里就表示必须要等到任务1这个线程结束后，才能执行thread.join()之后的代码，代码运行结果如下：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务1结束
-所有任务已完成</code></pre>
+所有任务已完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>使用join控制多个线程的执行顺序很关键。</p>
 <h1 id="0x02-添加第2个线程"><a href="#0x02-添加第2个线程" class="headerlink" title="0x02 添加第2个线程"></a>0x02 添加第2个线程</h1><p>这时如果我们加入第2个线程，但是不加入join功能，看看又是什么样，第2个线程的任务量较小，因此比第1个线程会更快执行，加入的第2个线程如下：</p>
-<pre><code class="python">def thread_jobs2(): # 定义第2个线程
-    print(&#39;任务2开始\n&#39;)
-    print(&#39;任务2结束\n&#39;)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">thread_jobs2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义第2个线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务2开始\n'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务2结束\n'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>输出的一种结果：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务2开始
 任务2结束
 所有任务已完成
-任务1结束</code></pre>
+任务1结束<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意这个时候任务1和任务2都没有添加join，也就是说输出的内容是什么完全看谁执行的快，谁先执行完谁就先输出，因此这里的输出结果并不唯一，这种杂乱的输出方式是不能接收的，所以需要使用join来控制。</p>
 <h1 id="0x03-在不同位置使用join-的结果"><a href="#0x03-在不同位置使用join-的结果" class="headerlink" title="0x03 在不同位置使用join()的结果"></a>0x03 在不同位置使用join()的结果</h1><p>如果在任务2开始前只对任务1加入join功能：</p>
-<pre><code class="python">thread.start()  # 开始线程1
-thread.join()  # 对任务1加入join功能
-thread2.start() # 开始线程2
-print(&#39;所有任务已完成\n&#39;)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程1</span>
+thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务1加入join功能</span>
+thread2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开始线程2</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有任务已完成\n'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其输出结果如下：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务1结束
 任务2开始
 任务2结束
-所有任务已完成</code></pre>
+所有任务已完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到程序会先执行任务1再执行接下来的操作，如果在任务2开始后只对任务1加入join功能：</p>
-<pre><code class="python">thread.start()  # 开始线程1
-thread2.start() # 开始线程2
-thread.join()  # 对任务1加入join功能
-print(&#39;所有任务已完成\n&#39;)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程1</span>
+thread2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开始线程2</span>
+thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务1加入join功能</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有任务已完成\n'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其输出结果如下：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务2开始
 任务2结束
 任务1结束
-所有任务已完成</code></pre>
+所有任务已完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>任务1先于任务2启动，但由于任务2的处理时间较短，因此先于任务1完成，而由于任务1加入了join，因此“所有任务已完成”也在任务1完成后再显示。</p>
 <h1 id="0x04-最终代码及输出结果"><a href="#0x04-最终代码及输出结果" class="headerlink" title="0x04 最终代码及输出结果"></a>0x04 最终代码及输出结果</h1><p>如果只对任务2加入join，同样输出结果就是要先等任务2执行完再执行其他程序，但是为了避免不必要的麻烦，推荐下面这种1221的V型排布，毕竟如果每个线程start()后就加入其join()，那就和单线程无异了。</p>
-<pre><code class="python">thread.start()  # 开始线程1
-thread2.start() # 开始线程2
-thread2.join()  # 对任务2加入join功能
-thread.join()  # 对任务1加入join功能</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程1</span>
+thread2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开始线程2</span>
+thread2<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务2加入join功能</span>
+thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务1加入join功能</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>最终完整代码及输出结果如下：</p>
-<pre><code class="python">import time
-import threading
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> threading
 
-def thread_jobs():  # 定义第1个线程
-    print(&#39;任务1开始\n&#39;)
-    for i in range(10):
-        time.sleep(0.1)
-    print(&#39;任务1结束\n&#39;)
+<span class="token keyword">def</span> <span class="token function">thread_jobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 定义第1个线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务1开始\n'</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务1结束\n'</span><span class="token punctuation">)</span>
 
-def thread_jobs2(): # 定义第2个线程
-    print(&#39;任务2开始\n&#39;)
-    print(&#39;任务2结束\n&#39;)
+<span class="token keyword">def</span> <span class="token function">thread_jobs2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义第2个线程</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务2开始\n'</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'任务2结束\n'</span><span class="token punctuation">)</span>
 
-def main():
-    thread = threading.Thread(target=thread_jobs,name=&#39;任务1&#39;)  # 定义线程1
-    thread2 = threading.Thread(target=thread_jobs2, name=&#39;任务2&#39;)  # 定义线程2
-    thread.start()  # 开始线程1
-    thread2.start() # 开始线程2
-    thread2.join()  # 对任务2加入join功能
-    thread.join()  # 对任务1加入join功能
-    print(&#39;所有任务已完成\n&#39;)
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    thread <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>thread_jobs<span class="token punctuation">,</span>name<span class="token operator">=</span><span class="token string">'任务1'</span><span class="token punctuation">)</span>  <span class="token comment"># 定义线程1</span>
+    thread2 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>thread_jobs2<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'任务2'</span><span class="token punctuation">)</span>  <span class="token comment"># 定义线程2</span>
+    thread<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 开始线程1</span>
+    thread2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开始线程2</span>
+    thread2<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务2加入join功能</span>
+    thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 对任务1加入join功能</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'所有任务已完成\n'</span><span class="token punctuation">)</span>
 
-if __name__ == &#39;__main__&#39;:
-    main()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>输出结果：</p>
-<pre><code class="bash"># python 3_join.py
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 3_join.py</span>
 任务1开始
 任务2开始
 任务2结束
 任务1结束
-所有任务已完成</code></pre>
+所有任务已完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>参考文章：<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a><br>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a></p>
 </blockquote>
@@ -1019,7 +1022,7 @@ if __name__ == &#39;__main__&#39;:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

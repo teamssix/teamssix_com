@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    10 分
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -479,107 +482,114 @@
 <li>被动收集子域名漏洞信息</li>
 </ul>
 <h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="1、安装MongoDB"><a href="#1、安装MongoDB" class="headerlink" title="1、安装MongoDB"></a>1、安装MongoDB</h3><p>这一步可自行百度，如果不是在本地主机安装，则需要在安装MongoDB之后修改<code>setting.py</code>文件的第72行，将数据库的URL及端口改为自己设置的即可，默认配置如下：</p>
-<pre><code class="python">MONGO_DB_URI = &#39;mongodb://localhost:27017&#39;</code></pre>
-<h3 id="2、安装第三方模块文件"><a href="#2、安装第三方模块文件" class="headerlink" title="2、安装第三方模块文件"></a>2、安装第三方模块文件</h3><pre><code class="bash">pip3 install -r requirements.txt</code></pre>
-<h3 id="3、开始运行"><a href="#3、开始运行" class="headerlink" title="3、开始运行"></a>3、开始运行</h3><pre><code class="bash">python3 start.py -u target.com</code></pre>
-<h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><pre><code class="bash">-u ：指定要被动收集的url
--o : 导出被动收集结果，支持 CSV、JSON、XML 等格式，结果将保存到 ./output 目录下
--a : 直接被动收集所有结果，没有步骤提示信息，并默认导出 result.csv 文件
--h : 查看帮助</code></pre>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="python3-start-py-u-teamssix-com"><a href="#python3-start-py-u-teamssix-com" class="headerlink" title="python3 start.py -u teamssix.com"></a>python3 start.py -u teamssix.com</h3><pre><code class="bash">- - - - - - - - - - - - - - - - - - - - - - - - - - -
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">MONGO_DB_URI <span class="token operator">=</span> <span class="token string">'mongodb://localhost:27017'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="2、安装第三方模块文件"><a href="#2、安装第三方模块文件" class="headerlink" title="2、安装第三方模块文件"></a>2、安装第三方模块文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip3 <span class="token function">install</span> -r requirements.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3、开始运行"><a href="#3、开始运行" class="headerlink" title="3、开始运行"></a>3、开始运行</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 start.py -u target.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-u ：指定要被动收集的url
+-o <span class="token builtin class-name">:</span> 导出被动收集结果，支持 CSV、JSON、XML 等格式，结果将保存到 ./output 目录下
+-a <span class="token builtin class-name">:</span> 直接被动收集所有结果，没有步骤提示信息，并默认导出 result.csv 文件
+-h <span class="token builtin class-name">:</span> 查看帮助<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="python3-start-py-u-teamssix-com"><a href="#python3-start-py-u-teamssix-com" class="headerlink" title="python3 start.py -u teamssix.com"></a>python3 start.py -u teamssix.com</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">- - - - - - - - - - - - - - - - - - - - - - - - - - -
  操作编号：
 
- [1] 被动收集备案信息
- [2] 被动收集 Whois 信息
- [3] 被动收集子域名信息
- [4] 被动收集子域名 IP 信息
- [5] 被动收集子域名 CMS 信息
- [6] 被动收集子域名 Shodan 信息
- [7] 被动收集子域名漏洞信息
- [8] 退出程序
- 备注：第 3 步执行一次后才可执行 4、5、6 步，第 6 步执行一次后才可执行第 7 步，否则运行会出现错误提示。
+ <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> 被动收集备案信息
+ <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> 被动收集 Whois 信息
+ <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> 被动收集子域名信息
+ <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> 被动收集子域名 IP 信息
+ <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> 被动收集子域名 CMS 信息
+ <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> 被动收集子域名 Shodan 信息
+ <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span> 被动收集子域名漏洞信息
+ <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span> 退出程序
+ 备注：第 <span class="token number">3</span> 步执行一次后才可执行 <span class="token number">4</span>、5、6 步，第 <span class="token number">6</span> 步执行一次后才可执行第 <span class="token number">7</span> 步，否则运行会出现错误提示。
 - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-[2020-03-21 13:36:35] 请输入你的操作步骤 :</code></pre>
-<h3 id="python3-start-py-u-teamssix-com-a"><a href="#python3-start-py-u-teamssix-com-a" class="headerlink" title="python3 start.py -u teamssix.com -a"></a>python3 start.py -u teamssix.com -a</h3><pre><code class="bash">[2020-03-21 13:45:50] 正在被动收集 freebuf.com 的备案信息……
-[2020-03-21 13:45:50] 备案网站名称：黑客与极客
-[2020-03-21 13:45:50] 备案单位类型：企业
-[2020-03-21 13:45:50] 备案单位名称：上海斗象信息科技有限公司
-[2020-03-21 13:45:50] 备案网站首页：www.freebuf.com
-[2020-03-21 13:45:50] 备案许可证号：沪ICP备13033796号-1
-[2020-03-21 13:45:50] 备案审核时间：2019/7/17
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:36:35<span class="token punctuation">]</span> 请输入你的操作步骤 <span class="token builtin class-name">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-[2020-03-21 13:45:56] 正在被动收集 freebuf.com 的 Whois 信息……
-[2020-03-21 13:45:56] 注册商：Alibaba Cloud Computing (Beijing) Co., Ltd.
-[2020-03-21 13:45:56] 注册邮箱：DomainAbuse@service.aliyun.com
-[2020-03-21 13:45:56] 注册电话：+86.95187
-[2020-03-21 13:45:56] 注册网址：http://www.net.cn
-[2020-03-21 13:45:56] 注册商 Whois 服务器：grs-whois.hichina.com
-[2020-03-21 13:45:56] DNS 解析服务器：[&#39;F1G1NS1.DNSPOD.NET&#39;, &#39;F1G1NS2.DNSPOD.NET&#39;]
-[2020-03-21 13:45:56] 注册日期：2010-08-21T15:24:37Z
-[2020-03-21 13:45:56] 到期日期：2021-08-21T15:24:37Z
-[2020-03-21 13:45:56] 更新日期：2020-02-27T02:03:14Z
+<h3 id="python3-start-py-u-teamssix-com-a"><a href="#python3-start-py-u-teamssix-com-a" class="headerlink" title="python3 start.py -u teamssix.com -a"></a>python3 start.py -u teamssix.com -a</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的备案信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案网站名称：黑客与极客
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案单位类型：企业
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案单位名称：上海斗象信息科技有限公司
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案网站首页：www.freebuf.com
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案许可证号：沪ICP备13033796号-1
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:50<span class="token punctuation">]</span> 备案审核时间：2019/7/17
 
-[2020-03-21 13:46:04] 正在被动收集 freebuf.com 的子域信息……
-[2020-03-21 13:46:04] 搜索&quot;freebuf.com&quot;查询结果为:29条。响应时间：5.204秒，搜索结果共 2 页
-[2020-03-21 13:46:04] zhuanlan.freebuf.com      专栏 - FreeBuf 互联网安全新媒体平台 | 关注黑客与极客    200
-[2020-03-21 13:46:04] you3enter.freebuf.com     空
-[2020-03-21 13:46:04] www.freebuf.com   FreeBuf互联网安全新媒体平台     200
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的 Whois 信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册商：Alibaba Cloud Computing <span class="token punctuation">(</span>Beijing<span class="token punctuation">)</span> Co., Ltd.
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册邮箱：DomainAbuse@service.aliyun.com
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册电话：+86.95187
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册网址：http://www.net.cn
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册商 Whois 服务器：grs-whois.hichina.com
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> DNS 解析服务器：<span class="token punctuation">[</span><span class="token string">'F1G1NS1.DNSPOD.NET'</span>, <span class="token string">'F1G1NS2.DNSPOD.NET'</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 注册日期：2010-08-21T15:24:37Z
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 到期日期：2021-08-21T15:24:37Z
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:45:56<span class="token punctuation">]</span> 更新日期：2020-02-27T02:03:14Z
+
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:04<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的子域信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:04<span class="token punctuation">]</span> 搜索<span class="token string">"freebuf.com"</span>查询结果为:29条。响应时间：5.204秒，搜索结果共 <span class="token number">2</span> 页
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:04<span class="token punctuation">]</span> zhuanlan.freebuf.com      专栏 - FreeBuf 互联网安全新媒体平台 <span class="token operator">|</span> 关注黑客与极客    <span class="token number">200</span>
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:04<span class="token punctuation">]</span> you3enter.freebuf.com     空
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:04<span class="token punctuation">]</span> www.freebuf.com   FreeBuf互联网安全新媒体平台     <span class="token number">200</span>
 ……此处内容太多，省略……
-[2020-03-21 13:46:06] ai.freebuf.com    空
-[2020-03-21 13:46:06] freebuf.com       FreeBuf互联网安全新媒体平台     200
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:06<span class="token punctuation">]</span> ai.freebuf.com    空
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:06<span class="token punctuation">]</span> freebuf.com       FreeBuf互联网安全新媒体平台     <span class="token number">200</span>
 
-[2020-03-21 13:46:09] 正在被动收集 freebuf.com 的子域 IP 信息……
-[2020-03-21 13:46:09] 提示：如果出现大量无法判断 IP 的情况，请尝试更换自己的IP
-[2020-03-21 13:46:09] freebuf.com       wittest.freebuf.com             123.57.248.123
-[2020-03-21 13:46:09] freebuf.com       www.freebuf.com         123.57.145.69
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:09<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的子域 IP 信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:09<span class="token punctuation">]</span> 提示：如果出现大量无法判断 IP 的情况，请尝试更换自己的IP
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:09<span class="token punctuation">]</span> freebuf.com       wittest.freebuf.com             <span class="token number">123.57</span>.248.123
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:09<span class="token punctuation">]</span> freebuf.com       www.freebuf.com         <span class="token number">123.57</span>.145.69
 ……此处内容太多，省略……
-[2020-03-21 13:46:12] freebuf.com       ai.freebuf.com          无法判断 IP
-[2020-03-21 13:46:14] freebuf.com       static.freebuf.com              39.96.250.248
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:12<span class="token punctuation">]</span> freebuf.com       ai.freebuf.com          无法判断 IP
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:14<span class="token punctuation">]</span> freebuf.com       static.freebuf.com              <span class="token number">39.96</span>.250.248
 
-[2020-03-21 13:46:17] 正在被动收集 freebuf.com 的子域 CMS 信息……
-[2020-03-21 13:46:18] freebuf.com       static.freebuf.com                      Apache 2.2.21
-[2020-03-21 13:46:19] freebuf.com       wittest.freebuf.com     WitAwards 2017互联网安全年度评选                源
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:17<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的子域 CMS 信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:18<span class="token punctuation">]</span> freebuf.com       static.freebuf.com                      Apache <span class="token number">2.2</span>.21
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:19<span class="token punctuation">]</span> freebuf.com       wittest.freebuf.com     WitAwards <span class="token number">2017</span>互联网安全年度评选                源
 ……此处内容太多，省略……
-[2020-03-21 13:46:28] freebuf.com       bar.freebuf.com FreeBuf小酒馆           Apache 2.2.21
-[2020-03-21 13:46:29] freebuf.com       company.freebuf.com     FreeBuf.COM | 企业空间          jQuery 2.0.3    Twitter Bootstrap       Tengine PHP
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:28<span class="token punctuation">]</span> freebuf.com       bar.freebuf.com FreeBuf小酒馆           Apache <span class="token number">2.2</span>.21
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:46:29<span class="token punctuation">]</span> freebuf.com       company.freebuf.com     FreeBuf.COM <span class="token operator">|</span> 企业空间          jQuery <span class="token number">2.0</span>.3    Twitter Bootstrap       Tengine PHP
 
-[2020-03-21 13:47:23] 正在被动收集 freebuf.com 的子域 shodan 信息……
-[2020-03-21 13:47:23] 如果您的 api 输入错误，可到数据库中修改
-[2020-03-21 13:47:26] freebuf.com       123.57.145.69   [&#39;www.freebuf.com&#39;, &#39;search.freebuf.com&#39;]       China   Aliyun Computing Co.    None    [80]
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:23<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的子域 shodan 信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:23<span class="token punctuation">]</span> 如果您的 api 输入错误，可到数据库中修改
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:26<span class="token punctuation">]</span> freebuf.com       <span class="token number">123.57</span>.145.69   <span class="token punctuation">[</span><span class="token string">'www.freebuf.com'</span>, <span class="token string">'search.freebuf.com'</span><span class="token punctuation">]</span>       China   Aliyun Computing Co.    None    <span class="token punctuation">[</span><span class="token number">80</span><span class="token punctuation">]</span>
 
-[2020-03-21 13:47:26] freebuf.com       182.254.150.199 [&#39;freebuf.com&#39;, &#39;freebuf.com&#39;]  China   Tencent cloud computing None    [443]   [&#39;CVE-2016-6291&#39;, &#39;CVE-2016-6290&#39;, &#39;CVE-2016-6292&#39;, &#39;CVE-2016-4473&#39;, &#39;CVE-2016-6294&#39;, &#39;CVE-2016-6297&#39;,
- &#39;CVE-2016-5767&#39;, &#39;CVE-2016-5768&#39;, &#39;CVE-2016-5769&#39;, &#39;CVE-2018-10547&#39;, &#39;CVE-2018-10546&#39;, &#39;CVE-2019-9641&#39;, &#39;CVE-2016-6295&#39;, &#39;CVE-2018-10548&#39;, &#39;CVE-2018-19520&#39;, &#39;CVE-2018-19396&#39;, &#39;CVE-2016-7478&#39;, &#39;CVE-2016-5766&#39;, &#39;CVE-2018-19935&#39;, &#39;CVE-2016-
-6296&#39;, &#39;CVE-2018-17082&#39;, &#39;CVE-2018-10545&#39;, &#39;CVE-2019-9639&#39;, &#39;CVE-2019-9638&#39;, &#39;CVE-2019-9637&#39;, &#39;CVE-2015-8994&#39;, &#39;CVE-2018-14883&#39;, &#39;CVE-2016-5773&#39;, &#39;CVE-2016-5772&#39;, &#39;CVE-2016-5771&#39;, &#39;CVE-2016-5770&#39;, &#39;CVE-2016-6289&#39;, &#39;CVE-2018-19395&#39;, &#39;CVE-2
-019-6977&#39;, &#39;CVE-2018-20783&#39;, &#39;CVE-2016-7568&#39;, &#39;CVE-2018-19518&#39;, &#39;CVE-2016-5399&#39;, &#39;CVE-2019-9023&#39;, &#39;CVE-2019-9020&#39;, &#39;CVE-2019-9021&#39;, &#39;CVE-2017-16642&#39;, &#39;CVE-2019-9024&#39;, &#39;CVE-2018-15132&#39;, &#39;CVE-2018-10549&#39;]
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:26<span class="token punctuation">]</span> freebuf.com       <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span>, <span class="token string">'freebuf.com'</span><span class="token punctuation">]</span>  China   Tencent cloud computing None    <span class="token punctuation">[</span><span class="token number">443</span><span class="token punctuation">]</span>   <span class="token punctuation">[</span><span class="token string">'CVE-2016-6291'</span>, <span class="token string">'CVE-2016-6290'</span>, <span class="token string">'CVE-2016-6292'</span>, <span class="token string">'CVE-2016-4473'</span>, <span class="token string">'CVE-2016-6294'</span>, <span class="token string">'CVE-2016-6297'</span>,
+ <span class="token string">'CVE-2016-5767'</span>, <span class="token string">'CVE-2016-5768'</span>, <span class="token string">'CVE-2016-5769'</span>, <span class="token string">'CVE-2018-10547'</span>, <span class="token string">'CVE-2018-10546'</span>, <span class="token string">'CVE-2019-9641'</span>, <span class="token string">'CVE-2016-6295'</span>, <span class="token string">'CVE-2018-10548'</span>, <span class="token string">'CVE-2018-19520'</span>, <span class="token string">'CVE-2018-19396'</span>, <span class="token string">'CVE-2016-7478'</span>, <span class="token string">'CVE-2016-5766'</span>, <span class="token string">'CVE-2018-19935'</span>, <span class="token string">'CVE-2016-
+6296'</span>, <span class="token string">'CVE-2018-17082'</span>, <span class="token string">'CVE-2018-10545'</span>, <span class="token string">'CVE-2019-9639'</span>, <span class="token string">'CVE-2019-9638'</span>, <span class="token string">'CVE-2019-9637'</span>, <span class="token string">'CVE-2015-8994'</span>, <span class="token string">'CVE-2018-14883'</span>, <span class="token string">'CVE-2016-5773'</span>, <span class="token string">'CVE-2016-5772'</span>, <span class="token string">'CVE-2016-5771'</span>, <span class="token string">'CVE-2016-5770'</span>, <span class="token string">'CVE-2016-6289'</span>, <span class="token string">'CVE-2018-19395'</span>, <span class="token string">'CVE-2
+019-6977'</span>, <span class="token string">'CVE-2018-20783'</span>, <span class="token string">'CVE-2016-7568'</span>, <span class="token string">'CVE-2018-19518'</span>, <span class="token string">'CVE-2016-5399'</span>, <span class="token string">'CVE-2019-9023'</span>, <span class="token string">'CVE-2019-9020'</span>, <span class="token string">'CVE-2019-9021'</span>, <span class="token string">'CVE-2017-16642'</span>, <span class="token string">'CVE-2019-9024'</span>, <span class="token string">'CVE-2018-15132'</span>, <span class="token string">'CVE-2018-10549'</span><span class="token punctuation">]</span>
 
-[2020-03-21 13:47:46] freebuf.com       123.57.248.123  [&#39;wittest.freebuf.com&#39;, &#39;wittest.freebuf.com&#39;]  China   Aliyun Computing Co.    None    [80, 443, 2222] [&#39;CVE-2012-0021&#39;, &#39;CVE-2017-15906&#39;, &#39;CVE-2011-4317&#39;, &#39;CVE-2017-7679&#39;, &#39;CVE-201
-6-0777&#39;, &#39;CVE-2018-1312&#39;, &#39;CVE-2011-3368&#39;, &#39;CVE-2012-3499&#39;, &#39;CVE-2012-4558&#39;, &#39;CVE-2013-1896&#39;, &#39;CVE-2011-5000&#39;, &#39;CVE-2016-8612&#39;, &#39;CVE-2014-1692&#39;, &#39;CVE-2012-4557&#39;, &#39;CVE-2014-0098&#39;, &#39;CVE-2017-7668&#39;, &#39;CVE-2012-0814&#39;, &#39;CVE-2013-6438&#39;, &#39;CVE-201
-2-2687&#39;, &#39;CVE-2011-4415&#39;, &#39;CVE-2012-0031&#39;, &#39;CVE-2010-5107&#39;, &#39;CVE-2013-2249&#39;, &#39;CVE-2016-10708&#39;, &#39;CVE-2011-3607&#39;, &#39;CVE-2017-3167&#39;, &#39;CVE-2011-4327&#39;, &#39;CVE-2012-0053&#39;, &#39;CVE-2012-0883&#39;, &#39;CVE-2017-3169&#39;, &#39;CVE-2014-0231&#39;, &#39;CVE-2013-1862&#39;, &#39;CVE-20
-16-4975&#39;, &#39;CVE-2010-4478&#39;, &#39;CVE-2010-4755&#39;]
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:46<span class="token punctuation">]</span> freebuf.com       <span class="token number">123.57</span>.248.123  <span class="token punctuation">[</span><span class="token string">'wittest.freebuf.com'</span>, <span class="token string">'wittest.freebuf.com'</span><span class="token punctuation">]</span>  China   Aliyun Computing Co.    None    <span class="token punctuation">[</span><span class="token number">80</span>, <span class="token number">443</span>, <span class="token number">2222</span><span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token string">'CVE-2012-0021'</span>, <span class="token string">'CVE-2017-15906'</span>, <span class="token string">'CVE-2011-4317'</span>, <span class="token string">'CVE-2017-7679'</span>, <span class="token string">'CVE-201
+6-0777'</span>, <span class="token string">'CVE-2018-1312'</span>, <span class="token string">'CVE-2011-3368'</span>, <span class="token string">'CVE-2012-3499'</span>, <span class="token string">'CVE-2012-4558'</span>, <span class="token string">'CVE-2013-1896'</span>, <span class="token string">'CVE-2011-5000'</span>, <span class="token string">'CVE-2016-8612'</span>, <span class="token string">'CVE-2014-1692'</span>, <span class="token string">'CVE-2012-4557'</span>, <span class="token string">'CVE-2014-0098'</span>, <span class="token string">'CVE-2017-7668'</span>, <span class="token string">'CVE-2012-0814'</span>, <span class="token string">'CVE-2013-6438'</span>, <span class="token string">'CVE-201
+2-2687'</span>, <span class="token string">'CVE-2011-4415'</span>, <span class="token string">'CVE-2012-0031'</span>, <span class="token string">'CVE-2010-5107'</span>, <span class="token string">'CVE-2013-2249'</span>, <span class="token string">'CVE-2016-10708'</span>, <span class="token string">'CVE-2011-3607'</span>, <span class="token string">'CVE-2017-3167'</span>, <span class="token string">'CVE-2011-4327'</span>, <span class="token string">'CVE-2012-0053'</span>, <span class="token string">'CVE-2012-0883'</span>, <span class="token string">'CVE-2017-3169'</span>, <span class="token string">'CVE-2014-0231'</span>, <span class="token string">'CVE-2013-1862'</span>, <span class="token string">'CVE-20
+16-4975'</span>, <span class="token string">'CVE-2010-4478'</span>, <span class="token string">'CVE-2010-4755'</span><span class="token punctuation">]</span>
 
-[2020-03-21 13:47:54] freebuf.com       39.96.250.248   [&#39;zhuanlan.freebuf.com&#39;, &#39;shop.freebuf.com&#39;, &#39;wit.freebuf.com&#39;, &#39;my.freebuf.com&#39;, &#39;open.freebuf.com&#39;, &#39;static.freebuf.com&#39;, &#39;live.freebuf.com&#39;, &#39;job.freebuf.com&#39;, &#39;prize.freebuf.com&#39;
-, &#39;www.freebuf.com&#39;, &#39;fit.freebuf.com&#39;, &#39;api.freebuf.com&#39;, &#39;chat.freebuf.com&#39;, &#39;bar.freebuf.com&#39;, &#39;company.freebuf.com&#39;, &#39;wit.freebuf.com&#39;, &#39;prize.freebuf.com&#39;, &#39;zhuanlan.freebuf.com&#39;, &#39;open.freebuf.com&#39;, &#39;live.freebuf.com&#39;, &#39;job.freebuf.
-com&#39;, &#39;fit.freebuf.com&#39;, &#39;my.freebuf.com&#39;, &#39;shop.freebuf.com&#39;, &#39;api.freebuf.com&#39;, &#39;chat.freebuf.com&#39;, &#39;company.freebuf.com&#39;, &#39;bar.freebuf.com&#39;, &#39;static.freebuf.com&#39;]   China   Aliyun Computing Co.    None    [5000, 6666, 8334, 8080, 8081,
- 7443, 8086, 8087, 8090, 10000, 9201, 9000, 8106, 9003, 53, 443, 8000, 8001, 8002, 8009, 81, 82, 83, 7001, 4443, 8800, 7777, 1000, 9200, 6001, 8181, 8443, 9002]
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:54<span class="token punctuation">]</span> freebuf.com       <span class="token number">39.96</span>.250.248   <span class="token punctuation">[</span><span class="token string">'zhuanlan.freebuf.com'</span>, <span class="token string">'shop.freebuf.com'</span>, <span class="token string">'wit.freebuf.com'</span>, <span class="token string">'my.freebuf.com'</span>, <span class="token string">'open.freebuf.com'</span>, <span class="token string">'static.freebuf.com'</span>, <span class="token string">'live.freebuf.com'</span>, <span class="token string">'job.freebuf.com'</span>, <span class="token string">'prize.freebuf.com'</span>
+, <span class="token string">'www.freebuf.com'</span>, <span class="token string">'fit.freebuf.com'</span>, <span class="token string">'api.freebuf.com'</span>, <span class="token string">'chat.freebuf.com'</span>, <span class="token string">'bar.freebuf.com'</span>, <span class="token string">'company.freebuf.com'</span>, <span class="token string">'wit.freebuf.com'</span>, <span class="token string">'prize.freebuf.com'</span>, <span class="token string">'zhuanlan.freebuf.com'</span>, <span class="token string">'open.freebuf.com'</span>, <span class="token string">'live.freebuf.com'</span>, <span class="token string">'job.freebuf.
+com'</span>, <span class="token string">'fit.freebuf.com'</span>, <span class="token string">'my.freebuf.com'</span>, <span class="token string">'shop.freebuf.com'</span>, <span class="token string">'api.freebuf.com'</span>, <span class="token string">'chat.freebuf.com'</span>, <span class="token string">'company.freebuf.com'</span>, <span class="token string">'bar.freebuf.com'</span>, <span class="token string">'static.freebuf.com'</span><span class="token punctuation">]</span>   China   Aliyun Computing Co.    None    <span class="token punctuation">[</span><span class="token number">5000</span>, <span class="token number">6666</span>, <span class="token number">8334</span>, <span class="token number">8080</span>, <span class="token number">8081</span>,
+ <span class="token number">7443</span>, <span class="token number">8086</span>, <span class="token number">8087</span>, <span class="token number">8090</span>, <span class="token number">10000</span>, <span class="token number">9201</span>, <span class="token number">9000</span>, <span class="token number">8106</span>, <span class="token number">9003</span>, <span class="token number">53</span>, <span class="token number">443</span>, <span class="token number">8000</span>, <span class="token number">8001</span>, <span class="token number">8002</span>, <span class="token number">8009</span>, <span class="token number">81</span>, <span class="token number">82</span>, <span class="token number">83</span>, <span class="token number">7001</span>, <span class="token number">4443</span>, <span class="token number">8800</span>, <span class="token number">7777</span>, <span class="token number">1000</span>, <span class="token number">9200</span>, <span class="token number">6001</span>, <span class="token number">8181</span>, <span class="token number">8443</span>, <span class="token number">9002</span><span class="token punctuation">]</span>
 
-[2020-03-21 13:47:57] 正在被动收集 freebuf.com 的漏洞详情信息……
-[2020-03-21 13:47:58] freebuf.com       CVE-2016-6291   高危    PHPext/exif/exif.c文件安全漏洞  182.254.150.199 [&#39;freebuf.com&#39;] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-929
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:57<span class="token punctuation">]</span> 正在被动收集 freebuf.com 的漏洞详情信息……
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:58<span class="token punctuation">]</span> freebuf.com       CVE-2016-6291   高危    PHPext/exif/exif.c文件安全漏洞  <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span><span class="token punctuation">]</span> http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD<span class="token operator">=</span>CNNVD-201607-929
 
-[2020-03-21 13:47:58] freebuf.com       CVE-2016-6292   中危    PHPext/exif/exif.c文件安全漏洞  182.254.150.199 [&#39;freebuf.com&#39;] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-930
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:58<span class="token punctuation">]</span> freebuf.com       CVE-2016-6292   中危    PHPext/exif/exif.c文件安全漏洞  <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span><span class="token punctuation">]</span> http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD<span class="token operator">=</span>CNNVD-201607-930
 
-[2020-03-21 13:47:58] freebuf.com       CVE-2016-4473   高危    PHP安全漏洞     182.254.150.199 [&#39;freebuf.com&#39;] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201610-062
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:58<span class="token punctuation">]</span> freebuf.com       CVE-2016-4473   高危    PHP安全漏洞     <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span><span class="token punctuation">]</span> http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD<span class="token operator">=</span>CNNVD-201610-062
 
-[2020-03-21 13:47:58] freebuf.com       CVE-2016-5768   高危    PHPmbstring扩展整数溢出漏洞     182.254.150.199 [&#39;freebuf.com&#39;] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201606-559
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:58<span class="token punctuation">]</span> freebuf.com       CVE-2016-5768   高危    PHPmbstring扩展整数溢出漏洞     <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span><span class="token punctuation">]</span> http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD<span class="token operator">=</span>CNNVD-201606-559
 
-[2020-03-21 13:47:58] freebuf.com       CVE-2016-6297   中危    PHPext/zip/zip_stream.c文件整数溢出漏洞 182.254.150.199 [&#39;freebuf.com&#39;] http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD=CNNVD-201607-935
+<span class="token punctuation">[</span><span class="token number">2020</span>-03-21 <span class="token number">13</span>:47:58<span class="token punctuation">]</span> freebuf.com       CVE-2016-6297   中危    PHPext/zip/zip_stream.c文件整数溢出漏洞 <span class="token number">182.254</span>.150.199 <span class="token punctuation">[</span><span class="token string">'freebuf.com'</span><span class="token punctuation">]</span> http://www.cnnvd.org.cn/web/xxk/ldxqById.tag?CNNVD<span class="token operator">=</span>CNNVD-201607-935
 
-……此处内容太多，省略……</code></pre>
+……此处内容太多，省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h2><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-29-32.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-07.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-21.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-30-33.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><pre><code>https://github.com/teamssix/pigat/releases</code></pre>
+<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;github.com&#x2F;teamssix&#x2F;pigat&#x2F;releases<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><a target="_blank" rel="noopener" href="https://github.com/teamssix/pigat/releases">点击此处进入下载页面</a></p>
 <h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>因为我没有太多的开发经验，因此该工具难免存在有问题以及不恰当的地方，希望各位大佬在使用的过程中碰到问题能够多多反馈。</p>
 <p>开发不易，还望大佬们走过路过顺手给个star，小弟将不胜感激。</p>
@@ -1018,7 +1028,7 @@ com&#39;, &#39;fit.freebuf.com&#39;, &#39;my.freebuf.com&#39;, &#39;shop.freebuf
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

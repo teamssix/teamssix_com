@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.6k
+                    3.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    17 分
                 </div>
                 
 
@@ -459,14 +459,18 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="1、判断是否存在域"><a href="#1、判断是否存在域" class="headerlink" title="1、判断是否存在域"></a>1、判断是否存在域</h2><h3 id="ipconfig"><a href="#ipconfig" class="headerlink" title="ipconfig"></a>ipconfig</h3><p>查看网关 IP 地址、DNS 的 IP 地址、域名、本机是否和 DNS 服务器处于同一网段。    </p>
-<pre><code>ipconfig /all</code></pre>
-<pre><code>C:\Users\daniel10&gt; ipconfig /all
+<pre class="line-numbers language-none"><code class="language-none">ipconfig &#x2F;all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; ipconfig &#x2F;all
 
 Windows IP 配置
    主 DNS 后缀 . . . . . . . . . .  : teamssix.com
@@ -476,42 +480,56 @@ Windows IP 配置
    IPv4 地址 . . . . . . . . . . .. : 192.168.7.110
    子网掩码  . . . . . . . . . . . . : 255.255.255.0
    默认网关. . . . . . . . . . . . . : 192.168.7.1
-   DNS 服务器  . . . . . . . . . . . : 192.168.7.7</code></pre>
+   DNS 服务器  . . . . . . . . . . . : 192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>接着使用 nslookup 解析域名的 IP 地址，查看是否与 DNS 服务器为同一 IP</p>
-<pre><code>nslookup teamssix.com</code></pre>
-<pre><code>C:\Users\daniel10&gt; nslookup teamssix.com
+<pre class="line-numbers language-none"><code class="language-none">nslookup teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nslookup teamssix.com
 服务器:  UnKnown
 Address:  192.168.7.7
 名称:    teamssix.com
-Address:  192.168.7.7</code></pre>
-<h3 id="系统详细信息"><a href="#系统详细信息" class="headerlink" title="系统详细信息"></a>系统详细信息</h3><pre><code>systeminfo</code></pre>
-<pre><code>C:\Users\daniel10&gt; systeminfo | findstr 域:
-域: teamssix.com</code></pre>
-<h3 id="当前登录域与域用户"><a href="#当前登录域与域用户" class="headerlink" title="当前登录域与域用户"></a>当前登录域与域用户</h3><pre><code>net config workstation</code></pre>
-<pre><code>C:\Users\daniel10&gt; net config workstation | findstr 域
+Address:  192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="系统详细信息"><a href="#系统详细信息" class="headerlink" title="系统详细信息"></a>系统详细信息</h3><pre class="line-numbers language-none"><code class="language-none">systeminfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; systeminfo | findstr 域:
+域: teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="当前登录域与域用户"><a href="#当前登录域与域用户" class="headerlink" title="当前登录域与域用户"></a>当前登录域与域用户</h3><pre class="line-numbers language-none"><code class="language-none">net config workstation<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net config workstation | findstr 域
 工作站域                    TEAMSSIX
 工作站域 DNS 名称            teamssix.com
-登录域                      TEAMSSIX</code></pre>
-<h3 id="判断主域"><a href="#判断主域" class="headerlink" title="判断主域"></a>判断主域</h3><pre><code>net time /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net time /domain
-\\dc.teamssix.com 的当前时间是 2021/2/13 20:49:56
-命令成功完成。</code></pre>
-<h2 id="2、收集域内基础信息"><a href="#2、收集域内基础信息" class="headerlink" title="2、收集域内基础信息"></a>2、收集域内基础信息</h2><h3 id="查看域"><a href="#查看域" class="headerlink" title="查看域"></a>查看域</h3><pre><code>net view /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net view /domain
+登录域                      TEAMSSIX<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="判断主域"><a href="#判断主域" class="headerlink" title="判断主域"></a>判断主域</h3><pre class="line-numbers language-none"><code class="language-none">net time &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net time &#x2F;domain
+\\dc.teamssix.com 的当前时间是 2021&#x2F;2&#x2F;13 20:49:56
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2、收集域内基础信息"><a href="#2、收集域内基础信息" class="headerlink" title="2、收集域内基础信息"></a>2、收集域内基础信息</h2><h3 id="查看域"><a href="#查看域" class="headerlink" title="查看域"></a>查看域</h3><pre class="line-numbers language-none"><code class="language-none">net view &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net view &#x2F;domain
 Domain
 -------------------------------------------------------------------------------
 TEAMSSIX
-命令成功完成。</code></pre>
-<h3 id="查看域内计算机"><a href="#查看域内计算机" class="headerlink" title="查看域内计算机"></a>查看域内计算机</h3><pre><code>net view /domain:domain_name</code></pre>
-<pre><code>C:\Users\daniel10&gt; net view /domain:teamssix
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域内计算机"><a href="#查看域内计算机" class="headerlink" title="查看域内计算机"></a>查看域内计算机</h3><pre class="line-numbers language-none"><code class="language-none">net view &#x2F;domain:domain_name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net view &#x2F;domain:teamssix
 服务器名称            注解
 -------------------------------------------------------------------------------
 \\DANIEL10
 \\DANIEL7
 \\DC
-命令成功完成。</code></pre>
-<h3 id="查看域内用户组列表"><a href="#查看域内用户组列表" class="headerlink" title="查看域内用户组列表"></a>查看域内用户组列表</h3><pre><code>net group /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net group /domain
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域内用户组列表"><a href="#查看域内用户组列表" class="headerlink" title="查看域内用户组列表"></a>查看域内用户组列表</h3><pre class="line-numbers language-none"><code class="language-none">net group &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net group &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 \\dc.teamssix.com 的组帐户
 -------------------------------------------------------------------------------
@@ -520,18 +538,22 @@ TEAMSSIX
 *Domain Computers
 *Domain Users
 *Enterprise Admins
-命令成功完成。</code></pre>
-<h3 id="查看域用户组信息"><a href="#查看域用户组信息" class="headerlink" title="查看域用户组信息"></a>查看域用户组信息</h3><pre><code>net group &quot;Enterprise Admins&quot; /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net group &quot;Enterprise Admins&quot; /domain
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域用户组信息"><a href="#查看域用户组信息" class="headerlink" title="查看域用户组信息"></a>查看域用户组信息</h3><pre class="line-numbers language-none"><code class="language-none">net group &quot;Enterprise Admins&quot; &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net group &quot;Enterprise Admins&quot; &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 组名     Enterprise Admins
 注释     指定的公司系統管理員
 成员
 -------------------------------------------------------------------------------
 Administrator
-命令成功完成。</code></pre>
-<h3 id="查看域密码策略信息"><a href="#查看域密码策略信息" class="headerlink" title="查看域密码策略信息"></a>查看域密码策略信息</h3><pre><code>net accounts /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net accounts /domain
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域密码策略信息"><a href="#查看域密码策略信息" class="headerlink" title="查看域密码策略信息"></a>查看域密码策略信息</h3><pre class="line-numbers language-none"><code class="language-none">net accounts &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net accounts &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 强制用户在时间到期之后多久必须注销?:     从不
 密码最短使用期限(天):                  1
@@ -542,29 +564,38 @@ Administrator
 锁定持续时间(分):                      30
 锁定观测窗口(分):                      30
 计算机角色:                           PRIMARY
-命令成功完成。</code></pre>
-<h3 id="查看域信任信息"><a href="#查看域信任信息" class="headerlink" title="查看域信任信息"></a>查看域信任信息</h3><pre><code>nltest /domain_trusts</code></pre>
-<pre><code>C:\Users\daniel10&gt; nltest /domain_trusts
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域信任信息"><a href="#查看域信任信息" class="headerlink" title="查看域信任信息"></a>查看域信任信息</h3><pre class="line-numbers language-none"><code class="language-none">nltest &#x2F;domain_trusts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nltest &#x2F;domain_trusts
 域信任的列表:
     0: TEAMSSIX teamssix.com (NT 5) (Forest Tree Root) (Primary Domain) (Native)
-此命令成功完成</code></pre>
-<h2 id="3、收集域用户和管理员信息"><a href="#3、收集域用户和管理员信息" class="headerlink" title="3、收集域用户和管理员信息"></a>3、收集域用户和管理员信息</h2><h3 id="查询域用户列表"><a href="#查询域用户列表" class="headerlink" title="查询域用户列表"></a>查询域用户列表</h3><pre><code>net user /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net user /domain
+此命令成功完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3、收集域用户和管理员信息"><a href="#3、收集域用户和管理员信息" class="headerlink" title="3、收集域用户和管理员信息"></a>3、收集域用户和管理员信息</h2><h3 id="查询域用户列表"><a href="#查询域用户列表" class="headerlink" title="查询域用户列表"></a>查询域用户列表</h3><pre class="line-numbers language-none"><code class="language-none">net user &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net user &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 \\dc.teamssix.com 的用户帐户
 -------------------------------------------------------------------------------
-admin                    Administrator                    daniel10</code></pre>
-<h3 id="查询域用户详细信息"><a href="#查询域用户详细信息" class="headerlink" title="查询域用户详细信息"></a>查询域用户详细信息</h3><pre><code>wmic useraccount get /all</code></pre>
-<pre><code>C:\Users\daniel10&gt; wmic useraccount get /all
+admin                    Administrator                    daniel10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查询域用户详细信息"><a href="#查询域用户详细信息" class="headerlink" title="查询域用户详细信息"></a>查询域用户详细信息</h3><pre class="line-numbers language-none"><code class="language-none">wmic useraccount get &#x2F;all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; wmic useraccount get &#x2F;all
 AccountType  Caption                        Description                                                     Disabled  Domain    FullName                               InstallDate  LocalAccount  Lockout  Name                  PasswordChangeable  PasswordExpires  PasswordRequired  SID                                            SIDType  Status
 512          DANIEL10\Administrator         管理计算机(域)的内置帐户                                        TRUE      DANIEL10                                                      TRUE          FALSE    Administrator         TRUE                FALSE            TRUE              S-1-5-21-1097120846-822447287-3576165687-500   1        Degraded
-512          DANIEL10\DefaultAccount        系统管理的用户帐户。                                            TRUE      DANIEL10                                                      TRUE          FALSE    DefaultAccount        TRUE                FALSE            FALSE             S-1-5-21-1097120846-822447287-3576165687-503   1        Degraded</code></pre>
-<h3 id="查询存在的用户"><a href="#查询存在的用户" class="headerlink" title="查询存在的用户"></a>查询存在的用户</h3><pre><code>dsquery user</code></pre>
-<pre><code>C:\Users\daniel10&gt; dsquery user
-&quot;CN=Administrator,CN=Users,DC=teamssix,DC=com&quot;
-&quot;CN=Guest,CN=Users,DC=teamssix,DC=com&quot;</code></pre>
+512          DANIEL10\DefaultAccount        系统管理的用户帐户。                                            TRUE      DANIEL10                                                      TRUE          FALSE    DefaultAccount        TRUE                FALSE            FALSE             S-1-5-21-1097120846-822447287-3576165687-503   1        Degraded<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查询存在的用户"><a href="#查询存在的用户" class="headerlink" title="查询存在的用户"></a>查询存在的用户</h3><pre class="line-numbers language-none"><code class="language-none">dsquery user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; dsquery user
+&quot;CN&#x3D;Administrator,CN&#x3D;Users,DC&#x3D;teamssix,DC&#x3D;com&quot;
+&quot;CN&#x3D;Guest,CN&#x3D;Users,DC&#x3D;teamssix,DC&#x3D;com&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>常用的 dsquery 命令</p>
-<pre><code>dsquery computer - 查找目录中的计算机
+<pre class="line-numbers language-none"><code class="language-none">dsquery computer - 查找目录中的计算机
 dsquery contact - 查找目录中的联系人
 dsquery subnet - 查找目录中的子网
 dsquery group - 查找目录中的组
@@ -574,56 +605,68 @@ dsquery server - 查找目录中的域控制器
 dsquery user - 查找目录中的用户
 dsquery quota - 查找目录中的配额
 dsquery partition - 查找目录中的分区
-dsquery * - 用通用的 LDAP 查询查找目录中的任何对象</code></pre>
-<h2 id="4、查找域控制器"><a href="#4、查找域控制器" class="headerlink" title="4、查找域控制器"></a>4、查找域控制器</h2><h3 id="查看域控器机器名"><a href="#查看域控器机器名" class="headerlink" title="查看域控器机器名"></a>查看域控器机器名</h3><pre><code>nltest /DCLIST:teamssix</code></pre>
-<pre><code>C:\Users\daniel10&gt; nltest /DCLIST:teamssix
+dsquery * - 用通用的 LDAP 查询查找目录中的任何对象<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4、查找域控制器"><a href="#4、查找域控制器" class="headerlink" title="4、查找域控制器"></a>4、查找域控制器</h2><h3 id="查看域控器机器名"><a href="#查看域控器机器名" class="headerlink" title="查看域控器机器名"></a>查看域控器机器名</h3><pre class="line-numbers language-none"><code class="language-none">nltest &#x2F;DCLIST:teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nltest &#x2F;DCLIST:teamssix
 
 获得域“teamssix”中 DC 的列表(从“\\DC”中)。
     dc.teamssix.com [PDC]  [DS] 站点: Default-First-Site-Name
-此命令成功完成</code></pre>
-<h3 id="查看域控器主机名"><a href="#查看域控器主机名" class="headerlink" title="查看域控器主机名"></a>查看域控器主机名</h3><pre><code>nslookup -type=SRV _ldap._tcp</code></pre>
-<pre><code>C:\Users\daniel10&gt; nslookup -type=SRV _ldap._tcp
+此命令成功完成<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域控器主机名"><a href="#查看域控器主机名" class="headerlink" title="查看域控器主机名"></a>查看域控器主机名</h3><pre class="line-numbers language-none"><code class="language-none">nslookup -type&#x3D;SRV _ldap._tcp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nslookup -type&#x3D;SRV _ldap._tcp
 
 _ldap._tcp.teamssix.com SRV service location:
-          priority       = 0
-          weight         = 100
-          port           = 389
-          svr hostname   = dc.teamssix.com
-dc.teamssix.com internet address = 192.168.7.7</code></pre>
-<pre><code>netdom query pdc</code></pre>
-<pre><code>C:\Users\daniel10&gt; netdom query pdc
+          priority       &#x3D; 0
+          weight         &#x3D; 100
+          port           &#x3D; 389
+          svr hostname   &#x3D; dc.teamssix.com
+dc.teamssix.com internet address &#x3D; 192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">netdom query pdc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; netdom query pdc
 域的主域控制器:
 DC
-命令成功完成。</code></pre>
-<h3 id="查看域控器组"><a href="#查看域控器组" class="headerlink" title="查看域控器组"></a>查看域控器组</h3><pre><code>net group &quot;domain controllers&quot; /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt; net group &quot;domain controllers&quot; /domain
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="查看域控器组"><a href="#查看域控器组" class="headerlink" title="查看域控器组"></a>查看域控器组</h3><pre class="line-numbers language-none"><code class="language-none">net group &quot;domain controllers&quot; &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; net group &quot;domain controllers&quot; &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 组名     Domain Controllers
 注释     在網域所有的網域控制站
 成员
 -------------------------------------------------------------------------------
 DC$
-命令成功完成。</code></pre>
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="5、定位域管理员"><a href="#5、定位域管理员" class="headerlink" title="5、定位域管理员"></a>5、定位域管理员</h2><h3 id="psloggedon"><a href="#psloggedon" class="headerlink" title="psloggedon"></a>psloggedon</h3><p>在 Windows 上使用 <code>net session</code> 可以查看谁使用了本机资源，但不能查看谁在使用远程计算机资源、谁登录了本地或远程计算机，使用 psloggedon 可以查看本地登录的用户和通过本地计算机或远程计算机进行资源登录的用户。</p>
 <p>psloggedon 下载地址：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon">https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon</a></p>
-<pre><code>psloggedon.exe [-] [-l] [-x] [\\computername|username]
+<pre class="line-numbers language-none"><code class="language-none">psloggedon.exe [-] [-l] [-x] [\\computername|username]
 
--                                显示支持的选项和用于输出值的单位。
--l                            仅显示本地登录，不显示本地和网络资源登录。
--x                            不显示登录时间。
-\\computername    指定要列出登录信息的计算机的名称。
-Username                指定用户名，在网络中搜索该用户登录的计算机。</code></pre>
-<pre><code>C:\Users\daniel10&gt; PsLoggedon.exe -l \\192.168.7.7
+-								显示支持的选项和用于输出值的单位。
+-l							仅显示本地登录，不显示本地和网络资源登录。
+-x							不显示登录时间。
+\\computername	指定要列出登录信息的计算机的名称。
+Username				指定用户名，在网络中搜索该用户登录的计算机。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; PsLoggedon.exe -l \\192.168.7.7
 Users logged on locally:
-2021/2/13 20:53:08         TEAMSSIX\Administrator</code></pre>
+2021&#x2F;2&#x2F;13 20:53:08         TEAMSSIX\Administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="PVEFindADUser"><a href="#PVEFindADUser" class="headerlink" title="PVEFindADUser"></a>PVEFindADUser</h3><p>PVEFindADUser 用于查找活动目录用户登录的位置、枚举域用户，以及查找在特定计算机上登录的用户，包括本地用户、通过 RDP 登录的用户、用于运行服务器和计划任务的用户，该工具需要管理员权限。</p>
 <p>PVEFindADUser 下载地址：<a target="_blank" rel="noopener" href="https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn">https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn</a></p>
-<pre><code>-h                                            显示帮助信息
--u                                            检测程序是否有新版本
--current [&quot;username&quot;]        -current参数显示每台PC上当前登录的用户在域中。如果指定用户名（在引号之间），则仅将显示该特定用户登录的PC
--noping                                    阻止尝试枚举用户登录名之前对目标计算机执行ping命令
--target                                    此可选参数允许您指定要查询的主机。如果未指定此-target参数，则将查询当前域中的所有主机。如果决定指定-target，然后指定以逗号分隔的主机名。查询结果将被输出到report.csv文件中</code></pre>
-<pre><code>C:\Users\daniel10&gt; PVEFindADUser.exe -current
+<pre class="line-numbers language-none"><code class="language-none">-h											显示帮助信息
+-u											检测程序是否有新版本
+-current [&quot;username&quot;]		-current参数显示每台PC上当前登录的用户在域中。如果指定用户名（在引号之间），则仅将显示该特定用户登录的PC
+-noping									阻止尝试枚举用户登录名之前对目标计算机执行ping命令
+-target									此可选参数允许您指定要查询的主机。如果未指定此-target参数，则将查询当前域中的所有主机。如果决定指定-target，然后指定以逗号分隔的主机名。查询结果将被输出到report.csv文件中<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; PVEFindADUser.exe -current
 
  [+] Finding currently logged on users ? true
  [+] Finding last logged on users ? false
@@ -634,19 +677,21 @@ Users logged on locally:
          - Logged on user : teamssix\administrator
      [+] Processing host : daniel7.teamssix.com (Windows 7 专业版;Service Pack 1)
      [+] Processing host : daniel10.teamssix.com (Windows 10 专业版)
- [+] Report written to report.csv</code></pre>
+ [+] Report written to report.csv<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="netview"><a href="#netview" class="headerlink" title="netview"></a>netview</h3><p>netview 是一个枚举工具，使用 WinAPI 枚举系统，利用 NetSessionEnum 寻找登录会话，利用 NetShareEnum 寻找共享，利用 NetWkstaUserEnum 枚举登录的用户，netview 可以查询共享入口和有价值的用户，其绝大部分功能无需管理员权限就可使用。</p>
 <p>Netview 下载地址：<a target="_blank" rel="noopener" href="https://github.com/mubix/netview">https://github.com/mubix/netview</a></p>
-<pre><code>-h               显示帮助信息
+<pre class="line-numbers language-none"><code class="language-none">-h               显示帮助信息
 -f filename.txt  指定要提取主机列表的文件
 -e filename.txt  指定要排除的主机名的文件
 -o filename.txt  将所有输出重定向到指定的文件
 -d domain        指定要提取主机列表的域。如果没有指定，则从当前域中提取主机列表
 -g group         指定搜索的组名。如果没有指定，则在Domain Admins组中搜索
--c               对已找到的共享目录/文件的访问权限进行检查
+-c               对已找到的共享目录&#x2F;文件的访问权限进行检查
 -i interval      枚举主机之间等待的秒数
--j jitter        应用于间隔的抖动百分比（0.0-1.0）</code></pre>
-<pre><code>C:\Users\daniel10&gt; netview.exe -d
+-j jitter        应用于间隔的抖动百分比（0.0-1.0）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; netview.exe -d
 [+] Number of hosts: 3
 
 [+] Host: DANIEL10
@@ -666,7 +711,8 @@ Enumerating AD Info[+] DC - Comment -
 [+] DC - Domain Controller
 Enumerating IP Info
 [+] (null) - IPv4 Address - 192.168.7.7
-……内容较多故省略……</code></pre>
+……内容较多故省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="NSE-脚本"><a href="#NSE-脚本" class="headerlink" title="NSE 脚本"></a>NSE 脚本</h3><p>常用的 NSE 脚本如下：</p>
 <p><code>smb-enum-domains.nse</code>:对域控制器进行信息收集，可以获取主机信息、用户、可使用密码策略的用户等</p>
 <p><code>smb-enum-users.nse</code>:在进行域渗透时，如获取了域内某台主机权限，但权限有限，无法获取更多的域用户信息，可借助此脚本对域控制器进行扫描</p>
@@ -675,18 +721,18 @@ Enumerating IP Info
 <p><code>smb-enum-sessions.nse</code>:获取域内主机的用户登陆会话，查看当前是否有用户登陆，且不需要管理员权限</p>
 <p><code>smb-os-discovery.nse</code>:收集目标主机的操作系统、计算机名、域名、域林名称、NetBIOS机器名、NetBIOS域名、工作组、系统时间等信息</p>
 <p>NES 脚本下载地址：<a target="_blank" rel="noopener" href="https://nmap.org/nsedoc/scripts/">https://nmap.org/nsedoc/scripts/</a></p>
-<pre><code>C:\Users\daniel10&gt; nmap --script=smb-os-discovery.nse -p 445 192.168.7.107
-Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-21 09:44 CST
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nmap --script&#x3D;smb-os-discovery.nse -p 445 192.168.7.107
+Starting Nmap 7.91 ( https:&#x2F;&#x2F;nmap.org ) at 2021-02-21 09:44 CST
 Nmap scan report for 192.168.7.107
 Host is up (0.00053s latency).
 
 PORT    STATE SERVICE
-445/tcp open  microsoft-ds
+445&#x2F;tcp open  microsoft-ds
 
 Host script results:
 | smb-os-discovery:
 |   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)
-|   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional
+|   OS CPE: cpe:&#x2F;o:microsoft:windows_7::sp1:professional
 |   Computer name: daniel7
 |   NetBIOS computer name: DANIEL7\x00
 |   Domain name: teamssix.com
@@ -694,25 +740,27 @@ Host script results:
 |   FQDN: daniel7.teamssix.com
 |_  System time: 2021-02-21T09:44:33+08:00
 
-Nmap done: 1 IP address (1 host up) scanned in 0.50 seconds</code></pre>
+Nmap done: 1 IP address (1 host up) scanned in 0.50 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p> <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-02-23_17-38-11.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="PowerView-脚本"><a href="#PowerView-脚本" class="headerlink" title="PowerView 脚本"></a>PowerView 脚本</h3><p>PowerView 脚本中包含了一系列的 powershell 脚本，信息收集相关的脚本有 Invoke-StealthUserHunter、Invoke-UserHunter 等，要使用 PowerView 脚本需要将 PowerView 文件夹复制到 PowerShell 的 Module 文件夹内， Module 文件夹路径可以通过在 PowerShell 中输入<code> $Env:PSModulePath</code>查看，我这里将其复制到了C:\Program Files\WindowsPowerShell\Modules文件夹内。</p>
 <p>接着在 powershell中输入<code> Import-Module PowerView</code>即可导入PowerView，使用<code> Get-Command -Module PowerView</code>可查看已导入的 PowerView 命令</p>
-<pre><code>PS C:\Users\daniel10&gt; Import-Module PowerView
+<pre class="line-numbers language-none"><code class="language-none">PS C:\Users\daniel10&gt; Import-Module PowerView
 PS C:\Users\daniel10&gt; Get-Command -Module PowerView
 
 CommandType     Name                                               Version    Source
 -----------     ----                                               -------    ------
 Alias           Find-UserTrustGroup                                1.0        PowerView
 Alias           Get-ComputerProperties                             1.0        PowerView
-……内容较多故省略……</code></pre>
+……内容较多故省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>PowerView 脚本下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView">https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView</a></p>
 <blockquote>
 <p>注：在打开上面的下载地址时会看到该项目已被转移到其他项目下，但是当我在使用新版本的 PowerView 脚本时，发现找不到<code>Invoke-StealthUserHunter</code>命令，而旧版本的 PowerView 有<code>Invoke-StealthUserHunter</code>命令</p>
 </blockquote>
 <p><strong>Invoke-StealthUserHunter</strong>：只需要进行一次查询，就可以获取域里面的所有用户。其原理为：从<code>user.HomeDirectories</code>中提取所有用户，并对每个服务器进行<code>Get-NetSession</code>获取。因不需要使用<code>Invoke-UserHunter</code>对每台机器进行操作，所以这个方法的隐蔽性相对较高（但涉及的机器不一定全面）。PowerView 默认使用<code>Invoke-StealthUserHunter</code>如果找不到需要的信息，就会使用<code>Invoke-UserHunter</code>.</p>
 <p><strong>Invoke-UserHunter</strong>：找到域内特定的用户群，接受用户名、用户列表和域组查询，接收一个主机列表或查询可用的主机域名。使用<code>Get-NetSession</code>和<code>Get-NetLoggedon</code>(调用 NetSessionEnum 和 NetWkstaUserEnumAPI )扫描每台服务器并对扫描结果进行比较，从而找出目标用户集，在使用时不需要管理员权限。</p>
-<pre><code>PS C:\Users\daniel10&gt; Invoke-UserHunter
+<pre class="line-numbers language-none"><code class="language-none">PS C:\Users\daniel10&gt; Invoke-UserHunter
 
 UserDomain   : TEAMSSIX
 UserName     : Administrator
@@ -733,7 +781,8 @@ UserName     : Administrator
 ComputerName : daniel7.teamssix.com
 IP           : 192.168.7.107
 SessionFrom  :
-LocalAdmin   :</code></pre>
+LocalAdmin   :<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>PowerView 中的其他信息收集模块：</p>
 <ul>
 <li>Get-NetDomain:获取当前用户所在域名称</li>
@@ -756,38 +805,43 @@ LocalAdmin   :</code></pre>
 <li>Invoke-UserEventHunter：根据用户日志查询某域用户登陆过哪些域机器</li>
 </ul>
 <h3 id="Empire"><a href="#Empire" class="headerlink" title="Empire"></a>Empire</h3><p>Empire中的<code>user_hunter</code>模块用于查找域管理员登陆的机器，使用 powershell/situational_awareness/network/powerview/user_hunter 模块，可查看哪个用户登陆哪台主机。</p>
-<pre><code>(Empire: listeners) &gt; agents
+<pre class="line-numbers language-none"><code class="language-none">(Empire: listeners) &gt; agents
 [*] Active agents:
  Name     La Internal IP     Machine Name      Username                Process            PID    Delay    Last Seen
  ----     -- -----------     ------------      --------                -------            ---    -----    ---------
- 3XRCWAB2 ps 192.168.7.7     DC                *TEAMSSIX\administrator powershell         2256   5/0.0    2021-02-22 20:39:54
-(Empire: agents) &gt; usemodule powershell/powershell/situational_awareness/network/powerview/user_hunter
-(Empire: powershell/situational_awareness/network/powerview/user_hunter) &gt; set Agent 3XRCWAB2
-(Empire: powershell/situational_awareness/network/powerview/user_hunter) &gt; execute
+ 3XRCWAB2 ps 192.168.7.7     DC                *TEAMSSIX\administrator powershell         2256   5&#x2F;0.0    2021-02-22 20:39:54
+(Empire: agents) &gt; usemodule powershell&#x2F;powershell&#x2F;situational_awareness&#x2F;network&#x2F;powerview&#x2F;user_hunter
+(Empire: powershell&#x2F;situational_awareness&#x2F;network&#x2F;powerview&#x2F;user_hunter) &gt; set Agent 3XRCWAB2
+(Empire: powershell&#x2F;situational_awareness&#x2F;network&#x2F;powerview&#x2F;user_hunter) &gt; execute
 [*] Tasked 3XRCWAB2 to run TASK_CMD_JOB
 [*] Agent 3XRCWAB2 tasked with task ID 1
-[*] Tasked agent 3XRCWAB2 to run module powershell/situational_awareness/network/powerview/user_hunter
+[*] Tasked agent 3XRCWAB2 to run module powershell&#x2F;situational_awareness&#x2F;network&#x2F;powerview&#x2F;user_hunter
 [*] Valid results returned by 192.168.7.7
-……</code></pre>
-<h2 id="6、查找域管理员进程"><a href="#6、查找域管理员进程" class="headerlink" title="6、查找域管理员进程"></a>6、查找域管理员进程</h2><h3 id="获取域管理员列表"><a href="#获取域管理员列表" class="headerlink" title="获取域管理员列表"></a>获取域管理员列表</h3><pre><code>net group &quot;Domain Admins&quot; /domain</code></pre>
-<pre><code>C:\Users\daniel10&gt;net group &quot;Domain Admins&quot; /domain
+……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="6、查找域管理员进程"><a href="#6、查找域管理员进程" class="headerlink" title="6、查找域管理员进程"></a>6、查找域管理员进程</h2><h3 id="获取域管理员列表"><a href="#获取域管理员列表" class="headerlink" title="获取域管理员列表"></a>获取域管理员列表</h3><pre class="line-numbers language-none"><code class="language-none">net group &quot;Domain Admins&quot; &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;net group &quot;Domain Admins&quot; &#x2F;domain
 这项请求将在域 teamssix.com 的域控制器处理。
 组名     Domain Admins
 注释     指定的域管理员
 成员
 -------------------------------------------------------------------------------
 Administrator
-命令成功完成。</code></pre>
-<h3 id="列出本机的所有进程及进程用户"><a href="#列出本机的所有进程及进程用户" class="headerlink" title="列出本机的所有进程及进程用户"></a>列出本机的所有进程及进程用户</h3><pre><code>tasklist /v</code></pre>
-<pre><code>C:\Users\daniel10&gt;tasklist /v
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="列出本机的所有进程及进程用户"><a href="#列出本机的所有进程及进程用户" class="headerlink" title="列出本机的所有进程及进程用户"></a>列出本机的所有进程及进程用户</h3><pre class="line-numbers language-none"><code class="language-none">tasklist &#x2F;v<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;tasklist &#x2F;v
 
 映像名称                       PID 会话名              会话#       内存使用  状态            用户名                                                 CPU 时间 窗口标题
-========================= ======== ================ =========== ============ =============== ================================================== ============ ========================================================================
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
 System Idle Process              0 Services                   0          8 K Unknown         NT AUTHORITY\SYSTEM                                    68:35:16 暂缺
 System                           4 Services                   0        924 K Unknown         暂缺                                                    0:24:14 暂缺
 svchost.exe                   9228 Console                    2      2,932 K Unknown         TEAMSSIX\daniel10                                       0:00:00 暂缺
 tasklist.exe                 10768 Console                    2      9,540 K Unknown         TEAMSSIX\daniel10                                       0:00:00 暂缺
-……内容过多省略……</code></pre>
+……内容过多省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果在列出的进程中看到了用户名为管理员用户名的话，便是找到了域管理员进程。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -1222,7 +1276,7 @@ tasklist.exe                 10768 Console                    2      9,540 K Unk
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

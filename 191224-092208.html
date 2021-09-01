@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    563
+                    566
                 </div>
                 
 
@@ -458,6 +458,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -481,9 +484,9 @@
 <p>7、Spiders 处理响应后将解析到的数据发送给 Engine。</p>
 <p>8、Engine 将处理过的数据发送到 Item Pipelines，然后将处理过的请求发送到 Scheduler，并请求爬行可能的下一个请求，该过程重复(从步骤1开始)，直到 Scheduler 不再发出请求为止。</p>
 <h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><p>在安装 Scrapy 之前，建议先安装 Anaconda ，可以省去不少麻烦，Scrapy可以直接 pip 安装，值得注意的是，如果使用 Python2 开发，就需要使用 pip2 安装，使用 Python3 开发就需要使用 pip3 安装，安装命令如下：</p>
-<pre><code>pip install scrapy</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">pip install scrapy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>如果安装比较慢，可以指定国内安装源进行安装，下面的命令使用的清华源。</p>
-<pre><code>pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">pip install scrapy -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>使用 -i 指定国内安装源后可以有效的提高下载速度。</p>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
@@ -923,7 +926,7 @@ teamssix
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -437,14 +437,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    421
+                    391
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -471,35 +474,40 @@
 <a id="more"></a>
 
 <h1 id="0x01-代码实现"><a href="#0x01-代码实现" class="headerlink" title="0x01 代码实现"></a>0x01 代码实现</h1><p>1、修改<code>templates\booklist.html</code>代码</p>
-<pre><code class="html">原来：&lt;li&gt;&lt;h1&gt;&lt;a href=&quot;#&quot;&gt;&#123;&#123; book.name &#125;&#125;&lt;/a&gt;&lt;/h1&gt;&lt;/li&gt;
-现在：&lt;li&gt;&lt;h1&gt;&lt;a href=&quot;&#123;&#123; book.id &#125;&#125;/&quot;&gt;&#123;&#123; book.name &#125;&#125;&lt;/a&gt;&lt;/h1&gt;&lt;/li&gt; #通过id值来进行对应书籍人物信息查询</code></pre>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">原来：<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123; book.name &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+现在：<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>&#123;&#123; book.id &#125;&#125;/<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123; book.name &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span> #通过id值来进行对应书籍人物信息查询<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>2、在<code>Book\views.py</code>中新添<code>peoplelist</code>函数</p>
-<pre><code class="python">def peoplelist(request, book_id):    #book_id从url中直接传入
-   book = BookInfo.objects.get(id=book_id)    #通过id查询书籍
-   people_list = book.peopleinfo_set.all()    #获取书籍中的所有人物
-   context = &#123;
-      &#39;people_list&#39;: people_list
-   &#125;
-   return render(request, &#39;peoplelist.html&#39;, context)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">peoplelist</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> book_id<span class="token punctuation">)</span><span class="token punctuation">:</span>	<span class="token comment">#book_id从url中直接传入</span>
+   book <span class="token operator">=</span> BookInfo<span class="token punctuation">.</span>objects<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span>book_id<span class="token punctuation">)</span>	<span class="token comment">#通过id查询书籍</span>
+   people_list <span class="token operator">=</span> book<span class="token punctuation">.</span>peopleinfo_set<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token comment">#获取书籍中的所有人物</span>
+   context <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+      <span class="token string">'people_list'</span><span class="token punctuation">:</span> people_list
+   <span class="token punctuation">&#125;</span>
+   <span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token string">'peoplelist.html'</span><span class="token punctuation">,</span> context<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>3、在<code>BookManager\urls.py</code>中新添url规则</p>
-<pre><code class="python">re_path(r&#39;^booklist/(\d+)/$&#39;, views.peoplelist), #(\d+)里的内容将直接传入peoplelist函数中的book_id参数</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">re_path<span class="token punctuation">(</span><span class="token string">r'^booklist/(\d+)/$'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>peoplelist<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">#(\d+)里的内容将直接传入peoplelist函数中的book_id参数</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果没有导入re_path需要导入一下</p>
-<pre><code class="python">from django.urls import re_path</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>urls <span class="token keyword">import</span> re_path<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>4、新建<code>templates\eoplelist.html</code>文件</p>
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;人物信息&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;ul&gt;
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>人物信息<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
     &#123;% for people in people_list %&#125;
-    <li><h1>&#123;&#123; people.name &#125;&#125;</h1></li>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>&#123;&#123; people.name &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
     &#123;% endfor%&#125;
-&lt;/ul&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>5、最后实现功能：</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/12django_note.png.gif?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>6、总结MVT流程</p>
@@ -949,7 +957,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

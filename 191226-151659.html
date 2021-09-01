@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    527
+                    533
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -466,28 +469,28 @@
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>通过上文的内容，已经把博客文章的标题及目录爬取下来了，接下来为了方便数据的保存，我们可以把这些文章的标题及目录给包装成一个数据项，也就是 items。</p>
 <h1 id="0x01-配置-item"><a href="#0x01-配置-item" class="headerlink" title="0x01 配置 item"></a>0x01 配置 item</h1><p>先来到 items.py 文件下，对标题及目录的信息进行包装，为了对这些信息进行区别，还需要有一个 id，所以代码如下：</p>
-<pre><code class="python">class TeamssixItem(scrapy.Item):
-    _id = scrapy.Field()
-    title = scrapy.Field()
-    list = scrapy.Field()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">TeamssixItem</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    _id <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    title <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token builtin">list</span> <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <a id="more"></a>
 <p>编辑好 items.py 文件后，来到 teamssix_blog_spider.py 先把刚才编辑的内容引用进来。</p>
-<pre><code class="python">from teamssix.items import TeamssixItem</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> teamssix<span class="token punctuation">.</span>items <span class="token keyword">import</span> TeamssixItem<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>接着创建一个 item ，并抛出 item ，这时这个 item 就会进入到 item pipelines 中处理。</p>
-<pre><code class="python">item = TeamssixItem(_id = response.url,title = title,list = list)
-yield item</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">item <span class="token operator">=</span> TeamssixItem<span class="token punctuation">(</span>_id <span class="token operator">=</span> response<span class="token punctuation">.</span>url<span class="token punctuation">,</span>title <span class="token operator">=</span> title<span class="token punctuation">,</span><span class="token builtin">list</span> <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">)</span>
+<span class="token keyword">yield</span> item<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h1 id="0x02-运行"><a href="#0x02-运行" class="headerlink" title="0x02 运行"></a>0x02 运行</h1><p>程序中包含 item 的好处就在于可以直接把运行结果输出到文件中，直接 -o 指定导出文件名，scrapy 支持导出 json 、jsonlines 、jl 、csv 、xml 、marshal 、pickle 这几种格式。</p>
-<pre><code>scrapy crawl blogurl -o result.json</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">scrapy crawl blogurl -o result.json<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>另外如果发现导出文件乱码，只需要在 settings.py 文件中添加下面一行代码即可。</p>
-<pre><code class="python">FEED_EXPORT_ENCODING = &quot;gb18030&quot;</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">FEED_EXPORT_ENCODING <span class="token operator">=</span> <span class="token string">"gb18030"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>运行结果如下：</p>
-<pre><code>~# scrapy crawl blogurl -o result.json
+<pre class="line-numbers language-none"><code class="language-none">~# scrapy crawl blogurl -o result.json
 ~# cat result2.json
 [
-&#123;&quot;_id&quot;: &quot;https://www.teamssix.com/year/191224-093319.html&quot;, &quot;title&quot;: &quot;【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接&quot;, &quot;list&quot;: [&quot;0x00 新建项目&quot;, &quot;0x01 创建一个爬虫&quot;, &quot;0x02
+&#123;&quot;_id&quot;: &quot;https:&#x2F;&#x2F;www.teamssix.com&#x2F;year&#x2F;191224-093319.html&quot;, &quot;title&quot;: &quot;【Python Scrapy 爬虫框架】 2、利用 Scrapy 爬取我的博客文章标题链接&quot;, &quot;list&quot;: [&quot;0x00 新建项目&quot;, &quot;0x01 创建一个爬虫&quot;, &quot;0x02
  运行爬虫&quot;, &quot;0x03 爬取内容解析&quot;]&#125;,
-&#123;&quot;_id&quot;: &quot;https://www.teamssix.com/year/191127-201447.html&quot;, &quot;title&quot;: &quot;【漏洞笔记】Robots.txt站点文件&quot;, &quot;list&quot;: [&quot;0x00 概述&quot;, &quot;0x01 漏洞描述&quot;, &quot;0x02 漏洞危害&quot;, &quot;0x03 修复建议&quot;]&#125;,
-……省略……</code></pre>
+&#123;&quot;_id&quot;: &quot;https:&#x2F;&#x2F;www.teamssix.com&#x2F;year&#x2F;191127-201447.html&quot;, &quot;title&quot;: &quot;【漏洞笔记】Robots.txt站点文件&quot;, &quot;list&quot;: [&quot;0x00 概述&quot;, &quot;0x01 漏洞描述&quot;, &quot;0x02 漏洞危害&quot;, &quot;0x03 修复建议&quot;]&#125;,
+……省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以很明显的感受到使用 scrapy 可以很方便的将数据导出到文件中，下一篇文章将介绍如何导出到 MongoDB数据库中。</p>
 <blockquote>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
@@ -715,7 +718,7 @@ yield item</code></pre>
                     <div class="summary block-with-text">
                         
                             0x00 写在前面在之前的文章中，会发现如果直接使用爬取命令，终端会回显很多调试信息，这样输出的内容就会显得很乱，所以就可以使用下面的命令：
-scrapy crawl blogurl  -s LOG_FILE=all.log
+scrapy crawl blogurl  -s LOG_FILE&#x3D;all.log
                         
                     </div>
                     <div class="publish-info">
@@ -926,7 +929,7 @@ scrapy crawl blogurl  -s LOG_FILE=all.log
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

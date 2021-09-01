@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    416
+                    423
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -472,11 +475,13 @@
 <p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/mahp/jQuery-with-XSS">https://github.com/mahp/jQuery-with-XSS</a></p>
 </blockquote>
 <p>1、下载之后，解压，使用编辑器打开，修改第9行代码，将代码中 src 后的链接修改为自己要验证的js地址链接。</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://yourjquerylink/jquery.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot; src&#x3D;&quot;http:&#x2F;&#x2F;yourjquerylink&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>2、保存之后，使用浏览器打开，然后可以看到3个Demo.</p>
-<pre><code>bug-9521
+<pre class="line-numbers language-none"><code class="language-none">bug-9521
 bug-11290
-bug-11974</code></pre>
+bug-11974<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>3、可以依次点击这三个Demo，看看哪个会弹窗，我这里是 jQuery v2.1.4 的版本，在点击 bug-11974 发生了弹窗，说明此版本的漏洞被验证成功了。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-02-23_23-05-36.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>4、也可以点击页面中的 test version，来判断自己版本的  jQuery 版本存在的 bug 编号，例如我这里的  jQuery v2.1.4 版本就对应着 bug-2432和bug-11974。</p>
@@ -916,7 +921,7 @@ Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

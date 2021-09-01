@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    358
+                    348
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,34 +470,34 @@
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>前文中讲到了将爬取的数据导出到文件中，接下来就在前文的代码基础之上，将数据导出到 MongoDB中。</p>
 <h1 id="0x01-配置-pipelines-py"><a href="#0x01-配置-pipelines-py" class="headerlink" title="0x01 配置 pipelines.py"></a>0x01 配置 pipelines.py</h1><p>首先来到 pipelines.py 文件下，在这里写入连接操作数据库的一些功能。</p>
 <p>将连接操作 mongo 所需要的包导入进来</p>
-<pre><code class="python">import pymongo</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pymongo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <a id="more"></a>
 <p>接下来定义一些参数，注意下面的函数都是在 TeamssixPipeline 类下的</p>
-<pre><code class="python">@classmethod
-def from_crawler(cls, crawler):
-    cls.DB_URL = crawler.settings.get(&#39;MONGO_DB_URI&#39;)
-    cls.DB_NAME = crawler.settings.get(&#39;MONGO_DB_NAME&#39;)
-    return cls()
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@classmethod</span>
+<span class="token keyword">def</span> <span class="token function">from_crawler</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> crawler<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    cls<span class="token punctuation">.</span>DB_URL <span class="token operator">=</span> crawler<span class="token punctuation">.</span>settings<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'MONGO_DB_URI'</span><span class="token punctuation">)</span>
+    cls<span class="token punctuation">.</span>DB_NAME <span class="token operator">=</span> crawler<span class="token punctuation">.</span>settings<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'MONGO_DB_NAME'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> cls<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-def open_spider(self, spider):
-    self.client = pymongo.MongoClient(self.DB_URL)
-    self.db = self.client[self.DB_NAME]
+<span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>client <span class="token operator">=</span> pymongo<span class="token punctuation">.</span>MongoClient<span class="token punctuation">(</span>self<span class="token punctuation">.</span>DB_URL<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>db <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span>self<span class="token punctuation">.</span>DB_NAME<span class="token punctuation">]</span>
 
-def close_spider(self, spider):
-    self.client.close()
+<span class="token keyword">def</span> <span class="token function">close_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-def process_item(self, item, spider):
-    collection = self.db[spider.name]
-    collection.insert_one(dict(item))
-    return item</code></pre>
+<span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    collection <span class="token operator">=</span> self<span class="token punctuation">.</span>db<span class="token punctuation">[</span>spider<span class="token punctuation">.</span>name<span class="token punctuation">]</span>
+    collection<span class="token punctuation">.</span>insert_one<span class="token punctuation">(</span><span class="token builtin">dict</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> item<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x02-配置-settings-py"><a href="#0x02-配置-settings-py" class="headerlink" title="0x02 配置 settings.py"></a>0x02 配置 settings.py</h1><p>ITEM_PIPELINES 是settings.py 文件自带的，把注释符号删掉就好</p>
-<pre><code class="python">ITEM_PIPELINES = &#123;
-    &#39;teamssix.pipelines.TeamssixPipeline&#39;: 300,  #优先级，1-1000，数值越低优先级越高
-&#125;
-MONGO_DB_URI = &#39;mongodb://localhost:27017&#39;  #mongodb 的连接 url
-MONGO_DB_NAME = &#39;blog&#39;  #要连接的库</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'teamssix.pipelines.TeamssixPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>  <span class="token comment">#优先级，1-1000，数值越低优先级越高</span>
+<span class="token punctuation">&#125;</span>
+MONGO_DB_URI <span class="token operator">=</span> <span class="token string">'mongodb://localhost:27017'</span>  <span class="token comment">#mongodb 的连接 url</span>
+MONGO_DB_NAME <span class="token operator">=</span> <span class="token string">'blog'</span>  <span class="token comment">#要连接的库</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x02-运行"><a href="#0x02-运行" class="headerlink" title="0x02 运行"></a>0x02 运行</h1><p>直接执行命令，不加参数</p>
-<pre><code>scrapy crawl blogurl</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">scrapy crawl blogurl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>注意，如果原来 MongoDB 中没有我们要连接的库， MongoDB 会自己创建，就不需要自己创建了，所以还是蛮方便的，使用 Robo 3T 打开后，就能看到刚才存进的数据。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/scrapy12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -933,7 +936,7 @@ MONGO_DB_NAME = &#39;blog&#39;  #要连接的库</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

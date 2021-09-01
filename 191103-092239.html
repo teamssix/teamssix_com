@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    974
+                    972
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -471,7 +474,7 @@
 <h1 id="0x00-关于Queue"><a href="#0x00-关于Queue" class="headerlink" title="0x00 关于Queue"></a>0x00 关于Queue</h1><p>queue模块实现了各种【多生产者-多消费者】队列，可用于在执行的多个线程之间安全的交换信息。</p>
 <a id="more"></a>
 <p><strong>queue的常用方法：</strong></p>
-<pre><code>q.size()：返回队列的正确大小。因为其他线程可能正在更新此队列，所以此方法的返回数字不可靠。
+<pre class="line-numbers language-none"><code class="language-none">q.size()：返回队列的正确大小。因为其他线程可能正在更新此队列，所以此方法的返回数字不可靠。
 
 q.empty()：如果队列为空，返回True，否则返回False。
 
@@ -492,69 +495,69 @@ q.get_nowait()：等价于get(0)
 
 q.task_done():在队列中数据的消费者用来指示对于项的处理已经结束。如果使用此方法，那么从队列中删除的每一项都应该调用一次。
 
-q.join()：阻塞直到队列中的所有项均被删除和处理为止。一旦为队列中的每一项都调用了一次q.task_done()方法，此方法将会直接返回。</code></pre>
+q.join()：阻塞直到队列中的所有项均被删除和处理为止。一旦为队列中的每一项都调用了一次q.task_done()方法，此方法将会直接返回。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x01-本节代码实现功能"><a href="#0x01-本节代码实现功能" class="headerlink" title="0x01 本节代码实现功能"></a>0x01 本节代码实现功能</h1><p>将数据列表中的数据传入，使用三个线程处理，将结果保存在Queue中，线程执行完后，从Queue中获取存储的结果。</p>
-<h1 id="0x02导入线程-队列的标准模块"><a href="#0x02导入线程-队列的标准模块" class="headerlink" title="0x02导入线程,队列的标准模块"></a>0x02导入线程,队列的标准模块</h1><pre><code class="python">import time
-import threading
-from queue import Queue</code></pre>
+<h1 id="0x02导入线程-队列的标准模块"><a href="#0x02导入线程-队列的标准模块" class="headerlink" title="0x02导入线程,队列的标准模块"></a>0x02导入线程,队列的标准模块</h1><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> threading
+<span class="token keyword">from</span> queue <span class="token keyword">import</span> Queue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x03-定义一个被多线程调用的函数"><a href="#0x03-定义一个被多线程调用的函数" class="headerlink" title="0x03 定义一个被多线程调用的函数"></a>0x03 定义一个被多线程调用的函数</h1><p>该函数的参数是一个列表lists和一个队列q，其功能是对lists列表中的元素除2取整，之后利用q.put()将结果保存在队列q中。</p>
-<pre><code class="python">def job(lists,q): # 被调用函数
-    for i in range(len(lists)):
-        lists[i] = lists[i]//2 # lists元素除2取整
-    q.put(lists) # 多线程调用的函数不能用return返回值</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">job</span><span class="token punctuation">(</span>lists<span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 被调用函数</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">//</span><span class="token number">2</span> <span class="token comment"># lists元素除2取整</span>
+    q<span class="token punctuation">.</span>put<span class="token punctuation">(</span>lists<span class="token punctuation">)</span> <span class="token comment"># 多线程调用的函数不能用return返回值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x04-定义一个多线程函数"><a href="#0x04-定义一个多线程函数" class="headerlink" title="0x04 定义一个多线程函数"></a>0x04 定义一个多线程函数</h1><p>在多线程函数中定义一个Queue用来保存返回值代替return，同时定义一个多线程列表，初始化一个多维数据列表用来传入上面的job()函数。</p>
-<pre><code class="python">def multithreading(): # 调用多线程的函数
-    q = Queue() # 存放job()函数的返回值
-    thread_list = []
-    data = [[1],[2,3],[4,5,6]]</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">multithreading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 调用多线程的函数</span>
+    q <span class="token operator">=</span> Queue<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 存放job()函数的返回值</span>
+    thread_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>定义三个线程，启动线程并分别join三个线程到主线程</p>
-<pre><code class="python">for i in range(3): # 定义三个线程
-    t = threading.Thread(target=job,args=(data[i],q))
-    t.start()
-    thread_list.append(t) # 将线程添加到thread_list列表中 
-for thread in thread_list:
-    thread.join()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义三个线程</span>
+    t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job<span class="token punctuation">,</span>args<span class="token operator">=</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    thread_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token comment"># 将线程添加到thread_list列表中 </span>
+<span class="token keyword">for</span> thread <span class="token keyword">in</span> thread_list<span class="token punctuation">:</span>
+    thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>定义一个空的result_list列表，将队列q中的数据添加到列表中并print</p>
-<pre><code class="python">result_list = []
-for j in range(3): # 循环三次
-    result_list.append(q.get())
-    print(result_list[j])</code></pre>
-<h1 id="0x05-完整的代码"><a href="#0x05-完整的代码" class="headerlink" title="0x05 完整的代码"></a>0x05 完整的代码</h1><pre><code class="python">import time
-import threading
-from queue import Queue
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">result_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 循环三次</span>
+    result_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>result_list<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h1 id="0x05-完整的代码"><a href="#0x05-完整的代码" class="headerlink" title="0x05 完整的代码"></a>0x05 完整的代码</h1><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> threading
+<span class="token keyword">from</span> queue <span class="token keyword">import</span> Queue
 
 
-def job(lists,q): # 被调用函数
-    for i in range(len(lists)):
-        lists[i] = lists[i]//2 # lists元素除2取整
-    q.put(lists) # 多线程调用的函数不能用return返回值
+<span class="token keyword">def</span> <span class="token function">job</span><span class="token punctuation">(</span>lists<span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 被调用函数</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>lists<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">//</span><span class="token number">2</span> <span class="token comment"># lists元素除2取整</span>
+    q<span class="token punctuation">.</span>put<span class="token punctuation">(</span>lists<span class="token punctuation">)</span> <span class="token comment"># 多线程调用的函数不能用return返回值</span>
 
 
-def multithreading(): # 调用多线程的函数
-    q = Queue() # 存放job()函数的返回值
-    thread_list = []
-    data = [[1],[2,3],[4,5,6]]
+<span class="token keyword">def</span> <span class="token function">multithreading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 调用多线程的函数</span>
+    q <span class="token operator">=</span> Queue<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 存放job()函数的返回值</span>
+    thread_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 
-    for i in range(3): # 定义三个线程
-        t = threading.Thread(target=job,args=(data[i],q))
-        t.start()
-        thread_list.append(t) # 将线程添加到thread_list列表中
-    for thread in thread_list:
-        thread.join()
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义三个线程</span>
+        t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job<span class="token punctuation">,</span>args<span class="token operator">=</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        thread_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token comment"># 将线程添加到thread_list列表中</span>
+    <span class="token keyword">for</span> thread <span class="token keyword">in</span> thread_list<span class="token punctuation">:</span>
+        thread<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    result_list = []
-    for j in range(3): # 循环三次
-        result_list.append(q.get())
-        print(result_list[j])
+    result_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 循环三次</span>
+        result_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>result_list<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
 
 
-if __name__ == &#39;__main__&#39;:
-    multithreading()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    multithreading<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果：</p>
-<pre><code class="bash"># python 4_queue.py
-[0]
-[1, 1]
-[2, 2, 3]</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 4_queue.py</span>
+<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token number">2</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a><br>参考文章：<br>1、<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016330288">https://segmentfault.com/a/1190000016330288</a><br>2、<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a></p>
 </blockquote>
@@ -995,7 +998,7 @@ if __name__ == &#39;__main__&#39;:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    946
+                    924
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -474,146 +477,146 @@
 <p>而使用lock就可以在不同线程使用同一共享内存时，能够确保线程之间互不影响。</p>
 <a id="more"></a>
 <h1 id="0x01-不使用lock锁的情况"><a href="#0x01-不使用lock锁的情况" class="headerlink" title="0x01 不使用lock锁的情况"></a>0x01 不使用lock锁的情况</h1><p>job1：全局变量A的值每次加1，循环7次并打印</p>
-<pre><code class="python">def job1(): # 全局变量A的值每次加1，循环7次并打印
-   global A
-   for i in range(7):
-      A += 1
-      print(&#39;job1&#39;,A)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">job1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 全局变量A的值每次加1，循环7次并打印</span>
+   <span class="token keyword">global</span> A
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">1</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job1'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>job2：全局变量A的值每次加10，循环7次并打印</p>
-<pre><code class="python">def job2():# 全局变量A的值每次加10，循环7次并打印
-   global A
-   for i in range(7):
-      A += 10
-      print(&#39;job2&#39;,A)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">job2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment"># 全局变量A的值每次加10，循环7次并打印</span>
+   <span class="token keyword">global</span> A
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">10</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job2'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>main：定义两个线程并执行job1和job2</p>
-<pre><code class="python">def main(): # 定义两个线程并执行job1和job2
-   t1 = threading.Thread(target=job1)
-   t2 = threading.Thread(target=job2)
-   t1.start()
-   t2.start()
-   t1.join()
-   t2.join()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义两个线程并执行job1和job2</span>
+   t1 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job1<span class="token punctuation">)</span>
+   t2 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job2<span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>完整代码：</p>
-<pre><code class="python">import threading
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> threading
 
 
-def job1(): # 全局变量A的值每次加1，循环7次并打印
-   global A
-   for i in range(7):
-      A += 1
-      print(&#39;job1&#39;,A)
+<span class="token keyword">def</span> <span class="token function">job1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 全局变量A的值每次加1，循环7次并打印</span>
+   <span class="token keyword">global</span> A
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">1</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job1'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
 
 
-def job2():# 全局变量A的值每次加10，循环7次并打印
-   global A
-   for i in range(7):
-      A += 10
-      print(&#39;job2&#39;,A)
+<span class="token keyword">def</span> <span class="token function">job2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment"># 全局变量A的值每次加10，循环7次并打印</span>
+   <span class="token keyword">global</span> A
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">10</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job2'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
 
 
-def main(): # 定义两个线程并执行job1和job2
-   t1 = threading.Thread(target=job1)
-   t2 = threading.Thread(target=job2)
-   t1.start()
-   t2.start()
-   t1.join()
-   t2.join()
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义两个线程并执行job1和job2</span>
+   t1 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job1<span class="token punctuation">)</span>
+   t2 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job2<span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-if __name__ == &#39;__main__&#39;:
-   A = 0
-   main()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+   A <span class="token operator">=</span> <span class="token number">0</span>
+   main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果：</p>
-<pre><code class="bash"># python 6_lock.py
-job1 1
-job1 2
-job1 3
-job1 4
-job1 5job2 15
-job2 
-job1 2625
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 6_lock.py</span>
+job1 <span class="token number">1</span>
+job1 <span class="token number">2</span>
+job1 <span class="token number">3</span>
+job1 <span class="token number">4</span>
+job1 5job2 <span class="token number">15</span>
+job2 
+job1 <span class="token number">2625</span>
 job2
-job1 36 37
-job2 
-47
-job2 57
-job2 67
-job2 77</code></pre>
+job1 <span class="token number">36</span> <span class="token number">37</span>
+job2 
+<span class="token number">47</span>
+job2 <span class="token number">57</span>
+job2 <span class="token number">67</span>
+job2 <span class="token number">77</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到不使用lock的时候，打印的结果很混乱。</p>
 <h1 id="0x02-使用lock的情况"><a href="#0x02-使用lock的情况" class="headerlink" title="0x02 使用lock的情况"></a>0x02 使用lock的情况</h1><p>使用lock的方法是， 在每个线程执行运算修改共享内存之前，执行lock.acquire()将共享内存上锁， 确保当前线程执行时，内存不会被其他线程访问，执行运算完毕后，使用lock.release()将锁打开， 保证其他的线程可以使用该共享内存。</p>
 <p>为job1和job2加锁：</p>
-<pre><code class="python">def job1(): # 全局变量A的值每次加1，循环7次并打印
-   global A,lock
-   lock.acquire() # 上锁
-   for i in range(7):
-      A += 1
-      print(&#39;job1&#39;,A)
-   lock.release() # 开锁
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">job1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 全局变量A的值每次加1，循环7次并打印</span>
+   <span class="token keyword">global</span> A<span class="token punctuation">,</span>lock
+   lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 上锁</span>
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">1</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job1'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
+   lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开锁</span>
 
 
-def job2():# 全局变量A的值每次加10，循环7次并打印
-   global A,lock
-   lock.acquire() # 上锁
-   for i in range(7):
-      A += 10
-      print(&#39;job2&#39;,A)
-   lock.release() # 开锁</code></pre>
+<span class="token keyword">def</span> <span class="token function">job2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment"># 全局变量A的值每次加10，循环7次并打印</span>
+   <span class="token keyword">global</span> A<span class="token punctuation">,</span>lock
+   lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 上锁</span>
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">10</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job2'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
+   lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 开锁</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在程序入口处定义一个lock</p>
-<pre><code class="python">if __name__ == &#39;__main__&#39;:
-   lock = threading.Lock()
-   A = 0
-   main()</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+   lock <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   A <span class="token operator">=</span> <span class="token number">0</span>
+   main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>完整代码：</p>
-<pre><code class="python">import threading
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> threading
 
 
-def job1(): # 全局变量A的值每次加1，循环7次并打印
-   global A,lock
-   lock.acquire()
-   for i in range(7):
-      A += 1
-      print(&#39;job1&#39;,A)
-   lock.release()
+<span class="token keyword">def</span> <span class="token function">job1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 全局变量A的值每次加1，循环7次并打印</span>
+   <span class="token keyword">global</span> A<span class="token punctuation">,</span>lock
+   lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">1</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job1'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
+   lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-def job2():# 全局变量A的值每次加10，循环7次并打印
-   global A,lock
-   lock.acquire()
-   for i in range(7):
-      A += 10
-      print(&#39;job2&#39;,A)
-   lock.release()
+<span class="token keyword">def</span> <span class="token function">job2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment"># 全局变量A的值每次加10，循环7次并打印</span>
+   <span class="token keyword">global</span> A<span class="token punctuation">,</span>lock
+   lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+      A <span class="token operator">+=</span> <span class="token number">10</span>
+      <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'job2'</span><span class="token punctuation">,</span>A<span class="token punctuation">)</span>
+   lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-def main(): # 定义两个线程并执行job1和job2
-   t1 = threading.Thread(target=job1)
-   t2 = threading.Thread(target=job2)
-   t1.start()
-   t2.start()
-   t1.join()
-   t2.join()
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 定义两个线程并执行job1和job2</span>
+   t1 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job1<span class="token punctuation">)</span>
+   t2 <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>job2<span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t1<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   t2<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-if __name__ == &#39;__main__&#39;:
-   lock = threading.Lock()
-   A = 0
-   main()</code></pre>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+   lock <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+   A <span class="token operator">=</span> <span class="token number">0</span>
+   main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果：</p>
-<pre><code class="bash"># python 6_lock.py
-job1 1
-job1 2
-job1 3
-job1 4
-job1 5
-job1 6
-job1 7
-job2 17
-job2 27
-job2 37
-job2 47
-job2 57
-job2 67
-job2 77</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># python 6_lock.py</span>
+job1 <span class="token number">1</span>
+job1 <span class="token number">2</span>
+job1 <span class="token number">3</span>
+job1 <span class="token number">4</span>
+job1 <span class="token number">5</span>
+job1 <span class="token number">6</span>
+job1 <span class="token number">7</span>
+job2 <span class="token number">17</span>
+job2 <span class="token number">27</span>
+job2 <span class="token number">37</span>
+job2 <span class="token number">47</span>
+job2 <span class="token number">57</span>
+job2 <span class="token number">67</span>
+job2 <span class="token number">77</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从运行结果来看，使用lock后，一个线程一个线程的执行完，两个线程之间互不影响。<br>至此，整个【Python Threading 学习笔记】系列更新完毕。</p>
 <blockquote>
 <p>代码项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/Python-Threading-study-notes">https://github.com/teamssix/Python-Threading-study-notes</a><br>参考文章：<br>1、<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05b6a6f6fdac">https://www.jianshu.com/p/05b6a6f6fdac</a><br>2、<a target="_blank" rel="noopener" href="https://morvanzhou.github.io/tutorials/python-basic/threading">https://morvanzhou.github.io/tutorials/python-basic/threading</a></p>
@@ -1051,7 +1054,7 @@ job2 77</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    547
+                    548
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -469,11 +472,13 @@
 <p>nps 和 frp 一样功能都很多，这里就主要记录下平时经常用到的 SOCKS5 代理模式。</p>
 <h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>nps 不同于 frp 的开箱即用，nps 的服务端需要安装才能使用，这里以 kali 下的安装为例。</p>
 <p>在 nps 项目的 releases 中下载好自己对应系统的版本后，解压安装</p>
-<pre><code>tar -zxvf linux_amd64_server.tar.gz
-./nps install</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">tar -zxvf linux_amd64_server.tar.gz
+.&#x2F;nps install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h2 id="3、使用"><a href="#3、使用" class="headerlink" title="3、使用"></a>3、使用</h2><p>官方使用文档：<a target="_blank" rel="noopener" href="https://ehang-io.github.io/nps">https://ehang-io.github.io/nps</a></p>
 <p>启动服务端，默认 Web 管理界面端口 8080 </p>
-<pre><code>nps start</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">nps start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>启动 nps 后，直接访问服务端的 8080 端口，输入默认密码 admin/123 进行登录，不难看出，这 web 界面确实比 frp 的丰富很多。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609170306.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>nps 的使用也很简单，界面语言也可选择中文。</p>
@@ -916,7 +921,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

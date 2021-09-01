@@ -433,7 +433,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    672
+                    686
                 </div>
                 
 
@@ -455,6 +455,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -467,32 +470,37 @@
 <p>本工具项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/url_batch_discovery">https://github.com/teamssix/url_batch_discovery</a></p>
 <h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><h2 id="1、安装-httpx"><a href="#1、安装-httpx" class="headerlink" title="1、安装 httpx"></a>1、安装 httpx</h2><p>在使用本工具前需要先安装httpx工具，httpx项目地址：<a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/httpx">https://github.com/projectdiscovery/httpx</a></p>
 <p>在httpx的<a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/httpx/releases">releases</a>页面下载适合自己系统的安装包，然后添加到系统路径即可，最后在命令行中能成功执行<code>httpx --version</code>即表示安装成功了。</p>
-<h1 id="2、安装本工具"><a href="#2、安装本工具" class="headerlink" title="2、安装本工具"></a>2、安装本工具</h1><pre><code>git clone https://github.com/teamssix/url_batch_discovery.git
+<h1 id="2、安装本工具"><a href="#2、安装本工具" class="headerlink" title="2、安装本工具"></a>2、安装本工具</h1><pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;teamssix&#x2F;url_batch_discovery.git
 cd url_batch_discovery
-pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
-python3 url_batch_discovery.py -h</code></pre>
+pip3 install -r requirements.txt -i https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;pypi&#x2F;simple&#x2F;
+python3 url_batch_discovery.py -h<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h1 id="0x02-使用"><a href="#0x02-使用" class="headerlink" title="0x02 使用"></a>0x02 使用</h1><ul>
 <li>命令说明</li>
 </ul>
-<pre><code>-h, --help  show this help message and exit
+<pre class="line-numbers language-none"><code class="language-none">-h, --help  show this help message and exit
 -l LIST     指定URL列表文件
 -m MATCH    指定要匹配的关键字，返回结果中将只包含存在该关键字的内容
--o OUTPUT   导出的文件路径，默认保存在./output/文件夹内，导出文件格式为xlsx，格式：/path1/path2/
+-o OUTPUT   导出的文件路径，默认保存在.&#x2F;output&#x2F;文件夹内，导出文件格式为xlsx，格式：&#x2F;path1&#x2F;path2&#x2F;
 -p PORT     指定要检测的端口，默认只对80和443端口进行检测，格式：80,443,8000-8010
 -t THREADS  指定线程大小，默认50个线程
--u URL      指定单个URL</code></pre>
+-u URL      指定单个URL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ul>
 <li>对 url.txt 里的url进行批量识别</li>
 </ul>
-<pre><code>python3 url_batch_discovery.py -l url.txt</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 url_batch_discovery.py -l url.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>对 url.ttx 进行80,443,8080-8090的端口识别</li>
 </ul>
-<pre><code>python3 url_batch_discovery.py -l url.txt -p 80,443,8080-8090</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 url_batch_discovery.py -l url.txt -p 80,443,8080-8090<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ul>
 <li>对 url.ttx 进行批量识别，且只返回网页中存在“JBoos”字符的URL</li>
 </ul>
-<pre><code>python3 url_batch_discovery.py -l url.txt -m &quot;JBoss&quot;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python3 url_batch_discovery.py -l url.txt -m &quot;JBoss&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h1 id="0x03-工具截图"><a href="#0x03-工具截图" class="headerlink" title="0x03 工具截图"></a>0x03 工具截图</h1><ul>
 <li>帮助信息</li>
 </ul>
@@ -930,7 +938,7 @@ python3 url_batch_discovery.py -h</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

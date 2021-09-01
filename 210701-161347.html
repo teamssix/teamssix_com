@@ -437,7 +437,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    256
+                    260
                 </div>
                 
 
@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -466,19 +469,23 @@
             <div id="articleContent">
                 <h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe 程序编码成 base64 文本，将编码后的内容复制到目标主机后，再进行解码，这里记录下方法。</p>
 <h2 id="2、PowerShell"><a href="#2、PowerShell" class="headerlink" title="2、PowerShell"></a>2、PowerShell</h2><p>使用 PowerShell 进行 base64 编码</p>
-<pre><code>$PEBytes = [System.IO.File]::ReadAllBytes(&quot;fscan.exe&quot;)
-$Base64Payload = [System.Convert]::ToBase64String($PEBytes)
-Set-Content fscan_base64.txt -Value $Base64Payload</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">$PEBytes &#x3D; [System.IO.File]::ReadAllBytes(&quot;fscan.exe&quot;)
+$Base64Payload &#x3D; [System.Convert]::ToBase64String($PEBytes)
+Set-Content fscan_base64.txt -Value $Base64Payload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>使用 PowerShell 进行 base64 解码</p>
-<pre><code>$Base64Bytes = Get-Content (&quot;fscan_base64.txt&quot;)
-$PEBytes= [System.Convert]::FromBase64String($Base64Bytes)
-[System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">$Base64Bytes &#x3D; Get-Content (&quot;fscan_base64.txt&quot;)
+$PEBytes&#x3D; [System.Convert]::FromBase64String($Base64Bytes)
+[System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="3、CertUtil"><a href="#3、CertUtil" class="headerlink" title="3、CertUtil"></a>3、CertUtil</h2><p>自 Windows 7 开始，Windows 自带了 CertUtil 命令，可以使用 CertUtil 进行 MD5、SHA1 等算法的计算，也可以使用 CertUtil 进行 base64 的编码，使用起来要比 PowerShell 方便不少。</p>
 <p>使用 CertUtil 进行编码</p>
-<pre><code>CertUtil -encode fscan.exe fscan_base64.txt</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">CertUtil -encode fscan.exe fscan_base64.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>使用 CertUtil 进行解码</p>
-<pre><code>CertUtil -decode fscan_base64.txt fscan_base64.exe</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">CertUtil -decode fscan_base64.txt fscan_base64.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630173155.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"> </p>
 <blockquote>
 <p>参考文章：</p>
@@ -912,7 +919,7 @@ $PEBytes= [System.Convert]::FromBase64String($Base64Bytes)
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             

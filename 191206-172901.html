@@ -459,6 +459,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,7 +473,7 @@
 <p>它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。</p>
 <p>DNS使用TCP和UDP端口53，当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。</p>
 <p>常用的DNS记录有以下几类：</p>
-<pre><code>主机记录(A记录)：
+<pre class="line-numbers language-none"><code class="language-none">主机记录(A记录)：
 A记录是用于名称解析的重要记录，它将特定的主机名映射到对应主机的IP地址上。
 
 IPv6主机记录(AAAA记录)：
@@ -489,7 +492,7 @@ CNAME记录用于将某个别名指向到某个A记录上，这样就不需要�
 也即从IP地址到域名的一条记录
 
 TXT记录：
-记录域名的相关文本信息</code></pre>
+记录域名的相关文本信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>DNS服务器分为主服务器，备份服务器，缓存服务器。</p>
 <p>备份服务器需要利用“域传送”从主服务器上复制数据，然后更新自身的数据库，以达到数据同步的目的，这样是为了增加冗余，万一主服务器挂了还有备份服务器顶着。</p>
 <p>而“域传送”漏洞则是由于dns配置不当，本来只有备份服务器能获得主服务器的数据，由于漏洞导致任意client都能通过“域传送”获得主服务器的数据（zone数据库信息）。</p>
@@ -497,15 +500,15 @@ TXT记录：
 <p>大的互联网厂商通常将内部网络与外部互联网隔离开，一个重要的手段是使用 Private DNS。如果内部 DNS 泄露，将造成极大的安全风险。风险控制不当甚至造成整个内部网络沦陷。</p>
 <h1 id="0x01-漏洞利用"><a href="#0x01-漏洞利用" class="headerlink" title="0x01 漏洞利用"></a>0x01 漏洞利用</h1><h2 id="1、Windows下使用nslookup"><a href="#1、Windows下使用nslookup" class="headerlink" title="1、Windows下使用nslookup"></a>1、Windows下使用nslookup</h2><p>nslookup命令以两种方式运行：非交互式和交互式。</p>
 <p>1、非交互式模式下，查看对应主机域的域名服务器</p>
-<pre><code>~# nslookup -type=ns teamssix.com
+<pre class="line-numbers language-none"><code class="language-none">~# nslookup -type&#x3D;ns teamssix.com
 
 服务器:  ns-gg.online.ny.cn
 Address:  118.192.13.5
 非权威应答:
-teamssix.com    nameserver = clint.ns.cloudflare.com
-teamssix.com    nameserver = isla.ns.cloudflare.com</code></pre>
+teamssix.com    nameserver &#x3D; clint.ns.cloudflare.com
+teamssix.com    nameserver &#x3D; isla.ns.cloudflare.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>2、进入交互模式，指定域名服务器，列出域名信息</p>
-<pre><code>~# nslookup
+<pre class="line-numbers language-none"><code class="language-none">~# nslookup
 
 默认服务器:  ns-gg.online.ny.cn
 Address:  118.192.13.5
@@ -523,13 +526,13 @@ ls: connect: No such file or directory
 *** 无法列出域 teamssix.com: Unspecified error
 DNS 服务器拒绝将区域 teamssix.com 传送到你的计算机。如果这不正确，
 请检查 IP 地址 2400:cb00:2049:1::adf5:3b5a 的 DNS 服务器上 teamssix.com 的
-区域传送安全设置。</code></pre>
+区域传送安全设置。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>如果提示无法列出域，那就说明此域名不存在域传送漏洞。</p>
 <h2 id="2、Kali下使用dig、dnsenum、dnswalk"><a href="#2、Kali下使用dig、dnsenum、dnswalk" class="headerlink" title="2、Kali下使用dig、dnsenum、dnswalk"></a>2、Kali下使用dig、dnsenum、dnswalk</h2><h3 id="a、dig"><a href="#a、dig" class="headerlink" title="a、dig"></a>a、dig</h3><p>这里涉及dig 一个重要的命令axfr，axfr 是q-type类型的一种，axfr类型是Authoritative Transfer的缩写，指请求传送某个区域的全部记录。</p>
 <p>我们只要欺骗dns服务器发送一个axfr请求过去，如果该dns服务器上存在该漏洞，就会返回所有的解析记录值。</p>
 <p>dig的整体利用步骤基本和nslookup一致。</p>
 <p>1、查看对应主机域的域名服务器</p>
-<pre><code>~# dig teamssix.com ns
+<pre class="line-numbers language-none"><code class="language-none">~# dig teamssix.com ns
 
 ; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1-Debian &lt;&lt;&gt;&gt; teamssix.com ns
 ;; global options: +cmd
@@ -549,19 +552,20 @@ teamssix.com.           5       IN      NS      isla.ns.cloudfla
 ;; Query time: 6 msec
 ;; SERVER: 10.18.37.7#54(10.18.37.7)
 ;; WHEN: Fri Dec 06 03:30:37 EST 2019
-;; MSG SIZE  rcvd: 83</code></pre>
+;; MSG SIZE  rcvd: 83<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>2、向该域名发送axfr 请求</p>
-<pre><code>~# dig axfr @clint.ns.cloudflare.com teamssix.com
+<pre class="line-numbers language-none"><code class="language-none">~# dig axfr @clint.ns.cloudflare.com teamssix.com
 
 ; &lt;&lt;&gt;&gt; DiG 9.11.5-P4-5.1-Debian &lt;&lt;&gt;&gt; axfr @clint.ns.cloudflare.com teamssix.com
 ; (3 servers found)
 ;; global options: +cmd
-; Transfer failed.</code></pre>
-<h3 id="b、dnsenum"><a href="#b、dnsenum" class="headerlink" title="b、dnsenum"></a>b、dnsenum</h3><p>这个工具相较于之前的方法要为简单，一行命令即可</p>
-<pre><code>~# dnsenum -enum teamssix.com
+; Transfer failed.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-Smartmatch is experimental at /usr/bin/dnsenum line 698.
-Smartmatch is experimental at /usr/bin/dnsenum line 698.
+<h3 id="b、dnsenum"><a href="#b、dnsenum" class="headerlink" title="b、dnsenum"></a>b、dnsenum</h3><p>这个工具相较于之前的方法要为简单，一行命令即可</p>
+<pre class="line-numbers language-none"><code class="language-none">~# dnsenum -enum teamssix.com
+
+Smartmatch is experimental at &#x2F;usr&#x2F;bin&#x2F;dnsenum line 698.
+Smartmatch is experimental at &#x2F;usr&#x2F;bin&#x2F;dnsenum line 698.
 dnsenum VERSION:1.2.4
 Warning: can&#39;t load Net::Whois::IP module, whois queries disabled.
 Warning: can&#39;t load WWW::Mechanize module, Google scraping desabled.
@@ -592,9 +596,9 @@ AXFR record query failed: FORMERR
 Trying Zone Transfer for teamssix.com on clint.ns.cloudflare.com ...
 AXFR record query failed: FORMERR
 
-brute force file not specified, bay.</code></pre>
+brute force file not specified, bay.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="c、dnswalk"><a href="#c、dnswalk" class="headerlink" title="c、dnswalk"></a>c、dnswalk</h3><p>dnswalk的使用同样一条命令，但是注意在域名最后加上一个点</p>
-<pre><code>~# dnswalk teamssix.com.
+<pre class="line-numbers language-none"><code class="language-none">~# dnswalk teamssix.com.
 
 Checking teamssix.com.
 Getting zone transfer of teamssix.com. from clint.ns.cloudflare.com...failed
@@ -602,15 +606,14 @@ FAIL: Zone transfer of teamssix.com. from clint.ns.cloudflare.com failed: FORMER
 Getting zone transfer of teamssix.com. from isla.ns.cloudflare.com...failed
 FAIL: Zone transfer of teamssix.com. from isla.ns.cloudflare.com failed: FORMERR
 BAD: All zone transfer attempts of teamssix.com. failed!
-2 failures, 0 warnings, 1 errors.</code></pre>
+2 failures, 0 warnings, 1 errors.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="0x02-修复建议"><a href="#0x02-修复建议" class="headerlink" title="0x02 修复建议"></a>0x02 修复建议</h1><p>区域传送是 DNS 常用的功能，为保证使用安全，应严格限制允许区域传送的主机，例如一个主 DNS 服务器应该只允许它的备用 DNS 服务器执行区域传送功能。</p>
 <p>在相应的 zone、options 中添加 allow-transfer，对执行此操作的服务器进行限制。如：</p>
 <ul>
 <li><p>严格限制允许进行区域传送的客户端的 IP</p>
-<pre><code>allow-transfer ｛1.1.1.1; 2.2.2.2;｝</code></pre>
-</li>
+<pre class="line-numbers language-none"><code class="language-none">allow-transfer ｛1.1.1.1; 2.2.2.2;｝<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>设置 TSIG key</p>
-<pre><code>allow-transfer ｛key &quot;dns1-slave1&quot;; key &quot;dns1-slave2&quot;;｝</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">allow-transfer ｛key &quot;dns1-slave1&quot;; key &quot;dns1-slave2&quot;;｝<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><p>最后感谢前辈们的文章与辛勤奉献，DNS域传送漏洞除了本文中讨论的方法外，也可以使用Python脚本或者万能的nmap，这里就不做讨论啦。</p>
 </li>
 </ul>
@@ -1060,7 +1063,7 @@ BAD: All zone transfer attempts of teamssix.com. failed!
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">162.6k</span>&nbsp;字
+                class="white-color">164k</span>&nbsp;字
             
             
             
