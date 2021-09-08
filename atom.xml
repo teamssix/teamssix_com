@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-09-07T07:48:48.288Z</updated>
+  <updated>2021-09-08T03:04:59.541Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】25、Exchange 邮件服务器</title>
+    <link href="https://www.teamssix.com/210908-105249.html"/>
+    <id>https://www.teamssix.com/210908-105249.html</id>
+    <published>2021-09-08T02:52:49.000Z</published>
+    <updated>2021-09-08T03:04:59.541Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、Exchange-的基本操作"><a href="#1、Exchange-的基本操作" class="headerlink" title="1、Exchange 的基本操作"></a>1、Exchange 的基本操作</h2><blockquote><p>在 Exchange 服务器上的 PowerShell 里进行以下操作</p></blockquote><p>将 Exchange 管理单元添加到当前会话中</p><pre class="line-numbers language-none"><code class="language-none">add-pssnapin microsoft.exchange*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看邮件数据库</p><pre class="line-numbers language-none"><code class="language-none">Get-MailboxDatabase -server &quot;dc&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查询数据库的物理路径</p><pre class="line-numbers language-none"><code class="language-none">Get-MailboxDatabase -Identity &#39;Mailbox Database 0761701514&#39; | Format-List Name,EdbFilePath,LogFolderPath<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>获取现有用户的邮件地址</p><pre class="line-numbers language-none"><code class="language-none">Get-Mailbox | Format-table Name,WindowsEmailAddress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看指定用户的邮箱使用信息</p><pre class="line-numbers language-none"><code class="language-none">Get-Mailboxstatistics -Identity Administrator | Select Dispayname,ItemCount,TotalItemSize,TotalTimeSize,LastLogonTime<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>获取用户邮箱中的邮件数量，通过该命令还可以列出那些用户未登录过邮箱</p><pre class="line-numbers language-none"><code class="language-none">Get-Mailbox -ResultSize Unlimited | Get-Mailboxstatistics | Sort-Object TotalItemSize -Descend<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="2、导出指定的电子邮箱"><a href="#2、导出指定的电子邮箱" class="headerlink" title="2、导出指定的电子邮箱"></a>2、导出指定的电子邮箱</h2><p>Exchange Server 2007 中需要使用 ExportMailBox 命令，在 Exchange Server 2010 SP1 及以后的版本中可以使用图形化界面导出，也可以使用 PowerShell</p><p>如果想要导出 PTS 格式的邮件文件，则需要为用户配置导出/导出权限。</p><h3 id="配置用户的导入导出权限"><a href="#配置用户的导入导出权限" class="headerlink" title="配置用户的导入导出权限"></a>配置用户的导入导出权限</h3><p>查看用户权限</p><pre class="line-numbers language-none"><code class="language-none">Get-ManagementRoleAssignment -role &quot;Mailbox Import Export&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将 Administrator 用户添加到 Mailbox Import Export  角色组里，将用户添加到角色组后，需要重启 Exchange 服务才能执行导出操作</p><pre class="line-numbers language-none"><code class="language-none">New-ManagementRoleAssignment -Name &quot;Import Export_Domain Admins&quot; -User &quot;Administrator&quot; -Role &quot;Mailbox Import Export&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>删除刚刚添加的 Mailbox Import Export 角色组中的用户</p><pre class="line-numbers language-none"><code class="language-none">Remove-ManagementRoleAssignment &quot;Import Export_Domain Admins&quot; -Confirm:$false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="设置网络共享文件夹"><a href="#设置网络共享文件夹" class="headerlink" title="设置网络共享文件夹"></a>设置网络共享文件夹</h3><p>不论使用哪种方式导出邮件，都需要将文件放置在 UNC（Universal Naming Convention，通用命名规则，也称通用命名规范）路径下</p><p>类似于 “\hostname\sharename”、“\ipaddress\sharename” 的网络路径下，sharename 为网络共享名称。</p><p>首先开启共享，将 C 盘 inetpub 文件夹设置为 everyone 可读写，执行如下命令：</p><pre class="line-numbers language-none"><code class="language-none">net share inetpub&#x3D;c:\inetpub &#x2F;grant:everyone,full<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="导出用户的电子邮件"><a href="#导出用户的电子邮件" class="headerlink" title="导出用户的电子邮件"></a>导出用户的电子邮件</h3><p>使用 PowerShell 导出电子邮件，用户的电子邮箱目录一般为Inbox（收件箱）、SentItems（已发送邮件）、DeleteItems（已删除邮件）、Drafts（草稿）等</p><pre class="line-numbers language-none"><code class="language-none">New-MailboxExportRequest -Mailbox administrator -FilePath \\192.168.7.77\inetpub\administrator.pst<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>使用图形化界面导出电子邮件，访问 <a href="https://127.0.0.1/ecp%EF%BC%8C%E6%89%93%E5%BC%80">https://127.0.0.1/ecp，打开</a> Exchange 管理中心的登录界面。</p><p>输入账号密码进入 Exchange 管理中心，点击「…」更多按钮，选择「导出到 PST 文件」即可进行导出操作。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908104558.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h3 id="管理导出请求"><a href="#管理导出请求" class="headerlink" title="管理导出请求"></a>管理导出请求</h3><p>不论是通过 Powershell 导出还是通过图形化的方式导出，都会在 Exchange 中生成一条告警信息，这些信息有助于 BT 发现服务器里的异常行为，通过以下命令，可以查看之前的导出请求记录信息。</p><pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将指定用户已经完成的导出请求删除</p><pre class="line-numbers language-none"><code class="language-none">Remove-MailboxExportRequest -Identity Administrator\MailboxExport<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>删除所有已完成的导出请求</p><pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest -Status Completed | Remove-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>删除所有导出请求，包括完成和失败的请求</p><pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest | Remove-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><blockquote><p>参考文章：</p><p><a href="https://www.cnblogs.com/micr067/p/12307519.html">https://www.cnblogs.com/micr067/p/12307519.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1、Exchange-的基本操作&quot;&gt;&lt;a href=&quot;#1、Exchange-的基本操作&quot; class=&quot;headerlink&quot; title=&quot;1、Exchange 的基本操作&quot;&gt;&lt;/a&gt;1、Exchange 的基本操作&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】24、SPN 的应用</title>
@@ -532,34 +561,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;nps 项目地址：&lt;a href=&quot;https://github.com/ehang-io/nps&quot;&gt;https://git</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】11、frp 的使用</title>
-    <link href="https://www.teamssix.com/210611-171526.html"/>
-    <id>https://www.teamssix.com/210611-171526.html</id>
-    <published>2021-06-11T09:15:26.000Z</published>
-    <updated>2021-08-04T08:22:03.553Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>相较于前一篇文章介绍的 ew 的年代久远，frp 就好的多了，基本上隔几天就会发布新的版本，最新的一版更新还就在几天前。</p><p>在实战中，大家较多使用的也是 frp，frp 项目地址：<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p><p>至于下载安装直接在项目的 releases 里下载自己对应的系统版本就行。</p><h2 id="2、使用"><a href="#2、使用" class="headerlink" title="2、使用"></a>2、使用</h2><p>官方使用文档：<a href="https://gofrp.org/docs/">https://gofrp.org/docs/</a></p><p>frp 分成服务端和客户端，分别叫 frps 和 frpc，配置文件分别对应 frps.ini 和 frpc.ini</p><blockquote><p>以下环境均为本地环境，VPS IP 为 172.16.214.52，目标主机 IP 为 192.168.7.110</p></blockquote><h3 id="a、内网端口穿透"><a href="#a、内网端口穿透" class="headerlink" title="a、内网端口穿透"></a>a、内网端口穿透</h3><p> 场景：内网主机可出网，想从公网访问内网主机的 3389 端口</p><p>在 VPS 上开启服务端，这里以 kali 为例，首先修改配置文件 frps.ini</p><pre class="line-numbers language-none"><code class="language-none">[common]bind_port &#x3D; 4444<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>然后启动服务端</p><pre class="line-numbers language-none"><code class="language-none">frps -c frps.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">&gt; .&#x2F;frps -c frps.ini2021&#x2F;06&#x2F;09 03:45:03 [I] [root.go:200] frps uses config file: frps.ini2021&#x2F;06&#x2F;09 03:45:03 [I] [service.go:192] frps tcp listen on 0.0.0.0:44442021&#x2F;06&#x2F;09 03:45:03 [I] [root.go:209] frps started successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>配置客户端配置文件</p><pre class="line-numbers language-none"><code class="language-none">[common]# 服务端 IPserver_addr &#x3D; vps_ip# 服务端端口server_port &#x3D; 4444[rdp]type &#x3D; tcplocal_ip &#x3D; 127.0.0.1local_port &#x3D; 3389# 连接 vps 的端口remote_port &#x3D; 3389<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">&gt; .\frpc.exe -c frpc.ini2021&#x2F;06&#x2F;09 15:50:29 [I] [service.go:304] [72904e8037a7fdf8] login to server success, get run id [72904e8037a7fdf8], server udp port [0]2021&#x2F;06&#x2F;09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]2021&#x2F;06&#x2F;09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>此时，在 vps 上访问本地的 3389 端口就会访问到内网主机的 3389 端口了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609155435.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h3 id="b、建立-socks-代理"><a href="#b、建立-socks-代理" class="headerlink" title="b、建立 socks 代理"></a>b、建立 socks 代理</h3><p>场景：内网主机可出网，想把内网主机作为跳板机使用</p><p>上面的场景只是利用 frp 访问了内网指定机器的指定端口，我们还可以利用 frp 将内网主机作为跳板机使用。</p><p>这次我们用上 frp 的 web 控制面板以及访问密码等功能，让我们建立的连接更加安全、方便。</p><p>在 VPS 上开启服务端，服务端配置文件如下：</p><pre class="line-numbers language-none"><code class="language-none">[common]bind_port &#x3D; 4444# 客户端认证 tokentoken &#x3D; 123456# 设置 frps 仪表盘端口、账号和密码，实战中用处貌似不大，但如果设置一定要设置强密码dashboard_port &#x3D; 8000dashboard_user &#x3D; admindashboard_pwd &#x3D; password<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>实战中，为了更好的隐藏自己，最好还是要设置通过域名访问</p></blockquote><p>配置好文件后，启动服务端</p><pre class="line-numbers language-none"><code class="language-none">frps -c frps.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">.&#x2F;frps -c frps.ini2021&#x2F;06&#x2F;09 04:06:34 [I] [root.go:200] frps uses config file: frps.ini2021&#x2F;06&#x2F;09 04:06:35 [I] [service.go:192] frps tcp listen on 0.0.0.0:44442021&#x2F;06&#x2F;09 04:06:35 [I] [service.go:294] Dashboard listen on 0.0.0.0:80002021&#x2F;06&#x2F;09 04:06:35 [I] [root.go:209] frps started successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>配置客户端文件</p><pre class="line-numbers language-none"><code class="language-none">[common]server_addr &#x3D; vps_ipserver_port &#x3D; 4444# 客户端认证 token，需要和服务端 token 保持一致token &#x3D; 123456# 启用加密，防止流量被拦截use_encryption &#x3D; true# 启用压缩，提升流量转发速度use_compression &#x3D; true[socks5]type &#x3D; tcp# 连接 vps 的端口remote_port &#x3D; 1080plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>开启客户端</p><pre class="line-numbers language-none"><code class="language-none">frpc -c frpc.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">&gt; .\frpc.exe -c frpc.ini2021&#x2F;06&#x2F;09 16:11:21 [I] [service.go:304] [ee7ad330ab4e6036] login to server success, get run id [ee7ad330ab4e6036], server udp port [0]2021&#x2F;06&#x2F;09 16:11:21 [I] [proxy_manager.go:144] [ee7ad330ab4e6036] proxy added: [socks5]2021&#x2F;06&#x2F;09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161458.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210609161859.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>frp 的参数远不止文章中提到的这些，更多功能可以参考下面的参考文章。</p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/331aa59fff5d">https://www.jianshu.com/p/331aa59fff5d</a></p><p><a href="https://www.anquanke.com/post/id/184855">https://www.anquanke.com/post/id/184855</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1、介绍&quot;&gt;&lt;a href=&quot;#1、介绍&quot; class=&quot;headerlink&quot; title=&quot;1、介绍&quot;&gt;&lt;/a&gt;1、介绍&lt;/h2&gt;&lt;p&gt;相较于前一篇文章介绍的 ew 的年代久远，frp 就好的多了，基本上隔几天就会发布新的版本，最新的一版更新还就在几天前。&lt;/</summary>
       
     
     

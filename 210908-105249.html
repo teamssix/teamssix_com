@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【工具分享】分享几个平时经常用到的小工具, TeamsSix">
+    <meta name="keywords" content="【内网学习笔记】25、Exchange 邮件服务器, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【工具分享】分享几个平时经常用到的小工具 | TeamsSix</title>
+    <title>【内网学习笔记】25、Exchange 邮件服务器 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908104558.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【工具分享】分享几个平时经常用到的小工具</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】25、Exchange 邮件服务器</h1>
                 </div>
             </div>
         </div>
@@ -392,12 +392,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                                <span class="chip bg-color">工具分享</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/Github/">
-                                <span class="chip bg-color">Github</span>
+                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                <span class="chip bg-color">红队</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -408,8 +412,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                工具分享
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -421,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-13
+                    2021-09-08
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-09-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    588
+                    752
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -465,22 +469,67 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>平时自己偶然会根据需要写点小工具，但是一直没上传到我的Github上（其实是因为太懒），今天把一些自己平时使用比较频繁的一些小工具上传到我的Github上，有问题的可以反馈，有喜欢的可以给个Star，嘿嘿。</p>
-<a id="more"></a>
+                <h2 id="1、Exchange-的基本操作"><a href="#1、Exchange-的基本操作" class="headerlink" title="1、Exchange 的基本操作"></a>1、Exchange 的基本操作</h2><blockquote>
+<p>在 Exchange 服务器上的 PowerShell 里进行以下操作</p>
+</blockquote>
+<p>将 Exchange 管理单元添加到当前会话中</p>
+<pre class="line-numbers language-none"><code class="language-none">add-pssnapin microsoft.exchange*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h1 id="小工具"><a href="#小工具" class="headerlink" title="小工具"></a>小工具</h1><h2 id="dirsearch-single"><a href="#dirsearch-single" class="headerlink" title="dirsearch-single"></a>dirsearch-single</h2><p>地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/dirsearch-single">https://github.com/teamssix/dirsearch-single</a></p>
-<p>介绍：在平时会碰到一个目标的多个资产都是使用的同一个CMS，当发现了一个站点的漏洞时，可能其他站点也存在此漏洞，此时就可以对这些URL进行单个目录的批量检测了。</p>
-<h2 id="fckeditor-dircheck"><a href="#fckeditor-dircheck" class="headerlink" title="fckeditor-dircheck"></a>fckeditor-dircheck</h2><p>地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/fckeditor-dircheck">https://github.com/teamssix/fckeditor-dircheck</a></p>
-<p>介绍：此工具主要对fckeditor编辑器的上传路径进行检测，目录字典为<code>dir_fckeditor.txt</code>，各位大佬也可以根据自己需求、经验进行字典的添加。</p>
-<h2 id="http-sys-check"><a href="#http-sys-check" class="headerlink" title="http.sys-check"></a>http.sys-check</h2><p>地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/http.sys-check">https://github.com/teamssix/http.sys-check</a></p>
-<p>介绍：由于在网上没有找到合适的批量检测http.sys漏洞的工具，于是自己简单写了一个，在这里分享出来。</p>
-<h2 id="springboot-check"><a href="#springboot-check" class="headerlink" title="springboot-check"></a>springboot-check</h2><p>地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/springboot-check">https://github.com/teamssix/springboot-check</a></p>
-<p>介绍：由于在网上没有找到满意的springboot敏感目录检测的工具，于是就自己简单写了一个，dir_springboot.txt为检测的字典，都是从网上收集来的，各位大佬也可以自己根据自己需要进行添加。</p>
-<h2 id="url-survival-check"><a href="#url-survival-check" class="headerlink" title="url-survival-check"></a>url-survival-check</h2><p>地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/url-survival-check">https://github.com/teamssix/url-survival-check</a></p>
-<p>介绍：由于平时在做资产梳理的时候，往往会遇到对大量URL进行存活检测的工作，有时候有的URL使用http能打开，有的则使用https才能打开，手动去检测效率太低，因此简单写了一个批量检测工具。</p>
-<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>上面这些工具由于主要是平时自己使用，因此写的比较粗糙。各位大佬在使用过程中，如果碰到Bug，可以在Github上进行反馈。</p>
-<p>除了上述工具外，还有一些工具因为存在的Bug比较多、误报率较高而没有上传到我的Github上，后期等成熟的时候，会一一上传上去。</p>
-<p>如果上面的工具有帮助到你，欢迎给个star或Github的关注，最后祝各位大佬HW顺利。</p>
+<p>查看邮件数据库</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-MailboxDatabase -server &quot;dc&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查询数据库的物理路径</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-MailboxDatabase -Identity &#39;Mailbox Database 0761701514&#39; | Format-List Name,EdbFilePath,LogFolderPath<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获取现有用户的邮件地址</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-Mailbox | Format-table Name,WindowsEmailAddress<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看指定用户的邮箱使用信息</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-Mailboxstatistics -Identity Administrator | Select Dispayname,ItemCount,TotalItemSize,TotalTimeSize,LastLogonTime<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获取用户邮箱中的邮件数量，通过该命令还可以列出那些用户未登录过邮箱</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-Mailbox -ResultSize Unlimited | Get-Mailboxstatistics | Sort-Object TotalItemSize -Descend<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="2、导出指定的电子邮箱"><a href="#2、导出指定的电子邮箱" class="headerlink" title="2、导出指定的电子邮箱"></a>2、导出指定的电子邮箱</h2><p>Exchange Server 2007 中需要使用 ExportMailBox 命令，在 Exchange Server 2010 SP1 及以后的版本中可以使用图形化界面导出，也可以使用 PowerShell</p>
+<p>如果想要导出 PTS 格式的邮件文件，则需要为用户配置导出/导出权限。</p>
+<h3 id="配置用户的导入导出权限"><a href="#配置用户的导入导出权限" class="headerlink" title="配置用户的导入导出权限"></a>配置用户的导入导出权限</h3><p>查看用户权限</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-ManagementRoleAssignment -role &quot;Mailbox Import Export&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将 Administrator 用户添加到 Mailbox Import Export  角色组里，将用户添加到角色组后，需要重启 Exchange 服务才能执行导出操作</p>
+<pre class="line-numbers language-none"><code class="language-none">New-ManagementRoleAssignment -Name &quot;Import Export_Domain Admins&quot; -User &quot;Administrator&quot; -Role &quot;Mailbox Import Export&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>删除刚刚添加的 Mailbox Import Export 角色组中的用户</p>
+<pre class="line-numbers language-none"><code class="language-none">Remove-ManagementRoleAssignment &quot;Import Export_Domain Admins&quot; -Confirm:$false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="设置网络共享文件夹"><a href="#设置网络共享文件夹" class="headerlink" title="设置网络共享文件夹"></a>设置网络共享文件夹</h3><p>不论使用哪种方式导出邮件，都需要将文件放置在 UNC（Universal Naming Convention，通用命名规则，也称通用命名规范）路径下</p>
+<p>类似于 “\hostname\sharename”、“\ipaddress\sharename” 的网络路径下，sharename 为网络共享名称。</p>
+<p>首先开启共享，将 C 盘 inetpub 文件夹设置为 everyone 可读写，执行如下命令：</p>
+<pre class="line-numbers language-none"><code class="language-none">net share inetpub&#x3D;c:\inetpub &#x2F;grant:everyone,full<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="导出用户的电子邮件"><a href="#导出用户的电子邮件" class="headerlink" title="导出用户的电子邮件"></a>导出用户的电子邮件</h3><p>使用 PowerShell 导出电子邮件，用户的电子邮箱目录一般为Inbox（收件箱）、SentItems（已发送邮件）、DeleteItems（已删除邮件）、Drafts（草稿）等</p>
+<pre class="line-numbers language-none"><code class="language-none">New-MailboxExportRequest -Mailbox administrator -FilePath \\192.168.7.77\inetpub\administrator.pst<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用图形化界面导出电子邮件，访问 <a target="_blank" rel="noopener" href="https://127.0.0.1/ecp%EF%BC%8C%E6%89%93%E5%BC%80">https://127.0.0.1/ecp，打开</a> Exchange 管理中心的登录界面。</p>
+<p>输入账号密码进入 Exchange 管理中心，点击「…」更多按钮，选择「导出到 PST 文件」即可进行导出操作。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908104558.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h3 id="管理导出请求"><a href="#管理导出请求" class="headerlink" title="管理导出请求"></a>管理导出请求</h3><p>不论是通过 Powershell 导出还是通过图形化的方式导出，都会在 Exchange 中生成一条告警信息，这些信息有助于 BT 发现服务器里的异常行为，通过以下命令，可以查看之前的导出请求记录信息。</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将指定用户已经完成的导出请求删除</p>
+<pre class="line-numbers language-none"><code class="language-none">Remove-MailboxExportRequest -Identity Administrator\MailboxExport<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>删除所有已完成的导出请求</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest -Status Completed | Remove-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>删除所有导出请求，包括完成和失败的请求</p>
+<pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest | Remove-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/micr067/p/12307519.html">https://www.cnblogs.com/micr067/p/12307519.html</a></p>
+<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
+</blockquote>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -507,7 +556,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/200613-134525.html">https://www.teamssix.com/200613-134525.html</a>
+                    <a href="https://www.teamssix.com/210908-105249.html">https://www.teamssix.com/210908-105249.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -545,12 +594,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/">
-                                    <span class="chip bg-color">工具分享</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/Github/">
-                                    <span class="chip bg-color">Github</span>
+                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                                    <span class="chip bg-color">红队</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -595,7 +648,7 @@
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2020-06-13T13-45-25',
+        id: '2021-09-08T10-52-49',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -621,53 +674,55 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/200619-233603.html">
+                <a href="/210908-105249.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-06-19_22-21-10.png" class="responsive-img" alt="【工具分享】shiro漏洞检测RCE工具">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908104558.png" class="responsive-img" alt="【内网学习笔记】25、Exchange 邮件服务器">
                         
-                        <span class="card-title">【工具分享】shiro漏洞检测RCE工具</span>
+                        <span class="card-title">【内网学习笔记】25、Exchange 邮件服务器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            0x00 前言最近在做shiro反序列化漏洞复现，从网上也找了一堆复现文章和工具，但是这些工具用着都不太舒服，于是参考网上大佬们的工具，自己进行了一些简单的改良。
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/" class="post-category">
-                                    工具分享
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B/">
-                        <span class="chip bg-color">漏洞检测</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/shiro/">
-                        <span class="chip bg-color">shiro</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
                     </a>
                     
-                    <a href="/tags/RCE/">
-                        <span class="chip bg-color">RCE</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -681,12 +736,12 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/200419-150740.html">
+                <a href="/210907-121204.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs28-4.png" class="responsive-img" alt="【CS学习笔记】28、白名单申请和宏渗透">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210907113159.png" class="responsive-img" alt="【内网学习笔记】24、SPN 的应用">
                         
-                        <span class="card-title">【CS学习笔记】28、白名单申请和宏渗透</span>
+                        <span class="card-title">【内网学习笔记】24、SPN 的应用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -697,14 +752,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -714,16 +769,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
                     <a href="/tags/%E7%BA%A2%E9%98%9F/">
                         <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
