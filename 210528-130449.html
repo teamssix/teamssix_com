@@ -992,8 +992,8 @@ socat tcp-listen:4444 tcp-listen:5555<span aria-hidden="true" class="line-number
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('4'),
-            headingSelector: 'h1, h2, h3, h4'
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
         });
 
         // modify the toc link href to support Chinese.
@@ -1005,7 +1005,7 @@ socat tcp-listen:4444 tcp-listen:5555<span aria-hidden="true" class="line-number
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 

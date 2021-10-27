@@ -937,8 +937,8 @@ auxiliary&#x2F;scanner&#x2F;portscan&#x2F;xmas         TCP XMas端口扫描
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('4'),
-            headingSelector: 'h1, h2, h3, h4'
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
         });
 
         // modify the toc link href to support Chinese.
@@ -950,7 +950,7 @@ auxiliary&#x2F;scanner&#x2F;portscan&#x2F;xmas         TCP XMas端口扫描
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 

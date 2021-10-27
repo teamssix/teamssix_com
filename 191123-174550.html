@@ -834,8 +834,8 @@ Web应用程序显露了某些文件名称，此信息可以帮助攻击者对�
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('4'),
-            headingSelector: 'h1, h2, h3, h4'
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
         });
 
         // modify the toc link href to support Chinese.
@@ -847,7 +847,7 @@ Web应用程序显露了某些文件名称，此信息可以帮助攻击者对�
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 

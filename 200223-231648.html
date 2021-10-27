@@ -838,8 +838,8 @@ Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('4'),
-            headingSelector: 'h1, h2, h3, h4'
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
         });
 
         // modify the toc link href to support Chinese.
@@ -851,7 +851,7 @@ Django遵循MVC设计模式，在Django中有个专有名词，叫做MVT
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 

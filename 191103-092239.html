@@ -915,8 +915,8 @@ q.join()：阻塞直到队列中的所有项均被删除和处理为止。一旦
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('4'),
-            headingSelector: 'h1, h2, h3, h4'
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
         });
 
         // modify the toc link href to support Chinese.
@@ -928,7 +928,7 @@ q.join()：阻塞直到队列中的所有项均被删除和处理为止。一旦
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
