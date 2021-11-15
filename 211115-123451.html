@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】3、如何进行分布操作, TeamsSix">
+    <meta name="keywords" content="【代码审计】Java EE 基础知识, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【CS学习笔记】3、如何进行分布操作 | TeamsSix</title>
+    <title>【代码审计】Java EE 基础知识 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151127644.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】3、如何进行分布操作</h1>
+                    <h1 class="description center-align post-title">【代码审计】Java EE 基础知识</h1>
                 </div>
             </div>
         </div>
@@ -392,16 +392,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                <span class="chip bg-color">红队</span>
-                            </a>
-                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                <span class="chip bg-color">代码审计</span>
                             </a>
                         
                     </div>
@@ -412,8 +408,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                代码审计
                             </a>
                         
                     </div>
@@ -425,28 +421,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-11-15
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    672
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -469,52 +465,39 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-最基本的团队服务模型"><a href="#0x00-最基本的团队服务模型" class="headerlink" title="0x00 最基本的团队服务模型"></a>0x00 最基本的团队服务模型</h1><p>这里介绍最基本的团队服务模型，具体由三个服务器构成，具体如下所示：</p>
-<ul>
-<li><p>临时服务器（Staging Servers）</p>
-<p>临时服务器介于持久服务器和后渗透服务器之间，它的作用主要是方便在短时间内对目标系统进行访问。</p>
-<p>它也是最开始用于传递payload、获取初始权限的服务器，它承担初始的权限提升和下载持久性程序的功能，因此这个服务器有较高暴露风险。</p>
-</li>
-<li><p>持久服务器（Long Haul Servers）</p>
-<p>持久服务器的作用是保持对目标网络的长期访问，所以持久服务器会以较低的频率与目标保持通信。</p>
-</li>
-<li><p>后渗透服务器（Post-Exploitation Servers）</p>
-<p>主要进行后渗透及横向移动的相关任务，比如对目标进行交互式访问</p>
-</li>
-</ul>
-<h1 id="0x01-可伸缩红队操作模型"><a href="#0x01-可伸缩红队操作模型" class="headerlink" title="0x01 可伸缩红队操作模型"></a>0x01 可伸缩红队操作模型</h1><p>可伸缩红队操作模型（Scaling Red Operations）分为两个层次，第一层次是针对一个目标网络的目标单元；第二层次是针对多个目标网络的权限管理单元。</p>
-<p>目标单元的工作：</p>
-<ul>
-<li>负责具体目标或行动的对象</li>
-<li>获得访问权限、后渗透、横向移动</li>
-<li>维护本地基础设施</li>
-</ul>
-<p>访问管理单元的工作：</p>
-<ul>
-<li>保持所有目标网络的访问权限</li>
-<li>获取访问权限并接收来自单元的访问</li>
-<li>根据需要传递对目标单元的访问</li>
-<li>为持续回调保持全局基础环境</li>
-</ul>
-<h1 id="0x02-团队角色"><a href="#0x02-团队角色" class="headerlink" title="0x02 团队角色"></a>0x02 团队角色</h1><ul>
-<li><p>开始渗透人员</p>
-<p>主要任务是进入目标系统，并扩大立足点</p>
-</li>
-<li><p>后渗透人员</p>
-<p>主要任务是对目标系统进行数据挖掘、对用户进行监控，收集目标系统的密钥、日志等敏感信息</p>
-</li>
-<li><p>本地通道管理人员</p>
-<p>主要任务有建立基础设施、保持shell的持久性、管理回调、传递全局访问管理单元之间的会话</p>
-</li>
-</ul>
-<h1 id="0x03-日志记录"><a href="#0x03-日志记录" class="headerlink" title="0x03 日志记录"></a>0x03 日志记录</h1><p>Cobalt Strike的日志文件在团队服务器下的运行目录中的<code>logs</code>文件夹内，其中有些日志文件名例如<code>beacon_11309.log</code>，这里的<code>11309</code>就是beacon会话的ID。</p>
-<p>按键的日志在<code>keystrokes</code>文件夹内，截屏的日志在<code>screenshots</code>文件夹内，截屏的日志名称一般如<code>screen_015321_4826.jpg</code>类似，其中<code>015321</code>表示时间（1点53分21秒），<code>4826</code>表示ID</p>
+                <p>Java 平台分为三个主要版本：</p>
+<ol>
+<li>Java SE（Java 平台标准版）</li>
+<li>Java EE（Java 平台企业版）</li>
+<li>Java ME（Java 平台微型版）</li>
+</ol>
+<p>Java EE 是 Java 应用最广泛的版本。</p>
+<h1 id="0x01-Java-EE-的核心技术"><a href="#0x01-Java-EE-的核心技术" class="headerlink" title="0x01 Java EE 的核心技术"></a>0x01 Java EE 的核心技术</h1><p>Java EE 有十三种核心技术，它们分别是：JDBC、JNDI、EJB、RMI、Servlet、JSP、XML、JMS、Java IDL、JTS、JTA、JavaMail 和 JAF，这里重点介绍以下几种：</p>
+<ol>
+<li>Java 数据库连接（Java Database Connectivity，JDBC）是 Java 语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。</li>
+<li>Java 命名和目录接口（Java Naming and Directory Interface，JNDI），是 Java 的一个目录服务应用程序界面（API），它提供一个目录系统，并将服务名称与对象关联起来，从而使得开发人员在开发过程中可以使用名称来访问对象。简单的说就是比如以前连接数据库需要把参数写在 Java 类里，但现在可以直接写在配置文件里了，这个配置文件可以是 XML，也可以是 properties，或者 yml 文件，只要能解析都行。</li>
+<li>企业级 JavaBean（Enterprise JavaBean, EJB）是一个用来构筑企业级应用的、在服务器端可被管理组件。不过这个东西在 Spring 问世后基本凉凉了，知道是什么就行。</li>
+<li>远程方法调用（Remote Method Invocation，RMI）是 Java 的一组拥有开发分布式应用程序的 API，它大大增强了 Java 开发分布式应用的能力。</li>
+<li>Servlet（Server Applet），是用 Java 编写的服务端程序。其主要功能在于交互式地浏览和修改数据，生成动态 Web 内容。狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是指任何实现了这个 Servlet 接口的类，一般情况下，人们将 Servlet 理解为后者。</li>
+<li>JSP（全称 JavaServer Pages）是由 Sun 公司主导创建的一种动态网页技术标准。JSP 部署于网络服务器上，可以响应客户端发送的请求，并根据请求内容动态地生成 HTML、XML 或其他格式文档的 Web 网页，然后返回给请求者。</li>
+<li>可扩展标记语言（eXtensible Markup Language，XML）是被设计用于传输和存储数据的语言。</li>
+<li>Java 服务消息（Java Message Service，JMS）是一个 Java 平台中关于面向消息中间件（MOM）的 API，用于在两个应用程序之间或分布式系统中发送消息，进行异步通信。</li>
+</ol>
+<h1 id="0x02-Java-EE-分层模型"><a href="#0x02-Java-EE-分层模型" class="headerlink" title="0x02 Java EE 分层模型"></a>0x02 Java EE 分层模型</h1><p>Java EE 应用的分层模型主要分为以下 5 层。</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151127644.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<ol>
+<li>Domain Object（领域对象）层，也叫模型（Modole）层，此层由一系列的 POJO（Plain Old Java Object，普通的、传统的 java 对象）组成，这些对象是该系统的 Domain Object，往往包含了各自所需实现的业务逻辑方法。</li>
+<li>DAO（Data Access Object，数据访问对象）层，此层由一系列的 DAO 组件组成，这些 DAO 实现了对数据库的创建、查询、更新和删除（CRUD）等原子操作。</li>
+<li>Service（业务逻辑层）层，此层由一系列的业务逻辑对象组成，这些业务逻辑对象实现了系统所需要的业务逻辑方法。这些业务逻辑方法可能仅仅用于暴露Domain Object 对象所实现的业务逻辑方法，也可能是依赖 DAO 组件实现的业务逻辑方法。</li>
+<li>Controller（控制器）层，此层由一系列控制器组成，这些控制器用于拦截用户请求，并调用业务逻辑组件的业务逻辑方法，并根据处理结果转发到不同的 View 组件。</li>
+<li>View（表现）层，此层由一系列的 JSP 页面、Velocity 页面、PDF 文档视图组件组成，负责收集用户请求，并显示处理后的结果。</li>
+</ol>
 <blockquote>
 <p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.leanote.com/post/snowming/62ec1132a2c9">http://blog.leanote.com/post/snowming/62ec1132a2c9</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.cobaltstrike.com/2014/09/09/infrastructure-for-ongoing-red-team-operations/">https://blog.cobaltstrike.com/2014/09/09/infrastructure-for-ongoing-red-team-operations/</a></p>
-<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/43884237">https://zhuanlan.zhihu.com/p/43884237</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.codenong.com/cs105259462/">https://www.codenong.com/cs105259462/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mzc_love/article/details/107244053">https://blog.csdn.net/mzc_love/article/details/107244053</a></p>
+<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -543,7 +526,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/200419-150440.html">https://www.teamssix.com/200419-150440.html</a>
+                    <a href="https://www.teamssix.com/211115-123451.html">https://www.teamssix.com/211115-123451.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -581,16 +564,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                    <span class="chip bg-color">红队</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                    <span class="chip bg-color">代码审计</span>
                                 </a>
                             
                         </div>
@@ -635,7 +614,7 @@
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2020-04-19T15-04-40',
+        id: '2021-11-15T12-34-51',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -661,53 +640,51 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/200419-150447.html">
+                <a href="/211115-123451.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2019-12-04-101402.jpg" class="responsive-img" alt="【CS学习笔记】4、快速登陆和生成会话报告">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151127644.png" class="responsive-img" alt="【代码审计】Java EE 基础知识">
                         
-                        <span class="card-title">【CS学习笔记】4、快速登陆和生成会话报告</span>
+                        <span class="card-title">【代码审计】Java EE 基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Cobalt Strike生成报告的目的在于培训或帮助蓝队，在`Reporting`菜单栏中就可以生成报告，关于生成的报告有以下特点。
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>
@@ -721,30 +698,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/200419-150432.html">
+                <a href="/211103-161807.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs2-6.png" class="responsive-img" alt="【CS学习笔记】2、如何连接团队服务器">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111031614583.png" class="responsive-img" alt="【代码审计】Maven 基础知识">
                         
-                        <span class="card-title">【CS学习笔记】2、如何连接团队服务器</span>
+                        <span class="card-title">【代码审计】Maven 基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Cobalt Strike使用C/S架构，Cobalt Strike的客户端连接到团队服务器，团队服务器连接到目标，也就是说Cobalt Strike的客户端不与目标服务器进行交互，那么Cobalt Strike的客户端如何连接到团队服务器就是本文所学习的东西。
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
@@ -754,16 +731,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>

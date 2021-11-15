@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2021-11-03T08:32:09.926Z</updated>
+  <updated>2021-11-15T04:41:12.109Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -17,13 +17,45 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【代码审计】Java EE 基础知识</title>
+    <link href="https://www.teamssix.com/211115-123451.html"/>
+    <id>https://www.teamssix.com/211115-123451.html</id>
+    <published>2021-11-15T04:34:51.000Z</published>
+    <updated>2021-11-15T04:41:12.109Z</updated>
+    
+    <content type="html"><![CDATA[<p>Java 平台分为三个主要版本：</p><ol><li>Java SE（Java 平台标准版）</li><li>Java EE（Java 平台企业版）</li><li>Java ME（Java 平台微型版）</li></ol><p>Java EE 是 Java 应用最广泛的版本。</p><h1 id="0x01-Java-EE-的核心技术"><a href="#0x01-Java-EE-的核心技术" class="headerlink" title="0x01 Java EE 的核心技术"></a>0x01 Java EE 的核心技术</h1><p>Java EE 有十三种核心技术，它们分别是：JDBC、JNDI、EJB、RMI、Servlet、JSP、XML、JMS、Java IDL、JTS、JTA、JavaMail 和 JAF，这里重点介绍以下几种：</p><ol><li>Java 数据库连接（Java Database Connectivity，JDBC）是 Java 语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。</li><li>Java 命名和目录接口（Java Naming and Directory Interface，JNDI），是 Java 的一个目录服务应用程序界面（API），它提供一个目录系统，并将服务名称与对象关联起来，从而使得开发人员在开发过程中可以使用名称来访问对象。简单的说就是比如以前连接数据库需要把参数写在 Java 类里，但现在可以直接写在配置文件里了，这个配置文件可以是 XML，也可以是 properties，或者 yml 文件，只要能解析都行。</li><li>企业级 JavaBean（Enterprise JavaBean, EJB）是一个用来构筑企业级应用的、在服务器端可被管理组件。不过这个东西在 Spring 问世后基本凉凉了，知道是什么就行。</li><li>远程方法调用（Remote Method Invocation，RMI）是 Java 的一组拥有开发分布式应用程序的 API，它大大增强了 Java 开发分布式应用的能力。</li><li>Servlet（Server Applet），是用 Java 编写的服务端程序。其主要功能在于交互式地浏览和修改数据，生成动态 Web 内容。狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是指任何实现了这个 Servlet 接口的类，一般情况下，人们将 Servlet 理解为后者。</li><li>JSP（全称 JavaServer Pages）是由 Sun 公司主导创建的一种动态网页技术标准。JSP 部署于网络服务器上，可以响应客户端发送的请求，并根据请求内容动态地生成 HTML、XML 或其他格式文档的 Web 网页，然后返回给请求者。</li><li>可扩展标记语言（eXtensible Markup Language，XML）是被设计用于传输和存储数据的语言。</li><li>Java 服务消息（Java Message Service，JMS）是一个 Java 平台中关于面向消息中间件（MOM）的 API，用于在两个应用程序之间或分布式系统中发送消息，进行异步通信。</li></ol><h1 id="0x02-Java-EE-分层模型"><a href="#0x02-Java-EE-分层模型" class="headerlink" title="0x02 Java EE 分层模型"></a>0x02 Java EE 分层模型</h1><p>Java EE 应用的分层模型主要分为以下 5 层。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151127644.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><ol><li>Domain Object（领域对象）层，也叫模型（Modole）层，此层由一系列的 POJO（Plain Old Java Object，普通的、传统的 java 对象）组成，这些对象是该系统的 Domain Object，往往包含了各自所需实现的业务逻辑方法。</li><li>DAO（Data Access Object，数据访问对象）层，此层由一系列的 DAO 组件组成，这些 DAO 实现了对数据库的创建、查询、更新和删除（CRUD）等原子操作。</li><li>Service（业务逻辑层）层，此层由一系列的业务逻辑对象组成，这些业务逻辑对象实现了系统所需要的业务逻辑方法。这些业务逻辑方法可能仅仅用于暴露Domain Object 对象所实现的业务逻辑方法，也可能是依赖 DAO 组件实现的业务逻辑方法。</li><li>Controller（控制器）层，此层由一系列控制器组成，这些控制器用于拦截用户请求，并调用业务逻辑组件的业务逻辑方法，并根据处理结果转发到不同的 View 组件。</li><li>View（表现）层，此层由一系列的 JSP 页面、Velocity 页面、PDF 文档视图组件组成，负责收集用户请求，并显示处理后的结果。</li></ol><blockquote><p>参考链接：</p><p><a href="https://zhuanlan.zhihu.com/p/43884237">https://zhuanlan.zhihu.com/p/43884237</a></p><p><a href="https://www.codenong.com/cs105259462/">https://www.codenong.com/cs105259462/</a></p><p><a href="https://blog.csdn.net/mzc_love/article/details/107244053">https://blog.csdn.net/mzc_love/article/details/107244053</a></p><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Java 平台分为三个主要版本：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Java SE（Java 平台标准版）&lt;/li&gt;
+&lt;li&gt;Java EE（Java 平台企业版）&lt;/li&gt;
+&lt;li&gt;Java ME（Java 平台微型版）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Java EE 是 Java </summary>
+      
+    
+    
+    
+    <category term="代码审计" scheme="https://www.teamssix.com/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+    
+    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="代码审计" scheme="https://www.teamssix.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【代码审计】Maven 基础知识</title>
     <link href="https://www.teamssix.com/211103-161807.html"/>
     <id>https://www.teamssix.com/211103-161807.html</id>
     <published>2021-11-03T08:18:07.000Z</published>
-    <updated>2021-11-03T08:32:09.926Z</updated>
+    <updated>2021-11-03T08:36:32.207Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。</p><p>Maven 采用项目对象模型 POM（Project Object Model）来管理项目。</p><p>Maven 的主要工作就是用来解析一些 XML 文档、管理生命周期与插件。</p><p>Maven 被设计成将主要的职责委派给一组 Maven 插件，这些插件可以影响 Maven 生命周期，提供对目标的访问。</p><h2 id="0x01-pom-xml-文件介绍"><a href="#0x01-pom-xml-文件介绍" class="headerlink" title="0x01 pom.xml 文件介绍"></a>0x01 pom.xml 文件介绍</h2><p>pom.xml 文件被用于管理源代码、配置文件、开发者的信息和角色等，Maven 项目中可以没有其他文件但必须包含 pom.xml 文件，该文件也是 Maven 项目的核心配置文件。</p><p>一个引入 Fastjson 1.2.24 版本组件的配置信息如下：</p><pre class="line-numbers language-none"><code class="language-none">&lt;dependencies&gt;  &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.alibaba&#x2F;fastjson --&gt;  &lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;fastjson&lt;&#x2F;artifactId&gt;    &lt;version&gt;1.2.24&lt;&#x2F;version&gt;  &lt;&#x2F;dependency&gt;&lt;&#x2F;dependencies&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该配置信息可直接从 <a href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a> 获得</p></blockquote><p>配置文件里的 dependencies 和 dependency 用于定义依赖关系，dependency 里的 groupId、artifactId、version 用来定义所依赖的项目。</p><h1 id="0x02-Maven-的使用"><a href="#0x02-Maven-的使用" class="headerlink" title="0x02 Maven 的使用"></a>0x02 Maven 的使用</h1><p>这里以 IntelliJ IDEA 为例，在新建项目时选择创建 Maven 项目即可。</p><p>在创建完 Maven 项目后，就会看到项目里包含的 pox.xml 文件了，对于安全人员就可以通过该文件去判断当前项目里是否包含了存在隐患的组件。</p><p>这时如果想搭建一个 Fastjson &lt;= 1.2.24 版本的漏洞环境，就需要将 Fastjson &lt;= 1.2.24 版本的组件引入。</p><p>这里只需要把上面的配置信息复制到 pom.xml 文件中，然后右击 pom.xml 文件选择「Maven」–「重新加载项目」，就可以自动进行组件的获取了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111031614583.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>稍后等组件被自动下载到本地并自动加入到项目依赖中后，就可以在项目代码使用该组件了。</p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/43ed2e9e386b">https://www.jianshu.com/p/43ed2e9e386b</a></p><p><a href="https://www.cnblogs.com/bndong/p/9762067.html">https://www.cnblogs.com/bndong/p/9762067.html</a></p><p><a href="https://www.cnblogs.com/cainiaomahua/p/10651014.html">https://www.cnblogs.com/cainiaomahua/p/10651014.html</a></p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。</p><p>Maven 采用项目对象模型 POM（Project Object Model）来管理项目。</p><p>Maven 的主要工作就是用来解析一些 XML 文档、管理生命周期与插件。</p><p>Maven 被设计成将主要的职责委派给一组 Maven 插件，这些插件可以影响 Maven 生命周期，提供对目标的访问。</p><h2 id="0x01-pom-xml-文件介绍"><a href="#0x01-pom-xml-文件介绍" class="headerlink" title="0x01 pom.xml 文件介绍"></a>0x01 pom.xml 文件介绍</h2><p>pom.xml 文件被用于管理源代码、配置文件、开发者的信息和角色等，Maven 项目中可以没有其他文件但必须包含 pom.xml 文件，该文件也是 Maven 项目的核心配置文件。</p><p>一个引入 Fastjson 1.2.24 版本组件的配置信息如下：</p><pre class="line-numbers language-none"><code class="language-none">&lt;dependencies&gt;  &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.alibaba&#x2F;fastjson --&gt;  &lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;fastjson&lt;&#x2F;artifactId&gt;    &lt;version&gt;1.2.24&lt;&#x2F;version&gt;  &lt;&#x2F;dependency&gt;&lt;&#x2F;dependencies&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该配置信息可直接从 <a href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a> 获得</p></blockquote><p>配置文件里的 dependencies 和 dependency 用于定义依赖关系，dependency 里的 groupId、artifactId、version 用来定义所依赖的项目。</p><h1 id="0x02-Maven-的使用"><a href="#0x02-Maven-的使用" class="headerlink" title="0x02 Maven 的使用"></a>0x02 Maven 的使用</h1><p>这里以 IntelliJ IDEA 为例，在新建项目时选择创建 Maven 项目即可。</p><p>在创建完 Maven 项目后，就会看到项目里包含的 pox.xml 文件了，对于安全人员就可以通过该文件去判断当前项目里是否包含了存在隐患的组件。</p><p>这时如果想搭建一个 Fastjson &lt;= 1.2.24 版本的漏洞环境，就需要将 Fastjson &lt;= 1.2.24 版本的组件引入。</p><p>这里只需要把上面的配置信息复制到 pom.xml 文件中，然后右击 pom.xml 文件选择「Maven」–「重新加载项目」，就可以自动进行组件的获取了。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111031614583.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>稍后等组件被自动下载到本地并自动加入到项目依赖中后，就可以在项目代码使用该组件了。</p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/43ed2e9e386b">https://www.jianshu.com/p/43ed2e9e386b</a></p><p><a href="https://www.cnblogs.com/bndong/p/9762067.html">https://www.cnblogs.com/bndong/p/9762067.html</a></p><p><a href="https://www.cnblogs.com/cainiaomahua/p/10651014.html">https://www.cnblogs.com/cainiaomahua/p/10651014.html</a></p><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
     
     
       
@@ -537,34 +569,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】17、令牌窃取</title>
-    <link href="https://www.teamssix.com/210729-110334.html"/>
-    <id>https://www.teamssix.com/210729-110334.html</id>
-    <published>2021-07-29T03:03:34.000Z</published>
-    <updated>2021-08-04T08:22:03.562Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。</p><h2 id="1、MSF"><a href="#1、MSF" class="headerlink" title="1、MSF"></a>1、MSF</h2><p>在获取到 Meterpreter Shell 后，使用以下命令获取令牌</p><pre class="line-numbers language-none"><code class="language-none">load incognitolist_tokens -u<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729095721.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>这里有两种令牌，一个是 Delegation Tokens 即授权令牌，还有一种是 Impersonation Tokens 即模拟令牌。前者支持交互式登录比如远程桌面，后者支持非交互的会话。</p><p>令牌获取的数量取决于获取到 Shell 的权限等级。</p><p>如果已经获取到了 SYSTEM 权限的令牌，那么攻击者就可以伪造这个令牌，拥有对应的权限。</p><pre class="line-numbers language-none"><code class="language-none">impersonate_token &quot;NT AUTHORITY\SYSTEM&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100415.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><p>可以看到我们已经通过伪造 SYSTEM 的令牌拿到 SYSTEM 权限了。</p><p>不过值得注意的是，如果不加双引号，\ 需要改成 <code>\\</code> 才行，个人猜测可能是因为 \ 被当做转义字符处理的原因。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729100653.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><h2 id="2、Rotten-Potato-本地提权"><a href="#2、Rotten-Potato-本地提权" class="headerlink" title="2、Rotten Potato 本地提权"></a>2、Rotten Potato 本地提权</h2><p>Rotten Potato 直译过来就烂土豆的意思，如果目标中存在有效的令牌，就可以通过 Rotten Potato 模拟用户令牌实现提权。</p><p>Rotten Potato 项目地址：<a href="https://github.com/breenmachine/RottenPotatoNG">https://github.com/breenmachine/RottenPotatoNG</a></p><p>运行 RottenPotato.exe 直接弹出 SYSTEM 权限的 CMD 窗口，不需要用到 MSF。</p><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210729101949.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p><blockquote><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持</summary>
       
     
     
