@@ -428,21 +428,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-15
+                    2021-11-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    6 分
                 </div>
                 
 
@@ -471,29 +471,29 @@
 <p>此外不同版本的 Servlet 所需要的 Java/JDK 版本也不同，具体如下图所示。</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151655826.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
 <h2 id="1、基于-web-xml-的配置"><a href="#1、基于-web-xml-的配置" class="headerlink" title="1、基于 web.xml 的配置"></a>1、基于 web.xml 的配置</h2><p>以下是一个基于 web.xml 的 Servlet 配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
-&lt;web-app xmlns&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;javaee&quot;  
-         xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;  
-         xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;javaee http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;javaee&#x2F;web-app_3_0.xsd&quot;  
-         version&#x3D;&quot;2.5&quot;&gt;
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://java.sun.com/xml/ns/javaee<span class="token punctuation">"</span></span>  
+         <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>  
+         <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd<span class="token punctuation">"</span></span>  
+         <span class="token attr-name">version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2.5<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   
-  &lt;display-name&gt;manage&lt;&#x2F;display-name&gt;
-  &lt;welcome-file-list&gt;
-    &lt;welcome-file&gt;index.html&lt;&#x2F;welcome-file&gt;
-    &lt;welcome-file&gt;index.jsp&lt;&#x2F;welcome-file&gt;
-  &lt;&#x2F;welcome-file-list&gt;
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>display-name</span><span class="token punctuation">></span></span>manage<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>display-name</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>welcome-file-list</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>welcome-file</span><span class="token punctuation">></span></span>index.html<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>welcome-file</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>welcome-file</span><span class="token punctuation">></span></span>index.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>welcome-file</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>welcome-file-list</span><span class="token punctuation">></span></span>
   
-  &lt;servlet&gt;
-    &lt;description&gt;&lt;&#x2F;description&gt;
-    &lt;display-name&gt;user&lt;&#x2F;display-name&gt;
-    &lt;servlet-name&gt;user&lt;&#x2F;servlet-name&gt;
-    &lt;servlet-class&gt;com.sec.servlet.UserServlet&lt;&#x2F;servlet-class&gt;
-  &lt;&#x2F;servlet&gt;
-  &lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;user&lt;&#x2F;servlet-name&gt;
-    &lt;url-pattern&gt;&#x2F;user&lt;&#x2F;url-pattern&gt;
-  &lt;&#x2F;servlet-mapping&gt;
-  &lt;&#x2F;web-app&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>description</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>description</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>display-name</span><span class="token punctuation">></span></span>user<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>display-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>user<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>com.sec.servlet.UserServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>user<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/user<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>web-app</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在 web.xml 中，Servlet 的配置在 Servlet 标签中，Servlet 标签由 Servlet 和 Servlet-mapping 标签组成，两者通过标签中相同的 Servlet-name 实现关联，上述配置文件中的标签含义如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;servlet&gt;				声明 Servlet 配置入口
@@ -506,38 +506,38 @@
 &lt;url-pattern&gt;		指定配置这个组件的访问路径<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2、基于注解方式"><a href="#2、基于注解方式" class="headerlink" title="2、基于注解方式"></a>2、基于注解方式</h2><p>Servlet 3.0 以上的版本中，开发者无须在 web.xml 里配置 Servlet，只需要添加 @WebServlet 注解即可修改 Servlet 的属性，如下代码所示。</p>
-<pre class="line-numbers language-none"><code class="language-none">import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span><span class="token class-name">ServletException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">WebServlet</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpServlet</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpServletRequest</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">PrintWriter</span><span class="token punctuation">;</span>
 
-&#x2F;**
+<span class="token comment">/**
  * 基于注解开发Servlet
- *&#x2F;
-@WebServlet(urlPatterns &#x3D; &quot;&#x2F;ann.do&quot;)
-public class AnnotationServlet extends HttpServlet &#123;
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
-        this.doPost(req, resp);
-    &#125;
+ */</span>
+<span class="token annotation punctuation">@WebServlet</span><span class="token punctuation">(</span>urlPatterns <span class="token operator">=</span> <span class="token string">"/ann.do"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AnnotationServlet</span> <span class="token keyword">extends</span> <span class="token class-name">HttpServlet</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doGet</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> req<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> resp<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doPost</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> resp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
-        PrintWriter out &#x3D; resp.getWriter();
-        out.println(&quot;&lt;!DOCTYPE HTML PUBLIC &#39;-&#x2F;&#x2F;W3C&#x2F;&#x2F;DTD HTML 4.0 Transitional&#x2F;&#x2F;EN&#39;&gt;&quot;);
-        out.println(&quot;&lt;HTML&gt;&quot;);
-        out.println(&quot;&lt;HEAD&gt;&lt;TITLE&gt; ITBZ &lt;&#x2F;TITLE&gt;&lt;&#x2F;HEAD&gt;&quot;);
-        out.println(&quot;&lt;BODY&gt;&quot;);
-        out.println(&quot;Annotation Servlet!&quot;);
-        out.println(&quot;&lt;&#x2F;BODY&gt;&quot;);
-        out.println(&quot;&lt;&#x2F;HTML&gt;&quot;);
-        out.flush();
-        out.close();
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doPost</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> req<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> resp<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">PrintWriter</span> out <span class="token operator">=</span> resp<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0 Transitional//EN'>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;HTML>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;HEAD>&lt;TITLE> ITBZ &lt;/TITLE>&lt;/HEAD>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;BODY>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Annotation Servlet!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;/BODY>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"&lt;/HTML>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        out<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注解参数</p>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656906.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
@@ -548,30 +548,30 @@ public class AnnotationServlet extends HttpServlet &#123;
 <h1 id="0x03-Servlet-的接口方法"><a href="#0x03-Servlet-的接口方法" class="headerlink" title="0x03 Servlet 的接口方法"></a>0x03 Servlet 的接口方法</h1><h2 id="1、init-接口"><a href="#1、init-接口" class="headerlink" title="1、init() 接口"></a>1、init() 接口</h2><p>在 Servlet 实例化后，Servlet 容器会调用 init() 方法来初始化该对象，主要是为了让 Servlet 对象在处理客户请求前可以完成一些初始化的工作，例如建立数据库连接，获取配置信息等。</p>
 <p>对于每一个 Servlet 实例，init() 方法只能被调用一次。</p>
 <p>init() 方法的定义如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">public void init() throws ServletException&#123;
-    &#x2F;&#x2F; 开发者自定义代码
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 开发者自定义代码</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2、service-接口"><a href="#2、service-接口" class="headerlink" title="2、service() 接口"></a>2、service() 接口</h2><p>service() 方法是执行实际任务的主要方法，Servlet 容器调用 service() 方法来处理来自客户端（浏览器）的请求，并将格式化的响应写回客户端，每次服务器接收到一个 Servlet 请求时，服务器都会产生一个新的线程并调用服务。</p>
 <p>值得注意的是，在 service() 方法被容器调用之前，必须确保 init() 方法正确完成。</p>
 <p>service() 方法的定义如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">public void service (ServletRequest request,ServletResponse response) throws ServletException,IOException&#123;
-     &#x2F;&#x2F; 开发者自定义代码
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> service <span class="token punctuation">(</span><span class="token class-name">ServletRequest</span> request<span class="token punctuation">,</span><span class="token class-name">ServletResponse</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span><span class="token class-name">IOException</span><span class="token punctuation">&#123;</span>
+     <span class="token comment">// 开发者自定义代码</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="3、doGet-doPost-等接口"><a href="#3、doGet-doPost-等接口" class="headerlink" title="3、doGet() / doPost() 等接口"></a>3、doGet() / doPost() 等接口</h2><p>doGet() 等方法需要根据 HTTP 的不同请求调用不同的方法，如果 HTTP 得到一个来自 URL 的 GET 请求，就会调用 doGet() 方法，同样的，如果得到 POST 请求，就会调用 doPost() 方法。</p>
 <p>这类方法的定义如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException&#123;
-    &#x2F;&#x2F; 开发者自定义代码
-    &#x2F;&#x2F; 如果是 POST 请求，则调用 public void doPost 方法
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doGet</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span><span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span><span class="token class-name">IOException</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 开发者自定义代码</span>
+    <span class="token comment">// 如果是 POST 请求，则调用 public void doPost 方法</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="4、destroy-接口"><a href="#4、destroy-接口" class="headerlink" title="4、destroy() 接口"></a>4、destroy() 接口</h2><p>当容器检测到一个 Servlet 对象应该从服务中被移除的时候，容器会调用该对象的 destroy() 方法，以便让 Servlet 对象可以释放它所使用的资源，保存数据到持久存储设备中，例如将内存中的数据保存到数据库中，关闭数据库的连接等。</p>
 <p>destroy() 方法与 init() 方法相同，都只会调用一次。</p>
 <p>destroy() 方法定义如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">public void destroy()&#123;
-    &#x2F;&#x2F; 开发者自定义代码
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 开发者自定义代码</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="5、getServletConfig-接口"><a href="#5、getServletConfig-接口" class="headerlink" title="5、getServletConfig() 接口"></a>5、getServletConfig() 接口</h2><p>该方法返回容器调用 init() 方法时传递给 Servlet 对象的 ServletConfig 对象，ServletConfig 对象包含了 Servlet 的初始化参数。</p>
 <h2 id="6、getServletInfo-接口"><a href="#6、getServletInfo-接口" class="headerlink" title="6、getServletInfo() 接口"></a>6、getServletInfo() 接口</h2><p>该方法返回一个 String 类型的字符串，其中包括了关于 Servlet 的信息，例如，作者、版本和版权等。</p>
@@ -726,17 +726,16 @@ public class AnnotationServlet extends HttpServlet &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/211115-165745.html">
+                <a href="/211116-112510.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656032.png" class="responsive-img" alt="【代码审计】Java Web 核心技术-Servlet">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111161127002.png" class="responsive-img" alt="【代码审计】Java Web 过滤器-filter">
                         
-                        <span class="card-title">【代码审计】Java Web 核心技术-Servlet</span>
+                        <span class="card-title">【代码审计】Java Web 过滤器-filter</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -746,9 +745,9 @@ public class AnnotationServlet extends HttpServlet &#123;
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-15
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -761,7 +760,6 @@ public class AnnotationServlet extends HttpServlet &#123;
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1002,7 +1000,7 @@ public class AnnotationServlet extends HttpServlet &#123;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">228.8k</span>&nbsp;字
+                class="white-color">230.2k</span>&nbsp;字
             
             
             
