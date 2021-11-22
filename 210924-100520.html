@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231733653.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -496,7 +496,7 @@
 <blockquote>
 <p>这里 net ues 使用 IP 可能会失败，因此在此使用机器名进行连接 </p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231733653.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png"></p>
 <h2 id="2、GoldenPac"><a href="#2、GoldenPac" class="headerlink" title="2、GoldenPac"></a>2、GoldenPac</h2><p>goldenPac.py 是一个用于对 Kerberos 协议进行测试的工具，它集成在 impacket 工具包里。</p>
 <p>Kali 在使用之前需要先安装 Kerberos 客户端</p>
 <pre class="line-numbers language-none"><code class="language-none">apt-get install krb5-user -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -507,7 +507,7 @@
 <blockquote>
 <p>这里使用 IP 进行连接会连接不成功，只能使用主机名，因此可以在 hosts 文件中添加主机名对应的 IP</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231746641.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231746641.png"></p>
 <p>goldenPac.py 是通过 PsExec 获得 Shell 的，因此会产生大量的日志，而且现在这种连接方式也已经被各大杀软所拦截。</p>
 <h2 id="3、kekeo"><a href="#3、kekeo" class="headerlink" title="3、kekeo"></a>3、kekeo</h2><p>kekeo 也是一个工具集，其中包含了 ms14-068 的利用模块，kekeo 下载地址：<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p>
 <p>使用之前需要先清除票据</p>
@@ -556,16 +556,16 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <pre class="line-numbers language-none"><code class="language-none">python2 KrbCredExport.py TGT_jack@0day.org.ccache user.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>接着使用 CS 的 kerberos_ticket_use 加载 ticket，之后就能访问到域控了</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109240943968.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109240943968.png"></p>
 <p>此时想让域控上线自然也是没问题的了，可以先添加一个域控地址的 target，然后选择 PsExec ，勾选上 use session’s current access token 通过 jack 的会话上线即可。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109241000974.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109241000974.png"></p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27730ab4a6db">https://www.jianshu.com/p/27730ab4a6db</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/websecyw/p/11835830.html">https://www.cnblogs.com/websecyw/p/11835830.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -717,7 +717,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/210927-163036.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271559013.png" class="responsive-img" alt="【内网学习笔记】28、黄金票据">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271559013.png" class="responsive-img" alt="【内网学习笔记】28、黄金票据">
                         
                         <span class="card-title">【内网学习笔记】28、黄金票据</span>
                     </div>
@@ -773,7 +773,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/210923-151418.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231513202.png" class="responsive-img" alt="Kerberos 协议详解与利用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231513202.png" class="responsive-img" alt="Kerberos 协议详解与利用">
                         
                         <span class="card-title">Kerberos 协议详解与利用</span>
                     </div>

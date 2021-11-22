@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231513202.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231513202.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -473,7 +473,7 @@
 <p>这里所讲的 Kerberos 是一种网络身份认证协议，个人猜测作者采用这个名字也正是为了体现出该协议里身份认证的特性，即通过 Kerberos 协议守护网络通信中的安全，下面就来详细看看 Kerberos 协议。</p>
 <p>Kerberos 是一种由 MIT 提出用来在非安全网络中对个人通信进行身份认证的计算机网络授权协议，该协议使用 AES 对称加密算法为客户端和服务端之间提供强身份认证，在域环境下的身份认证利用的就是 Kerberos 协议。</p>
 <p>在计算机通讯中，当客户端去访问服务端时，作为服务端需要判断对方是否有权限访问自己主机上的服务，作为安全人员我们想保证整个过程即使被拦截或者篡改也不会影响数据的安全性，Kerberos 协议正是为了解决这些问题而产生的。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210906154732.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906154732.png"></p>
 <p>上图是 Kerberos 的认证流程，协议中的名词缩写解释如下：</p>
 <ul>
 <li>AS (Authentication Service): 认证服务器</li>
@@ -525,12 +525,12 @@
 <h1 id="二、Kerberos-协议的利用"><a href="#二、Kerberos-协议的利用" class="headerlink" title="二、Kerberos 协议的利用"></a>二、Kerberos 协议的利用</h1><h2 id="1、用户名枚举"><a href="#1、用户名枚举" class="headerlink" title="1、用户名枚举"></a>1、用户名枚举</h2><p>当用户名输入正确或错误时，Kerberos 协议所返回的状态码是不同的，利用这一特性可以进行用户名枚举，这里使用 Kerbrute 工具进行演示。</p>
 <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">kerbrute userenum <span class="token punctuation">-</span><span class="token punctuation">-</span>dc 192.168.7.7 <span class="token punctuation">-</span>d teamssix.com users.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231512850.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231512850.png"></p>
 <h2 id="2、密码喷洒"><a href="#2、密码喷洒" class="headerlink" title="2、密码喷洒"></a>2、密码喷洒</h2><p>密码喷洒和用户名枚举原理一样，而且使用 Kerberos 协议对 Windows 密码进行暴力破解比其他方法要快得多，并且更加隐蔽，因为 Kerberos 身份验证即使失败也不会触发 4625 登录失败事件。</p>
 <p>这里同样使用 Kerbrute 工具进行演示。</p>
 <pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">kerbrute passwordspray <span class="token punctuation">-</span><span class="token punctuation">-</span>dc 192.168.7.7 <span class="token punctuation">-</span>d teamssix.com users.txt 1qaz@WSX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231512431.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231512431.png"></p>
 <h2 id="3、Kerberoast"><a href="#3、Kerberoast" class="headerlink" title="3、Kerberoast"></a>3、Kerberoast</h2><blockquote>
 <p>关于 Kerberoast 和 SPN 的详细介绍可以参考我之前的文章：<a target="_blank" rel="noopener" href="https://teamssix.com/210907-121204.html">https://teamssix.com/210907-121204.html</a></p>
 </blockquote>
@@ -543,7 +543,7 @@
 <h3 id="i-查询-SPN"><a href="#i-查询-SPN" class="headerlink" title="i. 查询 SPN"></a>i. 查询 SPN</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token punctuation">.</span><span class="token operator">/</span>GetUserSPNs<span class="token punctuation">.</span>ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>可以看到 test 用户有个 MSSQLSvc/DBSRV.teamssix.com:1433 服务</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231512937.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231512937.png"></p>
 <h3 id="ii-请求并导出服务票据"><a href="#ii-请求并导出服务票据" class="headerlink" title="ii. 请求并导出服务票据"></a>ii. 请求并导出服务票据</h3><p>这里请求 MSSQLSvc/DBSRV.teamssix.com:1433 服务并导出服务票据</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">Add<span class="token operator">-</span>Type <span class="token operator">-</span>AssemblyName System<span class="token punctuation">.</span>IdentityModel  
 New<span class="token operator">-</span>Object System<span class="token punctuation">.</span>IdentityModel<span class="token punctuation">.</span>Tokens<span class="token punctuation">.</span>KerberosRequestorSecurityToken <span class="token operator">-</span>ArgumentList <span class="token string">"MSSQLSvc/DBSRV.teamssix.com:1433"</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -551,11 +551,11 @@ New<span class="token operator">-</span>Object System<span class="token punctuat
 <p>可以使用 klist 查看新的是否有票据缓存，有的话就可以使用 mimikatz 导出票据了</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">kerberos<span class="token operator">:</span><span class="token operator">:</span>list <span class="token operator">/</span><span class="token keyword">export</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231513202.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231513202.png"></p>
 <h3 id="iii-对服务票据进行爆破"><a href="#iii-对服务票据进行爆破" class="headerlink" title="iii. 对服务票据进行爆破"></a>iii. 对服务票据进行爆破</h3><p>使用 Kerberoast 工具包里的 tgsrepcrack.py 就可以破解</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">python tgsrepcrack<span class="token punctuation">.</span>py password<span class="token punctuation">.</span>txt mssql<span class="token punctuation">.</span>kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231513659.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231513659.png"></p>
 <h1 id="三、防范思路"><a href="#三、防范思路" class="headerlink" title="三、防范思路"></a>三、防范思路</h1><p>1、密码设置为复杂密码</p>
 <p>2、在进行日志审计时，可以重点关注 ID 为 4769（请求 Kerberos 服务票据）的日志，如果有较多的 4769 日志，应进一步检查系统中是否存在恶意行为。</p>
 <p>3、 Kerberos 协议的默认加密方式是 AES256_HMAC，而服务票据只有在加密方式是 RC4_HMAC_MD5 时才能破解，因此可以对当前系统的加密方式进行检查，看看是否为 AES256_HMAC 的加密方式。</p>
@@ -568,7 +568,7 @@ New<span class="token operator">-</span>Object System<span class="token punctuat
 <p><a target="_blank" rel="noopener" href="https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/">https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3Kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -720,7 +720,7 @@ New<span class="token operator">-</span>Object System<span class="token punctuat
                 <a href="/210924-100520.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231733653.png" class="responsive-img" alt="【内网学习笔记】27、Kerberos 域用户提权漏洞">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png" class="responsive-img" alt="【内网学习笔记】27、Kerberos 域用户提权漏洞">
                         
                         <span class="card-title">【内网学习笔记】27、Kerberos 域用户提权漏洞</span>
                     </div>
@@ -776,7 +776,7 @@ New<span class="token operator">-</span>Object System<span class="token punctuat
                 <a href="/210909-215110.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908155944.png" class="responsive-img" alt="【内网学习笔记】26、ntds.dit 的提取与散列值导出">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908155944.png" class="responsive-img" alt="【内网学习笔记】26、ntds.dit 的提取与散列值导出">
                         
                         <span class="card-title">【内网学习笔记】26、ntds.dit 的提取与散列值导出</span>
                     </div>

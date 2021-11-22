@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-6.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-6.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -486,14 +486,14 @@
 <h1 id="0x02-系统侦察"><a href="#0x02-系统侦察" class="headerlink" title="0x02 系统侦察"></a>0x02 系统侦察</h1><p>系统侦察<code>System Profiler</code>是一个方便客户端攻击的侦察工具，这个工具将会在CS服务端上启动一个Web服务，这样当目标访问这个Web服务的时候，我们就能够看到目标使用的浏览器、操作系统等等指纹信息。</p>
 <p>设置系统侦察需要首先在自己的VPS服务器上运行CS服务端，之后本地客户端进行连接，选择<code>System Profiler</code>功能模块，配置待跳转的URL等信息即可。</p>
 <p>如果勾选了<code>Use Java Applet to get information</code>则可以发现目标的Java版本及内网IP地址，但是这样做被发现的风险就会提高，同时现在浏览器已经默认关闭了java执行权限，因此这个选项的作用也变得不大了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-1.png"></p>
 <p>配置完后，当用户打开配置后的链接，我们可以在三个地方进行观察</p>
 <pre class="line-numbers language-none"><code class="language-none">1、View --&gt; Applications
 2、View --&gt; Web Log
 3、Cobalt Strike --&gt; Visualization --&gt; Target Table<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>目标用户打开链接时，我们在CS上就能够看到目标使用的浏览器版本、系统版本等信息了，知道了版本信息，就能够进一步知道目标上可能存在什么漏洞。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-2.png"></p>
 <p>值得注意的一点是如果 Cobalt Strike 的 web 服务器收到了lynx、wget 或 curl 的请求，CS会自动返回一个 404 页面，这样做是为了防御蓝队的窥探。</p>
 <h1 id="0x03-用户驱动攻击"><a href="#0x03-用户驱动攻击" class="headerlink" title="0x03 用户驱动攻击"></a>0x03 用户驱动攻击</h1><p>用户驱动攻击<code>User-Driven Attacks</code>需要欺骗用户产生交互才行，但也有许多的优点。</p>
 <p>首先用户驱动攻击不包含恶意攻击代码，所以用户系统上的安全补丁是没用的；其次无论目标使用什么版本的程序，我们都可以创建相应的功能来执行；最后因为用户驱动攻击十分可靠，也使得它很完美。</p>
@@ -512,13 +512,13 @@
 <p>如果想删除上传到CS服务端上的文件，可以到<code>Attacks --&gt; Web Drive-by --&gt; Manage</code>下进行删除。</p>
 <p>如果想查看谁访问了这些文件，可以到<code>View --&gt; Web Log</code>下进行查看。</p>
 <h1 id="0x04-HTML-应用攻击演示"><a href="#0x04-HTML-应用攻击演示" class="headerlink" title="0x04 HTML 应用攻击演示"></a>0x04 HTML 应用攻击演示</h1><p>首先来到<code>Attacks --&gt; Packages --&gt; HTML Application</code>创建一个HTML应用，如果没有创建监听的话，还需要创建一个监听。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-3.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-3.png"></p>
 <p>HTML应用文件生成好后，来到<code>Attacks --&gt; Web Drive-by --&gt; Host File</code>，选择刚才生成的文件，最后点击Launch，复制CS创建的链接，在目标主机上打开此链接。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-4.png"></p>
 <p>当在目标主机上提示是否运行时，点击运行。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-5.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-5.png"></p>
 <p>当该文件在目标上运行后，CS客户端上就可以看到回连的会话了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs8-6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs8-6.png"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3975">https://xz.aliyun.com/t/3975</a></p>
@@ -526,7 +526,7 @@
 <p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -678,7 +678,7 @@
                 <a href="/200419-150524.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs9-4.png" class="responsive-img" alt="【CS学习笔记】9、Metasploit框架">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs9-4.png" class="responsive-img" alt="【CS学习笔记】9、Metasploit框架">
                         
                         <span class="card-title">【CS学习笔记】9、Metasploit框架</span>
                     </div>
@@ -734,7 +734,7 @@
                 <a href="/200419-150510.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs7-4.png" class="responsive-img" alt="【CS学习笔记】7、SMBbean的作用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs7-4.png" class="responsive-img" alt="【CS学习笔记】7、SMBbean的作用">
                         
                         <span class="card-title">【CS学习笔记】7、SMBbean的作用</span>
                     </div>

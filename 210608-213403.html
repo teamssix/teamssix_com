@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_21-12-06.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_21-12-06.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -473,7 +473,7 @@
 <p>iodine 和 dnscat2 一样，适合于其他请求方式被限制以至于只能发送 DNS 请求的环境中，iodine 同样也是分成了直接转发和中继两种模式。</p>
 <p>iodine 与 dnscat2 不同的在于 Iodine 服务端和客户端都是用 C 语言开发，同时 iodine 的原理也有些不同，iodine 通过 TAP 在服务端和客户端分别建立一个局域网和虚拟网卡，再通过 DNS 隧道进行连接，然后使其处在同一个局域网中。</p>
 <h2 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h2><p>首先需要有一个域名，并设置 NS 和 A 记录，A 记录指向自己的公网 VPS 地址，NS 记录指向 A 记录的子域名。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
 <p>Kali 下自带 iodine ，Debian Linux 可以使用 apt 进行安装</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo apt-get install iodine<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -497,14 +497,14 @@
 
 <p>如果出现 <code>Connection setup complete, transmitting data.</code> 就表示 DNS 隧道就已经建立了。</p>
 <p>这时如果去 ping 服务端自定义的虚拟 IP 也是可以 ping 通的。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_21-12-06.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_21-12-06.png"></p>
 <p>假如这里内网机器分配到了 192.168.77.2 这个 IP ，因为处在一个局域网中，所以 VPS 直接访问 192.168.77.2 的 3389、80 等端口就可以直接访问到内网机器的相关端口了，同样的内网主机也可以访问 VPS 的 22 端口等等，至此便绕过了策略限制。</p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/micr067/p/12263337.html">https://www.cnblogs.com/micr067/p/12263337.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -656,7 +656,7 @@
                 <a href="/210610-164507.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-09_10-24-45.png" class="responsive-img" alt="【内网学习笔记】10、ew 的使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-09_10-24-45.png" class="responsive-img" alt="【内网学习笔记】10、ew 的使用">
                         
                         <span class="card-title">【内网学习笔记】10、ew 的使用</span>
                     </div>
@@ -712,7 +712,7 @@
                 <a href="/210608-150224.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_14-35-33.png" class="responsive-img" alt="【内网学习笔记】dnscat2 使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_14-35-33.png" class="responsive-img" alt="【内网学习笔记】dnscat2 使用">
                         
                         <span class="card-title">【内网学习笔记】dnscat2 使用</span>
                     </div>

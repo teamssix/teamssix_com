@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908155944.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908155944.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -489,7 +489,7 @@
 <p>查询当前系统中的快照，可以看到没有任何快照</p>
 <pre class="line-numbers language-none"><code class="language-none">ntdsutil snapshot &quot;List All&quot; quit quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908135855.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908135855.png"></p>
 <h3 id="vssadmin"><a href="#vssadmin" class="headerlink" title="vssadmin"></a>vssadmin</h3><p>vssadmin 可用于创建和删除卷影拷贝、列出卷影的信息（只能管理系统 Provider 创建的卷影拷贝）、显示已安装的所有卷影拷贝写入程序（writers）和提供程序（providers），以及改变卷影拷贝的存储空间（即所谓的 “diff 空间”）的大小等。</p>
 <p>vssadmin 的使用流程和 ntdsutil 差不多，首先创建一个 C 盘的卷影拷贝</p>
 <pre class="line-numbers language-none"><code class="language-none">vssadmin create shadow &#x2F;for&#x3D;C:<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -500,7 +500,7 @@
 <p>删除快照</p>
 <pre class="line-numbers language-none"><code class="language-none">vssadmin delete shadows &#x2F;for&#x3D;C: &#x2F;quiet<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908145721.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908145721.png"></p>
 <h3 id="vssown-vbs"><a href="#vssown-vbs" class="headerlink" title="vssown.vbs"></a>vssown.vbs</h3><p>vssown.vbs 脚本的功能和 vssadmin 类似，可用于创建和删除卷影拷贝以及启动和停止卷影拷贝服务。</p>
 <p>vssown.vbs 下载地址：<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs">https://raw.githubusercontent.com/borigue/ptscripts/master/windows/vssown.vbs</a></p>
 <p>启动卷影拷贝服务</p>
@@ -518,7 +518,7 @@
 <p>删除卷影拷贝</p>
 <pre class="line-numbers language-none"><code class="language-none">cscript vssown.vbs &#x2F;delete &#123;22B93FE6-D53A-4ECA-BD5A-7A2A68203EF8&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908152359.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908152359.png"></p>
 <h3 id="IFM"><a href="#IFM" class="headerlink" title="IFM"></a>IFM</h3><p>除了上面介绍的通过执行命令来提取 ntds.dit，也可以通过创建一个 IFM 的方式获取 ntds.dit</p>
 <p>在使用 ntdsutil 创建媒体安装集（IFM）时，需要进行生成快照、加载、将 ntds.dit 和计算机的 SAM 文件复制到目标文件夹中等操作，这些操作也可以通过 PowerShell 或 VMI 远程执行。</p>
 <p>在域控中以管理员模式打开命令行环境，输入命令</p>
@@ -556,7 +556,7 @@ exit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
 <p>因为 system.hive 里存放着 ntds.dit 的秘钥，所以需要转储 system.hive ，不然没法查看 ntds.dit 里内容</p>
 <pre class="line-numbers language-none"><code class="language-none">reg save hklm\system c:\windows\temp\system.hive<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908155944.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908155944.png"></p>
 <h3 id="Invoke-NinjaCopy-ps1"><a href="#Invoke-NinjaCopy-ps1" class="headerlink" title="Invoke-NinjaCopy.ps1"></a>Invoke-NinjaCopy.ps1</h3><p>PowerSploit 工具包里的 Invoke-NinjaCopy.ps1 脚本也可以提取 ntds.dit 文件，这种方法没有调用 Volume Shadow Copy 服务，所以不会产生日志文件</p>
 <p>PowerSploit 工具包项目地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
 <pre class="line-numbers language-none"><code class="language-none">Import-Module .\Invoke-NinjaCopy.ps1
@@ -596,7 +596,7 @@ python setup.py install<span aria-hidden="true" class="line-numbers-rows"><span>
 <blockquote>
 <p>如果提示 ImportError: No module named Crypto.Hash，直接 pip install pycryptodome 即可</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908171420.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908171420.png"></p>
 <p>ntds.dit 包含域内的所有信息，可以通过分析 ntds.dit 导出域内的计算机信息以及其他信息，最后结果将保存在 all_computers.csv 文件内</p>
 <pre class="line-numbers language-none"><code class="language-none">python2 dscomputers.py ntds.dit.export&#x2F;datatable.3 computer_output --csvoutfile all_computers.csv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -703,7 +703,7 @@ reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-row
 <p><a target="_blank" rel="noopener" href="https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/">https://www.mondayice.com/2021/07/10/cobalt-strike-intranet-penetration-domain-control-attack/</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -855,7 +855,7 @@ reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-row
                 <a href="/210923-151418.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231513202.png" class="responsive-img" alt="Kerberos 协议详解与利用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231513202.png" class="responsive-img" alt="Kerberos 协议详解与利用">
                         
                         <span class="card-title">Kerberos 协议详解与利用</span>
                     </div>
@@ -911,7 +911,7 @@ reg save hklm\system system.hive<span aria-hidden="true" class="line-numbers-row
                 <a href="/210908-105249.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210908104558.png" class="responsive-img" alt="【内网学习笔记】25、Exchange 邮件服务器">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908104558.png" class="responsive-img" alt="【内网学习笔记】25、Exchange 邮件服务器">
                         
                         <span class="card-title">【内网学习笔记】25、Exchange 邮件服务器</span>
                     </div>

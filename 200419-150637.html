@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs19-2.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs19-2.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -476,7 +476,7 @@
 <p>4、实现对目标的控制</p>
 <p>以上是根据视频教程中直译的结果，个人感觉其实这一节叫<code>横向移动的方法</code>更为合适。</p>
 <h1 id="0x01-创建可执行文件"><a href="#0x01-创建可执行文件" class="headerlink" title="0x01 创建可执行文件"></a>0x01 创建可执行文件</h1><p>创建可执行文件可以在 Cobalt Strike 的 <code>Attack -&gt; Packages -&gt; Windows Executable(s)</code> 处进行创建。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs19-1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs19-1.png"></p>
 <p>如果用于内网中的横向移动，那么强烈建议使用 SMB Beacon，SMB Beacon 就是为了内网横向扩展渗透而设计的。</p>
 <h1 id="0x02-上传可执行文件"><a href="#0x02-上传可执行文件" class="headerlink" title="0x02 上传可执行文件"></a>0x02 上传可执行文件</h1><p>首先使用 Cobalt Strike 上的 <code>upload</code> 功能上传文件，接着复制文件到目标主机的其他位置。</p>
 <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell <span class="token function">copy</span> file<span class="token punctuation">.</span>exe \\host\C$\Windows\Temp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -617,7 +617,7 @@ WinDC<span class="token punctuation">.</span>teamssix<span class="token punctuat
 
 <p>接下来在 WinDC 上运行 psexec，因为这里是 64 位的，所以选择 psexec64，之后监听选择一个 smb beacon，会话就选择已经上线的 wintest 主机的会话，并勾选使用当前会话的访问令牌。</p>
 <p>这里笔者认为应该是因为当前在 wintest 主机上有 windc 的管理员账户登录着，所以使用 wintest 的访问令牌是可以获取 windc 的信任的，类似于 <a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150622.html">CS 学习笔记 17 节</a>里的描述方法，如有不正确之处，还请多多指教。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs19-2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs19-2.png"></p>
 <p>之后，windc 主机就上线了，域中如果还有其他主机，也可以使用这种方法去横向移动。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -625,7 +625,7 @@ WinDC<span class="token punctuation">.</span>teamssix<span class="token punctuat
 <p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -777,7 +777,7 @@ WinDC<span class="token punctuation">.</span>teamssix<span class="token punctuat
                 <a href="/200419-150644.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs20-1.png" class="responsive-img" alt="【CS学习笔记】20、通过Socks转发的方法">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs20-1.png" class="responsive-img" alt="【CS学习笔记】20、通过Socks转发的方法">
                         
                         <span class="card-title">【CS学习笔记】20、通过Socks转发的方法</span>
                     </div>
@@ -833,7 +833,7 @@ WinDC<span class="token punctuation">.</span>teamssix<span class="token punctuat
                 <a href="/200419-150630.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs18-1.png" class="responsive-img" alt="【CS学习笔记】18、密码哈希散列设置信任">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs18-1.png" class="responsive-img" alt="【CS学习笔记】18、密码哈希散列设置信任">
                         
                         <span class="card-title">【CS学习笔记】18、密码哈希散列设置信任</span>
                     </div>

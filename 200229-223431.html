@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/8django_note.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/8django_note.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -536,7 +536,7 @@ Running migrations:
   Applying sessions.0001_initial<span class="token punctuation">..</span>. OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>到此，将主目录下生成的<code>db.sqlite3</code>文件拖拽到Database窗口中即可，如果没有Database的窗口，可以用Pycharm专业版试试。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/4django_note.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/4django_note.png"></p>
 <h1 id="0x01-站点管理"><a href="#0x01-站点管理" class="headerlink" title="0x01 站点管理"></a>0x01 站点管理</h1><ul>
 <li>站点分为内容发布和公共访问两部分。</li>
 <li>使用django站点管理模块步骤：<ul>
@@ -585,9 +585,9 @@ admin<span class="token punctuation">.</span>site<span class="token punctuation"
 admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>register<span class="token punctuation">(</span>PeopleInfo<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>刷新浏览器页面，即可看到刚添加的两个模型类。如果页面无法加载，可以看看是不是服务出现异常，如果出现异常，重新启动服务即可。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/5django_note.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/5django_note.png"></p>
 <h2 id="4、自定义站点管理界面"><a href="#4、自定义站点管理界面" class="headerlink" title="4、自定义站点管理界面"></a>4、自定义站点管理界面</h2><p>在管理页面中，随便添加点数据，之后会发现书籍的名称都显示成了<code>BookInfo object</code></p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/6django_note.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/6django_note.png"></p>
 <p>此时，只需要在<code>model.py</code>里的class里添加以下内容即可。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__str__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
 	<span class="token keyword">return</span> self<span class="token punctuation">.</span>name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -609,7 +609,7 @@ admin<span class="token punctuation">.</span>site<span class="token punctuation"
 		<span class="token keyword">return</span> self<span class="token punctuation">.</span>name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>此时，再刷新页面，就可以看到显示正常了，同样 people info 界面也是正常的了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/7_1django_note.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/7_1django_note.png"></p>
 <p>但是，这样显示还是不够直观，所以就需要自定义站点管理界面了，接下来修改<code>admin.py</code>页面，添加以下语句：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">PeopleInfoAdmin</span><span class="token punctuation">(</span>admin<span class="token punctuation">.</span>ModelAdmin<span class="token punctuation">)</span><span class="token punctuation">:</span>
 	list_display <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token string">'gender'</span><span class="token punctuation">,</span> <span class="token string">'book'</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -626,7 +626,7 @@ admin<span class="token punctuation">.</span>site<span class="token punctuation"
 admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>register<span class="token punctuation">(</span>PeopleInfo<span class="token punctuation">,</span> PeopleInfoAdmin<span class="token punctuation">)</span><span class="token comment">#注意此处添加PeopleInfoAdmin以注册</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>再来刷新一下页面，就舒服很多了。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/8django_note.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/8django_note.png"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://youtu.be/BXyGr9JQVcc">https://youtu.be/BXyGr9JQVcc</a></p>
@@ -634,7 +634,7 @@ admin<span class="token punctuation">.</span>site<span class="token punctuation"
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35965090/article/details/81663941">https://blog.csdn.net/qq_35965090/article/details/81663941</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -856,7 +856,7 @@ admin<span class="token punctuation">.</span>site<span class="token punctuation"
                 <a href="/200229-220746.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/3django_note.png" class="responsive-img" alt="【Django 学习笔记】1、基础概念和MVT架构">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/3django_note.png" class="responsive-img" alt="【Django 学习笔记】1、基础概念和MVT架构">
                         
                         <span class="card-title">【Django 学习笔记】1、基础概念和MVT架构</span>
                     </div>

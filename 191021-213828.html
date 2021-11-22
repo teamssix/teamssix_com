@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag13.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag13.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -472,38 +472,38 @@
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近写了一篇《CFS三层靶机搭建及其内网渗透》的文章，里面满满的干货，本篇文章需要结合《CFS三层靶机搭建及其内网渗透》一起看，这篇文章可以在本文底部找到阅读链接。</p>
 <a id="more"></a>
 <h1 id="0x01-Target1"><a href="#0x01-Target1" class="headerlink" title="0x01 Target1"></a>0x01 Target1</h1><p>1、系统根目录下</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag1.png"></p>
 <p>2、网站根目录下</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag2.png"></p>
 <p>3、网站robots.txt文件中</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag3.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag3.png"></p>
 <h1 id="0x02-Target2"><a href="#0x02-Target2" class="headerlink" title="0x02 Target2"></a>0x02 Target2</h1><p>1、系统根目录下</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag4.png"></p>
 <p>2、日志文件中</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag5.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag5.png"></p>
 <p>3、passwd文件中</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag6.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag6.png"></p>
 <p>4、crontab文件中</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag7.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag7.png"></p>
 <p>5、网站根目录下</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag8.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag8.png"></p>
 <p>6、管理后台中</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag9.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag9.png"></p>
 <h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><p>1、通过meterpreter上传Everything工具并安装</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">meterpreter <span class="token operator">></span> upload ./Everything_64.exe C:<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag10.png"></p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag11.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag10.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag11.png"></p>
 <p>2、利用Everything，直接搜索flag文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag12.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag12.png"></p>
 <p>3、找到两处flag，继续找寻发现计划任务中存在第三处flag</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag13.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag13.png"></p>
 <p>4、最后一处在事件日志的注册表中被找到</p>
 <pre class="line-numbers language-none"><code class="language-none">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Eventlog<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag14.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/flag14.png"></p>
 <blockquote>
 <p>《CFS三层靶机搭建及其内网渗透》文章地址：<br>1、首发地址：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/187908">https://www.anquanke.com/post/id/187908</a><br>2、博客地址：<a href="https://www.teamssix.com/year/191021-211425.html">https://www.teamssix.com/year/191021-211425.html</a></p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -712,7 +712,7 @@
                 <a href="/191021-211425.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS46.png" class="responsive-img" alt="CFS三层靶机搭建及其内网渗透【附靶场环境】">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/CFS46.png" class="responsive-img" alt="CFS三层靶机搭建及其内网渗透【附靶场环境】">
                         
                         <span class="card-title">CFS三层靶机搭建及其内网渗透【附靶场环境】</span>
                     </div>

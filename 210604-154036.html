@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh4.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh4.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -488,7 +488,7 @@
 
 <h1 id="0x02-本地转发"><a href="#0x02-本地转发" class="headerlink" title="0x02 本地转发"></a>0x02 本地转发</h1><p>目前有这样的一个环境，外网有一台攻击主机 ，可访问处于内网环境的 Web 服务器（双网卡），但无法访问 Web 服务器所在内网的办公主机，接下来就用 SSH 进行流量转发，使外网的攻击主机通过 Web 服务器访问到位于内网的办公主机。</p>
 <p>环境拓扑如下：</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh1.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh1.jpg"></p>
 <p>在攻击主机上执行以下命令，将内网办公主机的 3389 端口映射到自己的 3388 端口上</p>
 <pre class="line-numbers language-none"><code class="language-none">ssh -CfNg -L 攻击主机端口:内网办公主机IP:内网办公主机端口 Web服务器ssh用户名@Web服务器IP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -506,10 +506,10 @@ tcp6       0      0 :::3388                 :::*                    LISTEN      
 <p>可以看到 ssh 程序已经监听 3388 端口了，接下来连接本地的 3388 端口就可以连接到内网办公主机的 3389 端口了</p>
 <pre class="line-numbers language-none"><code class="language-none">rdesktop 127.0.0.1:3388<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh2.png"></p>
 <h1 id="0x03-远程转发"><a href="#0x03-远程转发" class="headerlink" title="0x03 远程转发"></a>0x03 远程转发</h1><p>远程转发在这里其实也可以说是反向代理，目前有这样的一个环境：内网中不存在边界设备，但是内网的 Web 服务器能访问到攻击主机，而内网的办公主机则不行。</p>
 <p>因此可以在拿到 Web 服务器的 Shell 后，采用远程转发的方式，即利用 Web 服务器 SSH 连接到攻击主机上进行代理转发，然后访问攻击主机的端口即可，拓扑图如下：</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh3.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh3.jpg"></p>
 <p>将 Web 服务器作为跳板，进行远程转发</p>
 <pre class="line-numbers language-none"><code class="language-none">ssh -CfNg -R 攻击主机端口:内网办公主机IP:内网办公主机端口 攻击主机ssh用户名@攻击主机IP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -527,7 +527,7 @@ tcp6       0      0 ::1:3388                :::*                    LISTEN      
 <pre class="line-numbers language-none"><code class="language-none">rdesktop 127.0.0.1:3388<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h1 id="0x04-动态转发"><a href="#0x04-动态转发" class="headerlink" title="0x04 动态转发"></a>0x04 动态转发</h1><p>动态转发需要攻击主机能够访问到目标主机，因此这里采用和本地转发一样的拓扑进行演示。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh1.jpg"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh1.jpg"></p>
 <p>在攻击主机上执行下面的命令</p>
 <pre class="line-numbers language-none"><code class="language-none">ssh -CfNg -D 攻击主机端口 Web服务器ssh用户名@Web服务器IP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -552,7 +552,7 @@ tcp6       0      0 :::4444                 :::*                    LISTEN      
 <p>之后使用下面的命令连接内网办公主机 192.168.7.110 的 3389 端口。</p>
 <pre class="line-numbers language-none"><code class="language-none">proxychains4 rdesktop 192.168.7.110:3389 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ssh4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ssh4.png"></p>
 <p>可以看到动态转发要比本地转发自由度高出不少，借助动态转发可以访问到内网 Web 服务器能访问的所有地址、端口，没有了本地转发只能访问单个IP、端口的限制。</p>
 <h1 id="0x05-SSH-隧道攻击的防御"><a href="#0x05-SSH-隧道攻击的防御" class="headerlink" title="0x05 SSH 隧道攻击的防御"></a>0x05 SSH 隧道攻击的防御</h1><p>对 SSH 进行双向访问控制策略可以避免这些问题，一方面只允许可信 IP 才能连接，一方面只允许连接到可信 IP。</p>
 <blockquote>
@@ -560,7 +560,7 @@ tcp6       0      0 :::4444                 :::*                    LISTEN      
 <p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SSH/10407">https://baike.baidu.com/item/SSH/10407</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/174782978">https://zhuanlan.zhihu.com/p/174782978</a><br>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -712,7 +712,7 @@ tcp6       0      0 :::4444                 :::*                    LISTEN      
                 <a href="/210608-150224.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-08_14-35-33.png" class="responsive-img" alt="【内网学习笔记】dnscat2 使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-08_14-35-33.png" class="responsive-img" alt="【内网学习笔记】dnscat2 使用">
                         
                         <span class="card-title">【内网学习笔记】dnscat2 使用</span>
                     </div>
@@ -768,7 +768,7 @@ tcp6       0      0 :::4444                 :::*                    LISTEN      
                 <a href="/210601-155103.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-06-01_14-23-47.png" class="responsive-img" alt="【内网学习笔记】8、powercat 的使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/Snipaste_2021-06-01_14-23-47.png" class="responsive-img" alt="【内网学习笔记】8、powercat 的使用">
                         
                         <span class="card-title">【内网学习笔记】8、powercat 的使用</span>
                     </div>

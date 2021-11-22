@@ -472,14 +472,14 @@
                 <h1 id="0x00-下载视频下载脚本"><a href="#0x00-下载视频下载脚本" class="headerlink" title="0x00 下载视频下载脚本"></a>0x00 下载视频下载脚本</h1><p>首先来到我的<a target="_blank" rel="noopener" href="http://www.github.com/teamssix/">Github主页</a>，找到Douluo-download项目，点开找到<a target="_blank" rel="noopener" href="https://github.com/teamssix/Douluo-download.git">下载地址</a>，使用git clone对其进行下载</p>
 <a id="more"></a>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/teamssix/Douluo-download.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo1.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo1.png"></p>
 <h1 id="0x01-安装python所需要的库"><a href="#0x01-安装python所需要的库" class="headerlink" title="0x01 安装python所需要的库"></a>0x01 安装python所需要的库</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> Douluo-download/
 pip3 <span class="token function">install</span> -r requirements.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo2.png"></p>
 <h1 id="0x02-执行Python程序"><a href="#0x02-执行Python程序" class="headerlink" title="0x02 执行Python程序"></a>0x02 执行Python程序</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 douluo.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo3.png"><br>程序在执行的时候会感觉比较慢，其实不是卡了，而是程序正在下载视频，当下载好一个视频才会弹出一条信息。</p>
-<h1 id="0x03-查看成果"><a href="#0x03-查看成果" class="headerlink" title="0x03 查看成果"></a>0x03 查看成果</h1><p>执行ls命令可以看到刚才下载的视频<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo4.png"><br>播放看看能不能正常播放<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo5.png"><br>可以看到是可以正常播放的，不过我想试试最新的一集，也就是看看需要会员的视频能不能下载下来，当前最新的一集是55集，那我们下载试试。</p>
-<h1 id="0x04-继续尝试下载VIP视频"><a href="#0x04-继续尝试下载VIP视频" class="headerlink" title="0x04 继续尝试下载VIP视频"></a>0x04 继续尝试下载VIP视频</h1><p>知道下载那一集后还需要修改一下代码才行，将原来下载视频的代码简单做一下修改就行<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo6.png"><br>执行看看<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/douluo7.png"><br>看来不行，只能下载到预告片，接下来就对代码就行简单的介绍吧</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo3.png"><br>程序在执行的时候会感觉比较慢，其实不是卡了，而是程序正在下载视频，当下载好一个视频才会弹出一条信息。</p>
+<h1 id="0x03-查看成果"><a href="#0x03-查看成果" class="headerlink" title="0x03 查看成果"></a>0x03 查看成果</h1><p>执行ls命令可以看到刚才下载的视频<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo4.png"><br>播放看看能不能正常播放<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo5.png"><br>可以看到是可以正常播放的，不过我想试试最新的一集，也就是看看需要会员的视频能不能下载下来，当前最新的一集是55集，那我们下载试试。</p>
+<h1 id="0x04-继续尝试下载VIP视频"><a href="#0x04-继续尝试下载VIP视频" class="headerlink" title="0x04 继续尝试下载VIP视频"></a>0x04 继续尝试下载VIP视频</h1><p>知道下载那一集后还需要修改一下代码才行，将原来下载视频的代码简单做一下修改就行<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo6.png"><br>执行看看<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/douluo7.png"><br>看来不行，只能下载到预告片，接下来就对代码就行简单的介绍吧</p>
 <h1 id="0x05-代码简单介绍"><a href="#0x05-代码简单介绍" class="headerlink" title="0x05 代码简单介绍"></a>0x05 代码简单介绍</h1><h2 id="1、第一部分：导入库设定变量"><a href="#1、第一部分：导入库设定变量" class="headerlink" title="1、第一部分：导入库设定变量"></a>1、第一部分：导入库设定变量</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#导入库设定变量</span>
 <span class="token keyword">import</span> os
 <span class="token keyword">import</span> requests
@@ -520,7 +520,7 @@ lists <span class="token operator">=</span> <span class="token punctuation">[</s
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=55224540&cid=96981660&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>
 
 <p>如果视频不能全屏播放，请点击<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av55224540/" title="源链接">源链接</a>观看。</p>
-<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -729,7 +729,7 @@ lists <span class="token operator">=</span> <span class="token punctuation">[</s
                 <a href="/191612-123700.html">
                     <div class="card-image">
                         
-                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/https21.png" class="responsive-img" alt="为自定义域名的Hexo博客升级到Https网站">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/https21.png" class="responsive-img" alt="为自定义域名的Hexo博客升级到Https网站">
                         
                         <span class="card-title">为自定义域名的Hexo博客升级到Https网站</span>
                     </div>
