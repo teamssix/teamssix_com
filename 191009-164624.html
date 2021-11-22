@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/521_1.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -471,13 +471,13 @@
             <div id="articleContent">
                 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近自己博客的VPS欠费了，但是充值之后，启动VPS发现博客依旧无法访问，经过多次排查后，最后的结果真的是哭笑不得，下面就记录一下我最后的解决办法。</p>
 <a id="more"></a>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/521_2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/521_1.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/521_2.png"></p>
 <h1 id="0x01-排查过程"><a href="#0x01-排查过程" class="headerlink" title="0x01 排查过程"></a>0x01 排查过程</h1><p>排查的过程中，碰到的第一个问题就是我发现SSH连接不上了，第一反应是博客被黑了？之后修改密码后才登上，估计只是我忘记密码了吧<br>之后又发现hexo同步本地数据同步不上去，怎么搞都不行，之后过了一天，发现又可以同步了，这……玄学问题？<br>直到博客无法访问第三天，我到网上四处找寻结果，还是没找到我碰到的这个问题，最后突然看到有人提到hexo使用的是nginx网页服务器，这才恍然大悟，我博客的nginx没有开！</p>
 <h1 id="0x02-解决步骤"><a href="#0x02-解决步骤" class="headerlink" title="0x02 解决步骤"></a>0x02 解决步骤</h1><p>直接进入自己VPS的命令行输入nginx开启nginx服务就行了，之后如果不放心可以输入netstat -ant看看自己的80端口有没有开。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@VPS_name ~<span class="token punctuation">]</span><span class="token comment"># nginx</span>
 <span class="token punctuation">[</span>root@VPS_name ~<span class="token punctuation">]</span><span class="token comment"># netstat -ant</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h1 id="0x03-一点思考"><a href="#0x03-一点思考" class="headerlink" title="0x03 一点思考"></a>0x03 一点思考</h1><p>讲道理，最后发现是这样的一个原因，还是挺尴尬的，博客自从搭建好后，几个月都没有碰过这些环境的问题，以前VPS重启nginx也是自动开启的，这次不知道为什么突然不行了，同时也感觉到有些东西长时间不碰，即使当初看着多么简单的东西也变难了起来。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -629,7 +629,7 @@
                 <a href="/191014-090745.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png" class="responsive-img" alt="经过一场面试，我发现我还存在这些不足">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/mianshi3.png" class="responsive-img" alt="经过一场面试，我发现我还存在这些不足">
                         
                         <span class="card-title">经过一场面试，我发现我还存在这些不足</span>
                     </div>
@@ -682,7 +682,7 @@
                 <a href="/190925-114420.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/ctf22.png" class="responsive-img" alt="【CTF】记录一次CTF比赛的Writeup">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/ctf22.png" class="responsive-img" alt="【CTF】记录一次CTF比赛的Writeup">
                         
                         <span class="card-title">【CTF】记录一次CTF比赛的Writeup</span>
                     </div>

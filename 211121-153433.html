@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111211543622.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111211543622.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -428,7 +428,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-21
+                    2021-11-22
                 </div>
                 
 
@@ -543,7 +543,7 @@
 
 <p>注意第 25 行我执行的命令是 open -a Calculator，这里是 Mac 下打开计算机的命令，如果在 Windows 下则需要修改成对应命令。</p>
 <p>运行一下代码，可以看到成功弹出计算器</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111211543622.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111211543622.png"></p>
 <p>这里只是实现了无回显的利用方式，接下来就利用代码注入实现有回显的利用。</p>
 <h3 id="有回显利用"><a href="#有回显利用" class="headerlink" title="有回显利用"></a>有回显利用</h3><p>这里有回显利用的方式是使用 java.net.URLClassLoader 远程加载自定义恶意类，也就是自己放在服务器上的 jar 包，然后在抛出的异常信息中获得回显结果。</p>
 <p>因此这里首先需要先写一个恶意类，具体如下：</p>
@@ -626,7 +626,7 @@ python3 -m http.server 80<span aria-hidden="true" class="line-numbers-rows"><spa
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里执行的命令是 uname，运行代码可以看到报错信息里显示了 Darwin，说明命令被成功执行了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111211611336.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111211611336.png"></p>
 <p>这样就利用代码注入实现了 Apache Commons collections 反序列化漏洞有回显的利用。</p>
 <blockquote>
 <p>参考链接：</p>
@@ -636,7 +636,7 @@ python3 -m http.server 80<span aria-hidden="true" class="line-numbers-rows"><spa
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/java276582434/article/details/90550578">https://blog.csdn.net/java276582434/article/details/90550578</a></p>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -785,7 +785,7 @@ python3 -m http.server 80<span aria-hidden="true" class="line-numbers-rows"><spa
                 <a href="/211121-153433.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111211543622.png" class="responsive-img" alt="【代码审计】命令注入和代码注入">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111211543622.png" class="responsive-img" alt="【代码审计】命令注入和代码注入">
                         
                         <span class="card-title">【代码审计】命令注入和代码注入</span>
                     </div>
@@ -838,7 +838,7 @@ python3 -m http.server 80<span aria-hidden="true" class="line-numbers-rows"><spa
                 <a href="/211117-091653.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111172027760.png" class="responsive-img" alt="【代码审计】SQL 注入">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111172027760.png" class="responsive-img" alt="【代码审计】SQL 注入">
                         
                         <span class="card-title">【代码审计】SQL 注入</span>
                     </div>

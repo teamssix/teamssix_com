@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-03-10_14-19-23.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/2Snipaste_2020-03-10_14-19-23.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -473,30 +473,30 @@
 <p>本文仅供学习分享用途，严禁用于违法用途</p>
 </blockquote>
 <p>在搞站的时候，经过一顿操作后只发现了一堆低危，过了一段时间看看Xray，居然发现一个XSS</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/1Snipaste_2020-03-10_14-10-35.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/1Snipaste_2020-03-10_14-10-35.png"></p>
 <p>嗯~ Xray 真香！</p>
 <a id="more"></a>
 
 <p>随后进行复现，无奈多次尝试无果，好玩的是每换一个Payload，流量经过 Xray ，Xray 还会继续报这个漏洞，并且每次Payload都不一样，这感情好，直接用 Xray 给的 Payload 吧，尝试了半天，居然没有一个成功的，当时 Xray 的界面是这样的</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/2Snipaste_2020-03-10_14-19-23.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/2Snipaste_2020-03-10_14-19-23.png"></p>
 <p>虽然没有一个成功复现的，但是这看着还是挺爽的，一会儿报个漏洞一会儿报个漏洞的</p>
 <h1 id="0x01-Fuzz大法好"><a href="#0x01-Fuzz大法好" class="headerlink" title="0x01 Fuzz大法好"></a>0x01 Fuzz大法好</h1><p>屡试不行之后便想到了Fuzz，那先去GitHub上找个字典</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/TheKingOfDuck/fuzzDicts">https://github.com/TheKingOfDuck/fuzzDicts</a></p>
 </blockquote>
 <p>有了字典之后，上Burp</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/3Snipaste_2020-03-10_14-26-42.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/3Snipaste_2020-03-10_14-26-42.png"></p>
 <p>两千多的字典最后只有3个Payload响应200，不管了，先一个一个试试吧，那就先来试试第一个Payload</p>
 <pre class="line-numbers language-none"><code class="language-none">&quot;+alert(16)+&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/4Snipaste_2020-03-10_14-29-54.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/4Snipaste_2020-03-10_14-29-54.png"></p>
 <p>哎呀呀，不得不说，妙啊！</p>
 <p>之后我再试另外几个 Payload 就不管用了</p>
 <p>啧啧，Xray 真香、Fuzz 真香。</p>
 <blockquote>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -648,7 +648,7 @@
                 <a href="/200321-150643.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-03-21_14-29-32.png" class="responsive-img" alt="【工具分享】Pigat v2.0正式发布">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2020-03-21_14-29-32.png" class="responsive-img" alt="【工具分享】Pigat v2.0正式发布">
                         
                         <span class="card-title">【工具分享】Pigat v2.0正式发布</span>
                     </div>

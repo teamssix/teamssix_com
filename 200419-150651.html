@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs21-1.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -544,21 +544,21 @@ curl: <span class="token punctuation">(</span>7<span class="token punctuation">)
 ……内容太多，此处省略……                 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h1 id="0x02-反向转发"><a href="#0x02-反向转发" class="headerlink" title="0x02 反向转发"></a>0x02 反向转发</h1><p>反向转发顾名思义就是和<a target="_blank" rel="noopener" href="https://teamssix.com/year/200419-150644.html">上一节</a>中提到的转发路径相反，之前我们设置的代理是 <code>CS服务端 --&gt; 上线主机 --&gt; 内网主机</code>，反向转发则是 <code>内网主机 --&gt; 上线主机 --&gt; CS服务端</code>。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs21-1.png"></p>
 <p>继续使用上面的演示环境，首先右击上线主机会话，选择 <code>Pivoting --&gt; Listener</code> ，除了 Name 选项之外，CS 都会自动配置好，这里直接使用默认的配置信息。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs21-2.png"></p>
 <p>之后生成一个 Windows 可执行文件，选择上一步生成的监听器，如果目标是 64 位则勾选使用 x64 Payload 的选项。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs21-3.png"></p>
 <p>之后将该可执行文件在目标主机上执行即可，在现实环境中可以尝试使用钓鱼邮件的方式诱导目标执行。</p>
 <p>当目标执行该文件后，就会发现当前不出网的 192.168.232.132 主机已经上线了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs21-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs21-4.png"></p>
 <p>有一说一，关于这部分网上大部分教程还是 CS 3.x 版本的教程，而在 4.0 的操作中个人感觉要方便很多。</p>
 <p>网上关于这部分内容的 CS 4.0 的教程真的是少之又少，一开始在参考 3.x 教程的时候踩了很多坑，最后终于某内部知识库发现了一篇关于这部分内容的 4.0 教程，在该教程的参考下才发现居然如此简单。</p>
 <blockquote>
 <p>参考链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -710,7 +710,7 @@ curl: <span class="token punctuation">(</span>7<span class="token punctuation">)
                 <a href="/200419-150657.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs22-2.png" class="responsive-img" alt="【CS学习笔记】22、通过SSH开通通道">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs22-2.png" class="responsive-img" alt="【CS学习笔记】22、通过SSH开通通道">
                         
                         <span class="card-title">【CS学习笔记】22、通过SSH开通通道</span>
                     </div>
@@ -766,7 +766,7 @@ curl: <span class="token punctuation">(</span>7<span class="token punctuation">)
                 <a href="/200419-150644.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/cs20-1.png" class="responsive-img" alt="【CS学习笔记】20、通过Socks转发的方法">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/cs20-1.png" class="responsive-img" alt="【CS学习笔记】20、通过Socks转发的方法">
                         
                         <span class="card-title">【CS学习笔记】20、通过Socks转发的方法</span>
                     </div>

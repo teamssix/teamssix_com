@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656032.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151656032.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -428,7 +428,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-16
+                    2021-11-22
                 </div>
                 
 
@@ -469,7 +469,7 @@
 <p>Servlet 是 Java EE 的核心，也是所有 MVC 框架实现的根本。</p>
 <h1 id="0x01-Servlet-的配置"><a href="#0x01-Servlet-的配置" class="headerlink" title="0x01 Servlet 的配置"></a>0x01 Servlet 的配置</h1><p>版本不同，Servlet 的配置不同，Servlet 3.0 之前的版本都是在 web.xml 中配置的，在 3.0 之后的版本中则使用更为方便的注解方法来配置。</p>
 <p>此外不同版本的 Servlet 所需要的 Java/JDK 版本也不同，具体如下图所示。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151655826.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151655826.png"></p>
 <h2 id="1、基于-web-xml-的配置"><a href="#1、基于-web-xml-的配置" class="headerlink" title="1、基于 web.xml 的配置"></a>1、基于 web.xml 的配置</h2><p>以下是一个基于 web.xml 的 Servlet 配置文件</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://java.sun.com/xml/ns/javaee<span class="token punctuation">"</span></span>  
@@ -540,10 +540,10 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注解参数</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656906.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151656906.png"></p>
 <p>通过图中的「等价于 web.xml 的标签」一栏可以看出，web.xml 可以配置的 Servlet 属性都可以通过 @WebServlet 的方式进行配置。</p>
 <h1 id="0x02-Servlet-的访问流程"><a href="#0x02-Servlet-的访问流程" class="headerlink" title="0x02 Servlet 的访问流程"></a>0x02 Servlet 的访问流程</h1><p>以上文中的 web.xml 配置文件为例，其访问流程如下所示。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656655.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151656655.png"></p>
 <p>首先用户在浏览器里输入URL，然后浏览器发起请求，服务器通过 servlet-mapping 标签找到文件名为 user 的 url-pattern，通过其对应的 servlet-name 寻找 servlet 标签中 servlet-name 相同的 servlet，再获取其 servlet 标签里的 servlet-class 参数，最后得到具体的 class 文件路径，从而执行相关文件。</p>
 <h1 id="0x03-Servlet-的接口方法"><a href="#0x03-Servlet-的接口方法" class="headerlink" title="0x03 Servlet 的接口方法"></a>0x03 Servlet 的接口方法</h1><h2 id="1、init-接口"><a href="#1、init-接口" class="headerlink" title="1、init() 接口"></a>1、init() 接口</h2><p>在 Servlet 实例化后，Servlet 容器会调用 init() 方法来初始化该对象，主要是为了让 Servlet 对象在处理客户请求前可以完成一些初始化的工作，例如建立数据库连接，获取配置信息等。</p>
 <p>对于每一个 Servlet 实例，init() 方法只能被调用一次。</p>
@@ -577,7 +577,7 @@
 <h2 id="6、getServletInfo-接口"><a href="#6、getServletInfo-接口" class="headerlink" title="6、getServletInfo() 接口"></a>6、getServletInfo() 接口</h2><p>该方法返回一个 String 类型的字符串，其中包括了关于 Servlet 的信息，例如，作者、版本和版权等。</p>
 <h1 id="0x04-Servlet-的生命周期"><a href="#0x04-Servlet-的生命周期" class="headerlink" title="0x04 Servlet 的生命周期"></a>0x04 Servlet 的生命周期</h1><p>Servlet 生命周期指的是 Servlet 从创建直到销毁的整个过程。</p>
 <p>在一个生命周期中，Servlet 经历了被加载、初始化、接收请求、响应请求以及提供服务的过程，具体如下图所示。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151656032.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151656032.png"></p>
 <blockquote>
 <p>参考链接：</p>
 <p><a target="_blank" rel="noopener" href="https://tomcat.apache.org/whichversion.html">https://tomcat.apache.org/whichversion.html</a></p>
@@ -585,7 +585,7 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45017999/article/details/106696148">https://blog.csdn.net/qq_45017999/article/details/106696148</a></p>
 <p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -733,7 +733,7 @@
                 <a href="/211116-112510.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111161127002.png" class="responsive-img" alt="【代码审计】Java Web 过滤器-filter">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111161127002.png" class="responsive-img" alt="【代码审计】Java Web 过滤器-filter">
                         
                         <span class="card-title">【代码审计】Java Web 过滤器-filter</span>
                     </div>
@@ -785,7 +785,7 @@
                 <a href="/211115-123451.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/202111151127644.png" class="responsive-img" alt="【代码审计】Java EE 基础知识">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/202111151127644.png" class="responsive-img" alt="【代码审计】Java EE 基础知识">
                         
                         <span class="card-title">【代码审计】Java EE 基础知识</span>
                     </div>

