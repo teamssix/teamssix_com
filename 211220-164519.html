@@ -271,7 +271,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/imgs/202112201646981.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646981.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -428,7 +428,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-20
+                    2021-12-21
                 </div>
                 
 
@@ -474,14 +474,14 @@
 <span class="token operator">%</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>当访问 <a target="_blank" rel="noopener" href="http://localhost:8080/xss_demo/reflected_xss.jsp?name=1&sid=alert(1)">http://localhost:8080/xss_demo/reflected_xss.jsp?name=1&amp;sid=%3Cscript%3Ealert(1)%3C/script%3E</a> 时，就会触发 XSS 代码</p>
-<p><img src="cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646020.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646020.png"></p>
 <h1 id="0x02-存储型-XSS"><a href="#0x02-存储型-XSS" class="headerlink" title="0x02 存储型 XSS"></a>0x02 存储型 XSS</h1><p>这里以 zrlog v1.9.1.0227 靶场进行示例</p>
 <h2 id="部署靶场"><a href="#部署靶场" class="headerlink" title="部署靶场"></a>部署靶场</h2><p>靶场 war 包下载地址：<a target="_blank" rel="noopener" href="http://dl.zrlog.com/release/zrlog-1.9.1-cd87f93-release.war">http://dl.zrlog.com/release/zrlog-1.9.1-cd87f93-release.war</a></p>
 <p>安装参考官方安装文档即可：<a target="_blank" rel="noopener" href="https://blog.zrlog.com/post/how-to-install-zrlog">https://blog.zrlog.com/post/how-to-install-zrlog</a></p>
 <h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>来到后台，编辑标题处，在标题的位置插入 XSS 语句</p>
-<p><img src="cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646981.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646981.png"></p>
 <p>访问主页，可以看到 XSS 语句被执行</p>
-<p><img src="cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646003.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646003.png"></p>
 <p>通过抓包可以看到提交 XSS 语句时的 URL 为 /api/admin/website/update</p>
 <h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>查看该项目的 Web.xml 可以看到通过类 com.zrlog.web.config.ZrLogConfig 进行访问控制</p>
 <pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>init-param</span><span class="token punctuation">></span></span>
@@ -713,7 +713,7 @@
                 <a href="/211220-164519.html">
                     <div class="card-image">
                         
-                        <img src="/cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/imgs/202112201646981.png" class="responsive-img" alt="【代码审计】跨站脚本 XSS">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202112201646981.png" class="responsive-img" alt="【代码审计】跨站脚本 XSS">
                         
                         <span class="card-title">【代码审计】跨站脚本 XSS</span>
                     </div>
