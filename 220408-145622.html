@@ -555,7 +555,7 @@ resource &quot;aws_s3_bucket_acl&quot; &quot;example&quot; &#123;
 <p>这样每次下载 Provider 插件时，就会下载到 “$HOME/.terraform.d/plugin-cache” 目录下了，不过 Terraform 不会主动清理这个文件夹，因此可能随着插件版本的更迭，这个文件夹内会保存一些历史版本的 Provider 插件，这时就需要自己手动清理一下了。</p>
 <h2 id="2、可视化-Terraform"><a href="#2、可视化-Terraform" class="headerlink" title="2、可视化 Terraform"></a>2、可视化 Terraform</h2><p>如果 Terraform 项目比较复杂，那么可以利用 tfviz 这个工具，可视化 Terraform 项目，tfviz 项目地址：<a target="_blank" rel="noopener" href="https://github.com/steeve85/tfviz">https://github.com/steeve85/tfviz</a></p>
 <p>安装</p>
-<pre class="line-numbers language-none"><code class="language-none">O111MODULE&#x3D;on go get -u github.com&#x2F;steeve85&#x2F;tfviz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">GO111MODULE&#x3D;on go get -u github.com&#x2F;steeve85&#x2F;tfviz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>到 Terraform 项目目录下使用</p>
 <pre class="line-numbers language-none"><code class="language-none">tfviz -input .&#x2F; -output tfimg.png<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
