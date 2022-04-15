@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2022-04-15T13:48:57.844Z</updated>
+  <updated>2022-04-15T14:12:09.525Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://www.teamssix.com/220415-210629.html"/>
     <id>https://www.teamssix.com/220415-210629.html</id>
     <published>2022-04-15T13:06:29.000Z</published>
-    <updated>2022-04-15T13:48:57.844Z</updated>
+    <updated>2022-04-15T14:12:09.525Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>T Wiki</code> 是一个面向云安全方向的知识库，这一点是和其他文库最大的不同，也许这是国内第一个云安全知识文库？</p><p>搭建这个文库的起因是笔者发现在云安全方向的中文资料属实不多，少有的这些资料也很散乱，于是搭建了这个文库。</p><p>文库的地址为：wiki.teamssix.com</p><h2 id="文库介绍"><a href="#文库介绍" class="headerlink" title="文库介绍"></a>文库介绍</h2><p>首先来看文库首页，文库主要分成了三个板块，分别为<code>云服务</code>、<code>云原生</code>、<code>云安全资源</code></p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146075.png"></p><p>首先来看<code>云安全资源</code>板块，这个板块是我个人觉着整个知识库较为与众不同的地方，在这里可以看到汇总的云安全资源，比如云安全相关的文章、公众号、工具、靶场等等。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146469.png"></p><p>这部分的内容我也同步到了 Github 上单独作为一个项目，项目名称叫做 awesome-cloud-security，项目地址为：<a href="https://github.com/teamssix/awesome-cloud-security">https://github.com/teamssix/awesome-cloud-security</a></p><p>如果你知道一些比较好的云安全资源，欢迎留言补充，我会更新到这个板块中，首页的贡献者处也将出现你的身影。</p><p>在<code>云服务</code>板块可以看到云服务方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147429.png"></p><p>在<code>云原生</code>板块可以看到云原生方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147002.png"></p><p>目前文库的东西不算多，不过未来会不断更新，如果想要投稿，那么在<code>关于文库</code>中可以找到投稿的方式。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>相信通过这些资料能够在一定程度上帮助想要学习或者正在学习云安全的人，同时也欢迎读者一起来完善这个文库，从而帮助到更多的人，一起助力国内云安全的发展。</p><blockquote><p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p><p> 原文链接：</p><p> <a href="https://teamssix.com/220408-145622.html">https://teamssix.com/220408-145622.html</a></p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>T Wiki</code> 是一个面向云安全方向的知识库，这一点是和其他文库最大的不同，也许这是国内第一个云安全知识文库？</p><p>搭建这个文库的起因是笔者发现在云安全方向的中文资料属实不多，少有的这些资料也很散乱，于是搭建了这个文库。</p><p>文库的地址为：<a href="https://wiki.teamssix.com/">wiki.teamssix.com</a></p><h2 id="文库介绍"><a href="#文库介绍" class="headerlink" title="文库介绍"></a>文库介绍</h2><p>首先来看文库首页，文库主要分成了三个板块，分别为<code>云服务</code>、<code>云原生</code>、<code>云安全资源</code></p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146075.png"></p><p>首先来看<code>云安全资源</code>板块，这个板块是我个人觉着整个知识库较为与众不同的地方，在这里可以看到汇总的云安全资源，比如云安全相关的文章、公众号、工具、靶场等等。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146469.png"></p><p>这部分的内容我也同步到了 Github 上单独作为一个项目，项目名称叫做 awesome-cloud-security，项目地址为：<a href="https://github.com/teamssix/awesome-cloud-security">https://github.com/teamssix/awesome-cloud-security</a></p><p>如果你知道一些比较好的云安全资源，欢迎留言补充，我会更新到这个板块中，首页的贡献者处也将出现你的身影。</p><p>在<code>云服务</code>板块可以看到云服务方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147429.png"></p><p>在<code>云原生</code>板块可以看到云原生方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147002.png"></p><p>目前文库的东西不算多，不过未来会不断更新，如果想要投稿，那么在<code>关于文库</code>中可以找到投稿的方式。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>相信通过这些资料能够在一定程度上帮助想要学习或者正在学习云安全的人，同时也欢迎读者一起来完善这个文库，从而帮助到更多的人，一起助力国内云安全的发展。</p><blockquote><p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>]]></content>
     
     
       
