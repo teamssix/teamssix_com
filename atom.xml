@@ -6,7 +6,7 @@
   <link href="https://www.teamssix.com/atom.xml" rel="self"/>
   
   <link href="https://www.teamssix.com/"/>
-  <updated>2022-04-08T08:46:38.214Z</updated>
+  <updated>2022-04-15T13:48:57.844Z</updated>
   <id>https://www.teamssix.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TWiki 云安全知识文库上线</title>
+    <link href="https://www.teamssix.com/220415-210629.html"/>
+    <id>https://www.teamssix.com/220415-210629.html</id>
+    <published>2022-04-15T13:06:29.000Z</published>
+    <updated>2022-04-15T13:48:57.844Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>T Wiki</code> 是一个面向云安全方向的知识库，这一点是和其他文库最大的不同，也许这是国内第一个云安全知识文库？</p><p>搭建这个文库的起因是笔者发现在云安全方向的中文资料属实不多，少有的这些资料也很散乱，于是搭建了这个文库。</p><p>文库的地址为：wiki.teamssix.com</p><h2 id="文库介绍"><a href="#文库介绍" class="headerlink" title="文库介绍"></a>文库介绍</h2><p>首先来看文库首页，文库主要分成了三个板块，分别为<code>云服务</code>、<code>云原生</code>、<code>云安全资源</code></p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146075.png"></p><p>首先来看<code>云安全资源</code>板块，这个板块是我个人觉着整个知识库较为与众不同的地方，在这里可以看到汇总的云安全资源，比如云安全相关的文章、公众号、工具、靶场等等。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152146469.png"></p><p>这部分的内容我也同步到了 Github 上单独作为一个项目，项目名称叫做 awesome-cloud-security，项目地址为：<a href="https://github.com/teamssix/awesome-cloud-security">https://github.com/teamssix/awesome-cloud-security</a></p><p>如果你知道一些比较好的云安全资源，欢迎留言补充，我会更新到这个板块中，首页的贡献者处也将出现你的身影。</p><p>在<code>云服务</code>板块可以看到云服务方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147429.png"></p><p>在<code>云原生</code>板块可以看到云原生方向的文章、笔记</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152147002.png"></p><p>目前文库的东西不算多，不过未来会不断更新，如果想要投稿，那么在<code>关于文库</code>中可以找到投稿的方式。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>相信通过这些资料能够在一定程度上帮助想要学习或者正在学习云安全的人，同时也欢迎读者一起来完善这个文库，从而帮助到更多的人，一起助力国内云安全的发展。</p><blockquote><p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p><p> 原文链接：</p><p> <a href="https://teamssix.com/220408-145622.html">https://teamssix.com/220408-145622.html</a></p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;T Wiki&lt;/code&gt; 是一个面向云安全方向的知识库，这一点是和其他文库最大的不同，也许这是国内第一个云安全知识文库？&lt;/p</summary>
+      
+    
+    
+    
+    <category term="云安全" scheme="https://www.teamssix.com/categories/%E4%BA%91%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="云安全" scheme="https://www.teamssix.com/tags/%E4%BA%91%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="知识文库" scheme="https://www.teamssix.com/tags/%E7%9F%A5%E8%AF%86%E6%96%87%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>【云原生】Terraform 初体验</title>
@@ -548,33 +574,6 @@
 &lt;li&gt;Java ME（Java 平台微型版）&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Java EE 是 Java </summary>
-      
-    
-    
-    
-    <category term="代码审计" scheme="https://www.teamssix.com/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
-    
-    <category term="学习笔记" scheme="https://www.teamssix.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="代码审计" scheme="https://www.teamssix.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【代码审计】Maven 基础知识</title>
-    <link href="https://www.teamssix.com/211103-161807.html"/>
-    <id>https://www.teamssix.com/211103-161807.html</id>
-    <published>2021-11-03T08:18:07.000Z</published>
-    <updated>2021-11-22T08:59:50.276Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。</p><p>Maven 采用项目对象模型 POM（Project Object Model）来管理项目。</p><p>Maven 的主要工作就是用来解析一些 XML 文档、管理生命周期与插件。</p><p>Maven 被设计成将主要的职责委派给一组 Maven 插件，这些插件可以影响 Maven 生命周期，提供对目标的访问。</p><h2 id="0x01-pom-xml-文件介绍"><a href="#0x01-pom-xml-文件介绍" class="headerlink" title="0x01 pom.xml 文件介绍"></a>0x01 pom.xml 文件介绍</h2><p>pom.xml 文件被用于管理源代码、配置文件、开发者的信息和角色等，Maven 项目中可以没有其他文件但必须包含 pom.xml 文件，该文件也是 Maven 项目的核心配置文件。</p><p>一个引入 Fastjson 1.2.24 版本组件的配置信息如下：</p><pre class="line-numbers language-none"><code class="language-none">&lt;dependencies&gt;  &lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;com.alibaba&#x2F;fastjson --&gt;  &lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;fastjson&lt;&#x2F;artifactId&gt;    &lt;version&gt;1.2.24&lt;&#x2F;version&gt;  &lt;&#x2F;dependency&gt;&lt;&#x2F;dependencies&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该配置信息可直接从 <a href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a> 获得</p></blockquote><p>配置文件里的 dependencies 和 dependency 用于定义依赖关系，dependency 里的 groupId、artifactId、version 用来定义所依赖的项目。</p><h1 id="0x02-Maven-的使用"><a href="#0x02-Maven-的使用" class="headerlink" title="0x02 Maven 的使用"></a>0x02 Maven 的使用</h1><p>这里以 IntelliJ IDEA 为例，在新建项目时选择创建 Maven 项目即可。</p><p>在创建完 Maven 项目后，就会看到项目里包含的 pox.xml 文件了，对于安全人员就可以通过该文件去判断当前项目里是否包含了存在隐患的组件。</p><p>这时如果想搭建一个 Fastjson &lt;= 1.2.24 版本的漏洞环境，就需要将 Fastjson &lt;= 1.2.24 版本的组件引入。</p><p>这里只需要把上面的配置信息复制到 pom.xml 文件中，然后右击 pom.xml 文件选择「Maven」–「重新加载项目」，就可以自动进行组件的获取了。</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202111031614583.png"></p><p>稍后等组件被自动下载到本地并自动加入到项目依赖中后，就可以在项目代码使用该组件了。</p><blockquote><p>参考文章：</p><p><a href="https://www.jianshu.com/p/43ed2e9e386b">https://www.jianshu.com/p/43ed2e9e386b</a></p><p><a href="https://www.cnblogs.com/bndong/p/9762067.html">https://www.cnblogs.com/bndong/p/9762067.html</a></p><p><a href="https://www.cnblogs.com/cainiaomahua/p/10651014.html">https://www.cnblogs.com/cainiaomahua/p/10651014.html</a></p><p>更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h1&gt;&lt;p&gt;Maven 是一个项目构建和管理工具，利用它可以对 JAVA 项目进行构建和管理。&lt;/p&gt;
-&lt;p&gt;M</summary>
       
     
     
