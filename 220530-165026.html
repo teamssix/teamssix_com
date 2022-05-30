@@ -1,0 +1,1338 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Terraform 使用入门以及在云上攻防中的作用, TeamsSix">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7704006270618117"
+     crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150271429-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-150271429-1');
+</script>
+
+
+    <title>Terraform 使用入门以及在云上攻防中的作用 | TeamsSix</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="TeamsSix" type="application/atom+xml">
+</head>
+
+
+
+   <style>
+    body{
+       background-image: url(/medias/featureimages/0.jpg);
+       background-repeat:no-repeat;
+       background-size:cover;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">TeamsSix</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">TeamsSix</div>
+        <div class="logo-desc">
+            
+              I can do all this through him who gives me strength. (Philippians 4:13 NIV)
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301707311.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Terraform 使用入门以及在云上攻防中的作用</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #567ddf;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #567ddf;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">云安全</span>
+                            </a>
+                        
+                            <a href="/tags/Terraform/">
+                                <span class="chip bg-color">Terraform</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-category">
+                                云安全
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-05-30
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-05-30
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    6 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Terraform 是一种资源编排工具，通过它可以很方便的去构建云服务资源，本文将以「在腾讯云上创建一个 COS 存储桶」为例进行演示。</p>
+<h2 id="0x01-Terraform-概述"><a href="#0x01-Terraform-概述" class="headerlink" title="0x01 Terraform 概述"></a>0x01 Terraform 概述</h2><p>Terraform 官方下载页面：<a target="_blank" rel="noopener" href="https://www.terraform.io/downloads">terraform.io/downloads</a> ，在这里找到自己的系统进行安装即可。</p>
+<p>目前 Terraform 基本已经支持了大部分主流的云服务厂商，在 <a target="_blank" rel="noopener" href="https://registry.terraform.io/browse/providers">registry.terraform.io/browse/providers</a> 中可以看到其所支持的云服务厂商。</p>
+<p>本文中将使用腾讯云作为演示，在平时使用 Terraform 时会频繁的去参考官方文档，其腾讯云的官方文档地址为：<a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/tencentcloudstack/tencentcloud/latest/docs">registry.terraform.io/providers/tencentcloudstack/tencentcloud/latest/docs</a></p>
+<h2 id="0x02-开始编写"><a href="#0x02-开始编写" class="headerlink" title="0x02 开始编写"></a>0x02 开始编写</h2><p>首先创建一个文件夹（这里文件夹名称为 cos_bucket_demo），并新建以下文件。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">.
+└── cos_bucket_demo
+    ├── README.md
+    ├── main.tf
+    ├── output.tf
+    ├── terraform.tfvars
+    ├── variables.tf
+    └── version.tf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>README.md    描述文件</li>
+<li>main.tf    Terraform 主体代码文件</li>
+<li>output.tf    内容输出代码文件</li>
+<li>terraform.tfvars    参数文件</li>
+<li>variables.tf    变量声明文件</li>
+<li>version.tf    版本信息文件</li>
+</ul>
+<p>可以看到在 cos_bucket_demo 文件夹中，有多个 tf 后缀的文件，其实这些 tf 文件里的代码都可以写到一个 tf 文件里，但一般为了规范些，还是建议分多个 tf 文件去写，一个文件夹对应一个 tf 场景。</p>
+<p>接下来，我们来看看每个 tf 文件里都有哪些内容。</p>
+<h3 id="version-tf"><a href="#version-tf" class="headerlink" title="version.tf"></a>version.tf</h3><p>version.tf 一般是放和版本信息有关的代码，例如这里就是声明了 Provider 来源为 tencentcloud 且版本为 1.72.5，Provider 在这里可以理解成「提供云服务的厂商」的意思。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">terraform <span class="token punctuation">&#123;</span>
+  required_providers <span class="token punctuation">&#123;</span>
+    tencentcloud = <span class="token punctuation">&#123;</span>
+      source  = <span class="token string">"tencentcloudstack/tencentcloud"</span>
+      version = <span class="token string">"1.72.5"</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果经常使用某个云的 Provider，建议指定固定的版本，这样在开启插件缓存后，每次初始化 Terraform 时，就不会因为 Provider 有更新了而要重新下载它，同时还会避免因为  Provider 更新导致代码不可用或者出现告警的情况。</p>
+<p>开启插件缓存方法可以参考：<a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Terraform/terraform-enable-plugin-cache.html">wiki.teamssix.com/CloudNative/Terraform/terraform-enable-plugin-cache.html</a></p>
+<h3 id="variables-tf"><a href="#variables-tf" class="headerlink" title="variables.tf"></a>variables.tf</h3><p>variables.tf 里一般会写上变量的声明，例如这里需要声明腾讯云的 secret id 和 secret key 变量。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">variable <span class="token string">"tencentcloud_secret_id"</span> <span class="token punctuation">&#123;</span>
+  type        = string
+  description = <span class="token string">"Set Tencent Cloud secret id."</span>
+  sensitive   = <span class="token boolean">true</span>
+  nullable    = <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span>
+
+variable <span class="token string">"tencentcloud_secret_key"</span> <span class="token punctuation">&#123;</span>
+  type        = string
+  description = <span class="token string">"Set Tencent Cloud secret key."</span>
+  sensitive   = <span class="token boolean">true</span>
+  nullable    = <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其中 variable 后面的是变量名称，type 指定变量类型，description 用来描述变量的用途，sensitive 用来指定变量是不是敏感信息，nullable 用来指定变量是不是可以为空。</p>
+<h3 id="terraform-tfvars"><a href="#terraform-tfvars" class="headerlink" title="terraform.tfvars"></a>terraform.tfvars</h3><p>terraform.tfvars 文件比较简单，在这里可以写上变量的值，这样在运行 Terraform 的时候，就不用从命令行中去指定变量了。</p>
+<p>如果没有该文件，那么在执行 Terraform 代码时，Terraform 就会在命令行中提示输入这些变量。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">tencentcloud_secret_id  = <span class="token string">"xxx"</span>
+tencentcloud_secret_key = <span class="token string">"xxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="output-tf"><a href="#output-tf" class="headerlink" title="output.tf"></a>output.tf</h3><p>output.tf 文件里一般会指定要输出的内容，这里要输出的是 COS Bucket 的地址。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">output <span class="token string">"tencent_cloud_cos_bucket_name"</span> <span class="token punctuation">&#123;</span>
+  value       = <span class="token string">"https://$&#123;tencentcloud_cos_bucket.cos_bucket_demo.cos_bucket_url&#125;"</span>
+  description = <span class="token string">"This is the bucket name of Tencent Cloud COS."</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="main-tf"><a href="#main-tf" class="headerlink" title="main.tf"></a>main.tf</h3><p>最后 main.tf 一个就是最核心的文件了。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">provider <span class="token string">"tencentcloud"</span> <span class="token punctuation">&#123;</span>
+  secret_id  = var.tencentcloud_secret_id
+  secret_key = var.tencentcloud_secret_key
+  region     = <span class="token string">"ap-beijing"</span>
+<span class="token punctuation">&#125;</span>
+
+resource <span class="token string">"tencentcloud_cos_bucket"</span> <span class="token string">"cos_bucket_demo"</span> <span class="token punctuation">&#123;</span>
+  bucket = <span class="token string">"teamssix-$&#123;random_string.random_suffix.result&#125;-$&#123;data.tencentcloud_user_info.foo.app_id&#125;"</span>
+<span class="token punctuation">&#125;</span>
+
+resource <span class="token string">"random_string"</span> <span class="token string">"random_suffix"</span> <span class="token punctuation">&#123;</span>
+  length  = <span class="token number">7</span>
+  special = <span class="token boolean">false</span>
+  upper   = <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span>
+
+data <span class="token string">"tencentcloud_user_info"</span> <span class="token string">"foo"</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先在 provider 块中指定了腾讯云的 secret id 和 secret key 以及 region，接着使用 tencentcloud_cos_bucket resource 块用来创建存储桶。</p>
+<p>由于腾讯云的 Bucket 名称中包含了使用者的 APP ID，所以这里还使用了 tencentcloud_user_info data 块，用来获取当前用户的 APP ID，同时为了避免 Bucket 名称重复，这里使用了 random_string resource 块用来生成一个随机数。</p>
+<p>最后，就可以执行这些代码了。</p>
+<h2 id="0x03-执行代码"><a href="#0x03-执行代码" class="headerlink" title="0x03 执行代码"></a>0x03 执行代码</h2><p>首先，将终端路径切到 cos_bucket_demo 文件夹下，运行初始化命令。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">terraform init<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>该命令会识别当前文件夹里的 tf 文件中所使用到的 Provider，然后去下载它。</p>
+<p>如果提示 Error: Failed to install provider，大多数情况是因为网络的问题，可以在终端里设置代理后再次尝试。</p>
+<p>然后运行以下命令，该命令会检查当前代码是否存在问题，如果没问题就会给出接下来将要执行的计划。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">terraform plan<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>最后，确认没问题后，就可以应用这个代码了。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">terraform apply<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在执行该命令的时候，会提示 Enter a value，这时如果确认无误，就输入 yes 即可，最后就可以在 Outputs 中看到 Bucket 的 URL 了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301707311.png"></p>
+<p>这时，在腾讯云控制台的存储桶列表中，就可以看到我们刚才创建的存储桶了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301708483.png"></p>
+<p>这样，我们就完成了利用 Terraform 创建云服务资源的过程，如果想要销毁这个资源也很容易，直接运行以下命令即可。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">terraform destroy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="0x04-在云上攻防中的作用"><a href="#0x04-在云上攻防中的作用" class="headerlink" title="0x04 在云上攻防中的作用"></a>0x04 在云上攻防中的作用</h2><p>通过上面的内容，可以看到 Terraform 可以调用云厂商的 AK、SK 进行云服务资源的创建与获取，作为安全人员，我们可以利用这个特性进行云上服务的批量信息收集，下面以 COS、CVM、CAM 的信息收集为例。</p>
+<p>将 output.tf 改为以下内容</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">output <span class="token string">"tencent_cloud_cos_bucket_list"</span> <span class="token punctuation">&#123;</span>
+  value = data.tencentcloud_cos_buckets.cos_buckets.bucket_list
+<span class="token punctuation">&#125;</span>
+
+output <span class="token string">"tencent_cloud_cvm_instances_list"</span> <span class="token punctuation">&#123;</span>
+  value = data.tencentcloud_instances.cvm_instances.instance_list
+<span class="token punctuation">&#125;</span>
+
+output <span class="token string">"tencent_cloud_cam_users_list"</span> <span class="token punctuation">&#123;</span>
+  value = data.tencentcloud_cam_users.cam_users.user_list
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将 main.tf 改为以下内容</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">provider <span class="token string">"tencentcloud"</span> <span class="token punctuation">&#123;</span>
+  secret_id  = var.tencentcloud_secret_id
+  secret_key = var.tencentcloud_secret_key
+  region     = <span class="token string">"ap-beijing"</span>
+<span class="token punctuation">&#125;</span>
+
+data <span class="token string">"tencentcloud_cos_buckets"</span> <span class="token string">"cos_buckets"</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+data <span class="token string">"tencentcloud_instances"</span> <span class="token string">"cvm_instances"</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+data <span class="token string">"tencentcloud_cam_users"</span> <span class="token string">"cam_users"</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后应用代码，就可以获取到 COS、CVM、CAM 的相关信息了，如果想获取其他的信息，可以在 Provider 腾讯云官方文档中找到。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301710723.png"></p>
+<p>从站在安全人员的角度来说，我们完全可以通过 Terraform 打造一个独属于自己的全云场景覆盖的 AK、SK 利用工具，而且我们不用自己调取、调试任何 SDK，可以说是潜力无限了。</p>
+<blockquote>
+<p>通过 Terraform 进行信息收集的这个想法来自 tanger 师傅</p>
+</blockquote>
+<h2 id="0x05-最后"><a href="#0x05-最后" class="headerlink" title="0x05 最后"></a>0x05 最后</h2><p>Terraform 的内容远远不止上面说的这些，官方文档对它的介绍也足够详细，同时现在也有了由第三方翻译的中文文档：<a target="_blank" rel="noopener" href="https://lonegunmanb.github.io/introduction-terraform/">lonegunmanb.github.io/introduction-terraform</a></p>
+<p>另外在 T Wiki 中，还有一些 Terraform 其他资料，比如 Terraform 可视化、代码安全检查的方法等等，也可以作为扩展阅读：<a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Terraform/">wiki.teamssix.com/CloudNative/Terraform</a></p>
+<p>如果你在编写 Terraform 代码的时候，想找一些其他人写的代码进行参考，那么不妨看看 TerraformGoat 这个项目：<a target="_blank" rel="noopener" href="https://github.com/HuoCorp/TerraformGoat">github.com/HuoCorp/TerraformGoat</a></p>
+<p>最后建议自己在编写 Terraform 代码的时候，多看官方文档，多用英文去搜索，多用官方文档的代码，可以在很大程度上提高自己的效率。</p>
+<blockquote>
+<p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.teamssix.com" rel="external nofollow noreferrer">TeamsSix</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.teamssix.com/220530-165026.html">https://www.teamssix.com/220530-165026.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY-NC 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://www.teamssix.com" target="_blank">TeamsSix</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">云安全</span>
+                                </a>
+                            
+                                <a href="/tags/Terraform/">
+                                    <span class="chip bg-color">Terraform</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'c8a95bd73658f8325d81',
+        clientSecret: '2c42daedb7d6444b7482e31b76c818cfc99854f0',
+        repo: 'Gitalk',
+        owner: 'teamssix',
+        admin: "teamssix",
+        id: '2022-05-30T16-50-26',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/220530-165026.html">
+                    <div class="card-image">
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301707311.png" class="responsive-img" alt="Terraform 使用入门以及在云上攻防中的作用">
+                        
+                        <span class="card-title">Terraform 使用入门以及在云上攻防中的作用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-category">
+                                    云安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">云安全</span>
+                    </a>
+                    
+                    <a href="/tags/Terraform/">
+                        <span class="chip bg-color">Terraform</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/220430-155921.html">
+                    <div class="card-image">
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204301603498.png" class="responsive-img" alt="APISIX CVE-2022-29266 漏洞分析与复现">
+                        
+                        <span class="card-title">APISIX CVE-2022-29266 漏洞分析与复现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" class="post-category">
+                                    漏洞分析
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">云安全</span>
+                    </a>
+                    
+                    <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">
+                        <span class="chip bg-color">云原生</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">漏洞复现</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">漏洞分析</span>
+                    </a>
+                    
+                    <a href="/tags/APISIX/">
+                        <span class="chip bg-color">APISIX</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: TeamsSix<br />'
+            + '文章作者: TeamsSix<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('2'),
+            headingSelector: 'h1, h2'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+                <span id="year">2017</span>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">253.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "12";
+                    var startDate = "19";
+                    var startHour = "7";
+                    var startMinute = "7";
+                    var startSecond = "7";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的 GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="https://wiki.teamssix.com/" class="tooltipped" target="_blank" data-tooltip="访问 T Wiki 云安全知识文库" data-position="top" data-delay="50">
+        <i class="fab fa-wikipedia-w"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="https://twitter.com/TeamsSix" class="tooltipped" target="_blank" data-tooltip="关注我的 Twitter" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+    <a href="https://teamssix.oss-cn-hangzhou.aliyuncs.com/TeamsSix_Subscription_Logo2.png" class="tooltipped" target="_blank" data-tooltip="关注我的微信公众号" data-position="top" data-delay="50">
+        <i class="fab fa-weixin"></i>
+    </a>
+
+
+
+    <a href="https://blog.csdn.net/qq_37683287" class="tooltipped" target="_blank" data-tooltip="访问我的 CSDN" data-position="top" data-delay="50">
+        <i class="fab fa-cuttlefish"></i>
+    </a>
+
+
+    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fab fa-zhihu1">知</i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?8bab20886c3df9c0d832a9b6aee45740";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+    <script type="text/javascript" color="255,255,255"
+        pointColor="255,255,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
