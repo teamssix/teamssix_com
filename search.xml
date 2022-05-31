@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>T Wiki 云安全知识库 5 月份更新汇总</title>
+      <link href="//220531-121945.html"/>
+      <url>//220531-121945.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>T Wiki 在 4 月 16 日上线，5 月份以来依然收到不少师傅的支持与反馈，此时正好到月末，特此整理下这段时间来 T Wiki 上所更新的内容，如果你还不知道 T Wiki 是什么，可以查看这篇文章<a href="https://teamssix.com/220415-210629.html">T Wiki 云安全知识文库上线</a>，或者访问 T Wiki 地址： <a href="https://wiki.teamssix.com/Changelog/">wiki.teamssix.com</a></p><h2 id="感谢你们"><a href="#感谢你们" class="headerlink" title="感谢你们"></a>感谢你们</h2><p>自 5 月 1 日至 5 月 31 日，T Wiki 总共收到了 4 位师傅的补充，分别为 m4d3bug、Idle Life、da Vinci【达文西】、tanger</p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237409.png"></p><h3 id="云安全资源板块补充内容"><a href="#云安全资源板块补充内容" class="headerlink" title="云安全资源板块补充内容"></a>云安全资源板块补充内容</h3><p><strong>m4d3bug</strong></p><ul><li>k8s 安全风险检测工具 StackRox</li></ul><p><strong>Idle Life</strong></p><ul><li>开源云原生安全防护平台 neuvector</li></ul><p><strong>da Vinci【达文西】</strong></p><ul><li>云安全态势管理工具 CloudSploit</li><li>Azure 红队利用工具 Stormspotter</li><li>GCP IAM 权限提升方法 GCP-IAM-Privilege-Escalation</li></ul><p><strong>tanger</strong></p><ul><li>腾讯云轻量服务器管理工具</li></ul><p><strong>TeamsSix</strong></p><ul><li>云服务安全漏洞汇总</li><li>基于终端 UI 的 k8s 集群管理工具 k9s</li><li>从零开始的 Kubernetes 攻防</li><li>初探 eBPF</li><li>KubeCon + CloudNativeCon Europe 2022 相关视频</li><li>CNCF 云原生安全白皮书 v2</li><li>云上攻防：RED TEAMING FOR CLOUD</li><li>云上攻防二三事（续）</li><li>AWS 控制台接管利用工具 aws_consoler</li><li>云上公开资产枚举 CloudBrute</li><li>k8s 调试辅助工具 validkube</li><li>Bridgecrew Blog（英文）</li><li>浅析K8S各种未授权攻击方法</li><li>Trend Micro Blog（英文）</li><li>企业迁移到公有云之前要问的5个问题</li><li>在 AWS 下查看自己所拥有的权限</li><li>APISIX CVE-2022-29266 漏洞分析与复现</li><li>保障云和容器安全的十个注意事项（英文）</li><li>Rhino Security Labs Blog（英文）</li><li>火线云安全知识库</li><li>多云靶场搭建工具 TerraformGoat</li><li>Cloud Security Wiki（英文）</li><li>火线云安全沙龙视频</li><li>《Hacking Kubernetes》</li></ul><h3 id="文章更新内容"><a href="#文章更新内容" class="headerlink" title="文章更新内容"></a>文章更新内容</h3><p>《Terraform 使用入门以及在云上攻防中的作用》</p><p>《S3 任意文件上传》</p><p>《Bucket Object 遍历》</p><p>《RDS 信息收集》</p><p>《MSSQL 读取实例信息》</p><p>《PostgreSQL 数据库 SSRF》</p><p>《利用 IAM 进行权限提升》</p><p>《利用 IAM 进行权限维持》</p><p>《在 AWS 下查看自己所拥有的权限》</p><h2 id="Awesome-Cloud-Security"><a href="#Awesome-Cloud-Security" class="headerlink" title="Awesome Cloud Security"></a>Awesome Cloud Security</h2><p>Awesome Cloud Security 项目是一个云安全资源汇总的项目，这个项目内容会和 T Wiki 云安全资源板块同步更新，Awesome Cloud Security 项目地址：<a href="https://github.com/teamssix/awesome-cloud-security">github.com/teamssix/awesome-cloud-security</a></p><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237341.png"></p><blockquote><p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p></blockquote><p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 云安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 云安全 </tag>
+            
+            <tag> 知识文库 </tag>
+            
+            <tag> 更新汇总 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Terraform 使用入门以及在云上攻防中的作用</title>
       <link href="//220530-165026.html"/>
       <url>//220530-165026.html</url>

