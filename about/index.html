@@ -152,6 +152,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+      
+      <i class="fab fa-wikipedia-w" style="zoom: 0.6;"></i>
+      
+      <span>云安全知识库</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -255,6 +266,17 @@
           
         </li>
         
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-wikipedia-w"></i>
+			
+			云安全知识库
+		</a>
+          
+        </li>
+        
         
     </ul>
 </div>
@@ -291,7 +313,7 @@
                 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
                 <script>
                     var typed = new Typed("#subtitle", {
-                        strings: ['','我靠着那加给我力量的，凡事都能作。(腓立比书 4:13 和合本)'],
+                        strings: ['','我靠着那加给我力量的，凡事都能做。'],
                         startDelay: 0,
                         typeSpeed: 61,
                         loop: false,
@@ -413,10 +435,6 @@
     </a>
 
 
-    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
-
 
 
     <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
@@ -466,10 +484,6 @@
         <i class="fab fa-cuttlefish"></i>
     </a>
 
-
-    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
 
 
 
@@ -533,7 +547,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ["2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05"]
+            data: ["2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06"]
         },
         yAxis: {
             type: 'value',
@@ -543,7 +557,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [1,9,8,4,9,4,7,5,1,1,5,4,2],
+                data: [9,8,4,9,4,7,5,1,1,5,4,2,0],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -585,7 +599,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"内网学习笔记","value":39},{"name":"CS 学习笔记","value":29},{"name":"CTF","value":1},{"name":"Python 学习笔记","value":19},{"name":"实例","value":4},{"name":"云安全","value":8},{"name":"代码审计","value":12},{"name":"学习笔记","value":3},{"name":"工具分享","value":13},{"name":"摘要","value":1},{"name":"渗透实例","value":2},{"name":"漏洞复现","value":4},{"name":"漏洞笔记","value":11},{"name":"经验总结","value":18},{"name":"实例演示","value":1},{"name":"随笔","value":1},{"name":"云原生","value":1},{"name":"漏洞分析","value":1}],
+                data: [{"name":"内网学习笔记","value":39},{"name":"云安全","value":8},{"name":"CS 学习笔记","value":29},{"name":"CTF","value":1},{"name":"Python 学习笔记","value":19},{"name":"实例","value":4},{"name":"云原生","value":1},{"name":"代码审计","value":12},{"name":"学习笔记","value":3},{"name":"工具分享","value":13},{"name":"摘要","value":1},{"name":"渗透实例","value":2},{"name":"漏洞分析","value":1},{"name":"漏洞复现","value":4},{"name":"漏洞笔记","value":11},{"name":"经验总结","value":18},{"name":"实例演示","value":1},{"name":"随笔","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -663,27 +677,14 @@
         
         <div class="col s12 m6 l4" data-aos="fade-up">
             <div class="info center-align">
-                <a href="https://github.com/wgpsec/tig" class="icon"
+                <a href="https://github.com/teamssix/container-escape-check" class="icon"
                    style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
-                    <i class="fas fa-tools"></i>
+                    <i class="fa fa-cloud"></i>
                 </a>
                 <div class="info-title">
-                    <a href="https://github.com/wgpsec/tig" target="_blank">TIG</a>
+                    <a href="https://github.com/teamssix/container-escape-check" target="_blank">Awesome Cloud Security</a>
                 </div>
-                <div class="info-desc">一个旨在提高蓝队拿到攻击 IP 后对其进行威胁情报信息收集效率的工具</div>
-            </div>
-        </div>
-        
-        <div class="col s12 m6 l4" data-aos="fade-up">
-            <div class="info center-align">
-                <a href="https://github.com/wgpsec/CreateHiddenAccount" class="icon"
-                   style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
-                    <i class="fas fa-tools"></i>
-                </a>
-                <div class="info-title">
-                    <a href="https://github.com/wgpsec/CreateHiddenAccount" target="_blank">CreateHiddenAccount</a>
-                </div>
-                <div class="info-desc">一个通过注册表创建、检测、删除隐藏账号的工具</div>
+                <div class="info-desc">云安全资源汇总</div>
             </div>
         </div>
         
@@ -691,12 +692,64 @@
             <div class="info center-align">
                 <a href="https://github.com/teamssix/container-escape-check" class="icon"
                    style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
+                    <i class="fab fa-wikipedia-w"></i>
+                </a>
+                <div class="info-title">
+                    <a href="https://github.com/teamssix/container-escape-check" target="_blank">T Wiki</a>
+                </div>
+                <div class="info-desc">T Wiki 云安全知识文库</div>
+            </div>
+        </div>
+        
+        <div class="col s12 m6 l4" data-aos="fade-up">
+            <div class="info center-align">
+                <a href="https://github.com/HuoCorp/TerraformGoat" class="icon"
+                   style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
+                    <i class="fa fa-bug"></i>
+                </a>
+                <div class="info-title">
+                    <a href="https://github.com/HuoCorp/TerraformGoat" target="_blank">TerraformGoat</a>
+                </div>
+                <div class="info-desc">云服务漏洞靶场</div>
+            </div>
+        </div>
+        
+        <div class="col s12 m6 l4" data-aos="fade-up">
+            <div class="info center-align">
+                <a href="https://github.com/wgpsec/tig" class="icon"
+                   style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
                     <i class="fas fa-tools"></i>
+                </a>
+                <div class="info-title">
+                    <a href="https://github.com/wgpsec/tig" target="_blank">TIG</a>
+                </div>
+                <div class="info-desc">蓝队威胁情报信息收集工具</div>
+            </div>
+        </div>
+        
+        <div class="col s12 m6 l4" data-aos="fade-up">
+            <div class="info center-align">
+                <a href="https://github.com/wgpsec/CreateHiddenAccount" class="icon"
+                   style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
+                    <i class="fa fa-window-restore"></i>
+                </a>
+                <div class="info-title">
+                    <a href="https://github.com/wgpsec/CreateHiddenAccount" target="_blank">CreateHiddenAccount</a>
+                </div>
+                <div class="info-desc">隐藏账号创建工具</div>
+            </div>
+        </div>
+        
+        <div class="col s12 m6 l4" data-aos="fade-up">
+            <div class="info center-align">
+                <a href="https://github.com/teamssix/container-escape-check" class="icon"
+                   style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
+                    <i class="fa fa-cubes"></i>
                 </a>
                 <div class="info-title">
                     <a href="https://github.com/teamssix/container-escape-check" target="_blank">ContainerEscapeCheck</a>
                 </div>
-                <div class="info-desc">一个在容器内部检测逃逸漏洞的脚本</div>
+                <div class="info-desc">容器逃逸检测脚本</div>
             </div>
         </div>
         
@@ -725,7 +778,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">253.8k</span>&nbsp;字
+                class="white-color">253.7k</span>&nbsp;字
             
             
             
@@ -828,10 +881,6 @@
         <i class="fab fa-cuttlefish"></i>
     </a>
 
-
-    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
 
 
 

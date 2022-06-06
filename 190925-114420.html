@@ -152,6 +152,17 @@
     
   </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+      
+      <i class="fab fa-wikipedia-w" style="zoom: 0.6;"></i>
+      
+      <span>云安全知识库</span>
+    </a>
+    
+  </li>
+  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -251,6 +262,17 @@
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
 			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://wiki.teamssix.com" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-wikipedia-w"></i>
+			
+			云安全知识库
 		</a>
           
         </li>
@@ -542,7 +564,7 @@ flag格式：DDCTF-
 Hint:flag中包含chuxing
 
 题目来源：https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;1103<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>1、这道题是滴滴出行的一道CTF，下载题目可以看到一个apk文件，先在模拟器中运行看看是个什么东西<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf28.png"><br>2、功能很简单，一个输入框，输错会提示Wrong，那么利用Android killer给它反编译一下，查找字符“Wrong”<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf29.png"><br>3、可以看到Wrong字符的路径，接下来进行反编译，不过可能由于本身软件的文件，反编译提示未找到对应的APK源码，没关系，换ApkIDE对其进行编译<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf30.png"><br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf31.png"><br>4、等待一段时间后，可以看到对应源码，简单分析就可以知道该代码从hello-libs.so文件加载，并且对mFlagEntryView.getText().toString()函数的内容即我们输入的内容和stringFromJNI()函数的内容做判断，如果一致就Correct，即正确，不一致就返回Wrong，即错误，那么接下来只需要分析stringFromJNI()的内容就行了，因此我们需要知道系统从hello-libs.so文件加载了什么<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf32.png"><br>5、将APK解压，找到hello-libs.so文件，由于现在手机都是用arm64位的CPU（我也不知道是不是的啊，听别人说的），因此我们找到arm64-v8a文件夹下的libhello-libs.so文件，用IDA打开<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf33.png"><br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf34.png"><br>6、打开IDA后，根据题目提示，Alt +T　查找chuxing<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf35.png"><br>７、成功找到flag（<a href="mailto:&#x44;&#x44;&#67;&#84;&#x46;&#x2d;&#x33;&#x39;&#55;&#97;&#57;&#x30;&#x61;&#51;&#x32;&#54;&#55;&#x36;&#52;&#49;&#x36;&#x35;&#56;&#98;&#x62;&#99;&#57;&#x37;&#x35;&#51;&#x32;&#x36;&#55;&#48;&#48;&#102;&#52;&#98;&#x40;&#100;&#x69;&#100;&#x69;&#99;&#x68;&#117;&#120;&#x69;&#110;&#x67;&#46;&#99;&#111;&#x6d;">&#x44;&#x44;&#67;&#84;&#x46;&#x2d;&#x33;&#x39;&#55;&#97;&#57;&#x30;&#x61;&#51;&#x32;&#54;&#55;&#x36;&#52;&#49;&#x36;&#x35;&#56;&#98;&#x62;&#99;&#57;&#x37;&#x35;&#51;&#x32;&#x36;&#55;&#48;&#48;&#102;&#52;&#98;&#x40;&#100;&#x69;&#100;&#x69;&#99;&#x68;&#117;&#120;&#x69;&#110;&#x67;&#46;&#99;&#111;&#x6d;</a><br>）输入到模拟器中看到提示Correct，说明flag正确。<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf36.png"></p>
+<p>1、这道题是滴滴出行的一道CTF，下载题目可以看到一个apk文件，先在模拟器中运行看看是个什么东西<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf28.png"><br>2、功能很简单，一个输入框，输错会提示Wrong，那么利用Android killer给它反编译一下，查找字符“Wrong”<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf29.png"><br>3、可以看到Wrong字符的路径，接下来进行反编译，不过可能由于本身软件的文件，反编译提示未找到对应的APK源码，没关系，换ApkIDE对其进行编译<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf30.png"><br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf31.png"><br>4、等待一段时间后，可以看到对应源码，简单分析就可以知道该代码从hello-libs.so文件加载，并且对mFlagEntryView.getText().toString()函数的内容即我们输入的内容和stringFromJNI()函数的内容做判断，如果一致就Correct，即正确，不一致就返回Wrong，即错误，那么接下来只需要分析stringFromJNI()的内容就行了，因此我们需要知道系统从hello-libs.so文件加载了什么<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf32.png"><br>5、将APK解压，找到hello-libs.so文件，由于现在手机都是用arm64位的CPU（我也不知道是不是的啊，听别人说的），因此我们找到arm64-v8a文件夹下的libhello-libs.so文件，用IDA打开<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf33.png"><br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf34.png"><br>6、打开IDA后，根据题目提示，Alt +T　查找chuxing<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf35.png"><br>７、成功找到flag（<a href="mailto:&#68;&#68;&#x43;&#84;&#70;&#x2d;&#51;&#57;&#x37;&#x61;&#x39;&#x30;&#97;&#51;&#x32;&#54;&#x37;&#x36;&#x34;&#49;&#54;&#53;&#56;&#x62;&#98;&#x63;&#x39;&#x37;&#x35;&#x33;&#50;&#x36;&#55;&#48;&#x30;&#102;&#x34;&#x62;&#x40;&#x64;&#105;&#x64;&#x69;&#99;&#104;&#x75;&#120;&#x69;&#110;&#x67;&#46;&#99;&#x6f;&#109;">&#68;&#68;&#x43;&#84;&#70;&#x2d;&#51;&#57;&#x37;&#x61;&#x39;&#x30;&#97;&#51;&#x32;&#54;&#x37;&#x36;&#x34;&#49;&#54;&#53;&#56;&#x62;&#98;&#x63;&#x39;&#x37;&#x35;&#x33;&#50;&#x36;&#55;&#48;&#x30;&#102;&#x34;&#x62;&#x40;&#x64;&#105;&#x64;&#x69;&#99;&#104;&#x75;&#120;&#x69;&#110;&#x67;&#46;&#99;&#x6f;&#109;</a><br>）输入到模拟器中看到提示Correct，说明flag正确。<br><img src="https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/ctf36.png"></p>
 <h1 id="0x10-Easy-dump"><a href="#0x10-Easy-dump" class="headerlink" title="0x10 Easy_dump"></a>0x10 Easy_dump</h1><pre class="line-numbers language-none"><code class="language-none">flag：F0rens1cs_St2rt
 
 题目：Easy_dump
@@ -989,7 +1011,7 @@ Hint：volatilty了解一下
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">253.8k</span>&nbsp;字
+                class="white-color">253.7k</span>&nbsp;字
             
             
             
@@ -1092,10 +1114,6 @@ Hint：volatilty了解一下
         <i class="fab fa-cuttlefish"></i>
     </a>
 
-
-    <a href="https://www.zhihu.com/people/teamssix" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
 
 
 
