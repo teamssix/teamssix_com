@@ -2,7 +2,7 @@
 title: CF 云环境利用框架，一键化渗透云上内网
 date: 2022-07-11 11:24:05
 id: 220711-112405
-img: 
+img: https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202207111134217.png
 tags:
 - 云安全
 - 工具分享
