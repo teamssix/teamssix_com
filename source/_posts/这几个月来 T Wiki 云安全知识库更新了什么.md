@@ -13,7 +13,7 @@ categories:
 
 ## 前言
 
-T Wiki 云安全知识库截止到今天 2022 年 11 月 6 日，共有 56 篇云安全文章、181 条云安全资源。
+T Wiki 云安全知识库截止到今天 2022 年 11 月 5 日，共有 56 篇云安全文章、181 条云安全资源。
 
 T Wiki 在线访问地址：[wiki.teamssix.com](https://wiki.teamssix.com)
 
