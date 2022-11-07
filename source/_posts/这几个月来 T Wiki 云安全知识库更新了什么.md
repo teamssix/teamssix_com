@@ -120,7 +120,7 @@ T Wiki 于今年的 4 月 16 日上线，之前在四月份、五月份分别做
 
 ## Awesome Cloud Security
 
-Awesome Cloud Security 项目是一个云安全资源汇总的项目，当前已有 600 余个 Star，这个项目内容会和 T Wiki 云安全资源板块同步更新，Awesome Cloud Security 项目地址：github.com/teamssix/awesome-cloud-security
+Awesome Cloud Security 项目是一个云安全资源汇总的项目，当前已有 600 余个 Star，这个项目内容会和 T Wiki 云安全资源板块同步更新，Awesome Cloud Security 项目地址：[github.com/teamssix/awesome-cloud-security](https://github.com/teamssix/awesome-cloud-security)
 
 ![](https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/image-20221105192507273.png)
 
