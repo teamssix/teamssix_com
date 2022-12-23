@@ -13,9 +13,9 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://www.teamssix.com
+url: https://www.teamssix.com/
 root: /
-permalink: /:id.html
+permalink: :id
 permalink_defaults:
 
 # Directory
@@ -26,13 +26,13 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: 
+skip_render:
 
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link:   
+external_link:
   enable: true # Open external links in new tab
   field: site # Apply to the whole site
   exclude: ''
@@ -63,7 +63,7 @@ index_generator:
   path: ''
   per_page: 18
   order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
