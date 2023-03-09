@@ -18,11 +18,11 @@ AWS CloudFront 简单理解就是 AWS 的 CDN 服务，在 AWS 安全标准和�
 
 我一般在直接看他们官方介绍的时候，第一眼往往会让人摸不着头脑，再仔细看看才会明白所表达的意思，不知道是不是因为翻译的问题，这里谈谈我所消化的理解。
 
-要明白默认根对象，可以先看个例子：一般当我们在浏览器里输入访问一个网站时，比如 teamssix.com，实际上浏览器打开的是 teamssix.com/index.html ，这里的 index.html 就是默认根对象。
+要明白默认根对象，可以先看个例子：一般当我们在浏览器里输入访问一个网站时，比如 `teamssix.com`，实际上浏览器打开的是 `teamssix.com/index.html` ，这里的 `index.html` 就是默认根对象。
 
 所以默认根对象其实就是指当我们访问一个网站根目录时，这个网站所默认跳转指向的对象，故而叫默认根对象。
 
-在使用 CloudFront 时，如果不配置默认根对象，就意味着当我们访问 teamssix.com 时，就真的会访问 teamssix.com，而不是 teamssix.com/index.html，这时用户如果想浏览这个网站就需要自己拼接 `/index.html` 路径到 URL 中了。
+在使用 CloudFront 时，如果不配置默认根对象，就意味着当我们访问 `teamssix.com` 时，就真的会访问 `teamssix.com`，而不是 `teamssix.com/index.html`，这时用户如果想浏览这个网站就需要自己拼接 `/index.html` 路径到 URL 中了。
 
 ## 0x02 简单分析
 
