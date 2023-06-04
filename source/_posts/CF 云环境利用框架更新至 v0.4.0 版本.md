@@ -7,6 +7,7 @@ tags:
 - 云安全
 - 工具分享
 - 云服务
+- CF
 categories:
 - 云安全
 ---
@@ -128,3 +129,7 @@ cf upgrade
 
 * 本工具仅用于合法合规用途，严禁用于违法违规用途。
 * 本工具中所涉及的风险点均属于租户责任，与云厂商无关。
+
+>  更多信息欢迎关注我的个人微信公众号：TeamsSix
+
+![](https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png)
