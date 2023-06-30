@@ -1,5 +1,5 @@
 ---
-title: CF 云环境利用框架现已更新至 v0.5.0 版本
+title: CF 云环境利用框架现已更新至 0.5.0 版本
 date: 2023-07-01 01:21:10
 id: 230701-012110
 img: https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202307010120822.png
