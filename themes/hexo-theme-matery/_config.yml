@@ -25,7 +25,7 @@ menu:
   云安全知识库:
     url: https://wiki.teamssix.com
     icon: fab fa-wikipedia-w
-  
+
   # 二级菜单写法如下
   #Medias:
   #  icon: fas fa-list
@@ -71,7 +71,7 @@ dream:
   enable: false
   showTitle: false
   title: ""
-  text: I can do all this through him who gives me strength.
+  text: ""
 
 # Whether to display the musics.
 # 是否在首页显示音乐.
@@ -141,9 +141,9 @@ socialLink:
   email:
   facebook: # https://www.facebook.com/xxx
   twitter: https://twitter.com/TeamsSix
-  qq: 
+  qq:
   weibo: # https://weibo.com/xxx
-  wechat: https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png 
+  wechat: https://cdn.jsdelivr.net/gh/teamssix/BlogImages/imgs/202204152148071.png
   csdn: https://blog.csdn.net/qq_37683287
   # zhihu: https://www.zhihu.com/people/teamssix
   rss: true # true、false
@@ -566,8 +566,8 @@ subtitle:
   startDelay: 0 # 开始延迟
   typeSpeed: 61 # 打字速度
   backSpeed: 7 # 删除速度
-  sub1: 
-  sub2: I can do all this through him who gives me strength.
+  sub1:
+  sub2: ""
 
 # 手机二级菜单.
 navMenu:
@@ -589,7 +589,7 @@ icp:
   url: # 备案链接
   text: # 备案信息
 
-# CDN访问加速 
+# CDN访问加速
 # 第一次使用本功能，一定要先配置url，再`hexo cl && hexo g && hexo d`部署到GitHub的仓库，注意！必须是GitHub的仓库！
 # 如果必须要使用国内的coding或者gitee，可以采用双部署，同时将网站部署到两个仓库（其中一个必须是GitHub的仓库）
 # URL配置规则（例子如下）： https://cdn.jsdelivr.net/gh/你的GitHub用户名/你的仓库名
@@ -600,7 +600,7 @@ icp:
 # 注：jsdelivr可以自动帮你生成.min版的js和css，所以你在上面设置js及css路径中可以直接写.min.xxx
 jsDelivr:
   url: # https://cdn.jsdelivr.net/gh/skyls03/skyls03.github.io
-  
+
 # 网站背景图
 background:
   enable: true
