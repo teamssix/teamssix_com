@@ -212,7 +212,7 @@ clicklove:
 profile:
   avatar: /medias/logo.png
   career: 狼组安全团队成员
-  introduction: 点击我的个人微信公众号 TeamsSix 底部菜单栏中的「交个朋友」可添加我的个人微信 ~
+  introduction:
 
 # config my projects informations in about page.
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
@@ -223,23 +223,23 @@ myProjects:
     Awesome Cloud Security:
       icon: fa fa-cloud
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: https://github.com/teamssix/container-escape-check
+      url: https://github.com/teamssix/awesome-cloud-security
       desc: 云安全资源汇总
     T Wiki:
       icon: fab fa-wikipedia-w
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: https://github.com/teamssix/container-escape-check
+      url: https://wiki.teamssix.com
       desc: T Wiki 云安全知识文库
     TerraformGoat:
       icon: fa fa-bug
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
       url: https://github.com/HuoCorp/TerraformGoat
       desc: 云服务漏洞靶场
-    TIG:
+    LC:
       icon: fas fa-tools
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: https://github.com/wgpsec/tig
-      desc: 蓝队威胁情报信息收集工具
+      url: https://github.com/wgpsec/lc
+      desc: 多云攻击面资产梳理工具
     CreateHiddenAccount:
       icon: fa fa-window-restore
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
