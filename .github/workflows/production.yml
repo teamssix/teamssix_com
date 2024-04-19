@@ -27,7 +27,7 @@ jobs:
             hexo g
 
       - name: Deploy to netlify
-        uses: careflow/netlify-actions/cli@master
+        uses: teamssix/netlify-actions/cli@master
         env:
           NETLIFY_SITE_ID: ${{ secrets.PROD_NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
