@@ -251,7 +251,7 @@ python setup.py install
 将 ntds.dit.export 和 SYSTEM 文件放入到 ntdsxtract 工具的文件夹中，然后导出哈希值，最后的结果将保存在 all_user.txt 里
 
 ```
-python2 dsusers.py ntds.dit.export/datatable.3 ntds.dit.export/link_table.5 output --syshive SYSTEM --passwordhasher --pwdformat ocl --ntoufile atout --lmoufile lmout | tee all_user.txt
+python2 dsusers.py ntds.dit.export/datatable.3 ntds.dit.export/link_table.5 output --syshive SYSTEM --passwordhashes --pwdformat ocl --ntoutfile atout --lmoutfile lmout | tee all_user.txt
 ```
 
 > 如果提示 ImportError: No module named Crypto.Hash，直接 pip install pycryptodome 即可
